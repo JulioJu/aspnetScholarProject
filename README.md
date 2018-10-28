@@ -1,5 +1,4 @@
 # How to for Linux users
-
 * Create new project:
     ```
     dotnet new web
@@ -27,3 +26,17 @@
         dotnet dev-certs https
             ```
     *  See also https://github.com/dotnet/cli/issues/9114
+
+## Code Analysis and StyleCop
+* See https://carlos.mendible.com/2017/08/24/net-core-code-analysis-and-stylecop/
+* See also https://en.wikipedia.org/wiki/FxCop
+* and https://en.wikipedia.org/wiki/StyleCop
+
+* List of rules and explanations at
+    * https://github.com/DotNetAnalyzers/StyleCopAnalyzers/tree/master/documentation
+    * https://docs.microsoft.com/en-us/visualstudio/code-quality
+    * https://github.com/dotnet/roslyn-analyzers/blob/master/src/Microsoft.CodeQuality.Analyzers/Microsoft.CodeQuality.Analyzers.md
+    * Disable warnings for file: https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/preprocessor-directives/preprocessor-pragma-warning
+    * All rules for Roslyn http://roslynanalyzersstatus.azurewebsites.net/
+
+
