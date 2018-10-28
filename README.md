@@ -28,7 +28,13 @@
     *  See also https://github.com/dotnet/cli/issues/9114
 
 ## Code Analysis and StyleCop
-* See https://carlos.mendible.com/2017/08/24/net-core-code-analysis-and-stylecop/
+* See before all: https://carlos.mendible.com/2017/08/24/net-core-code-analysis-and-stylecop/
+        ```
+    dotnet add package Microsoft.CodeAnalysis.FxCopAnalyzers
+    dotnet add package StyleCop.Analyzers
+    ```
+    In `*.csproj` inside a Property Group add:
+    ``<CodeAnalysisRuleSet>ca.ruleset</CodeAnalysisRuleSet>``
 * See also https://en.wikipedia.org/wiki/FxCop
 * and https://en.wikipedia.org/wiki/StyleCop
 
@@ -39,4 +45,5 @@
     * Disable warnings for file: https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/preprocessor-directives/preprocessor-pragma-warning
     * All rules for Roslyn http://roslynanalyzersstatus.azurewebsites.net/
 
-
+* To also add sonar-chsarp:
+    ``$ dotnet add package SonarAnalyzer.CSharp ``

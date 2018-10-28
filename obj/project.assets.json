@@ -2894,6 +2894,9 @@
           }
         }
       },
+      "SonarAnalyzer.CSharp/7.7.0.7192": {
+        "type": "package"
+      },
       "StyleCop.Analyzers/1.0.2": {
         "type": "package"
       },
@@ -7421,6 +7424,21 @@
         "version.txt"
       ]
     },
+    "SonarAnalyzer.CSharp/7.7.0.7192": {
+      "sha512": "6cRQ6eroNtzMxOhZOEQOLZH3yx4xcv98XDEDwFCiHCUZPde8Lb8su6mMUbXExtMcKSt4KHIy+HyhDvFRKpKQyA==",
+      "type": "package",
+      "path": "sonaranalyzer.csharp/7.7.0.7192",
+      "files": [
+        ".signature.p7s",
+        "analyzers/Google.Protobuf.dll",
+        "analyzers/SonarAnalyzer.CSharp.dll",
+        "analyzers/SonarAnalyzer.dll",
+        "sonaranalyzer.csharp.7.7.0.7192.nupkg.sha512",
+        "sonaranalyzer.csharp.nuspec",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
+      ]
+    },
     "StyleCop.Analyzers/1.0.2": {
       "sha512": "SJXrFL+4YbLBlV+4Ija4/ezKApo1PfMBpeYS4vZomnUTWNxHHt0D3b+4GYc8ayA06+ZMAChYi6+nSfuFD56WMw==",
       "type": "package",
@@ -11824,6 +11842,7 @@
       "Microsoft.AspNetCore.Razor.Design >= 2.1.2",
       "Microsoft.CodeAnalysis.FxCopAnalyzers >= 2.6.2",
       "Microsoft.NETCore.App >= 2.1.0",
+      "SonarAnalyzer.CSharp >= 7.7.0.7192",
       "StyleCop.Analyzers >= 1.0.2"
     ]
   },
@@ -11883,6 +11902,12 @@
             "target": "Package",
             "version": "[2.1.0, )",
             "autoReferenced": true
+          },
+          "SonarAnalyzer.CSharp": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[7.7.0.7192, )"
           },
           "StyleCop.Analyzers": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers",
