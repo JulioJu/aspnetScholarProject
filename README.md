@@ -6,7 +6,7 @@ Le propriétaire d’une vidéothèque vous demande de lui réaliser une applica
 Il aimerait bien disposer des fonctionnalités suivantes :
 1. Mettre à jours son stock par des nouveaux articles au fur et à mesure qu’ils arrivent ;
 2. Rechercher les films par réalisateur, catégorie, date de sortie et par nom du film
-3.  Connaitre tous les articles en cours de locations et leurs dates de retours
+3. Connaitre tous les articles en cours de locations et leurs dates de retours
 4. Les films loués par une personne
 5. Les personnes qui ont loué un film
 6. Faire la location de films aux personnes.
