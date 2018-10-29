@@ -31,7 +31,7 @@ namespace Aspnet
             app.Run(async (context) =>
             {
             // https://medium.com/bynder-tech/c-why-you-should-use-configureawait-false-in-your-library-code-d7837dce3d7f
-            await context.Response.WriteAsync("Hello World!")
+            await context.Response.WriteAsync("Hello World2!")
                 .ConfigureAwait(false);
             });
         }

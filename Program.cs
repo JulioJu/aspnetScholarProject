@@ -11,6 +11,7 @@ namespace Aspnet
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
 
+    #pragma warning disable S1118
     public sealed class Program
     {
         public static void Main(string[] args)

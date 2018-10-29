@@ -1,3 +1,18 @@
+# Teacher's instructions
+
+Cahier des charges n°4 – Gestion vidéothèque
+Sujet/contexte :
+Le propriétaire d’une vidéothèque vous demande de lui réaliser une application pour gérer sa vidéothèque.
+Il aimerait bien disposer des fonctionnalités suivantes :
+    1. Mettre à jours son stock par des nouveaux articles au fur et à mesure qu’ils arrivent ;
+    2. Rechercher les films par réalisateur, catégorie, date de sortie et par nom du film
+    3.  Connaitre tous les articles en cours de locations et leurs dates de retours
+    4. Les films loués par une personne
+    5. Les personnes qui ont loué un film
+    6. Faire la location de films aux personnes.
+    7. Editer une facture à une personne
+    8. Faire un top N des films loués
+
 # How to for Linux users
 * Create new project:
     ```
@@ -35,6 +50,8 @@
     ```
     In `*.csproj` inside a Property Group add:
     ``<CodeAnalysisRuleSet>ca.ruleset</CodeAnalysisRuleSet>``
+    * Note from JulioJu: do not forget to declare rules it in `cs.ruleset`
+        (see the file).
 * See also https://en.wikipedia.org/wiki/FxCop
 * and https://en.wikipedia.org/wiki/StyleCop
 
@@ -46,4 +63,17 @@
     * All rules for Roslyn http://roslynanalyzersstatus.azurewebsites.net/
 
 * To also add sonar-chsarp:
-    ``$ dotnet add package SonarAnalyzer.CSharp ``
+    * `$ dotnet add package SonarAnalyzer.CSharp`
+    * Then in file `*.ruleset` :
+        ```
+        <Rules AnalyzerId="SonarAnalyser.CSharp" RuleNamespace="SonarAnalyser.CSharp">
+        </Rules>
+        ```
+
+## Dotnet Watcher
+
+```
+export PATH="$PATH:/home/user/.dotnet/tools"
+export DOTNET_ROOT=/opt/dotnet
+dotnet watch run
+```

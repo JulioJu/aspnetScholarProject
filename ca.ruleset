@@ -87,4 +87,8 @@
 
 
     </Rules>
+    <Rules AnalyzerId="SonarAnalyser.CSharp" RuleNamespace="SonarAnalyser.CSharp">
+        <!-- Remove this commented out code. -->
+        <Rule Id="S125" Action="None" />
+    </Rules>
 </RuleSet>
