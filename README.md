@@ -69,6 +69,71 @@ Il aimerait bien disposer des fonctionnalités suivantes :
     <Rules AnalyzerId="SonarAnalyser.CSharp" RuleNamespace="SonarAnalyser.CSharp">
     </Rules>
       ```
+## Sql Server
+* ***DO NOT FORGET TO CHANGE PASSWORD IN*** ./appsettings.json !!!
+  * DO NOT FORGET TO NOT PUSH PASSWORD, `.gitignore` locally
+  `git update-index --assume-unchanged ./appsettings.json`
+
+* Do not forget than this docs are also available for `dotnet cli`, not only
+    for Visual Studio.
+  * https://docs.microsoft.com/en-us/aspnet
+  * https://docs.microsoft.com/en-us/ef
+
+* How to install and configure `mssql-server` on Linux
+    https://computingforgeeks.com/how-to-install-ms-sql-on-ubuntu-18-04-lts/
+    For Arch Linux, there is similar packages.
+    * See also https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-configure-mssql-conf?view=sql-server-2017
+    * https://docs.microsoft.com/en-us/aspnet/web-pages/overview/data/5-working-with-data
+
+* For Razor:
+  * (very interesting) https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.1&tabs=netcore-cli
+  * (very interesting) https://docs.microsoft.com/en-us/aspnet/core/tutorials/razor-pages/sql?view=aspnetcore-2.1
+  * In the web app, connection string:
+      https://docs.microsoft.com/en-us/ef/core/miscellaneous/connection-strings
+
+* Above links are not complete, we have error
+    `Configuration.GetSection always returns null`
+    Therefore see https://stackoverflow.com/questions/46017593/configuration-getsection-always-returns-null
+
+* TODO
+    On link above, they describe LocalDB. I don't know what is it.
+    See https://docs.microsoft.com/en-us/sql/database-engine/configure-windows/sql-server-2016-express-localdb?view=sql-server-2017
+
+
+## Transact-SQL
+* https://www.w3schools.com/sql/
+* https://docs.microsoft.com/en-us/sql/t-sql/lesson-1-creating-database-objects?view=sql-server-linux-2017
+
+* Actually, with the current configuration, we must create table before use it
+    in our web app. Otherwise we have error
+    ``Exception Details: System.Data.SqlClient.SqlException: Invalid object name 'dbo.BaseCs'``
+    https://stackoverflow.com/questions/7784064/entity-framework-throws-exception-invalid-object-name-dbo-basecs
+    * TODO improve it. Do not use TSQL.
+        Table should be automatically created by `Entity Framework` if it
+        doesn't exist.
+
+* To show tables:
+    ``
+    Select Table_name as "Table name"
+    From Information_schema.Tables
+    Where Table_type = 'BASE TABLE' and Objectproperty
+    (Object_id(Table_name), 'IsMsShipped') = 0
+    ``
+    Source: https://stackoverflow.com/questions/124205/how-can-i-do-the-equivalent-of-show-tables-in-t-sql
+
+
+### Create Schema
+
+Tu use this file, connect sqlcmd:
+```
+$ sqlcmd -S localhost -U SA
+```
+Then execute:
+```
+:r BuildSchema.sql
+```
+https://stackoverflow.com/questions/8831651/is-it-possible-to-reference-other-scripts-in-a-tsql-script-file
+https://docs.microsoft.com/en-us/sql/relational-databases/scripting/edit-sqlcmd-scripts-with-query-editor?view=sql-server-linux-2017
 
 ## Dotnet Watcher
 
@@ -78,12 +143,6 @@ export DOTNET_ROOT=/opt/dotnet
 dotnet watch run
 ```
 
-## Documentation
-* Do not forget than this docs are also available for `dotnet cli`, not only
-    for Visual Studio.
-  * https://docs.microsoft.com/en-us/aspnet
-  * https://docs.microsoft.com/en-us/ef
-
 ## Credits
 
 * Strongly inspired from
@@ -91,4 +150,8 @@ dotnet watch run
 
 * Base created thanks `dotnet cli 2.1.403`
 
-<!-- vim:sw=2:ts=2:et:fileformat=dos -->
+# TODO
+* See TODO in this README.md
+
+<!-- vim:sw=2:ts=2:et:fileformat=dos
+-->

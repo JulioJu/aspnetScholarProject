@@ -11,9 +11,23 @@ namespace Aspnet
   using Microsoft.Extensions.DependencyInjection;
   using Microsoft.EntityFrameworkCore;
   using RazorPagesContacts.Data;
+  using Microsoft.Extensions.Configuration;
 
   public class Startup
   {
+
+    public IConfigurationRoot Configuration { get; set; }
+
+    public Startup(IHostingEnvironment env)
+    {
+      var builder = new ConfigurationBuilder()
+        .SetBasePath(env.ContentRootPath)
+        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+        .AddEnvironmentVariables();
+
+      this.Configuration = builder.Build();
+    }
+
     // This method gets called by the runtime. Use this method to add services
     // to the container.
     // For more information on how to configure your application, visit
@@ -21,14 +35,13 @@ namespace Aspnet
     #pragma warning disable CA1822
     public void ConfigureServices(IServiceCollection services)
     {
+      services.AddDbContext<AppDbContext>(options =>
+          options.UseSqlServer(
+            this.Configuration
+            .GetConnectionString("DefaultConnection")));
+
       // Includes support for Razor Pages and controllers.
       services.AddMvc();
-
-      var connection = "Data Source=videotheque.db";
-      services.AddDbContext<AppDbContext>(options =>
-          options.UseSqlServer(connection));
-      // services.AddDbContext<AppDbContext>
-      //   (options => options.UseSqlite(connection));
     }
 
     // This method gets called by the runtime. Use this method to configure the

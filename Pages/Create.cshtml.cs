@@ -26,6 +26,9 @@ namespace RazorPagesContacts.Pages
         return Page();
       }
 
+
+      System.Console.WriteLine("coucou" + Customer);
+
       _db.Customers.Add(Customer);
       await _db.SaveChangesAsync();
       return RedirectToPage("/Index");
