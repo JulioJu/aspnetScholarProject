@@ -11841,6 +11841,7 @@
       "Microsoft.AspNetCore.App >= 2.1.5",
       "Microsoft.AspNetCore.Razor.Design >= 2.1.2",
       "Microsoft.CodeAnalysis.FxCopAnalyzers >= 2.6.2",
+      "Microsoft.EntityFrameworkCore.SqlServer >= 2.1.4",
       "Microsoft.NETCore.App >= 2.1.0",
       "SonarAnalyzer.CSharp >= 7.7.0.7192",
       "StyleCop.Analyzers >= 1.0.2"
@@ -11897,6 +11898,10 @@
             "suppressParent": "All",
             "target": "Package",
             "version": "[2.6.2, )"
+          },
+          "Microsoft.EntityFrameworkCore.SqlServer": {
+            "target": "Package",
+            "version": "[2.1.4, )"
           },
           "Microsoft.NETCore.App": {
             "target": "Package",

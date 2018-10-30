@@ -78,4 +78,17 @@ export DOTNET_ROOT=/opt/dotnet
 dotnet watch run
 ```
 
+## Documentation
+* Do not forget than this docs are also available for `dotnet cli`, not only
+    for Visual Studio.
+  * https://docs.microsoft.com/en-us/aspnet
+  * https://docs.microsoft.com/en-us/ef
+
+## Credits
+
+* Strongly inspired from
+    https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.1&tabs=visual-studio
+
+* Base created thanks `dotnet cli 2.1.403`
+
 <!-- vim:sw=2:ts=2:et:fileformat=dos -->

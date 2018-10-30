@@ -9,6 +9,8 @@ namespace Aspnet
   using Microsoft.AspNetCore.Hosting;
   // using Microsoft.AspNetCore.Http;
   using Microsoft.Extensions.DependencyInjection;
+  using Microsoft.EntityFrameworkCore;
+  using RazorPagesContacts.Data;
 
   public class Startup
   {
@@ -21,6 +23,12 @@ namespace Aspnet
     {
       // Includes support for Razor Pages and controllers.
       services.AddMvc();
+
+      var connection = "Data Source=videotheque.db";
+      services.AddDbContext<AppDbContext>(options =>
+          options.UseSqlServer(connection));
+      // services.AddDbContext<AppDbContext>
+      //   (options => options.UseSqlite(connection));
     }
 
     // This method gets called by the runtime. Use this method to configure the
