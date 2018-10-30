@@ -78,4 +78,4 @@ export DOTNET_ROOT=/opt/dotnet
 dotnet watch run
 ```
 
-<!-- vim: sw=2 ts=2 et: set ++fileformat=dos -->
+<!-- vim:sw=2:ts=2:et:fileformat=dos -->

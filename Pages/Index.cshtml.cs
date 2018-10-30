@@ -2,16 +2,18 @@
 
 namespace RazorPagesIntro.Pages
 {
-    using System;
-    using Microsoft.AspNetCore.Mvc.RazorPages;
+  using System;
+  using Microsoft.AspNetCore.Mvc.RazorPages;
 
-    public class Index : PageModel
+  public class Index : PageModel
+  {
+    public string Message { get; private set; } = "PageModel in C#";
+
+    public void OnGet()
     {
-        public string Message { get; private set; } = "PageModel in C#";
-
-        public void OnGet()
-        {
-            Message += $" Server time is {DateTime.Now}";
-        }
+      Message += $" Server time is {DateTime.Now}";
     }
+  }
 }
+
+// vim:sw=2:ts=2:et:fileformat=dos
