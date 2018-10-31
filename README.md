@@ -86,31 +86,46 @@ Il aimerait bien disposer des fonctionnalités suivantes :
     * https://docs.microsoft.com/en-us/aspnet/web-pages/overview/data/5-working-with-data
 
 * For Razor:
-  * (very interesting) https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.1&tabs=netcore-cli
-  * (very interesting) https://docs.microsoft.com/en-us/aspnet/core/tutorials/razor-pages/sql?view=aspnetcore-2.1
-  * In the web app, connection string:
-      https://docs.microsoft.com/en-us/ef/core/miscellaneous/connection-strings
+  * (very interesting — very synthetic)
+      https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.1&tabs=netcore-cli
+  * (essential if you don't use Visual Studio.
+      As Adil says me, it's for "Code First" and not "Database First")
+      https://docs.microsoft.com/en-us/ef/core/get-started/aspnetcore/new-db?tabs=netcore-cli
+  * (Very interesting — very synthetic, for Visual Studio)
+      https://docs.microsoft.com/en-us/aspnet/core/tutorials/razor-pages/sql?view=aspnetcore-2.1
+  * (Very complete, with a sample)
+      https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/?view=aspnetcore-2.1
+
+* Connection string:
+    https://docs.microsoft.com/en-us/ef/core/miscellaneous/connection-strings
 
 * Above links are not complete, we have error
     `Configuration.GetSection always returns null`
     Therefore see https://stackoverflow.com/questions/46017593/configuration-getsection-always-returns-null
 
-* TODO
-    On link above, they describe LocalDB. I don't know what is it.
+* For LocalDB see:
     See https://docs.microsoft.com/en-us/sql/database-engine/configure-windows/sql-server-2016-express-localdb?view=sql-server-2017
 
+### Troubleshooting
 
-## Transact-SQL
+* *«One of the trickiest problems I encountered when I was just starting ASP.NET
+    web development was debugging issues with my web application connecting to
+    SQL server, especially when connecting to a local instance of SQL Server.»*
+    https://www.loganfranken.com/blog/1345/why-your-web-application-cant-connect-to-sql-server/
+
+* To fix error
+    1. `"Cannot open database “DatabaseName” requested by the login. The login failed.
+    Login failed for user ‘DOMAIN\Username’.""`
+    2. `Exception Details: System.Data.SqlClient.SqlException: Invalid object name 'dbo.BaseCs'`
+    * READ and apply https://docs.microsoft.com/en-us/ef/core/get-started/aspnetcore/new-db?tabs=netcore-cli
+        This is link of notion of "Code First", and "Database First". Thanks
+        Adil ;-).
+
+
+### Transact-SQL
 * https://www.w3schools.com/sql/
 * https://docs.microsoft.com/en-us/sql/t-sql/lesson-1-creating-database-objects?view=sql-server-linux-2017
 
-* Actually, with the current configuration, we must create table before use it
-    in our web app. Otherwise we have error
-    ``Exception Details: System.Data.SqlClient.SqlException: Invalid object name 'dbo.BaseCs'``
-    https://stackoverflow.com/questions/7784064/entity-framework-throws-exception-invalid-object-name-dbo-basecs
-    * TODO improve it. Do not use TSQL.
-        Table should be automatically created by `Entity Framework` if it
-        doesn't exist.
 
 * To show tables:
     ``
@@ -122,7 +137,7 @@ Il aimerait bien disposer des fonctionnalités suivantes :
     Source: https://stackoverflow.com/questions/124205/how-can-i-do-the-equivalent-of-show-tables-in-t-sql
 
 
-### Create Schema
+#### Create Schema
 
 Tu use this file, connect sqlcmd:
 ```
@@ -151,7 +166,6 @@ dotnet watch run
 * Base created thanks `dotnet cli 2.1.403`
 
 # TODO
-* See TODO in this README.md
 * Understand https://medium.com/bynder-tech/c-why-you-should-use-configureawait-false-in-your-library-code-d7837dce3d7f and the warning `CA2007`
     ```
     <Rules AnalyzerId="AsyncUsageAnalyzers" RuleNamespace="AsyncUsageAnalyzers">

@@ -1,4 +1,5 @@
 -- See README.md
+-- Actually not used
 
 USE videotheque
 GO
