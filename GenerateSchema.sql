@@ -11,4 +11,4 @@ CREATE TABLE dbo.Customers
   Name varchar(100) NOT NULL)
 GO
 
--- vim:sw=2:ts=2:et:fileformat=dos
+-- vim:sw=2:ts=2:et:fileformat=dos:ft=sqlserver

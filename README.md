@@ -152,6 +152,12 @@ dotnet watch run
 
 # TODO
 * See TODO in this README.md
+* Understand https://medium.com/bynder-tech/c-why-you-should-use-configureawait-false-in-your-library-code-d7837dce3d7f and the warning `CA2007`
+    ```
+    <Rules AnalyzerId="AsyncUsageAnalyzers" RuleNamespace="AsyncUsageAnalyzers">
+      <Rule Id="UseConfigureAwait" Action="Warning" />
+    </Rules>
+    ```
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->

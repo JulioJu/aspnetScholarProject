@@ -1,19 +1,19 @@
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using RazorPagesContacts.Data;
-
 // Inspired from https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.1&tabs=netcore-cli
 
 namespace RazorPagesContacts.Pages
 {
-  public class CreateModel : PageModel
-  {
-    private readonly AppDbContext _db;
+  using System.Threading.Tasks;
+  using Microsoft.AspNetCore.Mvc;
+  using Microsoft.AspNetCore.Mvc.RazorPages;
+  using RazorPagesContacts.Data;
 
-    public CreateModel(AppDbContext db)
+  public class Create : PageModel
+  {
+    private readonly AppDbContext db;
+
+    public Create(AppDbContext db)
     {
-      _db = db;
+      this.db = db;
     }
 
     [BindProperty]
@@ -21,17 +21,16 @@ namespace RazorPagesContacts.Pages
 
     public async Task<IActionResult> OnPostAsync()
     {
-      if (!ModelState.IsValid)
+      if (!base.ModelState.IsValid)
       {
-        return Page();
+        return base.Page();
       }
 
+      System.Console.WriteLine("coucou" + this.Customer);
 
-      System.Console.WriteLine("coucou" + Customer);
-
-      _db.Customers.Add(Customer);
-      await _db.SaveChangesAsync();
-      return RedirectToPage("/Index");
+      this.db.Customers.Add(this.Customer);
+      await this.db.SaveChangesAsync().ConfigureAwait(false);
+      return base.RedirectToPage("/Index");
     }
   }
 }

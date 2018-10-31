@@ -1,41 +1,43 @@
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using RazorPagesContacts.Data;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-
 // From https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.1&tabs=netcore-cli
 
 namespace RazorPagesContacts.Pages
 {
+  using System.Collections.Generic;
+  using System.Threading.Tasks;
+  using Microsoft.AspNetCore.Mvc;
+  using Microsoft.AspNetCore.Mvc.RazorPages;
+  using Microsoft.EntityFrameworkCore;
+  using RazorPagesContacts.Data;
+
   public class Index : PageModel
   {
-    private readonly AppDbContext _db;
+    private readonly AppDbContext db;
 
     public Index(AppDbContext db)
     {
-      _db = db;
+      this.db = db;
     }
 
     public IList<Customer> Customers { get; private set; }
 
     public async Task OnGetAsync()
     {
-      Customers = await _db.Customers.AsNoTracking().ToListAsync();
+      this.Customers = await this.db.Customers.AsNoTracking().ToListAsync().
+        ConfigureAwait(false);
     }
 
     public async Task<IActionResult> OnPostDeleteAsync(int id)
     {
-      var contact = await _db.Customers.FindAsync(id);
+      var contact = await this.db.Customers.FindAsync(id)
+        .ConfigureAwait(false);
 
       if (contact != null)
       {
-        _db.Customers.Remove(contact);
-        await _db.SaveChangesAsync();
+        this.db.Customers.Remove(contact);
+        await this.db.SaveChangesAsync().ConfigureAwait(false);
       }
 
-      return RedirectToPage();
+      return base.RedirectToPage();
     }
   }
 }

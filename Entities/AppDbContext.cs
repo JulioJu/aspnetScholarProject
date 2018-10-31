@@ -1,9 +1,9 @@
-using Microsoft.EntityFrameworkCore;
-
 // Inspired from https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.1&tabs=netcore-cli
 
 namespace RazorPagesContacts.Data
 {
+  using Microsoft.EntityFrameworkCore;
+
   public class AppDbContext : DbContext
   {
     public AppDbContext(DbContextOptions options)

@@ -8,14 +8,13 @@ namespace Aspnet
   using Microsoft.AspNetCore.Builder;
   using Microsoft.AspNetCore.Hosting;
   // using Microsoft.AspNetCore.Http;
-  using Microsoft.Extensions.DependencyInjection;
   using Microsoft.EntityFrameworkCore;
-  using RazorPagesContacts.Data;
   using Microsoft.Extensions.Configuration;
+  using Microsoft.Extensions.DependencyInjection;
+  using RazorPagesContacts.Data;
 
   public class Startup
   {
-
     public IConfigurationRoot Configuration { get; set; }
 
     public Startup(IHostingEnvironment env)
@@ -58,7 +57,6 @@ namespace Aspnet
 
       // app.Run(async (context) =>
       //   {
-      //   // https://medium.com/bynder-tech/c-why-you-should-use-configureawait-false-in-your-library-code-d7837dce3d7f
       //   await context.Response.WriteAsync("Hello World2!")
       //   .ConfigureAwait(false);
       //   });
