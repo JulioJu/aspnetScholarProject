@@ -9,11 +9,11 @@ namespace RazorPagesContacts.Pages
 
   public class Create : PageModel
   {
-    private readonly AppDbContext db;
+    private readonly AppDbContext _db;
 
     public Create(AppDbContext db)
     {
-      this.db = db;
+      this._db = db;
     }
 
     [BindProperty]
@@ -28,8 +28,8 @@ namespace RazorPagesContacts.Pages
 
       System.Console.WriteLine("coucou" + this.Customer);
 
-      this.db.Customers.Add(this.Customer);
-      await this.db.SaveChangesAsync().ConfigureAwait(false);
+      this._db.Customers.Add(this.Customer);
+      await this._db.SaveChangesAsync().ConfigureAwait(false);
       return base.RedirectToPage("/Index");
     }
   }

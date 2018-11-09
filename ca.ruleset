@@ -11,6 +11,8 @@
       RuleNamespace="Microsoft.Rules.Managed">
   </Rules>
   <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <!--  Field '_db' must not begin with an underscore -->
+    <Rule Id="SA1309" Action="None" />
     <!-- A single-line comment within C# code is followed by a blank line. -->
     <Rule Id="SA1512" Action="None" />
     <!-- Single-line comment must be preceded by blank line  -->

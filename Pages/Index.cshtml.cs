@@ -11,30 +11,30 @@ namespace RazorPagesContacts.Pages
 
   public class Index : PageModel
   {
-    private readonly AppDbContext db;
+    private readonly AppDbContext _db;
 
     public Index(AppDbContext db)
     {
-      this.db = db;
+      this._db = db;
     }
 
     public IList<Customer> Customers { get; private set; }
 
     public async Task OnGetAsync()
     {
-      this.Customers = await this.db.Customers.AsNoTracking().ToListAsync().
+      this.Customers = await this._db.Customers.AsNoTracking().ToListAsync().
         ConfigureAwait(false);
     }
 
     public async Task<IActionResult> OnPostDeleteAsync(int id)
     {
-      var contact = await this.db.Customers.FindAsync(id)
+      var contact = await this._db.Customers.FindAsync(id)
         .ConfigureAwait(false);
 
       if (contact != null)
       {
-        this.db.Customers.Remove(contact);
-        await this.db.SaveChangesAsync().ConfigureAwait(false);
+        this._db.Customers.Remove(contact);
+        await this._db.SaveChangesAsync().ConfigureAwait(false);
       }
 
       return base.RedirectToPage();
