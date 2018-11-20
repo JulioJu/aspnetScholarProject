@@ -16,6 +16,9 @@ namespace RazorPagesContacts.Pages
       this._db = db;
     }
 
+    [TempData]
+    public string Message { get; set; }
+
     [BindProperty]
     public Customer Customer { get; set; }
 
@@ -30,6 +33,7 @@ namespace RazorPagesContacts.Pages
 
       this._db.Customers.Add(this.Customer);
       await this._db.SaveChangesAsync().ConfigureAwait(false);
+      Message = $"Customer {Customer.Name} added";
       return base.RedirectToPage("/Index");
     }
   }

@@ -13,6 +13,9 @@ namespace RazorPagesContacts.Pages
   {
     private readonly AppDbContext _db;
 
+    [TempData]
+    public string Message { get; set; }
+
     public Index(AppDbContext db)
     {
       this._db = db;
