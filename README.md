@@ -157,12 +157,13 @@ export PATH="$PATH:/home/user/.dotnet/tools"
 export DOTNET_ROOT=/opt/dotnet
 dotnet watch run
 ```
+## Issue on GitHub
+* See https://github.com/aspnet/Docs/issues/9650
 
 ## Credits
 
 * Strongly inspired from
-    https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.1&tabs=visual-studio
-
+    https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.1&tabs=netcore-cli
 * Base created thanks `dotnet cli 2.1.403`
 
 # TODO

@@ -20,7 +20,7 @@ namespace RazorPagesContacts.Pages
     public Customer Customer { get; set; }
 
     [ViewData]
-    public String Title { get; } = "Edit Customer —";
+    public string Title { get; } = "Edit Customer —";
 
     public async Task<IActionResult> OnGetAsync(int id)
     {

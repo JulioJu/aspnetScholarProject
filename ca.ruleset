@@ -11,10 +11,21 @@
       RuleNamespace="Microsoft.Rules.Managed">
   </Rules>
   <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <!-- Do not prefix calls with base unless local imple mentation exists  -->
+    <Rule Id="SA1100" Action="None" />
+    <!-- The parameters must begin on the line after the declaration, whenever
+      the parameter span across multiple lines -->
+    <Rule Id="SA1116" Action="None" />
+    <!--  A constructor should not follow a property -->
+    <Rule Id="SA1201" Action="None" />
     <!--  Field '_db' must not begin with an underscore -->
     <Rule Id="SA1309" Action="None" />
+    <!-- A closing brace must not be preceded by a blank line. -->
+    <Rule Id="SA1508" Action="None" />
     <!-- A single-line comment within C# code is followed by a blank line. -->
     <Rule Id="SA1512" Action="None" />
+    <!-- Closing brace must be followed by blank line  -->
+    <Rule Id="SA1513" Action="None" />
     <!-- Single-line comment must be preceded by blank line  -->
     <Rule Id="SA1515" Action="None" />
     <!-- A C# code file is missing a standard file header -->
@@ -22,16 +33,6 @@
     <!-- All diagnostics of XML documentation comments has been disabled due to
       the current project configuration.-->
     <Rule Id="SA1652" Action="None" />
-    <!-- The parameters must begin on the line after the declaration, whenever
-      the parameter span across multiple lines -->
-    <Rule Id="SA1116" Action="None" />
-    <!-- Do not prefix calls with base unless local imple mentation exists  -->
-    <Rule Id="SA1100" Action="None" />
-    <!--  A constructor should not follow a property -->
-    <Rule Id="SA1201" Action="None" />
-
-
-
   </Rules>
   <Rules AnalyzerId="SonarAnalyser.CSharp" RuleNamespace="SonarAnalyser.CSharp">
     <!-- Remove this commented out code. -->

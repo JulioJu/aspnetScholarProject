@@ -2,6 +2,7 @@
 
 namespace RazorPagesContacts.Pages
 {
+  using System.Globalization;
   using System.Threading.Tasks;
   using Microsoft.AspNetCore.Mvc;
   using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -31,23 +32,25 @@ namespace RazorPagesContacts.Pages
 
       this._db.Customers.Add(this.Customer);
       await this._db.SaveChangesAsync().ConfigureAwait(false);
-      Message = $"Customer {Customer.Name} added";
+      this.Message = $"Customer {this.Customer.Name} added";
       return base.RedirectToPage("/Index");
     }
 
     public async Task<IActionResult> OnPostJoinListAsync()
     {
-      return await OnPostAsync();
+      return await this.OnPostAsync().ConfigureAwait(false);
     }
 
     public async Task<IActionResult> OnPostJoinListUCAsync()
     {
-      if (!ModelState.IsValid)
+      if (!base.ModelState.IsValid)
       {
-        return Page();
+        return base.Page();
       }
-      Customer.Name = Customer.Name?.ToUpper();
-      return await OnPostJoinListAsync();
+      this.Customer.Name = this.Customer.Name?
+        .ToUpper(CultureInfo.CurrentCulture);
+      return await this.OnPostJoinListAsync()
+        .ConfigureAwait(false);
     }
 
   }
