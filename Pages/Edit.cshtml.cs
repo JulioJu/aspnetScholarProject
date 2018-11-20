@@ -19,8 +19,12 @@ namespace RazorPagesContacts.Pages
     [BindProperty]
     public Customer Customer { get; set; }
 
+    [ViewData]
+    public String Title { get; } = "Edit Customer —";
+
     public async Task<IActionResult> OnGetAsync(int id)
     {
+      Console.Out.WriteLine(id);
       this.Customer = await this._db.Customers.FindAsync(id)
         .ConfigureAwait(false);
 

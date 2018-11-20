@@ -4,10 +4,15 @@
 <!-- Inspired from https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.1&tabs=netcore-cli  -->
 
 @{
-    ViewData["Title"] = "Edit Customer";
+    ViewData["Title local"] = "Edit Customer local —";
 }
 
-<h1>Edit Customer - @Model.Customer.Id</h1>
+<h1>
+  @ViewData["Title local"]
+  @ViewData["Title"]
+  @Model.Title
+  @Model.Customer.Id
+</h1>
 <form method="post">
   <div asp-validation-summary="All"></div>
   <input asp-for="Customer.Id" type="hidden" />
