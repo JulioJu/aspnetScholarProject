@@ -29,13 +29,27 @@ namespace RazorPagesContacts.Pages
         return base.Page();
       }
 
-      System.Console.WriteLine("coucou" + this.Customer);
-
       this._db.Customers.Add(this.Customer);
       await this._db.SaveChangesAsync().ConfigureAwait(false);
       Message = $"Customer {Customer.Name} added";
       return base.RedirectToPage("/Index");
     }
+
+    public async Task<IActionResult> OnPostJoinListAsync()
+    {
+      return await OnPostAsync();
+    }
+
+    public async Task<IActionResult> OnPostJoinListUCAsync()
+    {
+      if (!ModelState.IsValid)
+      {
+        return Page();
+      }
+      Customer.Name = Customer.Name?.ToUpper();
+      return await OnPostJoinListAsync();
+    }
+
   }
 }
 
