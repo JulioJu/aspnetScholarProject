@@ -1,11 +1,17 @@
 # Teacher's instructions
 
 Cahier des charges n°4 – Gestion vidéothèque
+
 Sujet/contexte :
-Le propriétaire d’une vidéothèque vous demande de lui réaliser une application pour gérer sa vidéothèque.
+
+Le propriétaire d’une vidéothèque vous demande de lui réaliser une application
+  pour gérer sa vidéothèque.
+
 Il aimerait bien disposer des fonctionnalités suivantes :
-1. Mettre à jours son stock par des nouveaux articles au fur et à mesure qu’ils arrivent ;
-2. Rechercher les films par réalisateur, catégorie, date de sortie et par nom du film
+1. Mettre à jours son stock par des nouveaux articles au fur et à mesure qu’ils
+   arrivent ;
+2. Rechercher les films par réalisateur, catégorie, date de sortie et par nom du
+   film
 3. Connaitre tous les articles en cours de locations et leurs dates de retours
 4. Les films loués par une personne
 5. Les personnes qui ont loué un film
@@ -24,7 +30,12 @@ Il aimerait bien disposer des fonctionnalités suivantes :
 * OmniSharp Vim, see my issue at:
   1. https://github.com/OmniSharp/omnisharp-vim/issues/423
   2. https://github.com/OmniSharp/omnisharp-vim/issues/425 :
+  3. https://github.com/OmniSharp/omnisharp-vim/issues/427
+  4. https://github.com/OmniSharp/omnisharp-roslyn/issues/1341
   (do not forget to remove package `mono` installed by the Linux Distro).
+
+* Warning, actually (21/11/2018) OmniSharp Vim doesn't work with dotnet versio
+    500, but works well with version 403 :-).
 
 * To finish install of dotnet and avoid error message when you run `dotnet run` "
   ```
