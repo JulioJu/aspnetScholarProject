@@ -12,11 +12,11 @@ Il aimerait bien disposer des fonctionnalités suivantes :
    arrivent ;
 2. Rechercher les films par réalisateur, catégorie, date de sortie et par nom du
    film
-3. Connaitre tous les articles en cours de locations et leurs dates de retours
+3. Connaître tous les articles en cours de locations et leurs dates de retours
 4. Les films loués par une personne
 5. Les personnes qui ont loué un film
 6. Faire la location de films aux personnes.
-7. Editer une facture à une personne
+7. Éditer une facture à une personne
 8. Faire un top N des films loués
 
 # How to for Linux users
