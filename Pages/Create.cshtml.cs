@@ -32,7 +32,7 @@ namespace RazorPagesContacts.Pages
 
       this._db.Customers.Add(this.Customer);
       await this._db.SaveChangesAsync().ConfigureAwait(false);
-      this.Message = $"Customer {this.Customer.Name} added";
+      this.Message = $"Customer {this.Customer.Lastname} added";
       return base.RedirectToPage("/Index");
     }
 
@@ -47,7 +47,7 @@ namespace RazorPagesContacts.Pages
       {
         return base.Page();
       }
-      this.Customer.Name = this.Customer.Name?
+      this.Customer.Lastname = this.Customer.Lastname?
         .ToUpper(CultureInfo.CurrentCulture);
       return await this.OnPostJoinListAsync()
         .ConfigureAwait(false);

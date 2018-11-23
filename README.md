@@ -96,7 +96,7 @@ Il aimerait bien disposer des fonctionnalités suivantes :
     * See also https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-configure-mssql-conf?view=sql-server-2017
     * https://docs.microsoft.com/en-us/aspnet/web-pages/overview/data/5-working-with-data
 
-* For Razor:
+* **For Razor:**
   * (very interesting — very synthetic)
       https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.1&tabs=netcore-cli
   * (essential if you don't use Visual Studio.
@@ -117,6 +117,35 @@ Il aimerait bien disposer des fonctionnalités suivantes :
 * For LocalDB see:
     See https://docs.microsoft.com/en-us/sql/database-engine/configure-windows/sql-server-2016-express-localdb?view=sql-server-2017
 
+* **For complete info on Entity Framework (e.g. `Unique`, default value, etc. )**
+    https://docs.microsoft.com/en-us/ef/core/
+
+### Create, update and generate database
+* Reference: https://docs.microsoft.com/en-us/ef/core/get-started/aspnetcore/new-db?tabs=netcore-cli
+  This is link of notion of "Code First", and "Database First". Thanks Adil ;-).
+    ```sh
+    sqlcmd -S localhost -U SA
+    ```
+    ```sql
+    -- show databases thanks:
+    SELECT name FROM master.sys.databases
+    GO
+    -- If database "videotheque" exists, drop database thanks:
+    DROP database videotheque
+    GO
+        ```
+    then run:
+    ```sh
+    dotnet ef migrations add InitialCreate
+    # WARNING:
+    # Check that files generated under folder `Migrations` are valid.
+    # Actually, at the beginning of the file (line 3) an invalid line is
+    # added:
+    # `using ;`
+    # Simply, delete it.
+    dotnet ef database update
+    ```
+
 ### Troubleshooting
 
 * *«One of the trickiest problems I encountered when I was just starting ASP.NET
@@ -128,10 +157,14 @@ Il aimerait bien disposer des fonctionnalités suivantes :
     1. `"Cannot open database “DatabaseName” requested by the login. The login failed.
     Login failed for user ‘DOMAIN\Username’.""`
     2. `Exception Details: System.Data.SqlClient.SqlException: Invalid object name 'dbo.BaseCs'`
-    * READ and apply https://docs.microsoft.com/en-us/ef/core/get-started/aspnetcore/new-db?tabs=netcore-cli
-        This is link of notion of "Code First", and "Database First". Thanks
-        Adil ;-).
+    * --> READ section above "Create and generate database"
 
+* If we have:
+  ```
+  $ dotnet ef database update
+  Build failed.
+  ```
+  Then SEE SECTION ABOVE named `#Create, update and generate database`
 
 ### Transact-SQL
 * https://www.w3schools.com/sql/
@@ -162,14 +195,27 @@ https://stackoverflow.com/questions/8831651/is-it-possible-to-reference-other-sc
 https://docs.microsoft.com/en-us/sql/relational-databases/scripting/edit-sqlcmd-scripts-with-query-editor?view=sql-server-linux-2017
 
 ## Dotnet Watcher
-
 ```
 export PATH="$PATH:/home/user/.dotnet/tools"
 export DOTNET_ROOT=/opt/dotnet
 dotnet watch run
 ```
-## Issue on GitHub
-* See https://github.com/aspnet/Docs/issues/9650
+## Other interesting doc
+* Comments:
+  * https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/xmldoc/recommended-tags-for-documentation-comments
+  * https://docs.microsoft.com/en-us/dotnet/csharp/codedoc
+
+## Issue created by me on GitHub
+
+*The four firsts issues are also referenced above in section
+  "How to for Linux Users"*
+1. https://github.com/OmniSharp/omnisharp-vim/issues/423
+2. https://github.com/OmniSharp/omnisharp-vim/issues/425 :
+3. https://github.com/OmniSharp/omnisharp-vim/issues/427
+4. https://github.com/OmniSharp/omnisharp-roslyn/issues/1341
+
+5. See https://github.com/aspnet/Docs/issues/9650
+  ([razor-page overview] can't have Query String in HTTP POST request method)
 
 ## Credits
 
