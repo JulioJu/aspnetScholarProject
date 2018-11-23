@@ -32,6 +32,7 @@ Il aimerait bien disposer des fonctionnalités suivantes :
   2. https://github.com/OmniSharp/omnisharp-vim/issues/425 :
   3. https://github.com/OmniSharp/omnisharp-vim/issues/427
   4. https://github.com/OmniSharp/omnisharp-roslyn/issues/1341
+  5. https://github.com/OmniSharp/omnisharp-roslyn/issues/129
   (do not forget to remove package `mono` installed by the Linux Distro).
 
 * Warning, actually (21/11/2018) OmniSharp Vim doesn't work with dotnet versio
@@ -120,7 +121,7 @@ Il aimerait bien disposer des fonctionnalités suivantes :
 * **For complete info on Entity Framework (e.g. `Unique`, default value, etc. )**
     https://docs.microsoft.com/en-us/ef/core/
 
-### Create, update and generate database
+### Create, update (without keep old database) and generate database
 * Reference: https://docs.microsoft.com/en-us/ef/core/get-started/aspnetcore/new-db?tabs=netcore-cli
   This is link of notion of "Code First", and "Database First". Thanks Adil ;-).
     ```sh
@@ -136,6 +137,9 @@ Il aimerait bien disposer des fonctionnalités suivantes :
         ```
     then run:
     ```sh
+    # If there is Migrations/* files
+    dotnet ef migrations remove
+
     dotnet ef migrations add InitialCreate
     # WARNING:
     # Check that files generated under folder `Migrations` are valid.
@@ -143,6 +147,7 @@ Il aimerait bien disposer des fonctionnalités suivantes :
     # added:
     # `using ;`
     # Simply, delete it.
+
     dotnet ef database update
     ```
 
@@ -194,6 +199,26 @@ Then execute:
 https://stackoverflow.com/questions/8831651/is-it-possible-to-reference-other-scripts-in-a-tsql-script-file
 https://docs.microsoft.com/en-us/sql/relational-databases/scripting/edit-sqlcmd-scripts-with-query-editor?view=sql-server-linux-2017
 
+
+### Date Update and Date Create
+* **https://github.com/aspnet/EntityFrameworkCore/issues/10769**
+    (code in AppDbContext.cs inspired from it)
+* https://stackoverflow.com/questions/36798186/ef-changetracker-entries-where-not-recognized
+    For code presented above, do not forget to `using System.Linq`.
+* https://docs.microsoft.com/en-us/ef/core/modeling/generated-properties#data-annotations
+    Explanations about `[DatabaseGenerated(DatabaseGeneratedOption.Identity)]`
+    and `[DatabaseGenerated(DatabaseGeneratedOption.Computed)]`
+* https://stackoverflow.com/questions/26001151/override-savechangesasync
+    I use method `SaveChangesAsync()`, not `SaveChanges()` like in example presented
+    in link above
+* https://docs.microsoft.com/en-us/ef/core/api/microsoft.entityframeworkcore.dbcontext.savechangesasync#Microsoft_EntityFrameworkCore_DbContext_SaveChangesAsync_System_Boolean_System_Threading_CancellationToken_
+    Explanation about `SaveChangeAsync()`
+* https://forums.asp.net/t/2118687.aspx?Problem+with+generate+DateTime+with+Entity+Framework
+    (For `[DatabaseGenerated(DatabaseGeneratedOption.Computed)]` otherwise we
+    have Cannot insert the value NULL into column )
+* https://github.com/aspnet/EntityFrameworkCore/issues/10417
+    Default value for parent class (inheritence)
+
 ## Dotnet Watcher
 ```
 export PATH="$PATH:/home/user/.dotnet/tools"
@@ -213,8 +238,8 @@ dotnet watch run
 2. https://github.com/OmniSharp/omnisharp-vim/issues/425 :
 3. https://github.com/OmniSharp/omnisharp-vim/issues/427
 4. https://github.com/OmniSharp/omnisharp-roslyn/issues/1341
-
-5. See https://github.com/aspnet/Docs/issues/9650
+5. https://github.com/OmniSharp/omnisharp-roslyn/issues/129
+6. See https://github.com/aspnet/Docs/issues/9650
   ([razor-page overview] can't have Query String in HTTP POST request method)
 
 ## Credits

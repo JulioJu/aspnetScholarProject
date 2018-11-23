@@ -10,10 +10,9 @@ namespace RazorPagesContacts.Data
   ///   Customer entity.
   ///   Either firstname and lastname or society is required
   /// </summary>
-  public class Customer
-  {
-    public int Id { get; set; }
+  public class Customer: AbstractEntity
 
+  {
     [StringLength (100)]
     public string Firstname { get; set; }
 
