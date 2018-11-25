@@ -9,14 +9,14 @@ namespace RazorPagesContacts.Pages
   using Microsoft.EntityFrameworkCore;
   using RazorPagesContacts.Data;
 
-  public class Index : PageModel
+  public class ShowAll : PageModel
   {
     private readonly AppDbContext _db;
 
     [TempData]
     public string Message { get; set; }
 
-    public Index(AppDbContext db)
+    public ShowAll(AppDbContext db)
     {
       this._db = db;
     }

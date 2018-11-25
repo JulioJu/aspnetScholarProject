@@ -1,0 +1,39 @@
+@page
+@model RazorPagesContacts.Pages.ShowAll
+
+<!-- Inspired from https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.1&tabs=netcore-cli -->
+
+<h1>Contacts</h1>
+@if (!String.IsNullOrEmpty(Model.Message))
+{
+<h3>Msg: @Model.Message</h3>
+}
+
+<form method="post">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var contact in Model.Customers)
+      {
+      <tr>
+        <td>@contact.Id</td>
+        <td>@contact.Lastname</td>
+        <td>
+          <a asp-page="./Edit" asp-route-id="@contact.Id">edit</a>
+          <button type="submit" asp-page-handler="delete"
+                                asp-route-id="@contact.Id">delete</button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+
+</form>
+
+<!-- vim:sw=2:ts=2:et:fileformat=dos
+-->
