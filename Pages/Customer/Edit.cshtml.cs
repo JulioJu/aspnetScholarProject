@@ -1,11 +1,11 @@
-namespace RazorPagesContacts.Pages
+namespace Videotheque.Pages.CustomerPage
 {
   using System;
   using System.Threading.Tasks;
   using Microsoft.AspNetCore.Mvc;
   using Microsoft.AspNetCore.Mvc.RazorPages;
   using Microsoft.EntityFrameworkCore;
-  using RazorPagesContacts.Data;
+  using Videotheque.Data;
 
   public class Edit : PageModel
   {

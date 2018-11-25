@@ -1,6 +1,6 @@
 // Inspired from https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.1&tabs=netcore-cli
 
-namespace RazorPagesContacts.Data
+namespace Videotheque.Data
 {
   using System;
   // https://stackoverflow.com/questions/36798186/ef-changetracker-entries-where-not-recognized

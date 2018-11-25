@@ -1,6 +1,6 @@
 // Inspired from https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.1&tabs=netcore-cli
 
-namespace RazorPagesContacts.Data
+namespace Videotheque.Data
 {
   using System;
   using System.Collections.Generic;

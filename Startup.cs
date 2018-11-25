@@ -12,7 +12,7 @@ namespace Aspnet
   using Microsoft.EntityFrameworkCore;
   using Microsoft.Extensions.Configuration;
   using Microsoft.Extensions.DependencyInjection;
-  using RazorPagesContacts.Data;
+  using Videotheque.Data;
 
   public class Startup
   {

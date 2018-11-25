@@ -1,4 +1,4 @@
-namespace RazorPagesContacts.Data
+namespace Videotheque.Data
 {
   using System;
   using System.ComponentModel.DataAnnotations;

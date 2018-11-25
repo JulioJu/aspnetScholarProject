@@ -1,12 +1,12 @@
 // Inspired from https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.1&tabs=netcore-cli
 
-namespace RazorPagesContacts.Pages
+namespace Videotheque.Pages.CustomerPage
 {
   using System.Globalization;
   using System.Threading.Tasks;
   using Microsoft.AspNetCore.Mvc;
   using Microsoft.AspNetCore.Mvc.RazorPages;
-  using RazorPagesContacts.Data;
+  using Videotheque.Data;
 
   public class Create : PageModel
   {

@@ -1,4 +1,4 @@
-namespace RazorPagesContacts.Data
+namespace Videotheque.Data
 {
   public enum Conservation
   {
