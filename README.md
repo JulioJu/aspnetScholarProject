@@ -54,6 +54,17 @@ Il aimerait bien disposer des fonctionnalités suivantes :
     ```
   *  See also https://github.com/dotnet/cli/issues/9114
 
+## Langage Version
+* Set your c# Language Version in Aspnet.csproj (2.3 is )
+* https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/
+    c# 7.3 is used from `.NET Core 2.1 SDK 2.1.300 RC1`.
+* In `ca.ruleset`
+    "ToolsVersion (required): This attribute is required for backwards
+    compatibility with other tools that use .ruleset files. In practice it is
+    the version of Visual Studio that produced this .ruleset file."
+    https://github.com/dotnet/roslyn/blob/master/docs/compilers/Rule%20Set%20Format.md
+    * Note: Visual Studio 2017 corresponding to the version 15.
+
 ## Code Analysis and StyleCop
 * See before all: https://carlos.mendible.com/2017/08/24/net-core-code-analysis-and-stylecop/
   ```
@@ -225,12 +236,12 @@ export PATH="$PATH:/home/user/.dotnet/tools"
 export DOTNET_ROOT=/opt/dotnet
 dotnet watch run
 ```
-## Other interesting doc
+# Other interesting doc
 * Comments:
   * https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/xmldoc/recommended-tags-for-documentation-comments
   * https://docs.microsoft.com/en-us/dotnet/csharp/codedoc
 
-## Issue created by me on GitHub
+# Issue created by me on GitHub
 
 *The four firsts issues are also referenced above in section
   "How to for Linux Users"*
@@ -242,7 +253,7 @@ dotnet watch run
 6. See https://github.com/aspnet/Docs/issues/9650
   ([razor-page overview] can't have Query String in HTTP POST request method)
 
-## Credits
+# Credits
 
 * Strongly inspired from
     https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.1&tabs=netcore-cli

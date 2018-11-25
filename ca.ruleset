@@ -2,7 +2,7 @@
 <!-- https://carlos.mendible.com/2017/08/24/net&#45;core&#45;code&#45;analysis&#45;and&#45;stylecop/ -->
 <!-- It's not necessary to add sone `Rule ID=XXX` .
   By defaut, rules are activated -->
-<RuleSet Name="Custom Rulset" Description="Custom Rulset" ToolsVersion="14.0">
+<RuleSet Name="Custom Rulset" Description="Custom Rulset" ToolsVersion="15.9">
   <Rules AnalyzerId="AsyncUsageAnalyzers" RuleNamespace="AsyncUsageAnalyzers">
     <!-- It's not necessary to add it. By defaut, this rule is activated -->
     <!-- <Rule Id="UseConfigureAwait" Action="Warning" /> -->
