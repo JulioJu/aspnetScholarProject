@@ -2,12 +2,12 @@
 
 namespace RazorPagesContacts.Data
 {
-  using Microsoft.EntityFrameworkCore;
   using System;
   // https://stackoverflow.com/questions/36798186/ef-changetracker-entries-where-not-recognized
   using System.Linq;
   using System.Threading;
   using System.Threading.Tasks;
+  using Microsoft.EntityFrameworkCore;
 
   public class AppDbContext : DbContext
   {
@@ -16,8 +16,9 @@ namespace RazorPagesContacts.Data
     {
     }
 
-    public DbSet<Customer> Customers { get; set; }
-    public DbSet<Article> Articles { get; set; }
+    internal DbSet<Customer> Customers { get; set; }
+
+    internal DbSet<Article> Articles { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -48,9 +49,10 @@ namespace RazorPagesContacts.Data
             .HasDefaultValue(0);
     }
 
-    public void dateCreationModification() {
+    private void DateCreationModification()
+    {
       var now = DateTime.UtcNow;
-      var changes = ChangeTracker
+      var changes = base.ChangeTracker
         .Entries<AbstractEntity>()
         .Where(e =>
             e.State == EntityState.Added
@@ -71,7 +73,7 @@ namespace RazorPagesContacts.Data
 
     public override int SaveChanges()
     {
-      this.dateCreationModification();
+      this.DateCreationModification();
       return base.SaveChanges();
     }
 
@@ -80,8 +82,9 @@ namespace RazorPagesContacts.Data
         CancellationToken cancellationToken = default(CancellationToken))
     {
       System.Console.WriteLine("coucou");
-      this.dateCreationModification();
-      return (await base.SaveChangesAsync(true, cancellationToken));
+      this.DateCreationModification();
+      return await base.SaveChangesAsync(true, cancellationToken).
+        ConfigureAwait(false);
     }
 
   }

@@ -48,12 +48,18 @@ Il aimerait bien disposer des fonctionnalités suivantes :
   * The solution: >>> https://github.com/fsharp/FAKE/issues/2075 :
     ```
     dotnet tool install --global dotnet-dev-certs
-    export PATH="$PATH:/home/julioprayer/.dotnet/tools"
+    export PATH="$PATH:/home/user/.dotnet/tools"
     DOTNET_ROOT=/opt/dotnet
     dotnet dev-certs https
     ```
   *  See also https://github.com/dotnet/cli/issues/9114
 
+* You could watch and run dotnet app simply with:
+    ```sh
+    export DOTNET_ROOT=/opt/dotnet \
+      && export PATH="$PATH:/home/user/.dotnet/tools" \
+      && rm -Rf bin/ obj/ && dotnet watch run
+    ```
 ## Langage Version
 * Set your c# Language Version in Aspnet.csproj (2.3 is )
 * https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/
@@ -92,6 +98,9 @@ Il aimerait bien disposer des fonctionnalités suivantes :
     <Rules AnalyzerId="SonarAnalyser.CSharp" RuleNamespace="SonarAnalyser.CSharp">
     </Rules>
       ```
+* **When `dotnet watch run` is launched, and if no lint warning are shown
+    `$ rm -Rf obj/`**
+
 ## Sql Server
 * ***DO NOT FORGET TO CHANGE PASSWORD IN*** ./appsettings.json !!!
   * DO NOT FORGET TO NOT PUSH PASSWORD, `.gitignore` locally

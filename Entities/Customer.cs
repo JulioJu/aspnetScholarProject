@@ -10,10 +10,9 @@ namespace RazorPagesContacts.Data
   ///   Customer entity.
   ///   Either firstname and lastname or society is required
   /// </summary>
-  public class Customer: AbstractEntity
-
+  public class Customer : AbstractEntity
   {
-    [StringLength (100)]
+    [StringLength(100)]
     public string Firstname { get; set; }
 
     [StringLength(100)]
@@ -22,7 +21,8 @@ namespace RazorPagesContacts.Data
     [StringLength(100)]
     public string Society { get; set; }
 
-    [Required, StringLength(255)]
+    [Required]
+    [StringLength(255)]
     public string Address { get; set; }
 
     [StringLength(100)]
@@ -33,7 +33,8 @@ namespace RazorPagesContacts.Data
     /// <summary>
     ///     List all custmers that have articles currently borrowed
     /// </summary>
-    public static Customer allBorrowers() {
+    public static Customer AllBorrowers()
+    {
       throw new NotImplementedException();
     }
 

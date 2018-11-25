@@ -3,9 +3,10 @@ namespace RazorPagesContacts.Data
   using System;
   using System.ComponentModel.DataAnnotations;
 
-  public class Article: AbstractEntity
+  public class Article : AbstractEntity
   {
-    [Required, StringLength (100)]
+    [Required]
+    [StringLength(100)]
     /// <value>Is Unique</value>
     public string Barcode { get; set; }
 
@@ -41,7 +42,8 @@ namespace RazorPagesContacts.Data
     public Customer Borrower { get; set; }
 
     /// <summary>List all articles borrowed</summary>
-    public static Article allArticlesBorrowed() {
+    public static Article AllArticlesBorrowed()
+    {
       throw new NotImplementedException();
     }
 

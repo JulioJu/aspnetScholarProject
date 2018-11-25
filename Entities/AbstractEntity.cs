@@ -8,10 +8,12 @@ namespace RazorPagesContacts.Data
   {
     public int Id { get; set; }
 
-    [Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    [Required]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public DateTime CreatedDate { get; set; }
 
-    [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+    [Required]
+    [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
     public DateTime UpdatedDate { get; set; }
   }
 

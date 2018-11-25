@@ -18,6 +18,8 @@
     <Rule Id="SA1116" Action="None" />
     <!--  A constructor should not follow a property -->
     <Rule Id="SA1201" Action="None" />
+    <!-- 'public' members must come before 'protected' members -->
+    <Rule Id="SA1202" Action="None" />
     <!--  Field '_db' must not begin with an underscore -->
     <Rule Id="SA1309" Action="None" />
     <!-- A closing brace must not be preceded by a blank line. -->
