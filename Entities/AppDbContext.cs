@@ -16,9 +16,9 @@ namespace Videotheque.Data
     {
     }
 
-    internal DbSet<Customer> Customers { get; set; }
-
     internal DbSet<Article> Articles { get; set; }
+
+    internal DbSet<Customer> Customers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -11,20 +11,20 @@
   @ViewData["Title local"]
   @ViewData["Title"]
   @Model.Title
-  @Model.Customer.Id
+  @Model.AbstractEntity.Id
 </h1>
 <form method="post">
   <div asp-validation-summary="All"></div>
-  <input asp-for="Customer.Id" type="hidden" />
+  <input asp-for="AbstractEntity.Id" type="hidden" />
   <div>
-    <label asp-for="Customer.Lastname"></label>
+    <label asp-for="AbstractEntity.Lastname"></label>
     <div>
-      <input asp-for="Customer.Lastname" />
-      <span asp-validation-for="Customer.Lastname" ></span>
+      <input asp-for="AbstractEntity.Lastname" />
+      <span asp-validation-for="AbstractEntity.Lastname" ></span>
     </div>
     <div>
-      <input asp-for="Customer.Address" />
-      <span asp-validation-for="Customer.Address" ></span>
+      <input asp-for="AbstractEntity.Address" />
+      <span asp-validation-for="AbstractEntity.Address" ></span>
     </div>
   </div>
 

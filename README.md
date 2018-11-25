@@ -171,6 +171,16 @@ Il aimerait bien disposer des fonctionnalités suivantes :
     dotnet ef database update
     ```
 
+### Inheritance
+* https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/inheritance?view=aspnetcore-2.0
+    (tutorial not updated for aspnetcore-2.1).
+    I choose `Table-per-Concrete Class (TPC) inheritance` in this program.
+* TPC inheritance seems to not be implemented by EntityFramework
+    https://github.com/aspnet/EntityFrameworkCore/issues/3170
+    * **But in Code part, it works well**
+        In our code, all fields from `./Entities/AbstractEntity.cs`
+        or inserted in other inherited Entities ;-) !!
+
 ### Troubleshooting
 
 * *«One of the trickiest problems I encountered when I was just starting ASP.NET
