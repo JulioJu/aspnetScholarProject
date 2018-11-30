@@ -262,15 +262,50 @@ dotnet watch run
 
 * Get URL
     * In cs file (a little complicated)
-      * https://forums.asp.net/t/2143295.aspx?Get+HttpContext+Current+in+a+library+project+in+ASP+NET+Core+ (how get all url parts)
+      * https://forums.asp.net/t/2143295.aspx?Get+HttpContext+Current+in+a+library+project+in+ASP+NET+Core+
+          (how get all url parts)
       * https://sites.google.com/site/netcorenote/asp-net-core/get-scheme-url-host
           (do not forget to inject the Service)
-      * https://www.carlrippon.com/httpcontext-in-asp-net-core/ (less interesting)
+      * https://www.carlrippon.com/httpcontext-in-asp-net-core/
+          (less interesting)
     * In Page file (very, very easy)
         * https://stackoverflow.com/questions/38437005/how-to-get-current-url-in-view-in-asp-net-core-1-0
 
-# Notes
+# Page/View, Layout, Partial View, View Component
+
+* Page/View, Layout, Partial View
+    * https://cpratt.co/how-to-change-the-default-asp-net-mvc-themet/
+        (explanation about the three)
+    * ~~http://www.dotnet-stuff.com/tutorials/aspnet-mvc/how-to-render-different-layout-in-asp-net-mvc
+        Old solution to use Layout only for some Pages
+        (should be adapted for Razor Page)~~
+        Bad solution, show notes below
+    * Partial view:
+      * "Unlike MVC view or page rendering, a partial view doesn't run
+          `_ViewStart.cshtml`."
+      * "In ASP.NET Core MVC, a controller's ViewResult is capable of returning
+          either a view or a partial view. An analogous capability is planned for
+          Razor Pages in ASP.NET Core 2.2. In Razor Pages, a PageModel can return
+          a PartialViewResult."
+      * "Partial view file names often begin with an underscore (_). This naming
+          convention isn't required, but it helps to visually differentiate
+          partial views from views and pages."
+      * When the markup is changed in the partial view, it updates the rendered
+          output of the markup files that use the partial view.
+      * Source https://docs.microsoft.com/en-us/aspnet/core/mvc/views/partial?view=aspnetcore-2.1
+    * View Component
+        "Don't use a partial view where complex rendering logic or code
+        execution is required to render the markup. Instead of a partial view,
+        use a view component."
+        e.g for Login panel, shopping cart.
+    * Layout
+        Partial views shouldn't be used to maintain common layout elements. Common
+    layout elements should be specified in` _Layout.cshtml` files.
+
+## Notes
 * `_Layout.cshtml` can't have its own `_Layout.cshtml.cs` Model.
+* Layout could be declared in top of page, not only in `_ViewStart.chtml`.
+    As it, it is used only in the Page where is it declared.
 
 
 # Issue created by me on GitHub
