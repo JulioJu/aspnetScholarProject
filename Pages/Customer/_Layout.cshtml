@@ -7,9 +7,22 @@
   <body>
     <!-- <a asp&#45;page="/Index">Home</a> -->
     @RenderBody()
+
     <br />
-    <a asp-page="./Create">Create</a>
+    @Context.Request.Host
     <br />
+    @Context.Request.Path
+
+    <br />
+    @if (@Context.Request.Path.Equals("/Customer/Create"))
+    {
+      <span>From "Customer/Create.cshtml.cs": </span>
+      @Model.CurrentRoute
+      <br />
+    }
+    else {
+      <a asp-page="./Create">Create</a>
+    }
   </body>
 </html>
 

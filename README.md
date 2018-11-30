@@ -260,6 +260,19 @@ dotnet watch run
   * https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/xmldoc/recommended-tags-for-documentation-comments
   * https://docs.microsoft.com/en-us/dotnet/csharp/codedoc
 
+* Get URL
+    * In cs file (a little complicated)
+      * https://forums.asp.net/t/2143295.aspx?Get+HttpContext+Current+in+a+library+project+in+ASP+NET+Core+ (how get all url parts)
+      * https://sites.google.com/site/netcorenote/asp-net-core/get-scheme-url-host
+          (do not forget to inject the Service)
+      * https://www.carlrippon.com/httpcontext-in-asp-net-core/ (less interesting)
+    * In Page file (very, very easy)
+        * https://stackoverflow.com/questions/38437005/how-to-get-current-url-in-view-in-asp-net-core-1-0
+
+# Notes
+* `_Layout.cshtml` can't have its own `_Layout.cshtml.cs` Model.
+
+
 # Issue created by me on GitHub
 
 *The four firsts issues are also referenced above in section

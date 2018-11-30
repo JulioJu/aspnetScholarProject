@@ -2,15 +2,23 @@ namespace Videotheque.Pages.CustomerPage
 {
   using System.Globalization;
   using System.Threading.Tasks;
+  using Microsoft.AspNetCore.Http;
   using Microsoft.AspNetCore.Mvc;
   using Videotheque.Data;
   using Videotheque.Pages.Abstract;
 
   public sealed class Create : CreateAbstract<Customer>
   {
-    public Create(AppDbContext db)
+    public string CurrentRoute { get; }
+
+    // IHttpContextAccessor needs to be injectected in Startup.cs
+    public Create(AppDbContext db, IHttpContextAccessor httpContextAccessor)
       : base(db, db.Customers)
     {
+      this.CurrentRoute = Microsoft.AspNetCore.Http.Extensions
+        .UriHelper.GetEncodedPathAndQuery(
+          httpContextAccessor.HttpContext.Request);
+      System.Console.WriteLine(this.CurrentRoute);
     }
 
     public async Task<IActionResult> OnPostJoinListAsync()

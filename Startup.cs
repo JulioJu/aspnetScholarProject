@@ -7,7 +7,7 @@ namespace Aspnet
 {
   using Microsoft.AspNetCore.Builder;
   using Microsoft.AspNetCore.Hosting;
-  // using Microsoft.AspNetCore.Http;
+  using Microsoft.AspNetCore.Http;
   using Microsoft.AspNetCore.Mvc;
   using Microsoft.EntityFrameworkCore;
   using Microsoft.Extensions.Configuration;
@@ -43,6 +43,9 @@ namespace Aspnet
       // Includes support for Razor Pages and controllers.
       services.AddMvc()
         .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+      // Used in Pages/Customer/Create.cshtml.cs
+      services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
     }
 
     // This method gets called by the runtime. Use this method to configure the
