@@ -1,0 +1,60 @@
+@{
+  Layout = "./_Layout.cshtml";
+}
+
+<!-- Inspired from https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.1&tabs=netcore-cli -->
+<h1> @RenderSection("h1", required: true) </h1>
+@if (!String.IsNullOrEmpty(Model.Message))
+{
+<h3>Msg: @Model.Message</h3>
+}
+
+<form method="post">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        @RenderSection("Thead", required: true)
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var field in Model.AbstractEntities)
+      {
+      <tr>
+        <td>@field.Id</td>
+
+        @** Following use "_ShowAllTBody.cshtml" of the folder*
+         *  where the Page that use the currant Layout is.
+         *@
+         @await Html.PartialAsync("_ShowAllTbody",
+            new ViewDataDictionary(ViewData) { { "field", field } })
+
+        @*
+        *  The type or namespace name 'Model' could not be found (are you missing a
+        *  using directive or an assembly reference?)
+        *  [We can't use @model in the Layout because at this time we can't to
+        *    the type]
+              @{await Html.PartialAsync("_ShowAllTbody",
+                (Model.AbstractEntities)field);}
+        *@
+
+        @** Following use "_ShowAllTbody" of the folder
+         *  where the current Layout is. We don't want that.
+         *  @await Html.PartialAsync("./_ShowAllTbody.cshtml")
+         *@
+
+        <td>
+          <a asp-page="./Edit" asp-route-id="@field.Id">edit</a>
+          <button type="submit" asp-page-handler="delete"
+                                asp-route-id="@field.Id">delete</button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+
+</form>
+@RenderBody()
+
+<!-- vim:sw=2:ts=2:et:fileformat=dos
+-->

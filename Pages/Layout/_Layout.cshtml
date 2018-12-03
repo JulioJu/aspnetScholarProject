@@ -1,0 +1,24 @@
+@{
+  Layout = "../_Layout.cshtml";
+}
+
+@RenderBody()
+
+<br />
+@Context.Request.Host
+<br />
+@Context.Request.Path
+
+<br />
+@if (@Context.Request.Path.Equals("/Customer/Create"))
+{
+  <span>From "Customer/Create.cshtml.cs": </span>
+  @Model.CurrentRoute
+  <br />
+}
+else {
+  <a asp-page="./Create">Create</a>
+}
+
+<!-- vim:sw=2:ts=2:et:fileformat=dos
+-->

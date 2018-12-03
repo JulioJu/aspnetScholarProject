@@ -127,6 +127,10 @@ Il aimerait bien disposer des fonctionnalités suivantes :
       https://docs.microsoft.com/en-us/aspnet/core/tutorials/razor-pages/sql?view=aspnetcore-2.1
   * (Very complete, with a sample)
       https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/?view=aspnetcore-2.1
+  * Do not forget to read (thanks to say me that Luc)
+      https://docs.microsoft.com/en-us/aspnet/core/tutorials/razor-pages/page?view=aspnetcore-2.1
+      "Scaffolding" means in French "Génération  de modèle automatique".
+      See also this tutorial in French https://docs.microsoft.com/fr-fr/aspnet/core/tutorials/razor-pages/page?view=aspnetcore-2.1
 
 * Connection string:
     https://docs.microsoft.com/en-us/ef/core/miscellaneous/connection-strings
@@ -306,7 +310,60 @@ dotnet watch run
 * `_Layout.cshtml` can't have its own `_Layout.cshtml.cs` Model.
 * Layout could be declared in top of page, not only in `_ViewStart.chtml`.
     As it, it is used only in the Page where is it declared.
+* `_ViewImport.cshtml` could be easy nested, contrary to `ViewStart.cshtml`.
+    In front of nested `Layout.cshtml` we must include parent `_Layout.cshtml`
+    * See also https://www.mikesdotnetting.com/article/164/nested-layout-pages-with-razor
+* In a Layout, we can't use a `@RenderSection` in a `@foreach()` instruction.
+    because of https://github.com/aspnet/Razor/issues/702
+    (not allow to render multiple time the same section)
+    * In the past, there was a solution described https://stackoverflow.com/questions/7931104/call-rendersection-twice .
+        * But actually can't works, beacause there is some async call, and the
+        result of calling `@Html.Raw(aVariable)` is that the variable is written
+        above the `@foreach`.
+          ```cshtml
+        @{var result = "truc";}
+        @foreach (var contact in Model.AbstractEntities)
+        {
+        <td>@contact.Id</td>
+        @Html.Raw(result);
+        }
+          ```
+        ==> "truc" written above @contact.Id several times.
+          * And I've found
+              https://github.com/aspnet/Mvc/issues/3813#issuecomment-167597645
+        * Maybe there is a solution
+        https://stackoverflow.com/questions/13858203/add-rendersection-to-html-helper
+          But not tested.
+* We can't pass a variable between View and Layout, use `Partial View` for it.
+    See https://stackoverflow.com/questions/10552502/passing-data-to-a-layout-page
 
+* Note copy and past from `./Pages/PartialView/_ShowAll.cshtml`
+    ```cshtml
+
+        @** Following use "_ShowAllTBody.cshtml" of the folder*
+         *  where the Page that use the currant Layout is.
+         *@
+         @await Html.PartialAsync("_ShowAllTbody",
+            new ViewDataDictionary(ViewData) { { "field", field } })
+
+        @*
+        *  The type or namespace name 'Model' could not be found (are you missing a
+        *  using directive or an assembly reference?)
+        *  [We can't use @model in the Layout because at this time we can't to
+        *    the type]
+              @{await Html.PartialAsync("_ShowAllTbody",
+                (Model.AbstractEntities)field);}
+        *@
+
+        @** Following use "_ShowAllTbody" of the folder
+         *  where the current Layout is. We don't want that.
+         *  @await Html.PartialAsync("./_ShowAllTbody.cshtml")
+         *@
+    ```
+
+* Casting ViewData in asp.net MVC
+    An example at `./Pages/Customer/_ShowAllTbody.cshtml`
+    See https://stackoverflow.com/questions/37050968/casting-viewdata-in-asp-net-mvc
 
 # Issue created by me on GitHub
 
@@ -333,6 +390,8 @@ dotnet watch run
       <Rule Id="UseConfigureAwait" Action="Warning" />
     </Rules>
     ```
+* Todo: read and maybe apply
+    https://docs.microsoft.com/en-us/aspnet/core/tutorials/razor-pages/page?view=aspnetcore-2.1
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->
