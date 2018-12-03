@@ -1,0 +1,9 @@
+@using Videotheque.Data
+
+@{
+  Article article = (Article) ViewData["field"];
+}
+<td>@Html.Raw(article.Barcode)</td>
+
+<!-- vim:sw=2:ts=2:et:fileformat=dos
+-->
