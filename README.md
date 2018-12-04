@@ -1,3 +1,31 @@
+# Table of Content
+<!-- vim-markdown-toc GFM -->
+
+* [Teacher's instructions](#teachers-instructions)
+* [How to for Linux users](#how-to-for-linux-users)
+  * [Langage Version](#langage-version)
+  * [Code Analysis and StyleCop](#code-analysis-and-stylecop)
+  * [Sql Server](#sql-server)
+    * [Create, update (without keep old database) and generate database](#create-update-without-keep-old-database-and-generate-database)
+    * [Inheritance](#inheritance)
+    * [Troubleshooting](#troubleshooting)
+    * [Transact-SQL](#transact-sql)
+      * [Create Schema](#create-schema)
+  * [Dotnet Watcher](#dotnet-watcher)
+* [EntityFramework](#entityframework)
+  * [For Razor](#for-razor)
+  * [Model Validation](#model-validation)
+  * [Relationship](#relationship)
+  * [Date Update and Date Create](#date-update-and-date-create)
+* [Page/View, Layout, Partial View, View Component](#pageview-layout-partial-view-view-component)
+  * [Notes](#notes)
+* [Other interesting doc](#other-interesting-doc)
+* [Issue created by me on GitHub](#issue-created-by-me-on-github)
+* [Credits](#credits)
+* [TODO](#todo)
+
+<!-- vim-markdown-toc -->
+
 # Teacher's instructions
 
 Cahier des charges n°4 – Gestion vidéothèque
@@ -124,21 +152,6 @@ Il aimerait bien disposer des fonctionnalités suivantes :
     * See also https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-configure-mssql-conf?view=sql-server-2017
     * https://docs.microsoft.com/en-us/aspnet/web-pages/overview/data/5-working-with-data
 
-* **For Razor:**
-  * (very interesting — very synthetic)
-      https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.1&tabs=netcore-cli
-  * (essential if you don't use Visual Studio.
-      As Adil says me, it's for "Code First" and not "Database First")
-      https://docs.microsoft.com/en-us/ef/core/get-started/aspnetcore/new-db?tabs=netcore-cli
-  * (Very interesting — very synthetic, for Visual Studio)
-      https://docs.microsoft.com/en-us/aspnet/core/tutorials/razor-pages/sql?view=aspnetcore-2.1
-  * (Very complete, with a sample)
-      https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/?view=aspnetcore-2.1
-  * Do not forget to read (thanks to say me that Luc)
-      https://docs.microsoft.com/en-us/aspnet/core/tutorials/razor-pages/page?view=aspnetcore-2.1
-      "Scaffolding" means in French "Génération  de modèle automatique".
-      See also this tutorial in French https://docs.microsoft.com/fr-fr/aspnet/core/tutorials/razor-pages/page?view=aspnetcore-2.1
-
 * Connection string:
     https://docs.microsoft.com/en-us/ef/core/miscellaneous/connection-strings
 
@@ -154,10 +167,6 @@ Il aimerait bien disposer des fonctionnalités suivantes :
 
 * MappedDatatype
     https://docs.microsoft.com/en-us/ef/core/api/microsoft.entityframeworkcore.sqlserver.functionaltests.mappeddatatypes
-
-* **Model Validation**
-    https://docs.microsoft.com/en-us/aspnet/core/mvc/models/validation?view=aspnetcore-2.1
-    https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations?view=netframework-4.7.2
 
 ### Create, update (without keep old database) and generate database
 * Reference: https://docs.microsoft.com/en-us/ef/core/get-started/aspnetcore/new-db?tabs=netcore-cli
@@ -248,7 +257,37 @@ https://stackoverflow.com/questions/8831651/is-it-possible-to-reference-other-sc
 https://docs.microsoft.com/en-us/sql/relational-databases/scripting/edit-sqlcmd-scripts-with-query-editor?view=sql-server-linux-2017
 
 
-### Date Update and Date Create
+## Dotnet Watcher
+```
+export PATH="$PATH:/home/user/.dotnet/tools"
+export DOTNET_ROOT=/opt/dotnet
+dotnet watch run
+```
+# EntityFramework
+
+## For Razor
+  * (very interesting — very synthetic)
+      https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.1&tabs=netcore-cli
+  * (essential if you don't use Visual Studio.
+      As Adil says me, it's for "Code First" and not "Database First")
+      https://docs.microsoft.com/en-us/ef/core/get-started/aspnetcore/new-db?tabs=netcore-cli
+  * (Very interesting — very synthetic, for Visual Studio)
+      https://docs.microsoft.com/en-us/aspnet/core/tutorials/razor-pages/sql?view=aspnetcore-2.1
+  * (Very complete, with a sample)
+      https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/?view=aspnetcore-2.1
+  * Do not forget to read (thanks to say me that Luc)
+      https://docs.microsoft.com/en-us/aspnet/core/tutorials/razor-pages/page?view=aspnetcore-2.1
+      "Scaffolding" means in French "Génération  de modèle automatique".
+      See also this tutorial in French https://docs.microsoft.com/fr-fr/aspnet/core/tutorials/razor-pages/page?view=aspnetcore-2.1
+
+## Model Validation
+    https://docs.microsoft.com/en-us/aspnet/core/mvc/models/validation?view=aspnetcore-2.1
+    https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations?view=netframework-4.7.2
+
+## Relationship
+    https://docs.microsoft.com/en-us/ef/core/modeling/relationships
+
+## Date Update and Date Create
 * **https://github.com/aspnet/EntityFrameworkCore/issues/10769**
     (code in AppDbContext.cs inspired from it)
 * https://stackoverflow.com/questions/36798186/ef-changetracker-entries-where-not-recognized
@@ -267,12 +306,6 @@ https://docs.microsoft.com/en-us/sql/relational-databases/scripting/edit-sqlcmd-
 * https://github.com/aspnet/EntityFrameworkCore/issues/10417
     Default value for parent class (inheritence)
 
-## Dotnet Watcher
-```
-export PATH="$PATH:/home/user/.dotnet/tools"
-export DOTNET_ROOT=/opt/dotnet
-dotnet watch run
-```
 # Page/View, Layout, Partial View, View Component
 
 * Page/View, Layout, Partial View
