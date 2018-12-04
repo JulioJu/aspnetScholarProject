@@ -32,6 +32,7 @@ namespace Aspnet
     // to the container.
     // For more information on how to configure your application, visit
     // https://go.microsoft.com/fwlink/?LinkID=398940
+    // CA1822: "Mark members as static"
     #pragma warning disable CA1822
     public void ConfigureServices(IServiceCollection services)
     {
@@ -50,6 +51,7 @@ namespace Aspnet
 
     // This method gets called by the runtime. Use this method to configure the
     // HTTP request pipeline.
+    // CA1822: "Mark members as static"
     #pragma warning disable CA1822
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
     {

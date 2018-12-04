@@ -47,6 +47,14 @@ namespace Videotheque.Data
         modelBuilder.Entity<Article>()
             .Property(a => a.CountBorrowing)
             .HasDefaultValue(0);
+
+        modelBuilder.Entity<Film>()
+            .Property(f => f.Price)
+            .HasDefaultValue(Price.Gold);
+
+        modelBuilder.Entity<Receipt>()
+            .Property(r => r.DateTime)
+            .HasDefaultValue(DateTime.UtcNow);
     }
 
     private void DateCreationModification()

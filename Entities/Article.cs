@@ -38,7 +38,7 @@ namespace Videotheque.Data
     /// <value>Default value: <code>0</code> </value>
     public int CountBorrowing { get; set; }
 
-    [StringLength(250)]
+    [StringLength(255)]
     public string Comment { get; set; }
 
     public DateTime BorrowingDate { get; set; }

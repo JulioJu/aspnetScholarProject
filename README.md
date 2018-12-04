@@ -101,6 +101,13 @@ Il aimerait bien disposer des fonctionnalités suivantes :
 * **When `dotnet watch run` is launched, and if no lint warning are shown
     `$ rm -Rf obj/`**
 
+* There are two solutions to remove warnings in the source code.
+    * The old `SuppressMessage`
+        https://docs.microsoft.com/en-us/visualstudio/code-quality/in-source-suppression-overview?view=vs-2017
+    * The new `#pragma warning disable CXXXX`
+        https://docs.microsoft.com/en-us/cpp/preprocessor/warning?view=vs-2017
+    * See also https://github.com/DotNetAnalyzers/StyleCopAnalyzers/issues/2080
+
 ## Sql Server
 * ***DO NOT FORGET TO CHANGE PASSWORD IN*** ./appsettings.json !!!
   * DO NOT FORGET TO NOT PUSH PASSWORD, `.gitignore` locally
@@ -147,6 +154,10 @@ Il aimerait bien disposer des fonctionnalités suivantes :
 
 * MappedDatatype
     https://docs.microsoft.com/en-us/ef/core/api/microsoft.entityframeworkcore.sqlserver.functionaltests.mappeddatatypes
+
+* **Model Validation**
+    https://docs.microsoft.com/en-us/aspnet/core/mvc/models/validation?view=aspnetcore-2.1
+    https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations?view=netframework-4.7.2
 
 ### Create, update (without keep old database) and generate database
 * Reference: https://docs.microsoft.com/en-us/ef/core/get-started/aspnetcore/new-db?tabs=netcore-cli
@@ -262,22 +273,6 @@ export PATH="$PATH:/home/user/.dotnet/tools"
 export DOTNET_ROOT=/opt/dotnet
 dotnet watch run
 ```
-# Other interesting doc
-* Comments:
-  * https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/xmldoc/recommended-tags-for-documentation-comments
-  * https://docs.microsoft.com/en-us/dotnet/csharp/codedoc
-
-* Get URL
-    * In cs file (a little complicated)
-      * https://forums.asp.net/t/2143295.aspx?Get+HttpContext+Current+in+a+library+project+in+ASP+NET+Core+
-          (how get all url parts)
-      * https://sites.google.com/site/netcorenote/asp-net-core/get-scheme-url-host
-          (do not forget to inject the Service)
-      * https://www.carlrippon.com/httpcontext-in-asp-net-core/
-          (less interesting)
-    * In Page file (very, very easy)
-        * https://stackoverflow.com/questions/38437005/how-to-get-current-url-in-view-in-asp-net-core-1-0
-
 # Page/View, Layout, Partial View, View Component
 
 * Page/View, Layout, Partial View
@@ -367,6 +362,25 @@ dotnet watch run
 * Casting ViewData in asp.net MVC
     An example at `./Pages/Customer/_ShowAllTbody.cshtml`
     See https://stackoverflow.com/questions/37050968/casting-viewdata-in-asp-net-mvc
+
+# Other interesting doc
+* **API reference:**
+    https://docs.microsoft.com/en-us/dotnet/api/?view=aspnetcore-2.1
+
+* Comments:
+  * https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/xmldoc/recommended-tags-for-documentation-comments
+  * https://docs.microsoft.com/en-us/dotnet/csharp/codedoc
+
+* Get URL
+    * In cs file (a little complicated)
+      * https://forums.asp.net/t/2143295.aspx?Get+HttpContext+Current+in+a+library+project+in+ASP+NET+Core+
+          (how get all url parts)
+      * https://sites.google.com/site/netcorenote/asp-net-core/get-scheme-url-host
+          (do not forget to inject the Service)
+      * https://www.carlrippon.com/httpcontext-in-asp-net-core/
+          (less interesting)
+    * In Page file (very, very easy)
+        * https://stackoverflow.com/questions/38437005/how-to-get-current-url-in-view-in-asp-net-core-1-0
 
 # Issue created by me on GitHub
 

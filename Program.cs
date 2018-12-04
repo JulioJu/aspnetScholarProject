@@ -11,6 +11,8 @@ namespace Aspnet
   using Microsoft.AspNetCore;
   using Microsoft.AspNetCore.Hosting;
 
+  // S1118: Add a 'private' constructor or the 'static' keyword to the class
+  //    declaration
   #pragma warning disable S1118
   public sealed class Program
   {

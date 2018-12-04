@@ -26,7 +26,12 @@ namespace Videotheque.Data
     public string Address { get; set; }
 
     [StringLength(100)]
+    [Phone]
     public string Phone { get; set; }
+
+    [StringLength(255)]
+    [EmailAddress]
+    public string Email { get; set; }
 
     public HashSet<Article> CurrentBorrowed { get; set; }
 
