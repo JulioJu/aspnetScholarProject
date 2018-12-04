@@ -145,6 +145,9 @@ Il aimerait bien disposer des fonctionnalités suivantes :
 * **For complete info on Entity Framework (e.g. `Unique`, default value, etc. )**
     https://docs.microsoft.com/en-us/ef/core/
 
+* MappedDatatype
+    https://docs.microsoft.com/en-us/ef/core/api/microsoft.entityframeworkcore.sqlserver.functionaltests.mappeddatatypes
+
 ### Create, update (without keep old database) and generate database
 * Reference: https://docs.microsoft.com/en-us/ef/core/get-started/aspnetcore/new-db?tabs=netcore-cli
   This is link of notion of "Code First", and "Database First". Thanks Adil ;-).
