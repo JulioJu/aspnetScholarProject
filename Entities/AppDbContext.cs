@@ -61,7 +61,6 @@ namespace Videotheque.Data
       foreach (var item in changes)
       {
         item.Property(p => p.UpdatedDate).CurrentValue = now;
-        System.Console.WriteLine("coucou");
         System.Console.WriteLine(item.Property(p => p.UpdatedDate).CurrentValue);
 
         if (item.State == EntityState.Added)
@@ -81,7 +80,6 @@ namespace Videotheque.Data
     public override async Task<int> SaveChangesAsync(
         CancellationToken cancellationToken = default(CancellationToken))
     {
-      System.Console.WriteLine("coucou");
       this.DateCreationModification();
       return await base.SaveChangesAsync(true, cancellationToken).
         ConfigureAwait(false);

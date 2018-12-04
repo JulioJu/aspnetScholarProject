@@ -19,14 +19,20 @@ namespace Videotheque.Data
     public Conservation Box { get; set; }
 
     [Required]
-    // « The 'bool' property 'IsLost' on entity type 'Article' is configured with
-    // a database-generated default. This default will always be used for
-    // inserts when the property has the value 'fals e', since this is the CLR
-    // default for the 'bool' type. Consider using the nullable 'bool?' type
-    // instead so that the default will only be used for inserts when the
-    // property value is 'null'. » (source, compilo warning)
+    // Warn during the runtime in the Server Console:
+    // « Microsoft.EntityFrameworkCore.Model.Validation[20601]
+    //     The 'bool' property 'IsLost' on entity type 'Article' is configured
+    //     with a database-generated default. This default will always be used
+    //     for inserts when the property has the value 'false', since this is
+    //     the CLR default for the 'bool' type. Consider using the nullable
+    //     'bool?' type instead so that the default will only be used for
+    //     inserts when the property value is 'null'. » (source, compilo
+    //     warning) »
+    // BUT if we use syntax `bool?', we have the error
+    //      at `http://localhost:5000/Article/Create' :
+    //      « The IsLost field is required. »
     /// <value>Default value: <code>false</code> </value>
-    public bool? IsLost { get; set; }
+    public bool IsLost { get; set; }
 
     [Required]
     /// <value>Default value: <code>0</code> </value>
