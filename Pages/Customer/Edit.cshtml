@@ -1,37 +1,22 @@
 @page "{id:int}"
 @model Videotheque.Pages.CustomerPage.Edit
 
-<!-- Inspired from https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.1&tabs=netcore-cli  -->
-
 @{
-    ViewData["Title local"] = "Edit Customer local —";
+  Layout = "../Layout/_Edit.cshtml";
 }
 
-<h1>
-  @ViewData["Title local"]
-  @ViewData["Title"]
-  @Model.Title
-  @Model.AbstractEntity.Id
-</h1>
-<form method="post">
-  <div asp-validation-summary="All"></div>
+@section Inputs {
   <input asp-for="AbstractEntity.Id" type="hidden" />
+  <label asp-for="AbstractEntity.Lastname"></label>
   <div>
-    <label asp-for="AbstractEntity.Lastname"></label>
-    <div>
-      <input asp-for="AbstractEntity.Lastname" />
-      <span asp-validation-for="AbstractEntity.Lastname" ></span>
-    </div>
-    <div>
-      <input asp-for="AbstractEntity.Address" />
-      <span asp-validation-for="AbstractEntity.Address" ></span>
-    </div>
+    <input asp-for="AbstractEntity.Lastname" />
+    <span asp-validation-for="AbstractEntity.Lastname" ></span>
   </div>
-
   <div>
-    <button type="submit">Save</button>
+    <input asp-for="AbstractEntity.Address" />
+    <span asp-validation-for="AbstractEntity.Address" ></span>
   </div>
-</form>
+}
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->

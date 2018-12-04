@@ -363,6 +363,38 @@ dotnet watch run
     An example at `./Pages/Customer/_ShowAllTbody.cshtml`
     See https://stackoverflow.com/questions/37050968/casting-viewdata-in-asp-net-mvc
 
+* In Edit.cshtml Razor Page, following doesn't work:
+    ```cshtml
+    @{
+    int myId = 1;
+    }
+    <input asp-for="@myId" />
+    ```
+  * The error is:
+   "InvalidOperationException: The property 'Id' on entity type 'Customer' has
+      a temporary value while attempting to change the entity's state to
+      'Modified'.  Either set a permanent value explicitly or ensure that the
+      database is configured to generate "
+  * Maybe see
+      https://docs.microsoft.com/en-us/ef/core/saving/explicit-values-generated-properties
+  * Therefore, we don't use a `PartialView` for the Layout
+      `./Pages/Layout/_Edit.cshtml` like that:
+      ```cshtml
+      @await Html.PartialAsync("./_EditPartial.cshtml",
+        new ViewDataDictionary(ViewData) { { "id", Model.AbstractEntity.Id } })
+      ```
+      And like that in `./Pages/Layout/_EditPartial.cshtml`
+      ```cshtml
+      @{
+        int id = (int) ViewData["id"];
+      }
+      <input asp-for="@id" />
+      ```
+  * Therefore, in each `Edit.cshtml` Page we must have:
+      ```cshtml
+      <input asp-for="AbstractEntity.Id" type="hidden" />
+      ```
+
 # Other interesting doc
 * **API reference:**
     https://docs.microsoft.com/en-us/dotnet/api/?view=aspnetcore-2.1
