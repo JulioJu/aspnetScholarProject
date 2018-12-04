@@ -1,0 +1,17 @@
+@{
+ Layout = "./_Layout";
+}
+
+
+<!-- Inspired from https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.1&tabs=netcore-cli  -->
+
+<h1> Create a @RenderSection("h1", required: true) </h1>
+
+<div asp-validation-summary="All"></div>
+<form method="POST">
+  @RenderSection("Inputs", required: true)
+  <input type="submit" value="Default" />
+</form>
+
+<!-- vim:sw=2:ts=2:et:fileformat=dos
+-->

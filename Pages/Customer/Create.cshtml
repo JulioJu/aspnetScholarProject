@@ -1,24 +1,20 @@
 @page
 @model Videotheque.Pages.CustomerPage.Create
 
-@** @{
- *   Layout = "_Layout";
- *  }
- *@
+@{
+  Layout = "../Layout/_Create.cshtml";
+}
 
-<!-- Inspired from https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.1&tabs=netcore-cli  -->
+@section h1 {
+  <span>Customer</span>
+}
 
-  <p>
-    Enter your name.
-  </p>
-  <div asp-validation-summary="All"></div>
-  <form method="POST">
-    <div>LastName: <input asp-for="AbstractEntity.Lastname" /></div>
-    <div>Address: <input asp-for="AbstractEntity.Address" /></div>
-    <input type="submit" value="Default" />
-    <input type="submit" asp-page-handler="JoinList" value="Join" />
-    <input type="submit" asp-page-handler="JoinListUC" value="JOIN UC" />
-  </form>
+@section Inputs {
+  <div>LastName: <input asp-for="AbstractEntity.Lastname" /></div>
+  <div>Address: <input asp-for="AbstractEntity.Address" /></div>
+  <input type="submit" asp-page-handler="JoinList" value="Join" />
+  <input type="submit" asp-page-handler="JoinListUC" value="JOIN UC" />
+}
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->
