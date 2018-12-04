@@ -1,0 +1,40 @@
+@page "{id:int}"
+@model Videotheque.Pages.ArticlePage.Edit
+
+@{
+  Layout = "../Layout/_Edit.cshtml";
+}
+
+@section Inputs {
+  <input asp-for="AbstractEntity.Id" type="hidden" />
+  <label asp-for="AbstractEntity.Barcode"></label>
+  <div>
+    <em>No modifiable</em>
+    <br />
+    <input asp-for="AbstractEntity.Barcode" class="required" disabled />
+    <span asp-validation-for="AbstractEntity.Barcode" class="required" ></span>
+  </div>
+  <label asp-for="AbstractEntity.Disc"></label>
+  <div>
+    <input asp-for="AbstractEntity.Disc" class="required" />
+    <span asp-validation-for="AbstractEntity.Disc" class="required" ></span>
+  </div>
+  <label asp-for="AbstractEntity.Box"></label>
+  <div>
+    <input asp-for="AbstractEntity.Box" class="required" />
+    <span asp-validation-for="AbstractEntity.Box" class="required" ></span>
+  </div>
+  <label asp-for="AbstractEntity.IsLost"></label>
+  <div>
+    <input asp-for="AbstractEntity.IsLost" class="required" />
+    <span asp-validation-for="AbstractEntity.IsLost" class="required" ></span>
+  </div>
+  <label asp-for="AbstractEntity.CountBorrowing"></label>
+  <div>
+    <input asp-for="AbstractEntity.CountBorrowing" class="required" />
+    <span asp-validation-for="AbstractEntity.CountBorrowing" class="required" ></span>
+  </div>
+}
+
+<!-- vim:sw=2:ts=2:et:fileformat=dos
+-->

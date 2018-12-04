@@ -4,6 +4,10 @@
   Article article = (Article) ViewData["field"];
 }
 <td>@Html.Raw(article.Barcode)</td>
+<td>@Html.Raw(article.Disc)</td>
+<td>@Html.Raw(article.Box)</td>
+<td>@Html.Raw(article.IsLost)</td>
+<td>@Html.Raw(article.CountBorrowing)</td>
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->
