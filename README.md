@@ -12,6 +12,9 @@
     * [Transact-SQL](#transact-sql)
       * [Create Schema](#create-schema)
   * [Dotnet Watcher](#dotnet-watcher)
+  * [Contonso University sample](#contonso-university-sample)
+    * [Download the sample](#download-the-sample)
+    * [Create the sample with dotnet cli](#create-the-sample-with-dotnet-cli)
 * [EntityFramework](#entityframework)
   * [For Razor](#for-razor)
   * [Model Validation](#model-validation)
@@ -159,8 +162,10 @@ Il aimerait bien disposer des fonctionnalités suivantes :
     `Configuration.GetSection always returns null`
     Therefore see https://stackoverflow.com/questions/46017593/configuration-getsection-always-returns-null
 
-* For LocalDB see:
-    See https://docs.microsoft.com/en-us/sql/database-engine/configure-windows/sql-server-2016-express-localdb?view=sql-server-2017
+* LocalDB isn't implemented on Linux
+    * https://github.com/aspnet/EntityFrameworkCore/issues/6336
+    * Further doc for Windows only:
+        https://docs.microsoft.com/en-us/sql/database-engine/configure-windows/sql-server-2016-express-localdb?view=sql-server-2017
 
 * **For complete info on Entity Framework (e.g. `Unique`, default value, etc. )**
     https://docs.microsoft.com/en-us/ef/core/
@@ -263,6 +268,33 @@ export PATH="$PATH:/home/user/.dotnet/tools"
 export DOTNET_ROOT=/opt/dotnet
 dotnet watch run
 ```
+## Contonso University sample
+
+### Download the sample
+
+* Download it thanks:
+    `$ svn co https://github.com/aspnet/Docs/trunk/aspnetcore/data/ef-rp/intro/samples/cu`
+* You could remove some not interesting files in it.
+    `$ rm appsettings1.json appsettings2.json appsettings.Development.json ContosoUniversity1_csproj`
+* As LocalDB isn't available on Linux Platforms:
+    in appsettings.json change the `ConnectionString` for example like this
+    `"DefaultConnection":"Server=localhost; Database=sampleMSUniversity; user id=SA; password=XXXXXX`
+    (see explanations above)
+* Run following command to create the Database:
+    `$ dotnet ef database update`
+    (see above for further explanations)
+* Actually (12/5/2018), in `ContosoUniversity.csproj`, line 6 should be changed
+    * from : `<PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />`
+    * to: `<PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.0" />`
+    * See also https://stackoverflow.com/questions/50825242/the-type-or-namespace-name-hosting-does-not-exist-in-the-namespace-microsoft
+* Run the app:
+    `$ dotnet run`
+
+### Create the sample with dotnet cli
+
+* See https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/intro?view=aspnetcore-2.2&tabs=netcore-cli
+    and others following samples
+
 # EntityFramework
 
 ## For Razor
@@ -285,7 +317,12 @@ dotnet watch run
     https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations?view=netframework-4.7.2
 
 ## Relationship
-    https://docs.microsoft.com/en-us/ef/core/modeling/relationships
+    * in EntityFramework doc
+      * https://docs.microsoft.com/en-us/ef/core/modeling/relationships
+    * in Aspnet Core doc
+      * https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/complex-data-model?view=aspnetcore-2.2&tabs=visual-studio
+      * https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/read-related-data?view=aspnetcore-2.2&tabs=visual-studio
+      * https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/update-related-data?view=aspnetcore-2.2
 
 ## Date Update and Date Create
 * **https://github.com/aspnet/EntityFrameworkCore/issues/10769**

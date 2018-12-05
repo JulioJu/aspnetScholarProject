@@ -3,7 +3,12 @@
 @{
   Customer customer = (Customer) ViewData["field"];
 }
-<td>@Html.Raw(customer.Lastname)</td>
+<td> @Html.Raw(customer.Firstname) </td>
+<td> @Html.Raw(customer.Lastname ) </td>
+<td> @Html.Raw(customer.Society  ) </td>
+<td> @Html.Raw(customer.Address  ) </td>
+<td> @Html.Raw(customer.Phone    ) </td>
+<td> @Html.Raw(customer.Email    ) </td>
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->

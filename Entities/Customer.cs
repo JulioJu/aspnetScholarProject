@@ -33,7 +33,7 @@ namespace Videotheque.Data
     [EmailAddress]
     public string Email { get; set; }
 
-    public HashSet<Article> CurrentBorrowed { get; set; }
+    public HashSet<Article> CurrentlyBorrowed { get; set; }
 
     /// <summary>
     ///     List all custmers that have articles currently borrowed
