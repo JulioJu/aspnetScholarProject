@@ -69,8 +69,9 @@ Il aimerait bien disposer des fonctionnalités suivantes :
   5. https://github.com/OmniSharp/omnisharp-roslyn/issues/129
   (do not forget to remove package `mono` installed by the Linux Distro).
 
-* Warning, actually (21/11/2018) OmniSharp Vim doesn't work with dotnet versio
+* Warning, actually (21/11/2018) OmniSharp Vim doesn't work with dotnet version
     500, but works well with version 403 :-).
+    * Works well also with 2.2.100
 
 * To finish install of dotnet and avoid error message when you run `dotnet run` "
   ```
@@ -507,6 +508,14 @@ dotnet watch run
           (less interesting)
     * In Page file (very, very easy)
         * https://stackoverflow.com/questions/38437005/how-to-get-current-url-in-view-in-asp-net-core-1-0
+
+* Migration  from old dotnet version to a newer
+    * See https://docs.microsoft.com/en-us/aspnet/core/migration/
+    * Do not forget to update `$ dotnet tool`. See `$ dotnet tool list` to
+        see the tools to update.
+    * Do not forget to update also tag the `LangVersion` in the `csprog` file.
+    * Do not forget to update also the  attribute `ToolsVersion` of the root tag
+        `RuleSet` in the `ruleset` file.
 
 # Issue created by me on GitHub
 

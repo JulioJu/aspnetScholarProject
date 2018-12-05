@@ -43,7 +43,7 @@ namespace Aspnet
 
       // Includes support for Razor Pages and controllers.
       services.AddMvc()
-        .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+        .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
       // Used in Pages/Customer/Create.cshtml.cs
       services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
