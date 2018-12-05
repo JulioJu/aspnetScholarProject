@@ -15,9 +15,9 @@
   * [Nuget packages](#nuget-packages)
 * [EntityFramework](#entityframework)
   * [For Razor](#for-razor)
-    * [Introduction Tutorial in ASP.NET Core documentation website](#introduction-tutorial-in-aspnet-core-documentation-website)
-    * [Tutorial from the EntityFramework documentation website](#tutorial-from-the-entityframework-documentation-website)
-    * [Contonso University sample in ASP.NET Core documentation website](#contonso-university-sample-in-aspnet-core-documentation-website)
+    * [1. Introduction Tutorial in ASP.NET Core documentation website](#1-introduction-tutorial-in-aspnet-core-documentation-website)
+    * [1. bis Tutorial from the EntityFramework documentation website](#1-bis-tutorial-from-the-entityframework-documentation-website)
+    * [2. Contonso University sample in ASP.NET Core documentation website](#2-contonso-university-sample-in-aspnet-core-documentation-website)
       * [Create the sample with dotnet cli](#create-the-sample-with-dotnet-cli)
       * [In Linux, example downloaded](#in-linux-example-downloaded)
   * [Model Validation](#model-validation)
@@ -281,7 +281,15 @@ dotnet watch run
 
 ## For Razor
 
-### Introduction Tutorial in ASP.NET Core documentation website
+**Read documentation presented at the section 1., then the section presented
+at the section 2 very carefully.**
+
+* Version 2.2 of the doc is more complete and understandable than version 2.1.
+    Especially, the tutorial presented in the first section below doesn't exist
+    in the version 2.1 of the tutorial, and it's very interesting to understand
+    well how works CRUD in Razor Page.
+
+### 1. Introduction Tutorial in ASP.NET Core documentation website
 
 * https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.2&tabs=netcore-cli
 * In the left navigation panel, could be seen thanks:
@@ -291,6 +299,10 @@ dotnet watch run
     Studio Code tutorial` explain all with the tool `dotnet cli`
 * Even if you use ASP.NET 2.1, read the tutorial of ASP.NET 2.2, more complete
     (more pages)
+* For command `$ dotnet aspnet-codegenerator razorpage`
+    presented at https://docs.microsoft.com/en-us/aspnet/core/tutorials/razor-pages/model?view=aspnetcore-2.2&tabs=visual-studio-code#scaffold-the-movie-model
+    do not forget to install the tool, it it isn't already installed:
+   `$ dotnet tool install --global dotnet-aspnet-codegenerator`
 * Do not forget to read (thanks to say me that Luc)
     1. **https://docs.microsoft.com/en-us/aspnet/core/tutorials/razor-pages/model?view=aspnetcore-2.2&tabs=visual-studio-code**
       * do not use `$ dotnet add package Microsoft.EntityFrameworkCore.SQLite`
@@ -302,7 +314,7 @@ dotnet watch run
       1. https://docs.microsoft.com/fr-fr/aspnet/core/tutorials/razor-pages/model?view=aspnetcore-2.2&tabs=visual-studio-code
       2. https://docs.microsoft.com/fr-fr/aspnet/core/tutorials/razor-pages/page?view=aspnetcore-2.2
 
-###  Tutorial from the EntityFramework documentation website
+###  1. bis Tutorial from the EntityFramework documentation website
 
 * https://docs.microsoft.com/en-us/ef/core/get-started/aspnetcore/new-db?tabs=netcore-cli
 * As Adil says me, the preceding link teach about "Code First" and not
@@ -310,7 +322,7 @@ dotnet watch run
     Core Documentation, but stay in the EntityFramework 6 Documentation
     (see https://docs.microsoft.com/en-us/ef/ef6/)
 
-### Contonso University sample in ASP.NET Core documentation website
+### 2. Contonso University sample in ASP.NET Core documentation website
 
 #### Create the sample with dotnet cli
 * https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/?view=aspnetcore-2.2
