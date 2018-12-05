@@ -12,11 +12,14 @@
     * [Transact-SQL](#transact-sql)
       * [Create Schema](#create-schema)
   * [Dotnet Watcher](#dotnet-watcher)
-  * [Contonso University sample](#contonso-university-sample)
-    * [Download the sample](#download-the-sample)
-    * [Create the sample with dotnet cli](#create-the-sample-with-dotnet-cli)
+  * [Nuget packages](#nuget-packages)
 * [EntityFramework](#entityframework)
   * [For Razor](#for-razor)
+    * [Introduction Tutorial in ASP.NET Core documentation website](#introduction-tutorial-in-aspnet-core-documentation-website)
+    * [Tutorial from the EntityFramework documentation website](#tutorial-from-the-entityframework-documentation-website)
+    * [Contonso University sample in ASP.NET Core documentation website](#contonso-university-sample-in-aspnet-core-documentation-website)
+      * [Create the sample with dotnet cli](#create-the-sample-with-dotnet-cli)
+      * [In Linux, example downloaded](#in-linux-example-downloaded)
   * [Model Validation](#model-validation)
   * [Relationship](#relationship)
   * [Date Update and Date Create](#date-update-and-date-create)
@@ -268,10 +271,55 @@ export PATH="$PATH:/home/user/.dotnet/tools"
 export DOTNET_ROOT=/opt/dotnet
 dotnet watch run
 ```
-## Contonso University sample
+## Nuget packages
+* If you manually add a package in `.csprog` file do not forget to run
+     `$ dotnet restore && dotnet build`
+* Prefer use  `$ dotnet add package`
 
-### Download the sample
+# EntityFramework
 
+## For Razor
+
+### Introduction Tutorial in ASP.NET Core documentation website
+
+* https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.2&tabs=netcore-cli
+* In the left navigation panel, could be seen thanks:
+  1. `Tutorials > Web apps >  Razor Pages`
+  2. `Web apps > Razor Pages`
+* Note: if you don't use `Visual Studio Code`, it works perfectly !  `Visual
+    Studio Code tutorial` explain all with the tool `dotnet cli`
+* Even if you use ASP.NET 2.1, read the tutorial of ASP.NET 2.2, more complete
+    (more pages)
+* Do not forget to read (thanks to say me that Luc)
+    1. **https://docs.microsoft.com/en-us/aspnet/core/tutorials/razor-pages/model?view=aspnetcore-2.2&tabs=visual-studio-code**
+      * do not use `$ dotnet add package Microsoft.EntityFrameworkCore.SQLite`
+      * but `$ dotnet add package Microsoft.EntityFrameworkCore.SqlServer`
+      * And `Startup.ConfigurationService` use SqlServer and not SQLite.
+    2. **https://docs.microsoft.com/en-us/aspnet/core/tutorials/razor-pages/page?view=aspnetcore-2.2**
+    * "Scaffolding" means in French "Génération  de modèle automatique".
+    * See also this tutorial in French
+      1. https://docs.microsoft.com/fr-fr/aspnet/core/tutorials/razor-pages/model?view=aspnetcore-2.2&tabs=visual-studio-code
+      2. https://docs.microsoft.com/fr-fr/aspnet/core/tutorials/razor-pages/page?view=aspnetcore-2.2
+
+###  Tutorial from the EntityFramework documentation website
+
+* https://docs.microsoft.com/en-us/ef/core/get-started/aspnetcore/new-db?tabs=netcore-cli
+* As Adil says me, the preceding link teach about "Code First" and not
+    "Database First".  This notions has disappeared in the EntityFramework
+    Core Documentation, but stay in the EntityFramework 6 Documentation
+    (see https://docs.microsoft.com/en-us/ef/ef6/)
+
+### Contonso University sample in ASP.NET Core documentation website
+
+#### Create the sample with dotnet cli
+* https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/?view=aspnetcore-2.2
+* In the left navigation panel, could be seen thanks:
+  1. `Tutorials > Data access >  EF Core with Razor Pages`
+  2. `Data access > EF Core with Razor Pages`
+* To understand command lines used in this tutorial, see tutorial
+    presented in the section above.
+
+#### In Linux, example downloaded
 * Download it thanks:
     `$ svn co https://github.com/aspnet/Docs/trunk/aspnetcore/data/ef-rp/intro/samples/cu`
 * You could remove some not interesting files in it.
@@ -290,39 +338,15 @@ dotnet watch run
 * Run the app:
     `$ dotnet run`
 
-### Create the sample with dotnet cli
-
-* See https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/intro?view=aspnetcore-2.2&tabs=netcore-cli
-    and others following samples
-
-# EntityFramework
-
-## For Razor
-  * (very interesting — very synthetic)
-      https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.1&tabs=netcore-cli
-  * (essential if you don't use Visual Studio.
-      As Adil says me, it's for "Code First" and not "Database First")
-      https://docs.microsoft.com/en-us/ef/core/get-started/aspnetcore/new-db?tabs=netcore-cli
-  * (Very interesting — very synthetic, for Visual Studio)
-      https://docs.microsoft.com/en-us/aspnet/core/tutorials/razor-pages/sql?view=aspnetcore-2.1
-  * (Very complete, with a sample)
-      https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/?view=aspnetcore-2.1
-  * Do not forget to read (thanks to say me that Luc)
-      https://docs.microsoft.com/en-us/aspnet/core/tutorials/razor-pages/page?view=aspnetcore-2.1
-      "Scaffolding" means in French "Génération  de modèle automatique".
-      See also this tutorial in French https://docs.microsoft.com/fr-fr/aspnet/core/tutorials/razor-pages/page?view=aspnetcore-2.1
-
 ## Model Validation
-    https://docs.microsoft.com/en-us/aspnet/core/mvc/models/validation?view=aspnetcore-2.1
-    https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations?view=netframework-4.7.2
+* https://docs.microsoft.com/en-us/aspnet/core/mvc/models/validation?view=aspnetcore-2.2
+* https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations?view=netframework-4.7.2
 
 ## Relationship
-    * in EntityFramework doc
-      * https://docs.microsoft.com/en-us/ef/core/modeling/relationships
-    * in Aspnet Core doc
-      * https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/complex-data-model?view=aspnetcore-2.2&tabs=visual-studio
-      * https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/read-related-data?view=aspnetcore-2.2&tabs=visual-studio
-      * https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/update-related-data?view=aspnetcore-2.2
+* in EntityFramework doc
+    https://docs.microsoft.com/en-us/ef/core/modeling/relationships
+* in Aspnet Core doc
+    See Contonso University sample in ASP.NET Core documentation website.
 
 ## Date Update and Date Create
 * **https://github.com/aspnet/EntityFrameworkCore/issues/10769**

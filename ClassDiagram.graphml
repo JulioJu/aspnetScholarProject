@@ -339,11 +339,11 @@ AllBorrowers(): Customer[]<y:LabelModel>
     <node id="n13">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="10.160000000000082" width="84.537109375" x="623.9962221093747" y="650.1073599999999"/>
+          <y:Geometry height="10.160000000000082" width="92.3154296875" x="620.1070619531247" y="650.1073599999999"/>
           <y:Fill hasColor="false" transparent="false"/>
           <y:BorderStyle hasColor="false" raised="false" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="26.1484375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="74.537109375" x="5.0" y="-7.994218749999959">0..*
-CurrentBorrowed<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="26.1484375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="82.3154296875" x="5.0" y="-7.994218749999959">0..*
+CurrentlyBorrowed<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
