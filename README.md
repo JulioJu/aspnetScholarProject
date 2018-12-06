@@ -16,10 +16,12 @@
 * [EntityFramework](#entityframework)
   * [For Razor](#for-razor)
     * [1. Introduction Tutorial in ASP.NET Core documentation website](#1-introduction-tutorial-in-aspnet-core-documentation-website)
+      * [Note about this tutorial](#note-about-this-tutorial)
+      * [In Linux, example downloaded](#in-linux-example-downloaded)
     * [1. bis Tutorial from the EntityFramework documentation website](#1-bis-tutorial-from-the-entityframework-documentation-website)
     * [2. Contonso University sample in ASP.NET Core documentation website](#2-contonso-university-sample-in-aspnet-core-documentation-website)
       * [Create the sample with dotnet cli](#create-the-sample-with-dotnet-cli)
-      * [In Linux, example downloaded](#in-linux-example-downloaded)
+      * [In Linux, example downloaded](#in-linux-example-downloaded-1)
   * [Model Validation](#model-validation)
   * [Relationship](#relationship)
   * [Date Update and Date Create](#date-update-and-date-create)
@@ -311,6 +313,8 @@ at the section 2 very carefully.**
 
 ### 1. Introduction Tutorial in ASP.NET Core documentation website
 
+#### Note about this tutorial
+
 * https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.2&tabs=netcore-cli
 * In the left navigation panel, could be seen thanks:
   1. `Tutorials > Web apps >  Razor Pages`
@@ -333,6 +337,37 @@ at the section 2 very carefully.**
     * See also this tutorial in French
       1. https://docs.microsoft.com/fr-fr/aspnet/core/tutorials/razor-pages/model?view=aspnetcore-2.2&tabs=visual-studio-code
       2. https://docs.microsoft.com/fr-fr/aspnet/core/tutorials/razor-pages/page?view=aspnetcore-2.2
+
+#### In Linux, example downloaded
+* I've tested with
+    https://github.com/aspnet/Docs/tree/master/aspnetcore/tutorials/razor-pages/razor-pages-start/2.2-stage-samples/RPmovieSQLiteNewField
+* Warning:
+    https://github.com/aspnet/Docs/issues/9863
+    « For Linux users RazorPagesMovie.Models.Movie.ID should be replaced by
+      RazorPagesMovie.Models.Movie.Id »
+
+      * An other solution is to add [key] on the line above like this:
+      ```cs
+      [Key]
+      public int ID { get; set; }
+      ```
+      then:
+      ```sh
+      rm -R Migrations
+      dotnet ef migrations add InitialCreate
+      dotnet ef database update
+      ```
+* Not tested with SQLite, but tested with SQLServer.
+* In `appsettings.json` you must replace the `ConnectionsSctrings` by
+    ```json
+    "ConnectionStrings": {
+      "RazorPagesMovieContext": "Server=localhost; Database=RazorPageMovie; user id=SA; password=XXXXXX"
+    }
+
+    ```
+* At the first line of Startup.cs, you must replace `#define UseSqlite` by
+    `#define UseSqlServer`
+
 
 ###  1. bis Tutorial from the EntityFramework documentation website
 
@@ -559,8 +594,11 @@ at the section 2 very carefully.**
 4. https://github.com/OmniSharp/omnisharp-roslyn/issues/1341
 5. https://github.com/OmniSharp/omnisharp-roslyn/issues/129
 6. See https://github.com/aspnet/Docs/issues/9650
-7. https://github.com/OmniSharp/omnisharp-vim/issues/434
   ([razor-page overview] can't have Query String in HTTP POST request method)
+7. https://github.com/OmniSharp/omnisharp-vim/issues/434
+8. https://github.com/aspnet/Docs/issues/9863
+  "For Linux users RazorPagesMovie.Models.Movie.ID should be replaced by
+  RazorPagesMovie.Models.Movie.Id
 
 # Credits
 
