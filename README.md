@@ -55,11 +55,19 @@ Il aimerait bien disposer des fonctionnalités suivantes :
 
 # How to for Linux users
 * Create new project:
-  ```
+  ```sh
   dotnet new web
   dotnet new sln
   dotnet dotnet sln add aspnet.csproj
   ```
+* Warning: this command don't generate the file `appsettings.Development.json`
+    * I've found the example of this file with the command:
+    `$ dotnet new webapp -o RazorPagesMovie`
+    * presented in section below:
+      * [Introduction Tutorial in ASP.NET Core documentation website](#1-introduction-tutorial-in-aspnet-core-documentation-website)
+    * But I didn't see any new log in my console. Default log level
+        seems to be already "Information".
+        Do not put the `ConnectionStrings` in this file (seems not be read).
 
 * OmniSharp Vim, see my issue at:
   1. https://github.com/OmniSharp/omnisharp-vim/issues/423
@@ -67,11 +75,23 @@ Il aimerait bien disposer des fonctionnalités suivantes :
   3. https://github.com/OmniSharp/omnisharp-vim/issues/427
   4. https://github.com/OmniSharp/omnisharp-roslyn/issues/1341
   5. https://github.com/OmniSharp/omnisharp-roslyn/issues/129
+  6. https://github.com/OmniSharp/omnisharp-vim/issues/434
   (do not forget to remove package `mono` installed by the Linux Distro).
 
 * Warning, actually (21/11/2018) OmniSharp Vim doesn't work with dotnet version
-    500, but works well with version 403 :-).
-    * Works well also with 2.2.100
+    500 and later, but works well with version 403 :-).
+* As version 2.2.100 has a documentation very very better (see section below)
+    use old version of `dotnet` installed globally, and when
+    you generate a code use version installed thanks
+    https://dotnet.microsoft.com/download/thank-you/dotnet-sdk-2.2.100-linux-x64-binaries
+    Set the new variable environnements like:
+    ```sh
+    $ export DOTNET_ROOT=$HOME/dotnet \
+      && export PATH=$HOME/dotnet:$PATH \
+      && export PATH="$PATH:/home/user/.dotnet/tools" \
+      && export ASPNETCORE_ENVIRONMENT=Development
+      ```
+
 
 * To finish install of dotnet and avoid error message when you run `dotnet run` "
   ```
@@ -81,7 +101,7 @@ Il aimerait bien disposer des fonctionnalités suivantes :
   To generate a developer certificate run 'dotnet dev-certs https'.
   ```
   * The solution: >>> https://github.com/fsharp/FAKE/issues/2075 :
-    ```
+    ```sh
     dotnet tool install --global dotnet-dev-certs
     export PATH="$PATH:/home/user/.dotnet/tools"
     DOTNET_ROOT=/opt/dotnet
@@ -91,10 +111,10 @@ Il aimerait bien disposer des fonctionnalités suivantes :
 
 * You could watch and run dotnet app simply with:
     ```sh
-    export DOTNET_ROOT=/opt/dotnet \
-      && export PATH="$PATH:/home/user/.dotnet/tools" \
-      && rm -Rf bin/ obj/ && dotnet watch run
+      rm -Rf bin/ obj/ && dotnet watch run
     ```
+    (do not forget to export environnement variables presented above)
+
 ## Langage Version
 * Set your c# Language Version in Aspnet.csproj (2.3 is )
 * https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/
@@ -336,7 +356,7 @@ at the section 2 very carefully.**
 * Download it thanks:
     `$ svn co https://github.com/aspnet/Docs/trunk/aspnetcore/data/ef-rp/intro/samples/cu`
 * You could remove some not interesting files in it.
-    `$ rm appsettings1.json appsettings2.json appsettings.Development.json ContosoUniversity1_csproj`
+    `$ rm appsettings1.json appsettings2.json ContosoUniversity1_csproj`
 * As LocalDB isn't available on Linux Platforms:
     in appsettings.json change the `ConnectionString` for example like this
     `"DefaultConnection":"Server=localhost; Database=sampleMSUniversity; user id=SA; password=XXXXXX`
@@ -539,6 +559,7 @@ at the section 2 very carefully.**
 4. https://github.com/OmniSharp/omnisharp-roslyn/issues/1341
 5. https://github.com/OmniSharp/omnisharp-roslyn/issues/129
 6. See https://github.com/aspnet/Docs/issues/9650
+7. https://github.com/OmniSharp/omnisharp-vim/issues/434
   ([razor-page overview] can't have Query String in HTTP POST request method)
 
 # Credits
