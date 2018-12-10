@@ -388,6 +388,8 @@ at the section 2 very carefully.**
     presented in the section above.
 
 #### In Linux, example downloaded
+https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/cu
+
 * Download it thanks:
     `$ svn co https://github.com/aspnet/Docs/trunk/aspnetcore/data/ef-rp/intro/samples/cu`
 * You could remove some not interesting files in it.
@@ -615,6 +617,12 @@ at the section 2 very carefully.**
     ```
 * Todo: read and maybe apply
     https://docs.microsoft.com/en-us/aspnet/core/tutorials/razor-pages/page?view=aspnetcore-2.1
+
+* Add in our code some interesting code of :
+    1. https://github.com/aspnet/Docs/tree/master/aspnetcore/tutorials/razor-pages/razor-pages-start/2.2-stage-samples/RPmovieSQLiteNewField
+    especially:
+      * From `Startup.cs`
+    2.  https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/cu
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->

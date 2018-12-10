@@ -17,6 +17,9 @@
     <!-- Last one of 2.2 serie the 12/5/2018 -->
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.0" />
 
+    <!-- Last one the 12/10/2018 -->
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
+
     <!-- Last one the 12/5/2018 -->
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.2">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
