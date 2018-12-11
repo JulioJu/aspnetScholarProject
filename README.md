@@ -80,9 +80,16 @@ Il aimerait bien disposer des fonctionnalités suivantes :
   6. https://github.com/OmniSharp/omnisharp-vim/issues/434
   (do not forget to remove package `mono` installed by the Linux Distro).
 
-* Warning, actually (21/11/2018) OmniSharp Vim doesn't work with dotnet version
-    500 and later, but works well with version 403 :-).
-* As version 2.2.100 has a documentation very very better (see section below)
+* Use the following command line before compile or start the code:
+    ```sh
+    export DOTNET_ROOT=/opt/dotnet \
+      && export PATH="$PATH:/home/user/.dotnet/tools" \
+      && export ASPNETCORE_ENVIRONMENT=Development
+      ```
+
+* ~~Warning, actually (21/11/2018) OmniSharp Vim doesn't work with dotnet version
+    500 and later, but works well with version 403 :-).~~
+* ~~As version 2.2.100 has a documentation very very better (see section below)
     use old version of `dotnet` installed globally, and when
     you generate a code use version installed thanks
     https://dotnet.microsoft.com/download/thank-you/dotnet-sdk-2.2.100-linux-x64-binaries
@@ -92,7 +99,7 @@ Il aimerait bien disposer des fonctionnalités suivantes :
       && export PATH=$HOME/dotnet:$PATH \
       && export PATH="$PATH:/home/user/.dotnet/tools" \
       && export ASPNETCORE_ENVIRONMENT=Development
-      ```
+      ```~~
 
 
 * To finish install of dotnet and avoid error message when you run `dotnet run` "
@@ -600,6 +607,7 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
 7. https://github.com/OmniSharp/omnisharp-vim/issues/434
 8. https://github.com/aspnet/Docs/issues/9863
   "For Linux users RazorPagesMovie.Models.Movie.ID should be replaced by
+9. https://github.com/OmniSharp/omnisharp-roslyn/issues/1358
   RazorPagesMovie.Models.Movie.Id
 
 # Credits

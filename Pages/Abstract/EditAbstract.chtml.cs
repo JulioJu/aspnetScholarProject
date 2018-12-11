@@ -17,9 +17,6 @@ namespace Videotheque.Pages.Abstract
     [BindProperty]
     public TAbstractEntity AbstractEntity { get; set; }
 
-    [ViewData]
-    public string Title { get; } = "Edit AbstractEntity —";
-
     protected EditAbstract(AppDbContext db, DbSet<TAbstractEntity> tDbSet)
     {
       this._db = db;

@@ -1,0 +1,24 @@
+@{
+ Layout = "./_Layout";
+}
+
+<h1>
+  @RenderSection("h1", required: true)
+</h1>
+
+<hr />
+
+<div class="row">
+  <div class="col-md-4">
+    <form method="POST">
+      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+      @RenderSection("Inputs", required: true)
+      <div class="form-group">
+        <input type="submit" value="Default" class="btn btn-primary" />
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- vim:sw=2:ts=2:et:fileformat=dos
+-->

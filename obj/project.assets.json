@@ -13288,14 +13288,13 @@
       "Microsoft.CodeAnalysis.FxCopAnalyzers >= 2.6.2",
       "Microsoft.EntityFrameworkCore.SqlServer >= 2.2.0",
       "Microsoft.NETCore.App >= 2.2.0",
-      "Microsoft.VisualStudio.Web.CodeGeneration.Design",
+      "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 2.2.0",
       "SonarAnalyzer.CSharp >= 7.9.1.7622",
       "StyleCop.Analyzers >= 1.0.2"
     ]
   },
   "packageFolders": {
-    "/home/julioprayer/.nuget/packages/": {},
-    "/home/julioprayer/dotnet/sdk/NuGetFallbackFolder": {}
+    "/home/julioprayer/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
@@ -13306,9 +13305,6 @@
       "packagesPath": "/home/julioprayer/.nuget/packages/",
       "outputPath": "/home/julioprayer/DCISS/dotNet/aspnet/obj/",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "/home/julioprayer/dotnet/sdk/NuGetFallbackFolder"
-      ],
       "configFilePaths": [
         "/home/julioprayer/.nuget/NuGet/NuGet.Config"
       ],
@@ -13356,7 +13352,7 @@
           },
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
             "target": "Package",
-            "version": "(, )"
+            "version": "[2.2.0, )"
           },
           "SonarAnalyzer.CSharp": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers",
