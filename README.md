@@ -615,6 +615,7 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
 * Strongly inspired from
     https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.1&tabs=netcore-cli
 * Base created thanks `dotnet cli 2.1.403`
+* Title icon from https://commons.wikimedia.org/wiki/File:Video-film.svg
 
 # TODO
 * Understand https://medium.com/bynder-tech/c-why-you-should-use-configureawait-false-in-your-library-code-d7837dce3d7f and the warning `CA2007`
