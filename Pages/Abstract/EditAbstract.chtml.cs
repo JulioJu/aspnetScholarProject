@@ -1,39 +1,18 @@
 namespace Videotheque.Pages.Abstract
 {
-  using System;
+  using System.Linq;
   using System.Threading.Tasks;
   using Microsoft.AspNetCore.Mvc;
-  using Microsoft.AspNetCore.Mvc.RazorPages;
   using Microsoft.EntityFrameworkCore;
   using Videotheque.Data;
 
-  public abstract class EditAbstract<TAbstractEntity> : PageModel
+  public abstract class EditAbstract<TAbstractEntity> :
+    DetailsAbstract<TAbstractEntity>
     where TAbstractEntity : AbstractEntity
   {
-    private readonly AppDbContext _db;
-
-    private readonly DbSet<TAbstractEntity> _tDbSet;
-
-    [BindProperty]
-    public TAbstractEntity AbstractEntity { get; set; }
-
     protected EditAbstract(AppDbContext db, DbSet<TAbstractEntity> tDbSet)
+      : base(db, tDbSet)
     {
-      this._db = db;
-      this._tDbSet = tDbSet;
-    }
-
-    public async Task<IActionResult> OnGetAsync(int id)
-    {
-      this.AbstractEntity = await this._tDbSet.FindAsync(id)
-        .ConfigureAwait(false);
-
-      if (this.AbstractEntity == null)
-      {
-        return base.RedirectToPage("../../");
-      }
-
-      return base.Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
@@ -43,20 +22,30 @@ namespace Videotheque.Pages.Abstract
         return base.Page();
       }
 
-      this._db.Attach(this.AbstractEntity).State = EntityState.Modified;
+      base._db.Attach(this.AbstractEntity).State = EntityState.Modified;
 
       try
       {
-        await this._db.SaveChangesAsync().ConfigureAwait(false);
+        await base._db.SaveChangesAsync().ConfigureAwait(false);
       }
       catch (DbUpdateConcurrencyException)
       {
-        #pragma warning disable S112
-        throw new Exception(
-            $"AbstractEntity {this.AbstractEntity.Id} not found!");
+        if (!this.AbstractEntityExist(base.AbstractEntity.Id))
+        {
+          return base.NotFound();
+        }
+        else
+        {
+          throw;
+        }
       }
 
       return base.RedirectToPage("./ShowAll");
+    }
+
+    private bool AbstractEntityExist(int id)
+    {
+      return base._tDbSet.Any(e => e.Id == id);
     }
   }
 }

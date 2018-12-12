@@ -13294,7 +13294,8 @@
     ]
   },
   "packageFolders": {
-    "/home/julioprayer/.nuget/packages/": {}
+    "/home/julioprayer/.nuget/packages/": {},
+    "/home/julioprayer/dotnet/sdk/NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
@@ -13305,6 +13306,9 @@
       "packagesPath": "/home/julioprayer/.nuget/packages/",
       "outputPath": "/home/julioprayer/DCISS/dotNet/aspnet/obj/",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "/home/julioprayer/dotnet/sdk/NuGetFallbackFolder"
+      ],
       "configFilePaths": [
         "/home/julioprayer/.nuget/NuGet/NuGet.Config"
       ],
