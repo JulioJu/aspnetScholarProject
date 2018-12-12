@@ -1,14 +1,33 @@
 @using Videotheque.Data
 
 @{
-  Customer customer = (Customer) ViewData["field"];
+  Customer item = (Customer) ViewData["field"];
 }
-<td> @Html.Raw(customer.Firstname) </td>
-<td> @Html.Raw(customer.Lastname ) </td>
-<td> @Html.Raw(customer.Society  ) </td>
-<td> @Html.Raw(customer.Address  ) </td>
-<td> @Html.Raw(customer.Phone    ) </td>
-<td> @Html.Raw(customer.Email    ) </td>
+
+<td>
+  @Html.DisplayFor(modelItem => item.Firstname)
+</td>
+<td>
+  @Html.DisplayFor(modelItem => item.Lastname)
+</td>
+<td>
+  @Html.DisplayFor(modelItem => item.Society)
+</td>
+<td>
+  @Html.DisplayFor(modelItem => item.Address)
+</td>
+<td>
+  @Html.DisplayFor(modelItem => item.Phone)
+</td>
+<td>
+  @Html.DisplayFor(modelItem => item.Email)
+</td>
+<td>
+  @Html.DisplayFor(modelItem => item.CreatedDate)
+</td>
+<td>
+  @Html.DisplayFor(modelItem => item.UpdatedDate)
+</td>
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->

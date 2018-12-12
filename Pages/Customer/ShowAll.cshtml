@@ -8,16 +8,37 @@
 }
 
 @section h1 {
-  <span>Customers</span>
+  <span>
+    Customers
+    <a asp-page="Create">Create New</a>
+  </span>
 }
 
 @section Thead {
-    <th> Firstname  </th>
-    <th> Lastname   </th>
-    <th> Society    </th>
-    <th> Address    </th>
-    <th> Phone      </th>
-    <th> Email      </th>
+  <th>
+    @Html.DisplayNameFor(model => model.AbstractEntities[0].Firstname)
+  </th>
+  <th>
+    @Html.DisplayNameFor(model => model.AbstractEntities[0].Lastname)
+  </th>
+  <th>
+    @Html.DisplayNameFor(model => model.AbstractEntities[0].Society)
+  </th>
+  <th>
+    @Html.DisplayNameFor(model => model.AbstractEntities[0].Address)
+  </th>
+  <th>
+    @Html.DisplayNameFor(model => model.AbstractEntities[0].Phone)
+  </th>
+  <th>
+    @Html.DisplayNameFor(model => model.AbstractEntities[0].Email)
+  </th>
+  <th>
+    @Html.DisplayNameFor(model => model.AbstractEntities[0].CreatedDate)
+  </th>
+  <th>
+    @Html.DisplayNameFor(model => model.AbstractEntities[0].UpdatedDate)
+  </th>
 }
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos

@@ -2,7 +2,6 @@
   Layout = "./_Layout.cshtml";
 }
 
-<!-- Inspired from https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.1&tabs=netcore-cli -->
 <h1> @RenderSection("h1", required: true) </h1>
 @if (!String.IsNullOrEmpty(Model.Message))
 {
@@ -15,6 +14,7 @@
       <tr>
         <th>ID</th>
         @RenderSection("Thead", required: true)
+        <th></th>
       </tr>
     </thead>
     <tbody>
