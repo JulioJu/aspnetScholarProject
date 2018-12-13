@@ -1,0 +1,15 @@
+@page "{id:int}"
+@model Videotheque.Pages.ArticlePage.Details
+
+@{
+  Layout = "../Layout/_Details.cshtml";
+  ViewData["Title"] = "Article Details";
+  ViewData["h1"] = "Details of a Article";
+}
+
+@section Details {
+  @await Html.PartialAsync("_DetailsPartialView", Model.AbstractEntity)
+}
+
+<!-- vim:sw=2:ts=2:et:fileformat=dos
+-->

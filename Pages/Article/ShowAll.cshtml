@@ -1,0 +1,38 @@
+@page
+@model Videotheque.Pages.ArticlePage.ShowAll
+
+@{
+  Layout = "../Layout/_ShowAll.cshtml";
+  ViewData["Title"] = "Article Create";
+  ViewData["h1"] = "List of articles";
+}
+
+@section Thead {
+  <th>
+    @Html.DisplayNameFor(model => model.AbstractEntities[0].Barcode)
+  </th>
+  <th>
+    @Html.DisplayNameFor(model => model.AbstractEntities[0].Disc)
+  </th>
+  <th>
+    @Html.DisplayNameFor(model => model.AbstractEntities[0].Box)
+  </th>
+  <th>
+    @Html.DisplayNameFor(model => model.AbstractEntities[0].IsLost)
+  </th>
+  <th>
+    @Html.DisplayNameFor(model => model.AbstractEntities[0].CountBorrowing)
+  </th>
+  <th>
+    @Html.DisplayNameFor(model => model.AbstractEntities[0].Comment)
+  </th>
+  <th>
+    @Html.DisplayNameFor(model => model.AbstractEntities[0].BorrowingDate)
+  </th>
+  <th>
+    @Html.DisplayNameFor(model => model.AbstractEntities[0].ReturnDate)
+  </th>
+}
+
+<!-- vim:sw=2:ts=2:et:fileformat=dos
+-->

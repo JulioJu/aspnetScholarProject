@@ -1,0 +1,20 @@
+@page "{id:int}"
+@model Videotheque.Pages.ArticlePage.Edit
+
+@{
+  Layout = "../Layout/_CreateOrEdit.cshtml";
+  ViewData["Title"] = "Article Edit";
+  ViewData["h1"] = "Edit a Article";
+}
+
+@section Inputs {
+  <div class="form-group">
+    <label asp-for="@Model.AbstractEntity.Id" class="control-label" ></label>
+    <input type="text" asp-for="@Model.AbstractEntity.Id" class="form-control"
+        disabled />
+  </div>
+  @await Html.PartialAsync("_FormPartialView", Model.AbstractEntity )
+}
+
+<!-- vim:sw=2:ts=2:et:fileformat=dos
+-->

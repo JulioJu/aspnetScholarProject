@@ -10,7 +10,7 @@
 @Context.Request.Path
 
 <br />
-@if (@Context.Request.Path.ToString().Contains("/Create"))
+@if (@Context.Request.Path.Equals("/Customer/Create"))
 {
   @Model.CurrentRoute
   <br />

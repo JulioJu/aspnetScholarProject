@@ -1,0 +1,15 @@
+@page "{id:int}"
+@model Videotheque.Pages.ArticlePage.Delete
+
+@{
+  Layout = "../Layout/_Delete.cshtml";
+  ViewData["Title"] = "Article Delete";
+  ViewData["h1"] = "Delete a Article";
+}
+
+@section Delete {
+  @await Html.PartialAsync("_DetailsPartialView", Model.AbstractEntity)
+}
+
+<!-- vim:sw=2:ts=2:et:fileformat=dos
+-->

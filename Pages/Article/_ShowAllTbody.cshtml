@@ -1,0 +1,33 @@
+@using Videotheque.Data
+
+@{
+  Article item = (Article) ViewData["field"];
+}
+
+<td>
+  @Html.DisplayFor(modelItem => item.Barcode)
+</td>
+<td>
+  @Html.DisplayFor(modelItem => item.Disc)
+</td>
+<td>
+  @Html.DisplayFor(modelItem => item.Box)
+</td>
+<td>
+  @Html.DisplayFor(modelItem => item.IsLost)
+</td>
+<td>
+  @Html.DisplayFor(modelItem => item.CountBorrowing)
+</td>
+<td>
+  @Html.DisplayFor(modelItem => item.Comment)
+</td>
+<td>
+  @Html.DisplayFor(modelItem => item.BorrowingDate)
+</td>
+<td>
+  @Html.DisplayFor(modelItem => item.ReturnDate)
+</td>
+
+<!-- vim:sw=2:ts=2:et:fileformat=dos
+-->

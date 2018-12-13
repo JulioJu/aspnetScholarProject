@@ -13,6 +13,8 @@
       <tr>
         <th>ID</th>
         @RenderSection("Thead", required: true)
+        <th>Created Date</th>
+        <th>Updated Date</th>
         <th></th>
       </tr>
     </thead>
@@ -20,7 +22,7 @@
       @foreach (var field in Model.AbstractEntities)
       {
       <tr>
-        <td>@field.Id</td>
+        <td> @field.Id </td>
 
         @** Following use "_ShowAllTBody.cshtml" of the folder*
          *  where the Page that use the currant Layout is.
@@ -41,6 +43,9 @@
          *  where the current Layout is. We don't want that.
          *  @await Html.PartialAsync("./_ShowAllTbody.cshtml")
          *@
+
+         <td> @field.CreatedDate </td>
+         <td> @field.UpdatedDate </td>
 
         <td>
           <a asp-page="./Details" asp-route-id="@field.Id">details</a>
