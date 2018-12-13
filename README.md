@@ -17,6 +17,7 @@
   * [For Razor](#for-razor)
     * [1. Introduction Tutorial in ASP.NET Core documentation website](#1-introduction-tutorial-in-aspnet-core-documentation-website)
       * [Note about this tutorial](#note-about-this-tutorial)
+        * [Integrate Scaffolding code into my very well factorized code](#integrate-scaffolding-code-into-my-very-well-factorized-code)
       * [In Linux, example downloaded](#in-linux-example-downloaded)
     * [1. bis Tutorial from the EntityFramework documentation website](#1-bis-tutorial-from-the-entityframework-documentation-website)
     * [2. Contonso University sample in ASP.NET Core documentation website](#2-contonso-university-sample-in-aspnet-core-documentation-website)
@@ -345,6 +346,28 @@ at the section 2 very carefully.**
       1. https://docs.microsoft.com/fr-fr/aspnet/core/tutorials/razor-pages/model?view=aspnetcore-2.2&tabs=visual-studio-code
       2. https://docs.microsoft.com/fr-fr/aspnet/core/tutorials/razor-pages/page?view=aspnetcore-2.2
 
+##### Integrate Scaffolding code into my very well factorized code
+
+* First of all, see doc above
+
+* Actually, Scaffolding with the current code is broken. Simply
+    move `Pages/*` outside the project, then generate the code.
+    The error is:
+    ```
+    There was an error creating a DbContext :Pages/Abstract/DetailsAbstract.cs(14,45): error CS8107: Feature 'private protected' is not available in C# 7
+    .0. Please use language version 7.2 or greater.
+    ```
+
+* My code is very well factorized, but code generated is not.
+
+* Therefore use the code `./ScriptIntegrateScaffolding.sh NameOfNewEntity`
+    ***Customized to fit my needs, with script launched under a
+    NeoVim terminal, and with `neovim-remote`***
+
+* Then, manually change `_DetailsParialView.cshtml`, `_FormPartialView.cshtml`,
+    `_ShowAllTBody.cshtml`, `ShowAll.cshtml` according in what was Generated in
+    `../GeneratedEntity`
+
 #### In Linux, example downloaded
 * I've tested with
     https://github.com/aspnet/Docs/tree/master/aspnetcore/tutorials/razor-pages/razor-pages-start/2.2-stage-samples/RPmovieSQLiteNewField
@@ -609,6 +632,8 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
   "For Linux users RazorPagesMovie.Models.Movie.ID should be replaced by
 9. https://github.com/OmniSharp/omnisharp-roslyn/issues/1358
   RazorPagesMovie.Models.Movie.Id
+10. https://github.com/OmniSharp/omnisharp-roslyn/pull/1361
+11. https://github.com/OmniSharp/omnisharp-vim/issues/437
 
 # Credits
 
