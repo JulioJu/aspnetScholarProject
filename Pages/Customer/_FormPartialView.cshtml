@@ -1,10 +1,6 @@
 @using Videotheque.Data
 @model Customer
 
-@if (@Context.Request.Path.ToString().Contains("Edit"))
-{
-  <input asp-for="Id" type="hidden" />
-}
 <div class="form-group">
   <label asp-for="Firstname" class="control-label"></label>
   <input asp-for="Firstname" class="form-control" />

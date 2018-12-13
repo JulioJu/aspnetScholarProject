@@ -4,13 +4,15 @@
 @{
   Layout = "../Layout/_CreateOrEdit.cshtml";
   ViewData["Title"] = "Customer Edit";
-}
-
-@section h1 {
-  <span>Edit a Customer</span>
+  ViewData["h1"] = "Edit a Customer";
 }
 
 @section Inputs {
+  <div class="form-group">
+    <label asp-for="@Model.AbstractEntity.Id" class="control-label" ></label>
+    <input type="text" asp-for="@Model.AbstractEntity.Id" class="form-control"
+        disabled />
+  </div>
   @await Html.PartialAsync("_FormPartialView", Model.AbstractEntity )
 }
 

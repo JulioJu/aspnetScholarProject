@@ -7,8 +7,8 @@ namespace Videotheque.Pages.Abstract
   using Videotheque.Data;
 
   public abstract class EditAbstract<TAbstractEntity> :
-    DetailsAbstract<TAbstractEntity>
-    where TAbstractEntity : AbstractEntity
+      DetailsOrDeleteAbstract<TAbstractEntity>
+      where TAbstractEntity : AbstractEntity
   {
     protected EditAbstract(AppDbContext db, DbSet<TAbstractEntity> tDbSet)
       : base(db, tDbSet)

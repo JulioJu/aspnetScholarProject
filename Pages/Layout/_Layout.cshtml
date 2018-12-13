@@ -10,9 +10,8 @@
 @Context.Request.Path
 
 <br />
-@if (@Context.Request.Path.Equals("/Customer/Create"))
+@if (@Context.Request.Path.ToString().Contains("/Create"))
 {
-  <span>From "Customer/Create.cshtml.cs": </span>
   @Model.CurrentRoute
   <br />
 }

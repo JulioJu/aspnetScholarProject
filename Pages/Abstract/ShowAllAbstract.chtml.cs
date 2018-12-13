@@ -33,20 +33,6 @@ namespace Videotheque.Pages.Abstract
         await this._tDbSet.AsNoTracking().ToListAsync().ConfigureAwait(false);
     }
 
-    public async Task<IActionResult> OnPostDeleteAsync(int id)
-    {
-      var abstractEntity = await this._tDbSet.FindAsync(id)
-        .ConfigureAwait(false);
-
-      if (abstractEntity != null)
-      {
-        this._tDbSet.Remove(abstractEntity);
-        await this._db.SaveChangesAsync().ConfigureAwait(false);
-      }
-
-      return base.RedirectToPage();
-    }
-
   }
 }
 

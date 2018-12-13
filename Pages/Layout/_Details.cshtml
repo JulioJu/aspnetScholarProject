@@ -1,0 +1,15 @@
+@{
+  Layout = "./_Layout.cshtml";
+}
+
+
+<div>
+  @RenderSection("Details", required: true)
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.AbstractEntity.Id">Edit</a> |
+    <a asp-page="./ShowAll">Back to List</a>
+</div>
+
+<!-- vim:sw=2:ts=2:et:fileformat=dos
+-->

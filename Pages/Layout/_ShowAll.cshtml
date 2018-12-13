@@ -2,7 +2,6 @@
   Layout = "./_Layout.cshtml";
 }
 
-<h1> @RenderSection("h1", required: true) </h1>
 @if (!String.IsNullOrEmpty(Model.Message))
 {
 <h3>Msg: @Model.Message</h3>
@@ -44,9 +43,9 @@
          *@
 
         <td>
+          <a asp-page="./Details" asp-route-id="@field.Id">details</a>
           <a asp-page="./Edit" asp-route-id="@field.Id">edit</a>
-          <button type="submit" asp-page-handler="delete"
-                                asp-route-id="@field.Id">delete</button>
+          <a asp-page="./Delete" asp-route-id="@field.Id">delete</a>
         </td>
       </tr>
       }
@@ -54,7 +53,6 @@
   </table>
 
 </form>
-@RenderBody()
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->

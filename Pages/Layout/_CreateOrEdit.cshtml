@@ -1,12 +1,6 @@
 @{
- Layout = "./_Layout";
+ Layout = "./_Layout.cshtml";
 }
-
-<h1>
-  @RenderSection("h1", required: true)
-</h1>
-
-<hr />
 
 <div class="row">
   <div class="col-md-4">
@@ -21,7 +15,7 @@
 </div>
 
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./ShowAll">Back to List</a>
 </div>
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
