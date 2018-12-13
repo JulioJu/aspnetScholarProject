@@ -12,8 +12,6 @@ namespace Videotheque.Pages.Abstract
   public abstract class ShowAllAbstract<TAbstractEntity> : PageModel
     where TAbstractEntity : AbstractEntity
   {
-    private readonly AppDbContext _db;
-
     private readonly DbSet<TAbstractEntity> _tDbSet;
 
     public IList<TAbstractEntity> AbstractEntities { get; private set; }
@@ -21,9 +19,8 @@ namespace Videotheque.Pages.Abstract
     [TempData]
     public string Message { get; set; }
 
-    protected ShowAllAbstract(AppDbContext db, DbSet<TAbstractEntity> tDbSet)
+    protected ShowAllAbstract(DbSet<TAbstractEntity> tDbSet)
     {
-      this._db = db;
       this._tDbSet = tDbSet;
     }
 

@@ -1,22 +1,22 @@
 @{
-  Layout = "./_Layout.cshtml";
+  Layout = "./_Details.cshtml";
 }
 
+@section h2 {
+  <h2>Are you sure you want to delete this?</h2>
+}
 
-<h2>Are you sure you want to delete this?</h2>
-
-<div>
+@section Details{
   @RenderSection("Delete", required: true)
-</div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.AbstractEntity.Id">Edit</a> |
-    <a asp-page="./ShowAll">Back to List</a>
-</div>
-<br />
-<form method="post">
-<input type="submit" value="delete" class="btn btn-danger"
-    asp-page-handler="delete" asp-route-id="@Model.AbstractEntity.Id" >
-</form>
+}
+
+@section DeleteButton {
+  <br />
+  <form method="post">
+  <input type="submit" value="delete" class="btn btn-danger"
+      asp-page-handler="delete" asp-route-id="@Model.AbstractEntity.Id" >
+  </form>
+}
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->

@@ -6,7 +6,7 @@ namespace Videotheque.Pages.Abstract
   using Microsoft.EntityFrameworkCore;
   using Videotheque.Data;
 
-  public abstract class DetailsOrDeleteAbstract<TAbstractEntity> : PageModel
+  public abstract class DetailsAbstract<TAbstractEntity> : PageModel
       where TAbstractEntity : AbstractEntity
   {
     // SA1401: Field must be private
@@ -20,7 +20,7 @@ namespace Videotheque.Pages.Abstract
     [BindProperty]
     public TAbstractEntity AbstractEntity { get; set; }
 
-    private protected DetailsOrDeleteAbstract(AppDbContext db,
+    private protected DetailsAbstract(AppDbContext db,
         DbSet<TAbstractEntity> tDbSet)
     {
       this._db = db;
@@ -43,26 +43,6 @@ namespace Videotheque.Pages.Abstract
         return base.NotFound();
       }
       return base.Page();
-    }
-
-    public async Task<IActionResult> OnPostDeleteAsync(int? id)
-    {
-      if (id == null)
-      {
-        return base.NotFound();
-      }
-
-      this.AbstractEntity = await this._tDbSet.FindAsync(id)
-        .ConfigureAwait(false);
-
-      if (this.AbstractEntity != null)
-      {
-        this._tDbSet.Remove(this.AbstractEntity);
-        await this._db.SaveChangesAsync()
-          .ConfigureAwait(false);
-      }
-
-      return base.RedirectToPage("./ShowAll");
     }
 
   }

@@ -624,8 +624,8 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
       <Rule Id="UseConfigureAwait" Action="Warning" />
     </Rules>
     ```
-* Todo: read and maybe apply
-    https://docs.microsoft.com/en-us/aspnet/core/tutorials/razor-pages/page?view=aspnetcore-2.1
+* ~~Todo: read and maybe apply
+    https://docs.microsoft.com/en-us/aspnet/core/tutorials/razor-pages/page?view=aspnetcore-2.1~~ (Done)
 
 * Add in our code some interesting code of :
     1. https://github.com/aspnet/Docs/tree/master/aspnetcore/tutorials/razor-pages/razor-pages-start/2.2-stage-samples/RPmovieSQLiteNewField

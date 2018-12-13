@@ -3,10 +3,10 @@ namespace Videotheque.Pages.CustomerPage
   using Videotheque.Data;
   using Videotheque.Pages.Abstract;
 
-  public class ShowAll : ShowAllAbstract<Customer>
+  public sealed class Delete : DeleteAbstract<Customer>
   {
-    public ShowAll(AppDbContext db)
-      : base(db.Customers)
+    public Delete(AppDbContext db)
+      : base(db, db.Customers)
     {
     }
 
