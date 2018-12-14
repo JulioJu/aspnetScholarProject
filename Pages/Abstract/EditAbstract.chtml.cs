@@ -15,6 +15,15 @@ namespace Videotheque.Pages.Abstract
     {
     }
 
+    // Detects concurrency exceptions when the one client
+    // deletes the movie and the other client posts changes to the movie.
+    // The previous code detects concurrency exceptions when the one client
+    // deletes the movie and the other client posts changes to the movie.
+    private bool AbstractEntityExist(int id)
+    {
+      return base._tDbSet.Any(e => e.Id == id);
+    }
+
     public async Task<IActionResult> OnPostAsync()
     {
       if (!base.ModelState.IsValid)
@@ -43,10 +52,6 @@ namespace Videotheque.Pages.Abstract
       return base.RedirectToPage("./ShowAll");
     }
 
-    private bool AbstractEntityExist(int id)
-    {
-      return base._tDbSet.Any(e => e.Id == id);
-    }
   }
 }
 
