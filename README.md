@@ -370,7 +370,8 @@ at the section 2 very carefully.**
 
 #### In Linux, example downloaded
 * I've tested with
-    https://github.com/aspnet/Docs/tree/master/aspnetcore/tutorials/razor-pages/razor-pages-start/2.2-stage-samples/RPmovieSQLiteNewField
+    https://github.com/aspnet/Docs/tree/master/aspnetcore/tutorials/razor-pages/razor-pages-start/2.2-stage-samples/RPmovieSearch
+    (the more complete)
 * Warning:
     https://github.com/aspnet/Docs/issues/9863
     « For Linux users RazorPagesMovie.Models.Movie.ID should be replaced by
@@ -419,6 +420,7 @@ at the section 2 very carefully.**
 
 #### In Linux, example downloaded
 https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/cu
+  (the more complete)
 
 * Download it thanks:
     `$ svn co https://github.com/aspnet/Docs/trunk/aspnetcore/data/ef-rp/intro/samples/cu`
@@ -426,7 +428,7 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
     `$ rm appsettings1.json appsettings2.json ContosoUniversity1_csproj`
 * As LocalDB isn't available on Linux Platforms:
     in appsettings.json change the `ConnectionString` for example like this
-    `"DefaultConnection":"Server=localhost; Database=sampleMSUniversity; user id=SA; password=XXXXXX`
+    `"DefaultConnection":"Server=localhost; Database=sampleMSUniversity; user id=SA; password=XXXXXX"`
     (see explanations above)
 * Run following command to create the Database:
     `$ dotnet ef database update`
@@ -437,6 +439,11 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
     * See also https://stackoverflow.com/questions/50825242/the-type-or-namespace-name-hosting-does-not-exist-in-the-namespace-microsoft
 * Run the app:
     `$ dotnet run`
+
+* If Migrations files are deleted, then generated again thanks command
+    `dotnet ef update`
+    I've seen than id has defined in uppercase (`ID`). Maybe see
+    https://github.com/aspnet/Docs/issues/9863
 
 ## Model Validation
 * https://docs.microsoft.com/en-us/aspnet/core/mvc/models/validation?view=aspnetcore-2.2
