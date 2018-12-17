@@ -27,15 +27,36 @@ namespace Videotheque.Pages.Abstract
       this._tDbSet = tDbSet;
     }
 
-    public async Task<IActionResult> OnGetAsync(int? id)
+    public delegate Task<TAbstractEntity> PerformSearchInDatabase(int? id);
+
+    public virtual async Task<TAbstractEntity> PerformSearchInDatabaseFunc(int? id)
+    {
+      return await this._tDbSet
+        .FindAsync(id)
+        .ConfigureAwait(false);
+    }
+
+    // * Could not have two OnGetAsync in a same function, even with
+    // parametric overload
+    // * PerformSearchInDatabase could not be nullable, because
+    // we are in a Generic function.
+    // * PerformSearchInDatabase could not be assign to a default
+    // callback, default parameter should be evaluated at compiled time.
+    public async Task<IActionResult> OnGetAsyncWithFunc(int? id,
+        PerformSearchInDatabase performSearchInDatabase)
     {
       if (id == null)
       {
         return base.NotFound();
       }
 
-      this.AbstractEntity = await this._tDbSet
-        .FirstOrDefaultAsync(m => m.Id == id)
+      // FirstOrDefaultAsync is more efficient than SingleOrDefaultAsync at
+      // fetching one entity:
+      // In much of the scaffolded code, FindAsync can be used in place of
+      // FirstOrDefaultAsync.  But if you want to Include other entities, then
+      // FindAsync is no longer appropriate.
+      // https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/crud?view=aspnetcore-2.2
+      this.AbstractEntity = await performSearchInDatabase(id)
         .ConfigureAwait(false);
 
       if (this.AbstractEntity == null)
@@ -43,6 +64,12 @@ namespace Videotheque.Pages.Abstract
         return base.NotFound();
       }
       return base.Page();
+    }
+
+    public virtual async Task<IActionResult> OnGetAsync(int? id)
+    {
+      return await this.OnGetAsyncWithFunc(id, this.PerformSearchInDatabaseFunc)
+        .ConfigureAwait(false);
     }
 
   }

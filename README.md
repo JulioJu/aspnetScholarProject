@@ -29,6 +29,7 @@
 * [Page/View, Layout, Partial View, View Component](#pageview-layout-partial-view-view-component)
   * [Notes](#notes)
 * [Other interesting doc](#other-interesting-doc)
+* [Inheritance](#inheritance-1)
 * [Issue created by me on GitHub](#issue-created-by-me-on-github)
 * [Credits](#credits)
 * [TODO](#todo)
@@ -72,14 +73,18 @@ Il aimerait bien disposer des fonctionnalités suivantes :
         seems to be already "Information".
         Do not put the `ConnectionStrings` in this file (seems not be read).
 
-* OmniSharp Vim, see my issue at:
+* To start well with OmniSharp Vim, see my issue at:
   1. https://github.com/OmniSharp/omnisharp-vim/issues/423
   2. https://github.com/OmniSharp/omnisharp-vim/issues/425 :
   3. https://github.com/OmniSharp/omnisharp-vim/issues/427
-  4. https://github.com/OmniSharp/omnisharp-roslyn/issues/1341
-  5. https://github.com/OmniSharp/omnisharp-roslyn/issues/129
   6. https://github.com/OmniSharp/omnisharp-vim/issues/434
   (do not forget to remove package `mono` installed by the Linux Distro).
+
+  * There are others issues about OmniSharp, but not important to start
+      on OmniSharp
+  * Warning OmniSharp needs 2.1.301 to works perfectly, and this project
+      use 2.2.200, we can't use `global.json`. Therefore, actually do not
+      forget to patch OmniSharp as explained in issue 434
 
 * Use the following command line before compile or start the code:
     ```sh
@@ -622,6 +627,23 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
     * Do not forget to update also tag the `LangVersion` in the `csprog` file.
     * Do not forget to update also the  attribute `ToolsVersion` of the root tag
         `RuleSet` in the `ruleset` file.
+
+# Inheritance
+
+* This code use all powerful c# inheritance.
+    See for instance ./Pages/Abstract/DetailsAbstract.cshtml.cs and
+    ./Pages/Customer/Details.cshtml.cs
+
+* There are examples about `delegate`, `virtual`, genericity, `Task<T>`, async/await
+
+* I have noticed than:
+    * Could not have two OnGetAsync in a same function, even with
+        parametric overload
+    * PerformSearchInDatabase could not be nullable, because
+        we are in a Generic function.
+    * PerformSearchInDatabase could not be assign to a default
+        callback, default parameter should be evaluated at compiled time.
+    * (see ./Pages/Abstract/DetailsAbstract.cshtml.cs for further examples)
 
 # Issue created by me on GitHub
 
