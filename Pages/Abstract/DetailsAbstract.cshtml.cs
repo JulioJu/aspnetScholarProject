@@ -1,6 +1,7 @@
 namespace Videotheque.Pages.Abstract
 {
   using System.Threading.Tasks;
+  using Microsoft.AspNetCore.Http;
   using Microsoft.AspNetCore.Mvc;
   using Microsoft.AspNetCore.Mvc.RazorPages;
   using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,8 @@ namespace Videotheque.Pages.Abstract
   public abstract class DetailsAbstract<TAbstractEntity> : PageModel
       where TAbstractEntity : AbstractEntity
   {
+    private string CurrentRoute { get; }
+
     // SA1401: Field must be private
     #pragma warning disable SA1401
     private protected readonly AppDbContext _db;
@@ -20,9 +23,14 @@ namespace Videotheque.Pages.Abstract
     [BindProperty]
     public TAbstractEntity AbstractEntity { get; set; }
 
+    // IHttpContextAccessor needs to be injectected in Startup.cs
     private protected DetailsAbstract(AppDbContext db,
-        DbSet<TAbstractEntity> tDbSet)
+        DbSet<TAbstractEntity> tDbSet,
+        IHttpContextAccessor httpContextAccessor)
     {
+      this.CurrentRoute = Microsoft.AspNetCore.Http.Extensions
+        .UriHelper.GetEncodedPathAndQuery(
+          httpContextAccessor.HttpContext.Request);
       this._db = db;
       this._tDbSet = tDbSet;
     }
@@ -47,6 +55,11 @@ namespace Videotheque.Pages.Abstract
     private protected async Task<IActionResult> OnGetAsyncWithFunc(int? id,
         PerformSearchInDatabase performSearchInDatabase)
     {
+      if (this.CurrentRoute.EndsWith("/Create",
+            System.StringComparison.InvariantCultureIgnoreCase))
+      {
+        return base.Page();
+      }
       if (id == null)
       {
         return base.NotFound();

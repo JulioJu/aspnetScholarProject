@@ -643,6 +643,14 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
         maybe for Thymeleaf
 
 
+* To get the URL
+    * In a Razor Page use `@Context.WhatEver`
+    * In a Razor PageModel, you must inject the context in the constructor
+        named `IHttpContextAccessor`
+    * See examples in the current code.
+    * For MVC, maybe see also
+        https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/routing?view=aspnetcore-2.2
+
 # Inheritance
 
 * This code use all powerful c# inheritance.

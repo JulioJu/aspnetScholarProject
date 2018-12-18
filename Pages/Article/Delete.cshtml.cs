@@ -1,12 +1,13 @@
 namespace Videotheque.Pages.ArticlePage
 {
+  using Microsoft.AspNetCore.Http;
   using Videotheque.Data;
   using Videotheque.Pages.Abstract;
 
   public sealed class Delete : DeleteAbstract<Article>
   {
-    public Delete(AppDbContext db)
-      : base(db, db.Articles)
+    public Delete(AppDbContext db, IHttpContextAccessor httpContextAccessor)
+      : base(db, db.Articles, httpContextAccessor)
     {
     }
 

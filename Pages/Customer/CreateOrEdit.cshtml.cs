@@ -7,18 +7,12 @@ namespace Videotheque.Pages.CustomerPage
   using Videotheque.Data;
   using Videotheque.Pages.Abstract;
 
-  public sealed class Create : CreateAbstract<Customer>
+  public sealed class CreateOrEdit : CreateOrEditAbstract<Customer>
   {
-    public string CurrentRoute { get; }
-
-    // IHttpContextAccessor needs to be injectected in Startup.cs
-    public Create(AppDbContext db, IHttpContextAccessor httpContextAccessor)
-      : base(db, db.Customers)
+    public CreateOrEdit(AppDbContext db,
+        IHttpContextAccessor httpContextAccessor)
+      : base(db, db.Customers, httpContextAccessor)
     {
-      this.CurrentRoute = Microsoft.AspNetCore.Http.Extensions
-        .UriHelper.GetEncodedPathAndQuery(
-          httpContextAccessor.HttpContext.Request);
-      System.Console.WriteLine(this.CurrentRoute);
     }
 
     private protected override async Task<bool> PerformTestOverpostingFunc()
@@ -35,15 +29,21 @@ namespace Videotheque.Pages.CustomerPage
         .ConfigureAwait(false);
     }
 
-    public async override Task<IActionResult> OnPostAsync()
+    public async override Task<IActionResult> OnPostCreateAsync()
     {
-      return await base.OnPostAsyncWithFunc(this.PerformTestOverpostingFunc)
+      return await base.OnPostCreateAsyncWithFunc(this.PerformTestOverpostingFunc)
+        .ConfigureAwait(false);
+    }
+
+    public async override Task<IActionResult> OnPostEditAsync()
+    {
+      return await base.OnPostEditAsyncWithFunc(this.PerformTestOverpostingFunc)
         .ConfigureAwait(false);
     }
 
     public async Task<IActionResult> OnPostJoinListAsync()
     {
-      return await this.OnPostAsync().ConfigureAwait(false);
+      return await this.OnPostCreateAsync().ConfigureAwait(false);
     }
 
     public async Task<IActionResult> OnPostJoinListUCAsync()

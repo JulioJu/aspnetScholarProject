@@ -1,6 +1,7 @@
 namespace Videotheque.Pages.CustomerPage
 {
   using System.Threading.Tasks;
+  using Microsoft.AspNetCore.Http;
   using Microsoft.AspNetCore.Mvc;
   using Microsoft.EntityFrameworkCore;
   using Videotheque.Data;
@@ -8,8 +9,8 @@ namespace Videotheque.Pages.CustomerPage
 
   public sealed class Details : DetailsAbstract<Customer>
   {
-    public Details(AppDbContext db)
-      : base(db, db.Customers)
+    public Details(AppDbContext db, IHttpContextAccessor httpContextAccessor)
+      : base(db, db.Customers, httpContextAccessor)
     {
     }
 

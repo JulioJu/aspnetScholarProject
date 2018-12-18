@@ -4,18 +4,9 @@
 
 @RenderBody()
 
-<br />
-@Context.Request.Host
-<br />
-@Context.Request.Path
-
-<br />
-@if (@Context.Request.Path.Equals("/Customer/Create"))
+@if (!@Context.Request.Path.ToString().EndsWith("/Create",
+  System.StringComparison.InvariantCultureIgnoreCase))
 {
-  @Model.CurrentRoute
-  <br />
-}
-else {
   <a asp-page="./Create">Create</a>
 }
 

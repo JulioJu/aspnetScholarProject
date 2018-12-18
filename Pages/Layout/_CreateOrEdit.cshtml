@@ -8,7 +8,16 @@
       <div asp-validation-summary="ModelOnly" class="text-danger"></div>
       @RenderSection("Inputs", required: true)
       <div class="form-group">
-        <input type="submit" value="Default" class="btn btn-primary" />
+        @if (@Context.Request.Path.ToString().Contains("/Edit/"))
+        {
+          <input type="submit" value="Edit" class="btn btn-danger"
+              asp-page-handler="edit"
+              asp-route-id="@Model.AbstractEntity.Id" >
+        }
+        else {
+          <input type="submit" value="Create" class="btn btn-danger"
+              asp-page-handler="create" >
+        }
       </div>
     </form>
   </div>

@@ -1,15 +1,17 @@
 namespace Videotheque.Pages.ArticlePage
 {
   using System.Threading.Tasks;
+  using Microsoft.AspNetCore.Http;
   using Microsoft.AspNetCore.Mvc;
   using Videotheque.Data;
   using Videotheque.Pages.Abstract;
 
-  public sealed class Create : CreateAbstract<Article>
+  public sealed class CreateOrEdit : CreateOrEditAbstract<Article>
   {
     // IHttpContextAccessor needs to be injectected in Startup.cs
-    public Create(AppDbContext db)
-      : base(db, db.Articles)
+    public CreateOrEdit(AppDbContext db,
+        IHttpContextAccessor httpContextAccessor)
+      : base(db, db.Articles, httpContextAccessor)
     {
     }
 
@@ -29,9 +31,16 @@ namespace Videotheque.Pages.ArticlePage
         .ConfigureAwait(false);
     }
 
-    public async override Task<IActionResult> OnPostAsync()
+    public async override Task<IActionResult> OnPostCreateAsync()
     {
-      return await base.OnPostAsyncWithFunc(this.PerformTestOverpostingFunc)
+      return await base.OnPostCreateAsyncWithFunc(
+          this.PerformTestOverpostingFunc)
+        .ConfigureAwait(false);
+    }
+
+    public async override Task<IActionResult> OnPostEditAsync()
+    {
+      return await base.OnPostEditAsyncWithFunc(this.PerformTestOverpostingFunc)
         .ConfigureAwait(false);
     }
 

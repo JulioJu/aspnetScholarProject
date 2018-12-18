@@ -1,6 +1,7 @@
 namespace Videotheque.Pages.Abstract
 {
   using System.Threading.Tasks;
+  using Microsoft.AspNetCore.Http;
   using Microsoft.AspNetCore.Mvc;
   using Microsoft.EntityFrameworkCore;
   using Videotheque.Data;
@@ -9,8 +10,10 @@ namespace Videotheque.Pages.Abstract
       DetailsAbstract<TAbstractEntity>
       where TAbstractEntity : AbstractEntity
   {
-    protected DeleteAbstract(AppDbContext db, DbSet<TAbstractEntity> tDbSet)
-      : base(db, tDbSet)
+    protected DeleteAbstract(AppDbContext db,
+        DbSet<TAbstractEntity> tDbSet,
+        IHttpContextAccessor httpContextAccessor)
+      : base(db, tDbSet, httpContextAccessor)
     {
     }
 

@@ -19,7 +19,7 @@ namespace Videotheque.Pages.Abstract
     [TempData]
     public string Message { get; set; }
 
-    protected ShowAllAbstract(DbSet<TAbstractEntity> tDbSet)
+    private protected ShowAllAbstract(DbSet<TAbstractEntity> tDbSet)
     {
       this._tDbSet = tDbSet;
     }

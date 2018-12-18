@@ -1,12 +1,13 @@
 namespace Videotheque.Pages.CustomerPage
 {
+  using Microsoft.AspNetCore.Http;
   using Videotheque.Data;
   using Videotheque.Pages.Abstract;
 
   public sealed class Delete : DeleteAbstract<Customer>
   {
-    public Delete(AppDbContext db)
-      : base(db, db.Customers)
+    public Delete(AppDbContext db, IHttpContextAccessor httpContextAccessor)
+      : base(db, db.Customers, httpContextAccessor)
     {
     }
 
