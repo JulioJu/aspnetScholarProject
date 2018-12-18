@@ -23,6 +23,8 @@ namespace Videotheque.Pages.Abstract
     [BindProperty]
     public TAbstractEntity AbstractEntity { get; set; }
 
+    public string DeleteErrorMessage { get; set; }
+
     // IHttpContextAccessor needs to be injectected in Startup.cs
     private protected DetailsAbstract(AppDbContext db,
         DbSet<TAbstractEntity> tDbSet,
@@ -41,9 +43,19 @@ namespace Videotheque.Pages.Abstract
     private protected virtual async
       Task<TAbstractEntity> PerformSearchInDatabaseFunc(int? id)
     {
-      return await this._tDbSet
-        .FindAsync(id)
-        .ConfigureAwait(false);
+      if (this.CurrentRoute.Contains("/Delete/",
+            System.StringComparison.InvariantCultureIgnoreCase))
+      {
+        return await this._tDbSet
+          .AsNoTracking()
+          .FirstOrDefaultAsync(m => m.Id == id)
+          .ConfigureAwait(false);
+      }
+      else {
+        return await this._tDbSet
+          .FindAsync(id)
+          .ConfigureAwait(false);
+      }
     }
 
     // * Could not have two OnGetAsync in a same function, even with
@@ -53,7 +65,8 @@ namespace Videotheque.Pages.Abstract
     // * PerformSearchInDatabase could not be assign to a default
     // callback, default parameter should be evaluated at compiled time.
     private protected async Task<IActionResult> OnGetAsyncWithFunc(int? id,
-        PerformSearchInDatabase performSearchInDatabase)
+        PerformSearchInDatabase performSearchInDatabase,
+        bool? saveChangesError = false)
     {
       if (this.CurrentRoute.EndsWith("/Create",
             System.StringComparison.InvariantCultureIgnoreCase))
@@ -78,12 +91,22 @@ namespace Videotheque.Pages.Abstract
       {
         return base.NotFound();
       }
+
+      if (this.CurrentRoute.Contains("/Delete/",
+            System.StringComparison.InvariantCultureIgnoreCase)
+          && saveChangesError.GetValueOrDefault())
+      {
+        DeleteErrorMessage = "Delete failed. Try again";
+      }
+
       return base.Page();
     }
 
-    public virtual async Task<IActionResult> OnGetAsync(int? id)
+    public virtual async Task<IActionResult> OnGetAsync(int? id,
+        bool? saveChangeErrors = false)
     {
-      return await this.OnGetAsyncWithFunc(id, this.PerformSearchInDatabaseFunc)
+      return await this.OnGetAsyncWithFunc(id, this.PerformSearchInDatabaseFunc,
+          saveChangeErrors)
         .ConfigureAwait(false);
     }
 

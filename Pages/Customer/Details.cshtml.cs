@@ -24,7 +24,8 @@ namespace Videotheque.Pages.CustomerPage
         .ConfigureAwait(false);
     }
 
-    public async override Task<IActionResult> OnGetAsync(int? id)
+    public override async Task<IActionResult> OnGetAsync(int? id,
+        bool? saveChangeErrors = false)
     {
       return await base.OnGetAsyncWithFunc(id, this.PerformSearchInDatabaseFunc)
         .ConfigureAwait(false);
