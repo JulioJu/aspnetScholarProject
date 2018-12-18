@@ -27,18 +27,35 @@ namespace Videotheque.Pages.Abstract
       this._tDbSet = tDbSet;
     }
 
-    public async Task<IActionResult> OnPostAsync()
+    private protected delegate Task<bool>
+      PerformTestOverposting();
+
+    private protected abstract Task<bool>
+      PerformTestOverpostingFunc();
+
+    private protected async Task<IActionResult>
+      OnPostAsyncWithFunc(PerformTestOverposting peformTestOverposting)
     {
       if (!base.ModelState.IsValid)
       {
         return base.Page();
       }
 
-      this._tDbSet.Add(this.AbstractEntity);
-      await this._db.SaveChangesAsync().ConfigureAwait(false);
-      this.Message = $"AbstractEntity {this.AbstractEntity.Id} added";
-      return base.RedirectToPage("./ShowAll");
+      System.Console.WriteLine("toto");
+
+      if (await peformTestOverposting().ConfigureAwait(false))
+      {
+        System.Console.WriteLine("toto2");
+        this._tDbSet.Add(this.AbstractEntity);
+        await this._db.SaveChangesAsync().ConfigureAwait(false);
+        this.Message = $"AbstractEntity {this.AbstractEntity.Id} added";
+        return base.RedirectToPage("./ShowAll");
+      }
+
+      return null;
     }
+
+    public abstract Task<IActionResult> OnPostAsync();
 
   }
 }

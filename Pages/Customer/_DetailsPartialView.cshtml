@@ -38,5 +38,32 @@
   @Html.DisplayFor(model => model.Email)
 </dd>
 
+<dt>
+@Html.DisplayNameFor(model => model.CurrentlyBorrowed)
+</dt>
+<dd>
+<table class="table">
+  <tr>
+    <th>Barcode</th>
+    <th>Borrowing Date</th>
+    <th>Returning Date</th>
+  </tr>
+  @foreach (var item in Model.CurrentlyBorrowed)
+  {
+  <tr>
+    <td>
+      @Html.DisplayFor(modelItem => item.Barcode)
+    </td>
+    <td>
+      @Html.DisplayFor(modelItem => item.BorrowingDate)
+    </td>
+    <td>
+      @Html.DisplayFor(modelItem => item.ReturnDate)
+    </td>
+  </tr>
+  }
+</table>
+</dd>
+
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->

@@ -27,9 +27,11 @@ namespace Videotheque.Pages.Abstract
       this._tDbSet = tDbSet;
     }
 
-    public delegate Task<TAbstractEntity> PerformSearchInDatabase(int? id);
+    private protected delegate
+      Task<TAbstractEntity> PerformSearchInDatabase(int? id);
 
-    public virtual async Task<TAbstractEntity> PerformSearchInDatabaseFunc(int? id)
+    private protected virtual async
+      Task<TAbstractEntity> PerformSearchInDatabaseFunc(int? id)
     {
       return await this._tDbSet
         .FindAsync(id)
@@ -42,7 +44,7 @@ namespace Videotheque.Pages.Abstract
     // we are in a Generic function.
     // * PerformSearchInDatabase could not be assign to a default
     // callback, default parameter should be evaluated at compiled time.
-    public async Task<IActionResult> OnGetAsyncWithFunc(int? id,
+    private protected async Task<IActionResult> OnGetAsyncWithFunc(int? id,
         PerformSearchInDatabase performSearchInDatabase)
     {
       if (id == null)

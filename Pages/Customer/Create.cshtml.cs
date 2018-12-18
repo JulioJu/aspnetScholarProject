@@ -21,6 +21,26 @@ namespace Videotheque.Pages.CustomerPage
       System.Console.WriteLine(this.CurrentRoute);
     }
 
+    private protected override async Task<bool> PerformTestOverpostingFunc()
+    {
+      return await base.TryUpdateModelAsync<Customer>(
+          base.AbstractEntity,
+          "customer",   // Prefix for form value.
+          s => s.Firstname,
+          s => s.Lastname,
+          s => s.Society,
+          s => s.Address,
+          s => s.Phone,
+          s => s.Email)
+        .ConfigureAwait(false);
+    }
+
+    public async override Task<IActionResult> OnPostAsync()
+    {
+      return await base.OnPostAsyncWithFunc(this.PerformTestOverpostingFunc)
+        .ConfigureAwait(false);
+    }
+
     public async Task<IActionResult> OnPostJoinListAsync()
     {
       return await this.OnPostAsync().ConfigureAwait(false);

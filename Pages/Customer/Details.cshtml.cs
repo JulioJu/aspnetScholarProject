@@ -13,7 +13,8 @@ namespace Videotheque.Pages.CustomerPage
     {
     }
 
-    public async override Task<Customer> PerformSearchInDatabaseFunc(int? id)
+    private protected async override Task<Customer>
+      PerformSearchInDatabaseFunc(int? id)
     {
       return base.AbstractEntity = await base._tDbSet
         .Include(s => s.CurrentlyBorrowed)

@@ -424,8 +424,12 @@ at the section 2 very carefully.**
     presented in the section above.
 
 #### In Linux, example downloaded
-https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/cu
-  (the more complete)
+https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/cu21
+  (the more complete, but CRUD not work very well, I don't know why)
+  (Be careful
+  https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/cu
+  doesn't work)
+  TODO: maybe post an Issue
 
 * Download it thanks:
     `$ svn co https://github.com/aspnet/Docs/trunk/aspnetcore/data/ef-rp/intro/samples/cu`
@@ -433,7 +437,7 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
     `$ rm appsettings1.json appsettings2.json ContosoUniversity1_csproj`
 * As LocalDB isn't available on Linux Platforms:
     in appsettings.json change the `ConnectionString` for example like this
-    `"DefaultConnection":"Server=localhost; Database=sampleMSUniversity; user id=SA; password=XXXXXX"`
+    `"SchoolContext":"Server=localhost; Database=sampleMSUniversity; user id=SA; password=XXXXXX"`
     (see explanations above)
 * Run following command to create the Database:
     `$ dotnet ef database update`
