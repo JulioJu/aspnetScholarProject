@@ -632,6 +632,17 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
     * Do not forget to update also the  attribute `ToolsVersion` of the root tag
         `RuleSet` in the `ruleset` file.
 
+* tag helper `form` can't handle HTTP PUT and DELETE method, because
+    PUT and DELETE are not valid on HTML forms
+    https://softwareengineering.stackexchange.com/questions/114156/why-are-there-are-no-put-and-delete-methods-on-html-forms/264735
+    * If you want consume PUT or DELETE Restful API, send POST to back end,
+        then send another PUT or DLETe API. Otherwise, use JavaScript.
+        Probably, there are workaroynd with `HTML Helper`, but not so
+        interesting.
+        Seems to be the same for all non JavaScript Client Framework, except
+        maybe for Thymeleaf
+
+
 # Inheritance
 
 * This code use all powerful c# inheritance.

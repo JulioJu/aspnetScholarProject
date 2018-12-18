@@ -41,11 +41,8 @@ namespace Videotheque.Pages.Abstract
         return base.Page();
       }
 
-      System.Console.WriteLine("toto");
-
       if (await peformTestOverposting().ConfigureAwait(false))
       {
-        System.Console.WriteLine("toto2");
         this._tDbSet.Add(this.AbstractEntity);
         await this._db.SaveChangesAsync().ConfigureAwait(false);
         this.Message = $"AbstractEntity {this.AbstractEntity.Id} added";
