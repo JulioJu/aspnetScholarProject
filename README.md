@@ -376,6 +376,11 @@ at the section 2 very carefully.**
      (12/20/2018) generate `Article` Entity generate nonexistent fields
      in `Details.cshtml`. So strange.
 
+* Don't forget that
+    `base.ViewData["ForeignKeyId"] = new SelectList(base._db.DependentEntity, …)`
+    Isn't cool because it's not strongly typed.
+    See https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/update-related-data?view=aspnetcore-2.2#customize-the-courses-pages
+
 #### In Linux, example downloaded
 * I've tested with
     https://github.com/aspnet/Docs/tree/master/aspnetcore/tutorials/razor-pages/razor-pages-start/2.2-stage-samples/RPmovieSearch
@@ -427,12 +432,9 @@ at the section 2 very carefully.**
     presented in the section above.
 
 #### In Linux, example downloaded
-https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/cu21
-  (the more complete, but CRUD not work very well, I don't know why)
-  (Be careful
-  https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/cu
-  doesn't work)
-  TODO: maybe post an Issue
+https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/cu
+  (the more complete, referenced in the doc)
+  * Note than https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/cu21 doesn't work
 
 * Download it thanks:
     `$ svn co https://github.com/aspnet/Docs/trunk/aspnetcore/data/ef-rp/intro/samples/cu`
@@ -440,7 +442,7 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
     `$ rm appsettings1.json appsettings2.json ContosoUniversity1_csproj`
 * As LocalDB isn't available on Linux Platforms:
     in appsettings.json change the `ConnectionString` for example like this
-    `"SchoolContext":"Server=localhost; Database=sampleMSUniversity; user id=SA; password=XXXXXX"`
+    `"DefaultConnection":"Server=localhost; Database=sampleMSUniversity; user id=SA; password=XXXXXX"`
     (see explanations above)
 * Run following command to create the Database:
     `$ dotnet ef database update`
@@ -449,6 +451,9 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
     * from : `<PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />`
     * to: `<PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.0" />`
     * See also https://stackoverflow.com/questions/50825242/the-type-or-namespace-name-hosting-does-not-exist-in-the-namespace-microsoft
+    * Otherwise we have error: `The type or namespace name 'Hosting' does not
+        exist in the namespace 'Microsoft.AspNetCore.Razor' (are you missing an
+        assembly reference?)`
 * Run the app:
     `$ dotnet run`
 
@@ -712,6 +717,14 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
     especially:
       * From `Startup.cs`
     2.  https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/cu
+
+* TODO
+  * https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/read-related-data?view=aspnetcore-2.2&tabs=visual-studio#create-an-instructors-page-that-shows-courses-and-enrollments
+  * https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/update-related-data?view=aspnetcore-2.2#customize-the-courses-pages
+
+* TODO (it's an emergency)
+  MERGE ALL CRUD OPERATIONS, OTHERWISE TO MUCH VIOLATION OF DRY
+  https://en.wikipedia.org/wiki/Don't_repeat_yourself
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->

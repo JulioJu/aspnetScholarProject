@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
   using Videotheque.Data;
   using Videotheque.Pages.Abstract;
 
-  public sealed class CreateOrEdit : CreateOrEditAbstract<Article>
+  public sealed class CreateOrEdit :  CreateOrEditAbstract<Article>
   {
     // IHttpContextAccessor needs to be injectected in Startup.cs
     public CreateOrEdit(AppDbContext db,

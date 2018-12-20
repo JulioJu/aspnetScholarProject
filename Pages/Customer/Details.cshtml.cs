@@ -7,7 +7,7 @@ namespace Videotheque.Pages.CustomerPage
   using Videotheque.Data;
   using Videotheque.Pages.Abstract;
 
-  public sealed class Details : DetailsAbstract<Customer>
+  public class Details : DetailsAbstract<Customer>
   {
     public Details(AppDbContext db, IHttpContextAccessor httpContextAccessor)
       : base(db, db.Customers, httpContextAccessor)
