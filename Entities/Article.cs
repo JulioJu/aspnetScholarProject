@@ -36,14 +36,16 @@ namespace Videotheque.Data
 
     [Required]
     /// <value>Default value: <code>0</code> </value>
-    public int CountBorrowing { get; set; }
+    public int CountBorrowing { get; set; } = 0;
 
     [StringLength(255)]
     public string Comment { get; set; }
 
-    public DateTime BorrowingDate { get; set; }
+    public DateTime? BorrowingDate { get; set; }
 
-    public DateTime ReturnDate { get; set; }
+    public DateTime? ReturnDate { get; set; }
+
+    public int? BorrowerId { get; set; }
 
     public Customer Borrower { get; set; }
 

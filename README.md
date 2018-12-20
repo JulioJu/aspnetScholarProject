@@ -107,7 +107,6 @@ Il aimerait bien disposer des fonctionnalités suivantes :
       && export ASPNETCORE_ENVIRONMENT=Development
       ```~~
 
-
 * To finish install of dotnet and avoid error message when you run `dotnet run` "
   ```
   System.InvalidOperationException: Unable to configure HTTPS endpoint.
@@ -372,6 +371,10 @@ at the section 2 very carefully.**
 * Then, manually change `_DetailsParialView.cshtml`, `_FormPartialView.cshtml`,
     `_ShowAllTBody.cshtml`, `ShowAll.cshtml` according in what was Generated in
     `../GeneratedEntity`
+
+* Warning, sometimes generated code isn't correct. For instance, today
+     (12/20/2018) generate `Article` Entity generate nonexistent fields
+     in `Details.cshtml`. So strange.
 
 #### In Linux, example downloaded
 * I've tested with

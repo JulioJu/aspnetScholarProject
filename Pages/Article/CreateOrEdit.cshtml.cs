@@ -3,6 +3,7 @@ namespace Videotheque.Pages.ArticlePage
   using System.Threading.Tasks;
   using Microsoft.AspNetCore.Http;
   using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
   using Videotheque.Data;
   using Videotheque.Pages.Abstract;
 
@@ -13,6 +14,15 @@ namespace Videotheque.Pages.ArticlePage
         IHttpContextAccessor httpContextAccessor)
       : base(db, db.Articles, httpContextAccessor)
     {
+    }
+
+    public override async Task<IActionResult> OnGetAsync(int? id,
+        bool? saveChangeErrors = false)
+    {
+      base.ViewData["BorrowerId"] = new SelectList(base._db.Customers,
+          "Id",
+          "Address");
+      return await base.OnGetAsync(id, saveChangeErrors).ConfigureAwait(false);
     }
 
     private protected override async Task<bool> PerformTestOverpostingFunc()

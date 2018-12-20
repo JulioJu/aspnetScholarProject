@@ -140,7 +140,7 @@ scaffoldingCore() {
     nvr --remote-tab ShowAll.cshtml
     nvr --remote-tab "${GeneratedEntity}/Index.cshtml"
 
-    nvr --remote-tab "${GeneratedEntity}/Create.cshtml.cs"
+    nvr --remote-tab "${GeneratedEntity}/CreateOrEdit.cshtml.cs"
 }
 
 main() {

@@ -10,7 +10,6 @@ namespace Videotheque.Pages.Abstract
       DetailsAbstract<TAbstractEntity>
       where TAbstractEntity : AbstractEntity
   {
-
     protected DeleteAbstract(AppDbContext db,
         DbSet<TAbstractEntity> tDbSet,
         IHttpContextAccessor httpContextAccessor)
@@ -30,10 +29,12 @@ namespace Videotheque.Pages.Abstract
         .FirstOrDefaultAsync(m => m.Id == id)
         .ConfigureAwait(false);
 
-      if (base.AbstractEntity == null) {
-        return NotFound();
+      if (base.AbstractEntity == null)
+      {
+        return base.NotFound();
       }
-      try {
+      try
+      {
         base._tDbSet.Remove(base.AbstractEntity);
         await base._db.SaveChangesAsync()
           .ConfigureAwait(false);
@@ -41,7 +42,7 @@ namespace Videotheque.Pages.Abstract
       }
       catch (DbUpdateException /* ex */)
       {
-        //Log the error (uncomment ex variable name and write a log.)
+        // Log the error (uncomment ex variable name and write a log.)
         return base.RedirectToAction("./Delete",
             new { id, saveChangesError = true });
       }

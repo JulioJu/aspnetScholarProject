@@ -51,7 +51,8 @@ namespace Videotheque.Pages.Abstract
           .FirstOrDefaultAsync(m => m.Id == id)
           .ConfigureAwait(false);
       }
-      else {
+      else
+      {
         return await this._tDbSet
           .FindAsync(id)
           .ConfigureAwait(false);
@@ -96,7 +97,7 @@ namespace Videotheque.Pages.Abstract
             System.StringComparison.InvariantCultureIgnoreCase)
           && saveChangesError.GetValueOrDefault())
       {
-        DeleteErrorMessage = "Delete failed. Try again";
+        this.DeleteErrorMessage = "Delete failed. Try again";
       }
 
       return base.Page();
@@ -105,7 +106,8 @@ namespace Videotheque.Pages.Abstract
     public virtual async Task<IActionResult> OnGetAsync(int? id,
         bool? saveChangeErrors = false)
     {
-      return await this.OnGetAsyncWithFunc(id, this.PerformSearchInDatabaseFunc,
+      return await this.OnGetAsyncWithFunc(id,
+          this.PerformSearchInDatabaseFunc,
           saveChangeErrors)
         .ConfigureAwait(false);
     }
