@@ -4,25 +4,16 @@ namespace Videotheque.Pages.Abstract
 {
   using System.Linq;
   using System.Threading.Tasks;
-  using Microsoft.AspNetCore.Http;
   using Microsoft.AspNetCore.Mvc;
+  using Microsoft.AspNetCore.Mvc.RazorPages;
   using Microsoft.EntityFrameworkCore;
   using Videotheque.Data;
 
-  public abstract class CreateOrEditAbstract<TAbstractEntity> :
-    DetailsAbstract<TAbstractEntity>
+  public abstract partial class CRUDAbstract<TAbstractEntity> : PageModel
     where TAbstractEntity : AbstractEntity
   {
     [TempData]
     public string Message { get; set; }
-
-    private protected CreateOrEditAbstract(
-        AppDbContext db,
-        DbSet<TAbstractEntity> tDbSet,
-        IHttpContextAccessor httpContextAccessor)
-      : base(db, tDbSet, httpContextAccessor)
-    {
-    }
 
     private protected delegate Task<bool>
       PerformTestOverposting();
@@ -36,7 +27,7 @@ namespace Videotheque.Pages.Abstract
     // deletes the movie and the other client posts changes to the movie.
     private bool AbstractEntityExist(int id)
     {
-      return base._tDbSet.Any(e => e.Id == id);
+      return this._tDbSet.Any(e => e.Id == id);
     }
 
     private protected async Task<IActionResult>
@@ -66,17 +57,17 @@ namespace Videotheque.Pages.Abstract
         return base.Page();
       }
 
-      base._db.Attach(this.AbstractEntity).State = EntityState.Modified;
+      this._db.Attach(this.AbstractEntity).State = EntityState.Modified;
 
       if (await peformTestOverposting().ConfigureAwait(false))
       {
         try
         {
-          await base._db.SaveChangesAsync().ConfigureAwait(false);
+          await this._db.SaveChangesAsync().ConfigureAwait(false);
         }
         catch (DbUpdateConcurrencyException)
         {
-          if (!this.AbstractEntityExist(base.AbstractEntity.Id))
+          if (!this.AbstractEntityExist(this.AbstractEntity.Id))
           {
             return base.NotFound();
           }

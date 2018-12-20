@@ -7,9 +7,9 @@ namespace Videotheque.Pages.CustomerPage
   using Videotheque.Data;
   using Videotheque.Pages.Abstract;
 
-  public class Details : DetailsAbstract<Customer>
+  public sealed partial class CRUD : CRUDAbstract<Customer>
   {
-    public Details(AppDbContext db, IHttpContextAccessor httpContextAccessor)
+    public CRUD(AppDbContext db, IHttpContextAccessor httpContextAccessor)
       : base(db, db.Customers, httpContextAccessor)
     {
     }

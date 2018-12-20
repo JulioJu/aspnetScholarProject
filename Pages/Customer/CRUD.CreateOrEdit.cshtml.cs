@@ -2,18 +2,12 @@ namespace Videotheque.Pages.CustomerPage
 {
   using System.Globalization;
   using System.Threading.Tasks;
-  using Microsoft.AspNetCore.Http;
   using Microsoft.AspNetCore.Mvc;
   using Videotheque.Data;
   using Videotheque.Pages.Abstract;
 
-  public sealed class CreateOrEdit : CreateOrEditAbstract<Customer>
+  public sealed partial class CRUD : CRUDAbstract<Customer>
   {
-    public CreateOrEdit(AppDbContext db,
-        IHttpContextAccessor httpContextAccessor)
-      : base(db, db.Customers, httpContextAccessor)
-    {
-    }
 
     private protected override async Task<bool> PerformTestOverpostingFunc()
     {

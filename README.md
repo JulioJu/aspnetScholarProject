@@ -323,6 +323,13 @@ at the section 2 very carefully.**
     in the version 2.1 of the tutorial, and it's very interesting to understand
     well how works CRUD in Razor Page.
 
+* **Warning, even if this doc present well Razor, do not follow it. Especially
+    it violates rule https://en.wikipedia.org/wiki/Don't_repeat_yourself**
+    * I've implemented and used Partial Class
+        https://en.wikipedia.org/wiki/Don't_repeat_yourself !
+    * I've also used Abstract Classes, and Layouts, and Partial View. The code
+        is well factorized !!! Can't be more factorized.
+
 ### 1. Introduction Tutorial in ASP.NET Core documentation website
 
 #### Note about this tutorial
@@ -722,9 +729,9 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
   * https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/read-related-data?view=aspnetcore-2.2&tabs=visual-studio#create-an-instructors-page-that-shows-courses-and-enrollments
   * https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/update-related-data?view=aspnetcore-2.2#customize-the-courses-pages
 
-* TODO (it's an emergency)
+* ~~TODO (it's an emergency)
   MERGE ALL CRUD OPERATIONS, OTHERWISE TO MUCH VIOLATION OF DRY
-  https://en.wikipedia.org/wiki/Don't_repeat_yourself
+  https://en.wikipedia.org/wiki/Don't_repeat_yourself~~
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->

@@ -1,20 +1,13 @@
 namespace Videotheque.Pages.ArticlePage
 {
   using System.Threading.Tasks;
-  using Microsoft.AspNetCore.Http;
   using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+  using Microsoft.AspNetCore.Mvc.Rendering;
   using Videotheque.Data;
   using Videotheque.Pages.Abstract;
 
-  public sealed class CreateOrEdit :  CreateOrEditAbstract<Article>
+  public sealed partial class CRUD : CRUDAbstract<Article>
   {
-    // IHttpContextAccessor needs to be injectected in Startup.cs
-    public CreateOrEdit(AppDbContext db,
-        IHttpContextAccessor httpContextAccessor)
-      : base(db, db.Articles, httpContextAccessor)
-    {
-    }
 
     public override async Task<IActionResult> OnGetAsync(int? id,
         bool? saveChangeErrors = false)

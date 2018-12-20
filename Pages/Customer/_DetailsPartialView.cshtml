@@ -41,41 +41,30 @@
 <dt>
 @Html.DisplayNameFor(model => model.CurrentlyBorrowed)
 </dt>
-@if (@Context.Request.Path.ToString().Contains("/Details/"))
-{
-  <dd>
-  <table class="table">
-    <tr>
-      <th>Barcode</th>
-      <th>Borrowing Date</th>
-      <th>Returning Date</th>
-    </tr>
-
-    @foreach (var item in Model.CurrentlyBorrowed)
-    {
-    <tr>
-      <td>
-        @Html.DisplayFor(modelItem => item.Barcode)
-      </td>
-      <td>
-        @Html.DisplayFor(modelItem => item.BorrowingDate)
-      </td>
-      <td>
-        @Html.DisplayFor(modelItem => item.ReturnDate)
-      </td>
-    </tr>
-    }
-  </table>
-  </dd>
-
-}
-else
-{
 <dd>
-  Not loaded (could exist).
-  See <a asp-page="./Details" asp-route-id="@Model.Id" > Details </a>
+<table class="table">
+  <tr>
+    <th>Barcode</th>
+    <th>Borrowing Date</th>
+    <th>Returning Date</th>
+  </tr>
+
+  @foreach (var item in Model.CurrentlyBorrowed)
+  {
+  <tr>
+    <td>
+      @Html.DisplayFor(modelItem => item.Barcode)
+    </td>
+    <td>
+      @Html.DisplayFor(modelItem => item.BorrowingDate)
+    </td>
+    <td>
+      @Html.DisplayFor(modelItem => item.ReturnDate)
+    </td>
+  </tr>
+  }
+</table>
 </dd>
-}
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->
