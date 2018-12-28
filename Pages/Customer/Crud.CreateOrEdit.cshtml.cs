@@ -48,28 +48,43 @@ namespace Videotheque.Pages.CustomerPage
     }
 
     public async Task<IActionResult> OnPostEditAsync(
-        string[] currentlyBorrowed)
+        string[] articleIdBorrowedArray, string[] articleLoanDurationArray)
     {
-      if (currentlyBorrowed != null)
+      // TODO display error
+      if (articleIdBorrowedArray != null
+          && articleLoanDurationArray != null
+          && articleIdBorrowedArray.Length == articleLoanDurationArray.Length
+          )
       {
-        foreach (string articleId in currentlyBorrowed)
+        for (int index = 0 ; index < articleIdBorrowedArray.Length ; index++)
         {
-          if (articleId != null)
+          if (articleIdBorrowedArray[index] != null
+              && articleLoanDurationArray[index] != null)
           {
             // TODO try catch int.Parse
-            int idParsed = int.Parse(articleId,
+            // TODO not protected against injections.
+            //      All number values could be injected
+            int articleId = int.Parse(articleIdBorrowedArray[index],
+                System.Globalization.NumberStyles.Integer,
+                CultureInfo.CurrentCulture);
+            int articleLoanDuration =
+              int.Parse(articleLoanDurationArray[index],
                 System.Globalization.NumberStyles.Integer,
                 CultureInfo.CurrentCulture);
             Article articleToAdd = await base._db.Articles
-                .FindAsync(idParsed).ConfigureAwait(false);
+                .FindAsync(articleId).ConfigureAwait(false);
             if (articleToAdd == null)
             {
               // TODO: display in browser
               System.Console.WriteLine("WARNING: Article with id (barcode) '" +
-                  idParsed + "' doesn't exist. Not borrowed.");
+                  articleId + "' doesn't exist. Not borrowed.");
             }
             else if (articleToAdd.BorrowerId == null)
             {
+              articleToAdd.CountBorrowing++;
+              articleToAdd.BorrowingDate = System.DateTime.UtcNow;
+              articleToAdd.ReturnDate = articleToAdd.BorrowingDate?.AddDays(
+                  articleLoanDuration);
               base.AbstractEntity.CurrentlyBorrowed.Add(articleToAdd);
               base._db.Attach(articleToAdd).State = EntityState.Modified;
               // TODO: display in browser

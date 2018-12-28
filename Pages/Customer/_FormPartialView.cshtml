@@ -36,20 +36,54 @@
   if (@Context.Request.Path.ToString().Contains("/Edit/",
       System.StringComparison.InvariantCultureIgnoreCase))
   {
-    @:<div>
-      @:<label for="currentlyBorrowed" class="control-label">
-      @:  Article Borrowed
-      @:</label>
-      @:<input type="number" name="currentlyBorrowed" class="form-control" />
-      @:<input type="number" name="currentlyBorrowed" class="form-control" />
-      @:<input type="number" name="currentlyBorrowed" class="form-control" />
-      @:<input type="number" name="currentlyBorrowed" class="form-control" />
+    @:<table id="CustomerEditArticlesCurrentlyBorrowed">
+      @:<tr>
+        @:<td>
+          @:<label for="articleIdBorrowedArray" class="control-label">
+          @:  Article Borrowed
+          @:</label>
+        @:</td>
+        @:<td>
+          @:<label for="articleIdBorrowedArray" class="control-label">
+          @:  Loan duration
+          @:</label>
+        @:</td>
+      @:</tr>
       foreach (Article article in Model.CurrentlyBorrowed)
       {
-        @:<input type="number" name="currentlyBorrowed" value="@article.Id">
+        @:<tr class="form-group">
+          @:<td>
+            @:<input type="number" name="articleIdBorrowedArray"
+            @:  value="@article.Id" disabled>
+          @:</td>
+          @:<td>
+            @:<select name="articleLoanDurationArray" disabled>
+            @:  <option value="">Not loaded</option>
+            @:</select>
+          @:</td>
+        @:</tr>
       }
+      for (int index=0 ; index < 4 ; index++)
+      {
+        @:<tr class="form-group">
+          @:<td>
+            @:<input type="number" name="articleIdBorrowedArray"
+            @:    placeholder="Article Barcode (id)" />
+          @:</td>
+          @:<td>
+            @:<select name="articleLoanDurationArray">
+            @:  <!-- <option value="">&#45;&#45;Loan duration&#45;&#45;</option> -->
+            @:  <option value="1">1 days</option>
+            @:  <option value="2" selected >2 days</option>
+            @:  <option value="5">5 days</option>
+            @:  <option value="7">7 days</option>
+            @:  <option value="14">14 days</option>
+            @:</select>
+          @:<ktd>
+        @:</div>
+      }
+    @:</table>
   }
-  @:</div>
 }
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
