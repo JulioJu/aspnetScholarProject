@@ -6,9 +6,8 @@ namespace Videotheque.Pages.ArticlePage
   using Videotheque.Data;
   using Videotheque.Pages.Abstract;
 
-  public sealed partial class CRUD : CRUDAbstract<Article>
+  public sealed partial class Crud : CrudAbstract<Article>
   {
-
     public override async Task<IActionResult> OnGetAsync(int? id,
         bool? saveChangeErrors = false)
     {

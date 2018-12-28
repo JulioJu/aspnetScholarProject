@@ -39,6 +39,9 @@
   <Rules AnalyzerId="SonarAnalyser.CSharp" RuleNamespace="SonarAnalyser.CSharp">
     <!-- Remove this commented out code. -->
     <Rule Id="S125" Action="None" />
+    <!-- Complete the task associated to this 'T\ODO' comment. -->
+    <!-- (If you want see where there is T\ODO, simply comment this rule) -->
+    <Rule Id="S1135" Action="None" />
   </Rules>
 </RuleSet>
 

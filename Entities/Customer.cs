@@ -33,17 +33,19 @@ namespace Videotheque.Data
     [EmailAddress]
     public string Email { get; set; }
 
-    private HashSet<Article> _currentlyBorrowed { get; set; }
+    private HashSet<Article> PCurrentlyBorrowed { get; set; }
 
     public HashSet<Article> CurrentlyBorrowed
     {
       get
       {
-        return _currentlyBorrowed ?? (_currentlyBorrowed = new HashSet<Article>());
+        return this.PCurrentlyBorrowed
+          ?? (this.PCurrentlyBorrowed = new HashSet<Article>());
       }
+
       set
       {
-        _currentlyBorrowed = value;
+        this.PCurrentlyBorrowed = value;
       }
     }
 

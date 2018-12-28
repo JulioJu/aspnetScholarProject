@@ -4,9 +4,9 @@ namespace Videotheque.Pages.ArticlePage
   using Videotheque.Data;
   using Videotheque.Pages.Abstract;
 
-  public sealed partial class CRUD : CRUDAbstract<Article>
+  public sealed partial class Crud : CrudAbstract<Article>
   {
-    public CRUD(AppDbContext db, IHttpContextAccessor httpContextAccessor)
+    public Crud(AppDbContext db, IHttpContextAccessor httpContextAccessor)
       : base(db, db.Articles, httpContextAccessor)
     {
     }

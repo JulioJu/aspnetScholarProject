@@ -779,6 +779,7 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
   https://en.wikipedia.org/wiki/Don't_repeat_yourself~~
 
 * See TODO in the code
+  To simply see all TODO, simply in ./ca.ruleset comment the rule `S1135` .
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->

@@ -7,9 +7,8 @@ namespace Videotheque.Pages.CustomerPage
   using Videotheque.Data;
   using Videotheque.Pages.Abstract;
 
-  public sealed partial class CRUD : CRUDAbstract<Customer>
+  public sealed partial class Crud : CrudAbstract<Customer>
   {
-
     private protected override async Task<bool> PerformTestOverpostingFunc()
     {
       return await base.TryUpdateModelAsync<Customer>(
@@ -58,16 +57,19 @@ namespace Videotheque.Pages.CustomerPage
           if (articleId != null)
           {
             // TODO try catch int.Parse
-            int idParsed = int.Parse(articleId);
+            int idParsed = int.Parse(articleId,
+                System.Globalization.NumberStyles.Integer,
+                CultureInfo.CurrentCulture);
             Article articleToAdd = await base._db.Articles
-                .FindAsync(idParsed);
+                .FindAsync(idParsed).ConfigureAwait(false);
             if (articleToAdd == null)
             {
               // TODO: display in browser
               System.Console.WriteLine("WARNING: Article with id (barcode) '" +
                   idParsed + "' doesn't exist. Not borrowed.");
             }
-            else if (articleToAdd.BorrowerId == null) {
+            else if (articleToAdd.BorrowerId == null)
+            {
               base.AbstractEntity.CurrentlyBorrowed.Add(articleToAdd);
               base._db.Attach(articleToAdd).State = EntityState.Modified;
               // TODO: display in browser
@@ -77,7 +79,7 @@ namespace Videotheque.Pages.CustomerPage
             }
             else
             {
-              if (articleToAdd.BorrowerId != AbstractEntity.Id)
+              if (articleToAdd.BorrowerId != base.AbstractEntity.Id)
               {
                 // TODO: display in browser
                 System.Console.WriteLine("WARNING: Article with id (barcode) '"
@@ -99,7 +101,6 @@ namespace Videotheque.Pages.CustomerPage
       return await base.OnPostEditAsyncWithFunc(this.PerformTestOverpostingFunc)
         .ConfigureAwait(false);
     }
-
 
   }
 }

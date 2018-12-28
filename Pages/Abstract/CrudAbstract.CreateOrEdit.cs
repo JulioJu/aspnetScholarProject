@@ -9,7 +9,7 @@ namespace Videotheque.Pages.Abstract
   using Microsoft.EntityFrameworkCore;
   using Videotheque.Data;
 
-  public abstract partial class CRUDAbstract<TAbstractEntity> : PageModel
+  public abstract partial class CrudAbstract<TAbstractEntity> : PageModel
     where TAbstractEntity : AbstractEntity
   {
     [TempData]

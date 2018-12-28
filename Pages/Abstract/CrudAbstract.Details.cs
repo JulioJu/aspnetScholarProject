@@ -7,7 +7,7 @@ namespace Videotheque.Pages.Abstract
   using Microsoft.EntityFrameworkCore;
   using Videotheque.Data;
 
-  public abstract partial class CRUDAbstract<TAbstractEntity> : PageModel
+  public abstract partial class CrudAbstract<TAbstractEntity> : PageModel
       where TAbstractEntity : AbstractEntity
   {
     private protected string CurrentRoute { get; }
@@ -26,7 +26,7 @@ namespace Videotheque.Pages.Abstract
     public string DeleteErrorMessage { get; set; }
 
     // IHttpContextAccessor needs to be injectected in Startup.cs
-    private protected CRUDAbstract(AppDbContext db,
+    private protected CrudAbstract(AppDbContext db,
         DbSet<TAbstractEntity> tDbSet,
         IHttpContextAccessor httpContextAccessor)
     {
