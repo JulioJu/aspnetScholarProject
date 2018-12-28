@@ -23,7 +23,6 @@ namespace Videotheque.Pages.ArticlePage
       return await base.TryUpdateModelAsync<Article>(
           base.AbstractEntity,
           "article",   // Prefix for form value.
-          s => s.Barcode,
           s => s.Disc,
           s => s.Box,
           s => s.IsLost,
@@ -34,14 +33,14 @@ namespace Videotheque.Pages.ArticlePage
         .ConfigureAwait(false);
     }
 
-    public async override Task<IActionResult> OnPostCreateAsync()
+    public override async Task<IActionResult> OnPostCreateAsync()
     {
       return await base.OnPostCreateAsyncWithFunc(
           this.PerformTestOverpostingFunc)
         .ConfigureAwait(false);
     }
 
-    public async override Task<IActionResult> OnPostEditAsync()
+    public async Task<IActionResult> OnPostEditAsync()
     {
       return await base.OnPostEditAsyncWithFunc(this.PerformTestOverpostingFunc)
         .ConfigureAwait(false);

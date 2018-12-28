@@ -84,7 +84,7 @@ namespace Videotheque.Pages.Abstract
 
     public abstract Task<IActionResult> OnPostCreateAsync();
 
-    public abstract Task<IActionResult> OnPostEditAsync();
+    // public abstract Task<IActionResult> OnPostEditAsync();
 
   }
 }

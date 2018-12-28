@@ -6,9 +6,6 @@ namespace Videotheque.Data
   public class Receipt : AbstractEntity
   {
     [Required]
-    public int Number { get; set; }
-
-    [Required]
     [DataType(DataType.Date)]
     /// <value>Default value: <code>DateTime.UtcNow</code> </value>
     public DateTime DateTime { get; set; }

@@ -32,9 +32,9 @@ namespace Videotheque.Data
                 .HasDefaultValue(DateTime.UtcNow);
         }
 
-        modelBuilder.Entity<Article>()
-            .HasAlternateKey(a => a.Barcode)
-            .HasName("AlternateKey_BareCode");
+        // modelBuilder.Entity<Article>()
+        //     .HasAlternateKey(a => a.Barcode)
+        //     .HasName("AlternateKey_BareCode");
         modelBuilder.Entity<Article>()
             .Property(a => a.Disc)
             .HasDefaultValue(Conservation.New);

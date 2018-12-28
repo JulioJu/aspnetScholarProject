@@ -32,5 +32,25 @@
   <span asp-validation-for="Email" class="text-danger"></span>
 </div>
 
+@{
+  if (@Context.Request.Path.ToString().Contains("/Edit/",
+      System.StringComparison.InvariantCultureIgnoreCase))
+  {
+    @:<div>
+      @:<label for="currentlyBorrowed" class="control-label">
+      @:  Article Borrowed
+      @:</label>
+      @:<input type="number" name="currentlyBorrowed" class="form-control" />
+      @:<input type="number" name="currentlyBorrowed" class="form-control" />
+      @:<input type="number" name="currentlyBorrowed" class="form-control" />
+      @:<input type="number" name="currentlyBorrowed" class="form-control" />
+      foreach (Article article in Model.CurrentlyBorrowed)
+      {
+        @:<input type="number" name="currentlyBorrowed" value="@article.Id">
+      }
+  }
+  @:</div>
+}
+
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->

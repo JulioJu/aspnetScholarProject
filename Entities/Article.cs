@@ -6,11 +6,6 @@ namespace Videotheque.Data
   public class Article : AbstractEntity
   {
     [Required]
-    [StringLength(100)]
-    /// <value>Is Unique</value>
-    public string Barcode { get; set; }
-
-    [Required]
     /// <value>Default value: <code>Conservation.New</code> </value>
     public Conservation Disc { get; set; }
 

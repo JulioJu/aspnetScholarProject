@@ -22,8 +22,7 @@
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasLineColor="false" height="15.07421875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="31.763671875" x="55.442468640625066" y="4.0">Article</y:NodeLabel>
-          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Liberation Sans" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="138.0625" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="top" visible="true" width="136.2509765625" x="2.0" y="27.07421875">&lt;&lt;U&gt;&gt; Barcode*: string [20]
-Disc*: Conservation
+          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Liberation Sans" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="126.890625" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="top" visible="true" width="136.2509765625" x="2.0" y="27.07421875">Disc*: Conservation
            = Conservation.New
 Box*: Conservation
            = Conservation.New
@@ -380,8 +379,7 @@ Borrower<y:LabelModel>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasLineColor="false" height="15.07421875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="34.5419921875" x="42.35828673644892" y="4.0">Receipt</y:NodeLabel>
-          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Liberation Sans" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="48.6875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="top" visible="true" width="110.416015625" x="2.0" y="27.07421875">&lt;&lt;U&gt;&gt; Number*: int
-DateTime*: DateTime
+          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Liberation Sans" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="37.515625" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="top" visible="true" width="110.416015625" x="2.0" y="27.07421875">DateTime*: DateTime
       = DateTime.UtcNow
 TotalPrice*: float
 <y:LabelModel>
@@ -495,7 +493,7 @@ or society is required<y:LabelModel>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasLineColor="false" height="15.07421875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="62.3203125" x="29.755859375" y="4.0">AbstractEntity</y:NodeLabel>
-          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Liberation Sans" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="37.515625" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="top" visible="true" width="111.83203125" x="2.0" y="27.07421875">Id*: int
+          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Liberation Sans" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="37.515625" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="top" visible="true" width="111.83203125" x="2.0" y="27.07421875">Id*: int [1000-MAX]
 CreatedDate: DateTime
 UpdatedDate: DateTime<y:LabelModel>
               <y:ErdAttributesNodeLabelModel/>

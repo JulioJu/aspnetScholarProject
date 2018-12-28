@@ -10,7 +10,7 @@ namespace Videotheque.Pages.Abstract
   public abstract partial class CRUDAbstract<TAbstractEntity> : PageModel
       where TAbstractEntity : AbstractEntity
   {
-    private string CurrentRoute { get; }
+    private protected string CurrentRoute { get; }
 
     // SA1401: Field must be private
     #pragma warning disable SA1401

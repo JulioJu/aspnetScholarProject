@@ -430,6 +430,18 @@ at the section 2 very carefully.**
 
 ### 2. Contonso University sample in ASP.NET Core documentation website
 
+* Warning 1: Contoso University example for MVC is more updated.
+    * https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/update-related-data?view=aspnetcore-2.2#update-the-instructor-pages
+    * https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/update-related-data?view=aspnetcore-2.0#update-the-delete-page
+    * Ref https://github.com/aspnet/Docs/issues/9237 )
+* Warning 2: `many` counterpart of a `many-to-one` relationships are not presented.
+    * Following is *not* very interesting for us:
+        https://github.com/aspnet/Docs/blob/68928585f451253769edd476b4a915843183bb5e/aspnetcore/data/ef-rp/intro/samples/cu/Pages/Instructors/InstructorCoursesPageModel.cshtml.cs#L33,L71
+    * **Don't forget to read the UML diagram at:**
+    https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/complex-data-model?view=aspnetcore-2.2&tabs=visual-studio
+    * Solution for one-to-many is presented bellow, in section Relationship.
+
+
 #### Create the sample with dotnet cli
 * https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/?view=aspnetcore-2.2
 * In the left navigation panel, could be seen thanks:
@@ -478,6 +490,39 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
     https://docs.microsoft.com/en-us/ef/core/modeling/relationships
 * in Aspnet Core doc
     See Contonso University sample in ASP.NET Core documentation website.
+* https://docs.microsoft.com/en-us/ef/core/saving/related-data
+    Very synthetic !
+* For `many-to-one` relationship, for example to add Articles to Customer
+    * For retrieve the Article:
+        ```
+      Article articleToAdd = await base._db.Articles
+          .FindAsync(idParsed);
+        ```
+    * For `edit`
+      in the function:
+      `public async Task<IActionResult> OnPostEditAsync(string[] currentlyBorrowed)`
+      simply add:
+      ```
+      base.AbstractEntity.CurrentlyBorrowed.Add(articleToAdd);
+      base._db.Attach(articleToAdd).State = EntityState.Modified;
+      ```
+      * I've found the solution alone, nothing found in StackOverflow.
+  * For create an Entity with `many` counterpart simply in the function
+      `public async Task<IActionResult> OnPostCreateAsync(string[] currentlyBorrowed)`
+      add:
+      ```
+      base.AbstractEntity.CurrentlyBorrowed.Add(articleToAdd);
+      ```
+  * See also:
+      * https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/update-related-data?view=aspnetcore-2.2#add-course-assignments-to-the-instructor-edit-page
+          (explanation is far of the solution, but could help).
+      * https://docs.microsoft.com/en-us/ef/core/saving/related-data#adding-a-graph-of-new-entities
+      * “ *FirstOrDefaultAsync is more efficient than SingleOrDefaultAsync at
+        fetching one entity:
+        In much of the scaffolded code, FindAsync can be used in place of
+        FirstOrDefaultAsync.  But if you want to Include other entities, then
+        FindAsync is no longer appropriate.* ”
+        https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/crud?view=aspnetcore-2.2
 
 ## Date Update and Date Create
 * **https://github.com/aspnet/EntityFrameworkCore/issues/10769**
@@ -732,6 +777,8 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
 * ~~TODO (it's an emergency)
   MERGE ALL CRUD OPERATIONS, OTHERWISE TO MUCH VIOLATION OF DRY
   https://en.wikipedia.org/wiki/Don't_repeat_yourself~~
+
+* See TODO in the code
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->
