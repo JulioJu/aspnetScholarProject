@@ -501,11 +501,20 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
     * For `edit`
       in the function:
       `public async Task<IActionResult> OnPostEditAsync(string[] currentlyBorrowed)`
-      simply add:
-      ```
-      base.AbstractEntity.CurrentlyBorrowed.Add(articleToAdd);
-      base._db.Attach(articleToAdd).State = EntityState.Modified;
-      ```
+      * To add:
+        ```
+        base.AbstractEntity.CurrentlyBorrowed.Add(articleToAdd);
+        base._db.Attach(articleToAdd).State = EntityState.Modified;
+        ```
+      * To delete:
+          ```
+          articleToRemove.BorrowerId = null;
+          base._db.Attach(articleToRemove).State = EntityState.Modified;
+          ```
+          * note doesn't work:
+          `base.AbstractEntity.CurrentlyBorrowed.Remove(articleToRemove);`
+          or
+          `articleToRemove.Borrower = null;`
       * I've found the solution alone, nothing found in StackOverflow.
   * For create an Entity with `many` counterpart simply in the function
       `public async Task<IActionResult> OnPostCreateAsync(string[] currentlyBorrowed)`
@@ -513,6 +522,12 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
       ```
       base.AbstractEntity.CurrentlyBorrowed.Add(articleToAdd);
       ```
+  * For build an array with `input name="nameOfArray"`,
+      can't use `type=checkbox` because the array `nameOfArray`
+      will contain only inputs with `value="true"` and not inputs with
+      `value=false`. Length of `nameOfArray` depends
+      of number of `<inputs type="checkbox" name="nameOfArray" value="true" />`
+      * e.g. at ./Pages/Customer/_FormPartialView.cshtml
   * See also:
       * https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/update-related-data?view=aspnetcore-2.2#add-course-assignments-to-the-instructor-edit-page
           (explanation is far of the solution, but could help).

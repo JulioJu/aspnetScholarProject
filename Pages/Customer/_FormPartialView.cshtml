@@ -39,6 +39,40 @@
     @:<table id="CustomerEditArticlesCurrentlyBorrowed">
       @:<tr>
         @:<td>
+          @:<label for="articleIdAlreadyBorrowedArray" class="control-label">
+          @:  Article Borrowed
+          @:</label>
+        @:</td>
+        @:<td>
+          @:<label for="shouldBeRemovedArray"
+          @:    class="control-label">
+          @:  Should be removed
+          @:</label>
+        @:</td>
+      @:</tr>
+      foreach (Article article in Model.CurrentlyBorrowed)
+      {
+        @:<tr class="form-group">
+          @:<td>
+            @:<input type="hidden" name="articleIdAlreadyBorrowedArray"
+            @:  value="@article.Id" />
+            @:<span>@article.Id</span>
+          @:</td>
+          @:<td>
+            @:<!-- Can't use checkbox, because the array shouldBeRemovedArray
+            @:  contains only checkbox with true values (therfore if all
+            @:  checkbox are not selected, shorter than
+            @:  articleIdAlreadyBorrowedArray)-->
+            @:<span>(return date: @article.ReturnDate?.ToShortDateString())</span>
+            @:<select name="shouldBeRemovedArray" value="false" >
+            @:  <option value="false" selected>Continue borrowing</option>
+            @:  <option value="true" >Return</option>
+            @:</select>
+        @:</td>
+        @:</tr>
+      }
+      @:<tr>
+        @:<td>
           @:<label for="articleIdBorrowedArray" class="control-label">
           @:  Article Borrowed
           @:</label>
@@ -48,26 +82,12 @@
           @:  Loan duration
           @:</label>
         @:</td>
-      @:</tr>
-      foreach (Article article in Model.CurrentlyBorrowed)
-      {
-        @:<tr class="form-group">
-          @:<td>
-            @:<input type="number" name="articleIdBorrowedArray"
-            @:  value="@article.Id" disabled>
-          @:</td>
-          @:<td>
-            @:<select name="articleLoanDurationArray" disabled>
-            @:  <option value="">Not loaded</option>
-            @:</select>
-          @:</td>
-        @:</tr>
-      }
+      @:<tr>
       for (int index=0 ; index < 4 ; index++)
       {
         @:<tr class="form-group">
           @:<td>
-            @:<input type="number" name="articleIdBorrowedArray"
+            @:<input type="number" name="articleIdToBorrowArray"
             @:    placeholder="Article Barcode (id)" />
           @:</td>
           @:<td>

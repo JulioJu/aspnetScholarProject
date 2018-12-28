@@ -47,24 +47,100 @@ namespace Videotheque.Pages.CustomerPage
         .ConfigureAwait(false);
     }
 
-    public async Task<IActionResult> OnPostEditAsync(
-        string[] articleIdBorrowedArray, string[] articleLoanDurationArray)
+    private async Task RemoveSomeArticlesAlreadyBorrowed(
+        string[] articleIdAlreadyBorrowedArray,
+        string[] shouldBeRemovedArray)
     {
       // TODO display error
-      if (articleIdBorrowedArray != null
+      if (articleIdAlreadyBorrowedArray != null
+          && shouldBeRemovedArray != null
+          && articleIdAlreadyBorrowedArray.Length
+              == shouldBeRemovedArray.Length)
+      {
+        for (int index = 0 ;
+            index < articleIdAlreadyBorrowedArray.Length ;
+            index++)
+        {
+          if (articleIdAlreadyBorrowedArray[index] != null
+              && shouldBeRemovedArray[index] != null)
+          {
+            // TODO try catch int.Parse
+            // TODO not protected against injections.
+            //      All number values could be injected
+            int articleId = int.Parse(articleIdAlreadyBorrowedArray[index],
+                System.Globalization.NumberStyles.Integer,
+                CultureInfo.CurrentCulture);
+            System.Console.WriteLine(shouldBeRemovedArray[index]);
+            bool shouldBeRemoved = bool.Parse(shouldBeRemovedArray[index]);
+            Article articleToRemove = await base._db.Articles
+                .FindAsync(articleId).ConfigureAwait(false);
+            if (articleToRemove == null)
+            {
+              // TODO: display in browser
+              System.Console.WriteLine("WARNING: Article with id (barcode) '"
+                  + articleId + "' doesn't exist. Not removed.");
+            }
+            else if (articleToRemove.BorrowerId == null)
+            {
+              System.Console.WriteLine("WARNING: Article with id '"
+                  + articleToRemove.Id + "' is not borrowed by any Customer. "
+                  + "Not removed.");
+            }
+            else
+            {
+              if (articleToRemove.BorrowerId != base.AbstractEntity.Id)
+              {
+                  // TODO: display in browser
+                  System.Console.WriteLine("INFO: Article with id (barcode) '"
+                      + articleToRemove.Id + "' not borrowed by the current "
+                      + "Customer with id '"
+                      + articleToRemove.BorrowerId + "'. Can't be returned "
+                      + "by the current Customer.");
+              }
+              else
+              {
+                if (shouldBeRemoved)
+                {
+                  // TODO: display in browser
+                  System.Console.WriteLine("INFO: Article with id (barcode) '"
+                      + articleToRemove.Id
+                      + "' is returned by Customer with id '"
+                      + articleToRemove.BorrowerId);
+                  articleToRemove.BorrowingDate = null;
+                  articleToRemove.BorrowerId = null;
+                  base._db.Attach(articleToRemove).State = EntityState.Modified;
+                }
+                else {
+                  System.Console.WriteLine("INFO: Article with id (barcode) '"
+                      + articleToRemove.Id + "' is keeped by Customer with id '"
+                      + articleToRemove.BorrowerId);
+                }
+              }
+            }
+          }
+        }
+
+      }
+    }
+
+    private async Task AddNewArticlesBorrowed(
+        string[] articleIdToBorrowArray,
+        string[] articleLoanDurationArray) {
+      // TODO display error
+      if (articleIdToBorrowArray != null
           && articleLoanDurationArray != null
-          && articleIdBorrowedArray.Length == articleLoanDurationArray.Length
+          && articleIdToBorrowArray.Length == articleLoanDurationArray.Length
           )
       {
-        for (int index = 0 ; index < articleIdBorrowedArray.Length ; index++)
+        for (int index = 0 ; index < articleIdToBorrowArray.Length ; index++)
         {
-          if (articleIdBorrowedArray[index] != null
+          if (articleIdToBorrowArray[index] != null
               && articleLoanDurationArray[index] != null)
           {
             // TODO try catch int.Parse
             // TODO not protected against injections.
             //      All number values could be injected
-            int articleId = int.Parse(articleIdBorrowedArray[index],
+            int articleId = int.Parse(articleIdToBorrowArray[index],
                 System.Globalization.NumberStyles.Integer,
                 CultureInfo.CurrentCulture);
             int articleLoanDuration =
@@ -76,8 +152,8 @@ namespace Videotheque.Pages.CustomerPage
             if (articleToAdd == null)
             {
               // TODO: display in browser
-              System.Console.WriteLine("WARNING: Article with id (barcode) '" +
-                  articleId + "' doesn't exist. Not borrowed.");
+              System.Console.WriteLine("WARNING: Article with id (barcode) '"
+                  + articleId + "' doesn't exist. Not borrowed.");
             }
             else if (articleToAdd.BorrowerId == null)
             {
@@ -98,8 +174,9 @@ namespace Videotheque.Pages.CustomerPage
               {
                 // TODO: display in browser
                 System.Console.WriteLine("WARNING: Article with id (barcode) '"
-                    + articleToAdd.Id + "' already borrowed by Customer with id '" +
-                    articleToAdd.BorrowerId + "'. Can't be borrowed again.");
+                    + articleToAdd.Id
+                    + "' already borrowed by Customer with id '"
+                    + articleToAdd.BorrowerId + "'. Can't be borrowed again.");
               }
               else
               {
@@ -113,6 +190,18 @@ namespace Videotheque.Pages.CustomerPage
           }
         }
       }
+    }
+
+    public async Task<IActionResult> OnPostEditAsync(
+        string[] articleIdToBorrowArray,
+        string[] articleLoanDurationArray,
+        string[] articleIdAlreadyBorrowedArray,
+        string[] shouldBeRemovedArray)
+    {
+      await this.AddNewArticlesBorrowed(articleIdToBorrowArray,
+          articleLoanDurationArray);
+      await this.RemoveSomeArticlesAlreadyBorrowed(articleIdAlreadyBorrowedArray,
+          shouldBeRemovedArray);
       return await base.OnPostEditAsyncWithFunc(this.PerformTestOverpostingFunc)
         .ConfigureAwait(false);
     }
