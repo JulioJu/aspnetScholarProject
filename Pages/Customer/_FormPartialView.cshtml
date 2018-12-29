@@ -36,72 +36,101 @@
   if (@Context.Request.Path.ToString().Contains("/Edit/",
       System.StringComparison.InvariantCultureIgnoreCase))
   {
-    @:<table id="CustomerEditArticlesCurrentlyBorrowed">
-      @:<tr>
-        @:<td>
-          @:<label for="articleIdAlreadyBorrowedArray" class="control-label">
-          @:  Article Borrowed
-          @:</label>
-        @:</td>
-        @:<td>
-          @:<label for="shouldBeRemovedArray"
-          @:    class="control-label">
-          @:  Should be removed
-          @:</label>
-        @:</td>
-      @:</tr>
+    if (Model.CurrentlyBorrowed.Count > 0)
+    {
+        @:<table id="CustomerEditArticlesCurrentlyBorrowed">
+        @:<thead>
+          @:<tr>
+            @:<td>
+              @:Article borrowed <br /> (barcode)
+            @:</td>
+            @:<td>
+              @:Do you want return it?
+            @:</td>
+            @:<td>
+              @:Should be returned before
+            @:</td>
+          @:</tr>
+        @:</thead>
       foreach (Article article in Model.CurrentlyBorrowed)
       {
-        @:<tr class="form-group">
-          @:<td>
-            @:<input type="hidden" name="articleIdAlreadyBorrowedArray"
-            @:  value="@article.Id" />
-            @:<span>@article.Id</span>
-          @:</td>
-          @:<td>
-            @:<!-- Can't use checkbox, because the array shouldBeRemovedArray
-            @:  contains only checkbox with true values (therfore if all
-            @:  checkbox are not selected, shorter than
-            @:  articleIdAlreadyBorrowedArray)-->
-            @:<span>(return date: @article.ReturnDate?.ToShortDateString())</span>
-            @:<select name="shouldBeRemovedArray" value="false" >
-            @:  <option value="false" selected>Continue borrowing</option>
-            @:  <option value="true" >Return</option>
-            @:</select>
-        @:</td>
-        @:</tr>
+        @:<tbody>
+          @:<tr class="form-group">
+            @:<td>
+              @:<input type="hidden" name="articleIdAlreadyBorrowedArray"
+              @:  value="@article.Id" />
+              @:<span>@article.Id</span>
+            @:</td>
+            @:<td>
+              @:<table>
+              @:<thead>
+                @:<tr>
+                  @:<td>
+                    @:Keep
+                  @:</td>
+                  @:<td>
+                    @:Return
+                  @:</td>
+                @:</tr>
+              @:</thead>
+              @:<tbody>
+                @:<tr>
+                  @:<td>
+                    @:<input type="radio"  name="shouldBeRemovedArray"
+                        @:value="false" checked />
+                  @:</td>
+                  @:<td>
+                    @:<input type="radio"  name="shouldBeRemovedArray"
+                        @:value="true" />
+                  @:</td>
+              @:</tr>
+            @:</tbody>
+            @:</table>
+            @:</td>
+            @:<td> @article.ReturnDate?.ToShortDateString() </td>
+          @:</tr>
+        @:</tbody>
+        @:</table>
       }
+    }
+    else
+    {
+      @:<p>No articles currently borrowed</p>
+    }
+
+
+    <!-- We could make four new borrowing -->
+    @:<table>
+    @:<thead>
       @:<tr>
         @:<td>
-          @:<label for="articleIdBorrowedArray" class="control-label">
-          @:  Article Borrowed
-          @:</label>
+          @:Article borrowed <br /> (barcode)
         @:</td>
         @:<td>
-          @:<label for="articleIdBorrowedArray" class="control-label">
-          @:  Loan duration
-          @:</label>
+          @:Loan duration
         @:</td>
       @:<tr>
-      for (int index=0 ; index < 4 ; index++)
-      {
-        @:<tr class="form-group">
-          @:<td>
-            @:<input type="number" name="articleIdToBorrowArray"
-            @:    placeholder="Article Barcode (id)" />
-          @:</td>
-          @:<td>
-            @:<select name="articleLoanDurationArray">
-            @:  <!-- <option value="">&#45;&#45;Loan duration&#45;&#45;</option> -->
-            @:  <option value="1">1 days</option>
-            @:  <option value="2" selected >2 days</option>
-            @:  <option value="5">5 days</option>
-            @:  <option value="7">7 days</option>
-            @:  <option value="14">14 days</option>
-            @:</select>
-          @:<ktd>
-        @:</div>
-      }
+    @:</thead>
+    @:<tbody>
+    for (int index=0 ; index < 4 ; index++)
+    {
+      @:<tr class="form-group">
+        @:<td>
+          @:<input type="number" name="articleIdToBorrowArray"
+          @:    placeholder="Article Barcode (id)" />
+        @:</td>
+        @:<td>
+          @:<select name="articleLoanDurationArray">
+          @:  <option value="1">1 days</option>
+          @:  <option value="2" selected >2 days</option>
+          @:  <option value="5">5 days</option>
+          @:  <option value="7">7 days</option>
+          @:  <option value="14">14 days</option>
+          @:</select>
+        @:</td>
+      @:</tr>
+    }
+    @:</tbody>
     @:</table>
   }
 }

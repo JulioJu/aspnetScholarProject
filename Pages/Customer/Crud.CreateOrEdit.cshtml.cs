@@ -57,8 +57,8 @@ namespace Videotheque.Pages.CustomerPage
           && articleIdAlreadyBorrowedArray.Length
               == shouldBeRemovedArray.Length)
       {
-        for (int index = 0 ;
-            index < articleIdAlreadyBorrowedArray.Length ;
+        for (int index = 0;
+            index < articleIdAlreadyBorrowedArray.Length;
             index++)
         {
           if (articleIdAlreadyBorrowedArray[index] != null
@@ -110,7 +110,8 @@ namespace Videotheque.Pages.CustomerPage
                   articleToRemove.BorrowerId = null;
                   base._db.Attach(articleToRemove).State = EntityState.Modified;
                 }
-                else {
+                else
+                {
                   System.Console.WriteLine("INFO: Article with id (barcode) '"
                       + articleToRemove.Id + "' is keeped by Customer with id '"
                       + articleToRemove.BorrowerId);
@@ -125,14 +126,14 @@ namespace Videotheque.Pages.CustomerPage
 
     private async Task AddNewArticlesBorrowed(
         string[] articleIdToBorrowArray,
-        string[] articleLoanDurationArray) {
+        string[] articleLoanDurationArray)
+    {
       // TODO display error
       if (articleIdToBorrowArray != null
           && articleLoanDurationArray != null
-          && articleIdToBorrowArray.Length == articleLoanDurationArray.Length
-          )
+          && articleIdToBorrowArray.Length == articleLoanDurationArray.Length)
       {
-        for (int index = 0 ; index < articleIdToBorrowArray.Length ; index++)
+        for (int index = 0; index < articleIdToBorrowArray.Length; index++)
         {
           if (articleIdToBorrowArray[index] != null
               && articleLoanDurationArray[index] != null)
@@ -199,9 +200,9 @@ namespace Videotheque.Pages.CustomerPage
         string[] shouldBeRemovedArray)
     {
       await this.AddNewArticlesBorrowed(articleIdToBorrowArray,
-          articleLoanDurationArray);
+          articleLoanDurationArray).ConfigureAwait(false);
       await this.RemoveSomeArticlesAlreadyBorrowed(articleIdAlreadyBorrowedArray,
-          shouldBeRemovedArray);
+          shouldBeRemovedArray).ConfigureAwait(false);
       return await base.OnPostEditAsyncWithFunc(this.PerformTestOverpostingFunc)
         .ConfigureAwait(false);
     }
