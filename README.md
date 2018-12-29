@@ -796,5 +796,15 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
 * See TODO in the code
   To simply see all TODO, simply in ./ca.ruleset comment the rule `S1135` .
 
+* Add client-side validation scaffolded.
+
+* Our goal is simply to make a simple app deployable in an intranet,
+    for an updated PC browser (Chrome, Firefox, Edge, Safari, not IE).
+    We assume that the user will not try to change the client side app
+    thanks Developers tools of the Browser. Therefore, if in a client
+    side we have `<input type="number" name="xxx" />`, we will not `try` `catch`
+    in server side `int.Parse(xxx)`
+    Could be done in a future, therefore this kind of TODO as marked `TODO LOW`
+
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->

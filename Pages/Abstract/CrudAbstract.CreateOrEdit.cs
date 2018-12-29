@@ -43,7 +43,8 @@ namespace Videotheque.Pages.Abstract
         this._tDbSet.Add(this.AbstractEntity);
         await this._db.SaveChangesAsync().ConfigureAwait(false);
         this.Message = $"AbstractEntity {this.AbstractEntity.Id} added.";
-        return base.RedirectToPage("./ShowAll");
+        return base.RedirectToPage("./Details/",
+            new {id = this.AbstractEntity.Id});
       }
 
       return null;
@@ -78,8 +79,16 @@ namespace Videotheque.Pages.Abstract
         }
       }
 
-      this.Message = $"AbstractEntity {this.AbstractEntity.Id} edited.";
-      return base.RedirectToPage("./ShowAll");
+      if (this.Message != null)
+      {
+        this.Message = $"AbstractEntity {this.AbstractEntity.Id} edited. "
+          + "<br />Some details: <br /><ul>" + this.Message + "</ul>";
+      }
+      else {
+        this.Message = $"AbstractEntity {this.AbstractEntity.Id} edited.";
+      }
+      return base.RedirectToPage("./Details/",
+          new {id = this.AbstractEntity.Id});
     }
 
     public abstract Task<IActionResult> OnPostCreateAsync();

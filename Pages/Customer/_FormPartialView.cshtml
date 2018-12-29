@@ -1,5 +1,11 @@
 @using Videotheque.Data
 @model Customer
+@{
+  string[] ValidationMessageArticleIdToBorrowArray =
+    (string[])ViewData["ValidationMessageArticleIdToBorrowArray"];
+  string[] ArticleIdToBorrowArrayInputValue =
+    (string[])ViewData["ArticleIdToBorrowArrayInputValue"];
+}
 
 <div class="form-group">
   <label asp-for="Firstname" class="control-label"></label>
@@ -52,9 +58,9 @@
             @:</td>
           @:</tr>
         @:</thead>
+        @:<tbody>
       foreach (Article article in Model.CurrentlyBorrowed)
       {
-        @:<tbody>
           @:<tr class="form-group">
             @:<td>
               @:<input type="hidden" name="articleIdAlreadyBorrowedArray"
@@ -62,36 +68,16 @@
               @:<span>@article.Id</span>
             @:</td>
             @:<td>
-              @:<table>
-              @:<thead>
-                @:<tr>
-                  @:<td>
-                    @:Keep
-                  @:</td>
-                  @:<td>
-                    @:Return
-                  @:</td>
-                @:</tr>
-              @:</thead>
-              @:<tbody>
-                @:<tr>
-                  @:<td>
-                    @:<input type="radio"  name="shouldBeRemovedArray"
-                        @:value="false" checked />
-                  @:</td>
-                  @:<td>
-                    @:<input type="radio"  name="shouldBeRemovedArray"
-                        @:value="true" />
-                  @:</td>
-              @:</tr>
-            @:</tbody>
-            @:</table>
+              @:<select name="shouldBeRemovedArray">
+                @:<option value="false" selected >Keep</option>
+                @:<option value="true" >Return</option>
+              @:</select>
             @:</td>
             @:<td> @article.ReturnDate?.ToShortDateString() </td>
           @:</tr>
+      }
         @:</tbody>
         @:</table>
-      }
     }
     else
     {
@@ -112,12 +98,19 @@
       @:<tr>
     @:</thead>
     @:<tbody>
-    for (int index=0 ; index < 4 ; index++)
+    for (int index=0 ;
+          index < ValidationMessageArticleIdToBorrowArray.Length ;
+          index++)
     {
       @:<tr class="form-group">
         @:<td>
           @:<input type="number" name="articleIdToBorrowArray"
-          @:    placeholder="Article Barcode (id)" />
+          @:    placeholder="Article Barcode (id)"
+          @:    value="@ArticleIdToBorrowArrayInputValue[index]">
+          @:<br />
+          @:<span class="text-danger field-validation-error" >
+            @ValidationMessageArticleIdToBorrowArray[index]
+          @:</span>
         @:</td>
         @:<td>
           @:<select name="articleLoanDurationArray">

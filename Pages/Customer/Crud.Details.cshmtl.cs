@@ -12,12 +12,14 @@ namespace Videotheque.Pages.CustomerPage
     public Crud(AppDbContext db, IHttpContextAccessor httpContextAccessor)
       : base(db, db.Customers, httpContextAccessor)
     {
+      this.ValidationMessageArticleIdToBorrowArray = new string[4];
+      this.ArticleIdToBorrowArrayInputValue = new string[4];
     }
 
     private protected async override Task<Customer>
       PerformSearchInDatabaseFunc(int? id)
     {
-      return base.AbstractEntity = await base._tDbSet
+      return await base._tDbSet
         .Include(s => s.CurrentlyBorrowed)
         .AsNoTracking()
         .FirstOrDefaultAsync(m => m.Id == id)

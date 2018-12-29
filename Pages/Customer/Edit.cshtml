@@ -13,7 +13,14 @@
     <input type="text" asp-for="@Model.AbstractEntity.Id" class="form-control"
         disabled />
   </div>
-  @await Html.PartialAsync("_FormPartialView", Model.AbstractEntity )
+  @await Html.PartialAsync("_FormPartialView", Model.AbstractEntity,
+      new ViewDataDictionary(ViewData)
+      {
+        {"ValidationMessageArticleIdToBorrowArray",
+            Model.ValidationMessageArticleIdToBorrowArray},
+        {"ArticleIdToBorrowArrayInputValue",
+            Model.ArticleIdToBorrowArrayInputValue}
+      })
 }
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos

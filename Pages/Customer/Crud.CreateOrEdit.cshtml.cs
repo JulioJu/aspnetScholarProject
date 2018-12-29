@@ -9,6 +9,12 @@ namespace Videotheque.Pages.CustomerPage
 
   public sealed partial class Crud : CrudAbstract<Customer>
   {
+    // Instantiate in constructor
+    public string[] ValidationMessageArticleIdToBorrowArray { get; set; }
+
+    // Instantiate in constructor
+    public string[] ArticleIdToBorrowArrayInputValue { get; set; }
+
     private protected override async Task<bool> PerformTestOverpostingFunc()
     {
       return await base.TryUpdateModelAsync<Customer>(
@@ -51,7 +57,7 @@ namespace Videotheque.Pages.CustomerPage
         string[] articleIdAlreadyBorrowedArray,
         string[] shouldBeRemovedArray)
     {
-      // TODO display error
+      // TODO LOW display error
       if (articleIdAlreadyBorrowedArray != null
           && shouldBeRemovedArray != null
           && articleIdAlreadyBorrowedArray.Length
@@ -64,8 +70,8 @@ namespace Videotheque.Pages.CustomerPage
           if (articleIdAlreadyBorrowedArray[index] != null
               && shouldBeRemovedArray[index] != null)
           {
-            // TODO try catch int.Parse
-            // TODO not protected against injections.
+            // TODO LOW try catch int.Parse
+            // TODO LOW not protected against injections.
             //      All number values could be injected
             int articleId = int.Parse(articleIdAlreadyBorrowedArray[index],
                 System.Globalization.NumberStyles.Integer,
@@ -76,7 +82,7 @@ namespace Videotheque.Pages.CustomerPage
                 .FindAsync(articleId).ConfigureAwait(false);
             if (articleToRemove == null)
             {
-              // TODO: display in browser
+              // TODO LOW: display in browser
               System.Console.WriteLine("WARNING: Article with id (barcode) '"
                   + articleId + "' doesn't exist. Not removed.");
             }
@@ -90,7 +96,7 @@ namespace Videotheque.Pages.CustomerPage
             {
               if (articleToRemove.BorrowerId != base.AbstractEntity.Id)
               {
-                  // TODO: display in browser
+                  // TODO LOW: display in browser
                   System.Console.WriteLine("INFO: Article with id (barcode) '"
                       + articleToRemove.Id + "' not borrowed by the current "
                       + "Customer with id '"
@@ -101,13 +107,18 @@ namespace Videotheque.Pages.CustomerPage
               {
                 if (shouldBeRemoved)
                 {
-                  // TODO: display in browser
-                  System.Console.WriteLine("INFO: Article with id (barcode) '"
+                  base.Message += "<li>Article with id (barcode) '"
                       + articleToRemove.Id
                       + "' is returned by Customer with id '"
-                      + articleToRemove.BorrowerId);
+                      + articleToRemove.BorrowerId + ".</li>";
                   articleToRemove.BorrowingDate = null;
                   articleToRemove.BorrowerId = null;
+
+                  // Not needed for Entity Framework Core 2.2, but more clean.
+                  // (personal opinion)
+                  articleToRemove.Borrower = null;
+                  base.AbstractEntity.CurrentlyBorrowed.Remove(articleToRemove);
+
                   base._db.Attach(articleToRemove).State = EntityState.Modified;
                 }
                 else
@@ -124,11 +135,12 @@ namespace Videotheque.Pages.CustomerPage
       }
     }
 
-    private async Task AddNewArticlesBorrowed(
+    private async Task<bool> AddNewArticlesBorrowed(
         string[] articleIdToBorrowArray,
         string[] articleLoanDurationArray)
     {
-      // TODO display error
+      bool isValidationError = false;
+      // TODO LOW display error
       if (articleIdToBorrowArray != null
           && articleLoanDurationArray != null
           && articleIdToBorrowArray.Length == articleLoanDurationArray.Length)
@@ -138,8 +150,8 @@ namespace Videotheque.Pages.CustomerPage
           if (articleIdToBorrowArray[index] != null
               && articleLoanDurationArray[index] != null)
           {
-            // TODO try catch int.Parse
-            // TODO not protected against injections.
+            // TODO LOW try catch int.Parse
+            // TODO LOW not protected against injections.
             //      All number values could be injected
             int articleId = int.Parse(articleIdToBorrowArray[index],
                 System.Globalization.NumberStyles.Integer,
@@ -148,13 +160,15 @@ namespace Videotheque.Pages.CustomerPage
               int.Parse(articleLoanDurationArray[index],
                 System.Globalization.NumberStyles.Integer,
                 CultureInfo.CurrentCulture);
+            this.ArticleIdToBorrowArrayInputValue[index] = articleId.ToString();
             Article articleToAdd = await base._db.Articles
                 .FindAsync(articleId).ConfigureAwait(false);
             if (articleToAdd == null)
             {
-              // TODO: display in browser
-              System.Console.WriteLine("WARNING: Article with id (barcode) '"
-                  + articleId + "' doesn't exist. Not borrowed.");
+              this.ValidationMessageArticleIdToBorrowArray[index] =
+                "Article with id (barcode) '"
+                + articleId + "' doesn't exist. Not borrowed.";
+              isValidationError = true;
             }
             else if (articleToAdd.BorrowerId == null)
             {
@@ -163,34 +177,42 @@ namespace Videotheque.Pages.CustomerPage
               articleToAdd.ReturnDate = articleToAdd.BorrowingDate?.AddDays(
                   articleLoanDuration);
               base.AbstractEntity.CurrentlyBorrowed.Add(articleToAdd);
+
+              // Not needed for Entity Framework Core 2.2, but more clean
+              // (personal opinion)
+              articleToAdd.BorrowerId = base.AbstractEntity.Id;
+              articleToAdd.Borrower = base.AbstractEntity;
+
               base._db.Attach(articleToAdd).State = EntityState.Modified;
-              // TODO: display in browser
-              System.Console.WriteLine("INFO: Article with id '"
+              base.Message += "<li>Article with id '"
                   + articleToAdd.Id + "' borrowed (added) by Customer with Id '"
-                  + articleToAdd.BorrowerId + "'.");
+                  + articleToAdd.BorrowerId + "'.</li>";
             }
             else
             {
               if (articleToAdd.BorrowerId != base.AbstractEntity.Id)
               {
-                // TODO: display in browser
-                System.Console.WriteLine("WARNING: Article with id (barcode) '"
+                this.ValidationMessageArticleIdToBorrowArray[index] =
+                  "Article with id (barcode) '"
                     + articleToAdd.Id
                     + "' already borrowed by Customer with id '"
-                    + articleToAdd.BorrowerId + "'. Can't be borrowed again.");
+                    + articleToAdd.BorrowerId + "'. Can't be borrowed again.";
+                isValidationError = true;
               }
               else
               {
-                // TODO: display in browser
-                System.Console.WriteLine("INFO: Article with id (barcode) '"
+                this.ValidationMessageArticleIdToBorrowArray[index] =
+                  "Article with id (barcode) '"
                     + articleToAdd.Id + "' already borrowed by the current "
                     + "Customer with id '" +
-                    articleToAdd.BorrowerId + "'. Can't be borrowed again.");
+                    articleToAdd.BorrowerId + "'. Can't be borrowed again.";
+                isValidationError = true;
               }
             }
           }
         }
       }
+      return isValidationError;
     }
 
     public async Task<IActionResult> OnPostEditAsync(
@@ -199,8 +221,18 @@ namespace Videotheque.Pages.CustomerPage
         string[] articleIdAlreadyBorrowedArray,
         string[] shouldBeRemovedArray)
     {
-      await this.AddNewArticlesBorrowed(articleIdToBorrowArray,
-          articleLoanDurationArray).ConfigureAwait(false);
+      if (await this.AddNewArticlesBorrowed(articleIdToBorrowArray,
+          articleLoanDurationArray).ConfigureAwait(false)) {
+        // Otherwise we lost base.AbstractEntity.CurrentlyBorrowed
+        // As it, all is reseted
+        base.AbstractEntity = await
+          this.PerformSearchInDatabaseFunc(base.AbstractEntity.Id)
+          .ConfigureAwait(false);
+        this.Message = null;
+        return base.Page();
+      }
+      // We must remove after add, otherwise we sadly could return and article
+      // then borrow it again in the same edit.
       await this.RemoveSomeArticlesAlreadyBorrowed(articleIdAlreadyBorrowedArray,
           shouldBeRemovedArray).ConfigureAwait(false);
       return await base.OnPostEditAsyncWithFunc(this.PerformTestOverpostingFunc)

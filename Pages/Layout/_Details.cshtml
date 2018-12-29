@@ -2,6 +2,11 @@
   Layout = "./_Layout.cshtml";
 }
 
+@if (!String.IsNullOrEmpty(Model.Message))
+{
+<h3>Msg: @Html.Raw(Model.Message)</h3>
+}
+
 @RenderSection("h2", required: false)
 
 <div>
