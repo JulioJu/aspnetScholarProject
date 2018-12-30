@@ -8,7 +8,8 @@
       <div asp-validation-summary="ModelOnly" class="text-danger"></div>
       @RenderSection("Inputs", required: true)
       <div class="form-group">
-        @if (@Context.Request.Path.ToString().Contains("/Edit/"))
+        @if (@Context.Request.Path.ToString().Contains("/Edit/",
+            System.StringComparison.InvariantCultureIgnoreCase))
         {
           <input type="submit" value="Edit" class="btn btn-danger"
               asp-page-handler="edit"

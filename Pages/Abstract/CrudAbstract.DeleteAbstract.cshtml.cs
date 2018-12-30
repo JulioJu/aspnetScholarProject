@@ -30,6 +30,9 @@ namespace Videotheque.Pages.Abstract
         this._tDbSet.Remove(this.AbstractEntity);
         await this._db.SaveChangesAsync()
           .ConfigureAwait(false);
+        this.Message = new System.Text.StringBuilder(
+            this.AbstractEntity.GetType() +
+            $"{this.AbstractEntity.Id} deleted.");
         return base.RedirectToPage("./ShowAll");
       }
       catch (DbUpdateException /* ex */)

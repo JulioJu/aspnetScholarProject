@@ -10,9 +10,15 @@ namespace Videotheque.Pages.CustomerPage
   public sealed partial class Crud : CrudAbstract<Customer>
   {
     // Instantiate in constructor
+    // CA1819: "Arrays returned by properties are not write-protected, even if
+    //      the property is read-only."
+    #pragma warning disable CA1819
     public string[] ValidationMessageArticleIdToBorrowArray { get; set; }
 
     // Instantiate in constructor
+    // CA1819: "Arrays returned by properties are not write-protected, even if
+    //      the property is read-only."
+    #pragma warning disable CA1819
     public string[] ArticleIdToBorrowArrayInputValue { get; set; }
 
     private protected override async Task<bool> PerformTestOverpostingFunc()
@@ -48,7 +54,7 @@ namespace Videotheque.Pages.CustomerPage
         return base.Page();
       }
       base.AbstractEntity.Lastname = base.AbstractEntity.Lastname?
-        .ToUpper(CultureInfo.CurrentCulture);
+        .ToUpper(CultureInfo.InvariantCulture);
       return await this.OnPostJoinListAsync()
         .ConfigureAwait(false);
     }
@@ -75,7 +81,7 @@ namespace Videotheque.Pages.CustomerPage
             //      All number values could be injected
             int articleId = int.Parse(articleIdAlreadyBorrowedArray[index],
                 System.Globalization.NumberStyles.Integer,
-                CultureInfo.CurrentCulture);
+                CultureInfo.InvariantCulture);
             System.Console.WriteLine(shouldBeRemovedArray[index]);
             bool shouldBeRemoved = bool.Parse(shouldBeRemovedArray[index]);
             Article articleToRemove = await base._db.Articles
@@ -107,10 +113,10 @@ namespace Videotheque.Pages.CustomerPage
               {
                 if (shouldBeRemoved)
                 {
-                  base.Message += "<li>Article with id (barcode) '"
+                  base.Message.Append("<li>Article with id (barcode) '"
                       + articleToRemove.Id
                       + "' is returned by Customer with id '"
-                      + articleToRemove.BorrowerId + ".</li>";
+                      + articleToRemove.BorrowerId + ".</li>");
                   articleToRemove.BorrowingDate = null;
                   articleToRemove.BorrowerId = null;
 
@@ -155,12 +161,13 @@ namespace Videotheque.Pages.CustomerPage
             //      All number values could be injected
             int articleId = int.Parse(articleIdToBorrowArray[index],
                 System.Globalization.NumberStyles.Integer,
-                CultureInfo.CurrentCulture);
+                CultureInfo.InvariantCulture);
             int articleLoanDuration =
               int.Parse(articleLoanDurationArray[index],
                 System.Globalization.NumberStyles.Integer,
-                CultureInfo.CurrentCulture);
-            this.ArticleIdToBorrowArrayInputValue[index] = articleId.ToString();
+                CultureInfo.InvariantCulture);
+            this.ArticleIdToBorrowArrayInputValue[index] =
+              articleId.ToString(CultureInfo.InvariantCulture);
             Article articleToAdd = await base._db.Articles
                 .FindAsync(articleId).ConfigureAwait(false);
             if (articleToAdd == null)
@@ -184,9 +191,9 @@ namespace Videotheque.Pages.CustomerPage
               articleToAdd.Borrower = base.AbstractEntity;
 
               base._db.Attach(articleToAdd).State = EntityState.Modified;
-              base.Message += "<li>Article with id '"
+              base.Message.Append("<li>Article with id '"
                   + articleToAdd.Id + "' borrowed (added) by Customer with Id '"
-                  + articleToAdd.BorrowerId + "'.</li>";
+                  + articleToAdd.BorrowerId + "'.</li>");
             }
             else
             {
@@ -222,7 +229,8 @@ namespace Videotheque.Pages.CustomerPage
         string[] shouldBeRemovedArray)
     {
       if (await this.AddNewArticlesBorrowed(articleIdToBorrowArray,
-          articleLoanDurationArray).ConfigureAwait(false)) {
+          articleLoanDurationArray).ConfigureAwait(false))
+      {
         // Otherwise we lost base.AbstractEntity.CurrentlyBorrowed
         // As it, all is reseted
         base.AbstractEntity = await
@@ -231,6 +239,7 @@ namespace Videotheque.Pages.CustomerPage
         this.Message = null;
         return base.Page();
       }
+      this.Message = new System.Text.StringBuilder();
       // We must remove after add, otherwise we sadly could return and article
       // then borrow it again in the same edit.
       await this.RemoveSomeArticlesAlreadyBorrowed(articleIdAlreadyBorrowedArray,
