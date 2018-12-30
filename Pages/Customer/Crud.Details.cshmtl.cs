@@ -1,7 +1,6 @@
 namespace Videotheque.Pages.CustomerPage
 {
   using System.Threading.Tasks;
-  using Microsoft.AspNetCore.Http;
   using Microsoft.AspNetCore.Mvc;
   using Microsoft.EntityFrameworkCore;
   using Videotheque.Data;
@@ -9,8 +8,8 @@ namespace Videotheque.Pages.CustomerPage
 
   public sealed partial class Crud : CrudAbstract<Customer>
   {
-    public Crud(AppDbContext db, IHttpContextAccessor httpContextAccessor)
-      : base(db, db.Customers, httpContextAccessor)
+    public Crud(AppDbContext db)
+      : base(db, db.Customers)
     {
       this.ValidationMessageArticleIdToBorrowArray = new string[4];
       this.ArticleIdToBorrowArrayInputValue = new string[4];

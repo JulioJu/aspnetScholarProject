@@ -10,8 +10,6 @@ namespace Videotheque.Pages.Abstract
   public abstract partial class CrudAbstract<TAbstractEntity> : PageModel
       where TAbstractEntity : AbstractEntity
   {
-    private protected string CurrentRoute { get; }
-
     // SA1401: Field must be private
     #pragma warning disable SA1401
     private protected readonly AppDbContext _db;
@@ -27,12 +25,8 @@ namespace Videotheque.Pages.Abstract
 
     // IHttpContextAccessor needs to be injectected in Startup.cs
     private protected CrudAbstract(AppDbContext db,
-        DbSet<TAbstractEntity> tDbSet,
-        IHttpContextAccessor httpContextAccessor)
+        DbSet<TAbstractEntity> tDbSet)
     {
-      this.CurrentRoute = Microsoft.AspNetCore.Http.Extensions
-        .UriHelper.GetEncodedPathAndQuery(
-          httpContextAccessor.HttpContext.Request);
       this._db = db;
       this._tDbSet = tDbSet;
     }
@@ -43,7 +37,8 @@ namespace Videotheque.Pages.Abstract
     private protected virtual async
       Task<TAbstractEntity> PerformSearchInDatabaseFunc(int? id)
     {
-      if (this.CurrentRoute.Contains("/Delete/",
+      string currentRoute = base.HttpContext.Request.Path;
+      if (currentRoute.Contains("/Delete/",
             System.StringComparison.InvariantCultureIgnoreCase))
       {
         return await this._tDbSet
@@ -69,7 +64,8 @@ namespace Videotheque.Pages.Abstract
         PerformSearchInDatabase performSearchInDatabase,
         bool? saveChangesError = false)
     {
-      if (this.CurrentRoute.EndsWith("/Create",
+      string currentRoute = base.HttpContext.Request.Path;
+      if (currentRoute.EndsWith("/Create",
             System.StringComparison.InvariantCultureIgnoreCase))
       {
         return base.Page();
@@ -93,7 +89,7 @@ namespace Videotheque.Pages.Abstract
         return base.NotFound();
       }
 
-      if (this.CurrentRoute.Contains("/Delete/",
+      if (currentRoute.Contains("/Delete/",
             System.StringComparison.InvariantCultureIgnoreCase)
           && saveChangesError.GetValueOrDefault())
       {

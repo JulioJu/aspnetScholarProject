@@ -13,7 +13,7 @@ namespace Videotheque.Pages.Abstract
     where TAbstractEntity : AbstractEntity
   {
     [TempData]
-    public System.Text.StringBuilder Message { get; set; }
+    public string Message { get; set; }
 
     private protected delegate Task<bool>
       PerformTestOverposting();
@@ -42,9 +42,8 @@ namespace Videotheque.Pages.Abstract
       {
         this._tDbSet.Add(this.AbstractEntity);
         await this._db.SaveChangesAsync().ConfigureAwait(false);
-        this.Message = new System.Text.StringBuilder(
-            this.AbstractEntity.GetType() +
-            $"{this.AbstractEntity.Id} created.");
+        this.Message = this.AbstractEntity.GetType() +
+            $"{this.AbstractEntity.Id} created.";
         return base.RedirectToPage("./Details/",
             new { id = this.AbstractEntity.Id });
       }
@@ -83,14 +82,13 @@ namespace Videotheque.Pages.Abstract
 
       if (this.Message != null)
       {
-        this.Message = new System.Text.StringBuilder(
-            $"AbstractEntity {this.AbstractEntity.Id} edited. "
-          + "<br />Some details: <br /><ul>" + this.Message + "</ul>");
+        this.Message = $"AbstractEntity {this.AbstractEntity.Id} edited. "
+          + "<br />Some details: <br /><ul>" + this.Message + "</ul>";
       }
       else
       {
-        this.Message.Insert(0,
-            $"AbstractEntity {this.AbstractEntity.Id} edited.");
+        this.Message = $"AbstractEntity {this.AbstractEntity.Id} edited." +
+          this.Message;
       }
       return base.RedirectToPage("./Details/",
           new { id = this.AbstractEntity.Id });

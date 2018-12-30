@@ -113,10 +113,15 @@ namespace Videotheque.Pages.CustomerPage
               {
                 if (shouldBeRemoved)
                 {
-                  base.Message.Append("<li>Article with id (barcode) '"
+                  // 'Microsoft.AspNetCore.Mvc.ViewFeatures.Internal.TempDataSerializer'
+                  // cannot serialize an object of type
+                  // 'System.Text.StringBuilder'.
+                  // S1643: Use a StringBuilder instead.
+                  #pragma warning disable S1643
+                  base.Message += "<li>Article with id (barcode) '"
                       + articleToRemove.Id
                       + "' is returned by Customer with id '"
-                      + articleToRemove.BorrowerId + ".</li>");
+                      + articleToRemove.BorrowerId + ".</li>";
                   articleToRemove.BorrowingDate = null;
                   articleToRemove.BorrowerId = null;
 
@@ -191,9 +196,14 @@ namespace Videotheque.Pages.CustomerPage
               articleToAdd.Borrower = base.AbstractEntity;
 
               base._db.Attach(articleToAdd).State = EntityState.Modified;
-              base.Message.Append("<li>Article with id '"
+              // 'Microsoft.AspNetCore.Mvc.ViewFeatures.Internal.TempDataSerializer'
+              // cannot serialize an object of type
+              // 'System.Text.StringBuilder'.
+              // S1643: Use a StringBuilder instead.
+              #pragma warning disable S1643
+              base.Message += "<li>Article with id '"
                   + articleToAdd.Id + "' borrowed (added) by Customer with Id '"
-                  + articleToAdd.BorrowerId + "'.</li>");
+                  + articleToAdd.BorrowerId + "'.</li>";
             }
             else
             {
@@ -239,7 +249,7 @@ namespace Videotheque.Pages.CustomerPage
         this.Message = null;
         return base.Page();
       }
-      this.Message = new System.Text.StringBuilder();
+      this.Message = null;
       // We must remove after add, otherwise we sadly could return and article
       // then borrow it again in the same edit.
       await this.RemoveSomeArticlesAlreadyBorrowed(articleIdAlreadyBorrowedArray,

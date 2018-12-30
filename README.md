@@ -689,15 +689,19 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
   * https://docs.microsoft.com/en-us/dotnet/csharp/codedoc
 
 * Get URL
-    * In cs file (a little complicated)
-      * https://forums.asp.net/t/2143295.aspx?Get+HttpContext+Current+in+a+library+project+in+ASP+NET+Core+
-          (how get all url parts)
-      * https://sites.google.com/site/netcorenote/asp-net-core/get-scheme-url-host
-          (do not forget to inject the Service)
-      * https://www.carlrippon.com/httpcontext-in-asp-net-core/
-          (less interesting)
-    * In Page file (very, very easy)
-        * https://stackoverflow.com/questions/38437005/how-to-get-current-url-in-view-in-asp-net-core-1-0
+    * ~~In cs file (a little complicated)~~
+      * ~~https://forums.asp.net/t/2143295.aspx?Get+HttpContext+Current+in+a+library+project+in+ASP+NET+Core+
+          (how get all url parts)~~
+      * ~~https://sites.google.com/site/netcorenote/asp-net-core/get-scheme-url-host
+          (do not forget to inject the Service)~~
+      * ~~https://www.carlrippon.com/httpcontext-in-asp-net-core/
+          (less interesting)~~
+    * ~~In Page file (very, very easy)
+        * https://stackoverflow.com/questions/38437005/how-to-get-current-url-in-view-in-asp-net-core-1-0~~
+    * The solution is: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/http-context?view=aspnetcore-2.2
+        Notes
+        1. You should use `base.HttpContext.Request.Path`
+        2. Doesn't work in constructor.
 
 * Migration  from old dotnet version to a newer
     * See https://docs.microsoft.com/en-us/aspnet/core/migration/
