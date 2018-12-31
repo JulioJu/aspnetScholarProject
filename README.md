@@ -807,7 +807,8 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
     We assume that the user will not try to change the client side app
     thanks Developers tools of the Browser. Therefore, if in a client
     side we have `<input type="number" name="xxx" />`, we will not `try` `catch`
-    in server side `int.Parse(xxx)`
+    in server side `int.Parse(xxx)`. Like that, all fields
+    `<input type="hidden">`are not tested.
     Could be done in a future, therefore this kind of TODO as marked `TODO LOW`
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
