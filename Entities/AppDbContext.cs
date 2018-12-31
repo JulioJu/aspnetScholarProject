@@ -20,6 +20,8 @@ namespace Videotheque.Data
 
     internal DbSet<Customer> Customers { get; set; }
 
+    internal DbSet<Film> Films { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         foreach (var entityType in modelBuilder.Model.GetEntityTypes()

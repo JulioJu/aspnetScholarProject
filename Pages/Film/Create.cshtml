@@ -1,0 +1,15 @@
+@page
+@model Videotheque.Pages.FilmPage.Crud
+
+@{
+  Layout = "../Layout/_CreateOrEdit.cshtml";
+  ViewData["Title"] = "Film Create";
+  ViewData["h1"] = "Create a Film";
+}
+
+@section Inputs {
+  @await Html.PartialAsync("_FormPartialView", Model.AbstractEntity )
+}
+
+<!-- vim:sw=2:ts=2:et:fileformat=dos
+-->
