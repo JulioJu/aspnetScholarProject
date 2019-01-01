@@ -2,6 +2,16 @@
 @model Article
 
 <dt class="col-sm-2">
+  @Html.DisplayNameFor(model => model.Film)
+  <span> | </span>
+  @Html.DisplayNameFor(model => model.Film.Id)
+</dt>
+<dd class="col-sm-10">
+  @Html.DisplayFor(model => model.Film.Id)
+  <span> | </span>
+  @Html.DisplayFor(model => model.Film.Title)
+</dd>
+<dt class="col-sm-2">
   @Html.DisplayNameFor(model => model.Disc)
 </dt>
 <dd class="col-sm-10">

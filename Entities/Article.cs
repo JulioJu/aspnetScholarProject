@@ -40,6 +40,12 @@ namespace Videotheque.Data
 
     public DateTime? ReturnDate { get; set; }
 
+    [Required]
+    public int FilmId { get; set; }
+
+    // should not be required
+    public Film Film { get; set; }
+
     public int? BorrowerId { get; set; }
 
     public Customer Borrower { get; set; }

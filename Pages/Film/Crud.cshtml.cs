@@ -2,18 +2,19 @@ namespace Videotheque.Pages.FilmPage
 {
   using System.Threading.Tasks;
   using Microsoft.AspNetCore.Mvc;
-  using Microsoft.AspNetCore.Mvc.Rendering;
   using Videotheque.Data;
   using Videotheque.Pages.Abstract;
 
   public sealed partial class Crud : CrudAbstract<Film>
   {
+    public Crud(AppDbContext db)
+      : base(db, db.Films)
+    {
+    }
+
     public override async Task<IActionResult> OnGetAsync(int? id,
         bool? saveChangeErrors = false)
     {
-      base.ViewData["BorrowerId"] = new SelectList(base._db.Customers,
-          "Id",
-          "Address");
       return await base.OnGetAsync(id, saveChangeErrors).ConfigureAwait(false);
     }
 

@@ -8,12 +8,20 @@ namespace Videotheque.Pages.ArticlePage
 
   public sealed partial class Crud : CrudAbstract<Article>
   {
+    public Crud(AppDbContext db)
+      : base(db, db.Articles)
+    {
+    }
+
     public override async Task<IActionResult> OnGetAsync(int? id,
         bool? saveChangeErrors = false)
     {
       base.ViewData["BorrowerId"] = new SelectList(base._db.Customers,
           "Id",
           "Address");
+      base.ViewData["FilmId"] = new SelectList(base._db.Films,
+          "Id",
+          "Title");
       return await base.OnGetAsync(id, saveChangeErrors).ConfigureAwait(false);
     }
 
@@ -28,7 +36,10 @@ namespace Videotheque.Pages.ArticlePage
           s => s.CountBorrowing,
           s => s.Comment,
           s => s.BorrowingDate,
-          s => s.ReturnDate)
+          s => s.ReturnDate,
+          s => s.FilmId,
+          s => s.BorrowerId
+          )
         .ConfigureAwait(false);
     }
 

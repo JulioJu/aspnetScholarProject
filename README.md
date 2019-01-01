@@ -546,6 +546,16 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
         FindAsync is no longer appropriate.* ”
         https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/crud?view=aspnetcore-2.2
 
+* Note:
+    ```
+    [Required]
+    public int FilmId { get; set; }
+
+    // should not be required
+    public Film Film { get; set; }
+    ```
+
+
 ## Date Update and Date Create
 * **https://github.com/aspnet/EntityFrameworkCore/issues/10769**
     (code in AppDbContext.cs inspired from it)
@@ -831,6 +841,8 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
     in server side `int.Parse(xxx)`. Like that, all fields
     `<input type="hidden">`are not tested.
     Could be done in a future, therefore this kind of TODO as marked `TODO LOW`
+
+* Todo: change `base.ViewData` to be strong typed (better when we scaffold with my script)
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->

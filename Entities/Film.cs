@@ -1,6 +1,7 @@
 namespace Videotheque.Data
 {
   using System;
+  using System.Collections.Generic;
   using System.ComponentModel.DataAnnotations;
 
   public class Film : AbstractEntity
@@ -26,6 +27,22 @@ namespace Videotheque.Data
     //      the property is read-only."
     #pragma warning disable CA1819
     public byte[] Image { get; set; }
+
+    private HashSet<Article> PArticles { get; set; }
+
+    public HashSet<Article> Articles
+    {
+      get
+      {
+        return this.PArticles
+          ?? (this.PArticles = new HashSet<Article>());
+      }
+
+      set
+      {
+        this.PArticles = value;
+      }
+    }
 
     /// <summary>Search films by Title</summary>
     public static Film[] SearchByTitle()

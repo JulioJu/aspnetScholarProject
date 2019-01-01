@@ -275,7 +275,9 @@ scaffoldingCore() {
             "(script should be launched in a Neovim Terminal)." \
         "\n* In the last tab (ninth), move the line added with" \
         "\`Dbset<${NewEntity}>' at the beginning of the file." \
-        "\n* In the height tab, correct errors" \
+        "\n* In the height tab, correct errors"  \
+            "DO NOT FORGET to correct OnGetAsync() function" \
+            "(no warning displayed)"
         "\n* Copy content of the seventh tab in the fifth and sixth tab," \
             "CORRECT INDENTATION, " \
             "DO NOT FORGET TO REMOVE UPDATED_DATE AND CREATED_DATE FIELDS." \
@@ -300,7 +302,7 @@ scaffoldingCore() {
     nvr --remote-tab ShowAll.cshtml
     nvr --remote-tab "${GeneratedEntity}/Index.cshtml"
 
-    nvr --remote-tab Crud.CreateOrEdit.cshtml.cs
+    nvr --remote-tab Crud.cshtml.cs
 
     popd
 
@@ -315,9 +317,9 @@ scaffoldingCore() {
     sqlcmd -S localhost -U SA -P "${Mdp}" \
         -Q "drop database ${DatabaseName}"
 
-    rm -Rf Migrations && \
-        dotnet ef migrations add InitialCreate && \
-        dotnet ef database update
+    rm -Rf Migrations
+    dotnet ef migrations add InitialCreate
+    dotnet ef database update
     set +x
 }
 
