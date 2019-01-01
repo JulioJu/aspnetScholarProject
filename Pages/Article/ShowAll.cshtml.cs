@@ -1,5 +1,7 @@
 namespace Videotheque.Pages.ArticlePage
 {
+  using System.Threading.Tasks;
+  using Microsoft.EntityFrameworkCore;
   using Videotheque.Data;
   using Videotheque.Pages.Abstract;
 
@@ -8,6 +10,16 @@ namespace Videotheque.Pages.ArticlePage
     public ShowAll(AppDbContext db)
       : base(db.Articles)
     {
+    }
+
+    public override async Task OnGetAsync()
+    {
+      base.AbstractEntities = await base._tDbSet
+        .Include(a => a.Borrower)
+        .Include(a => a.Film)
+        .AsNoTracking()
+        .ToListAsync()
+        .ConfigureAwait(false);
     }
 
   }

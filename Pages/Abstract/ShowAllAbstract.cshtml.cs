@@ -12,9 +12,10 @@ namespace Videotheque.Pages.Abstract
   public abstract class ShowAllAbstract<TAbstractEntity> : PageModel
     where TAbstractEntity : AbstractEntity
   {
-    private readonly DbSet<TAbstractEntity> _tDbSet;
+    private protected readonly DbSet<TAbstractEntity> _tDbSet;
 
-    public IList<TAbstractEntity> AbstractEntities { get; private set; }
+    public IList<TAbstractEntity> AbstractEntities
+      { get; private protected set; }
 
     [TempData]
     public string Message { get; set; }
@@ -24,10 +25,13 @@ namespace Videotheque.Pages.Abstract
       this._tDbSet = tDbSet;
     }
 
-    public async Task OnGetAsync()
+    public virtual async Task OnGetAsync()
     {
       this.AbstractEntities =
-        await this._tDbSet.AsNoTracking().ToListAsync().ConfigureAwait(false);
+        await this._tDbSet
+          .AsNoTracking()
+          .ToListAsync()
+          .ConfigureAwait(false);
     }
 
   }

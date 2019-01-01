@@ -273,18 +273,19 @@ scaffoldingCore() {
     echo -e "\n\nFile to edit will be open in new NeoVim tabs" \
             "thanks Neovim Remote" \
             "(script should be launched in a Neovim Terminal)." \
-        "\n* In the last tab (ninth), move the line added with" \
+        "\n* In the last tab (10th), move the line added with" \
         "\`Dbset<${NewEntity}>' at the beginning of the file." \
-        "\n* In the height tab, correct errors"  \
+        "\n* In the 9th tab, correct errors"  \
             "DO NOT FORGET to correct OnGetAsync() function" \
             "(no warning displayed)"
-        "\n* Copy content of the seventh tab in the fifth and sixth tab," \
+        "\n* In the 8th tab, correct errors"  \
+        "\n* Copy content of the 7th tab in the 6th and 5th tab," \
             "CORRECT INDENTATION, " \
             "DO NOT FORGET TO REMOVE UPDATED_DATE AND CREATED_DATE FIELDS." \
-        "\n* Copy content of the fourth tab in the third tab," \
+        "\n* Copy content of the 4th tab in the 3th tab," \
             "CORRECT INDENTATION, " \
             "DO NOT FORGET TO REMOVE UPDATED_DATE AND CREATED_DATE FIELDS." \
-        "\n* Copy content of the second tab in the first tab," \
+        "\n* Copy content of the 2th in the 1th tab," \
             "CORRECT INDENTATION, " \
             "DO NOT FORGET TO REMOVE UPDATED_DATE AND CREATED_DATE FIELDS."
 
@@ -303,6 +304,8 @@ scaffoldingCore() {
     nvr --remote-tab "${GeneratedEntity}/Index.cshtml"
 
     nvr --remote-tab Crud.cshtml.cs
+
+    nvr --remote-tab ShowAll.cshtml.cs
 
     popd
 

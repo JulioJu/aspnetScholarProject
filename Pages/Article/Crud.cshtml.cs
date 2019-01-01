@@ -3,6 +3,7 @@ namespace Videotheque.Pages.ArticlePage
   using System.Threading.Tasks;
   using Microsoft.AspNetCore.Mvc;
   using Microsoft.AspNetCore.Mvc.Rendering;
+  using Microsoft.EntityFrameworkCore;
   using Videotheque.Data;
   using Videotheque.Pages.Abstract;
 
@@ -11,6 +12,17 @@ namespace Videotheque.Pages.ArticlePage
     public Crud(AppDbContext db)
       : base(db, db.Articles)
     {
+    }
+
+    private protected async override Task<Article>
+      PerformSearchInDatabaseFunc(int? id)
+    {
+      return await base._tDbSet
+        .Include(a => a.Borrower)
+        .Include(a => a.Film)
+        .AsNoTracking()
+        .FirstOrDefaultAsync(m => m.Id == id)
+        .ConfigureAwait(false);
     }
 
     public override async Task<IActionResult> OnGetAsync(int? id,
@@ -22,7 +34,8 @@ namespace Videotheque.Pages.ArticlePage
       base.ViewData["FilmId"] = new SelectList(base._db.Films,
           "Id",
           "Title");
-      return await base.OnGetAsync(id, saveChangeErrors).ConfigureAwait(false);
+      return await base.OnGetAsyncWithFunc(id, this.PerformSearchInDatabaseFunc)
+        .ConfigureAwait(false);
     }
 
     private protected override async Task<bool> PerformTestOverpostingFunc()
