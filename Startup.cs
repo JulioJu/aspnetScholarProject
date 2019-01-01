@@ -60,6 +60,11 @@ namespace Aspnet
         app.UseDeveloperExceptionPage();
       }
 
+      app.UseStatusCodePages();
+      // S1075: Refactor your code not to use hardcoded absolute paths or URIs.
+      #pragma warning disable S1075
+      app.UseStatusCodePagesWithReExecute("/Status{0}");
+
       app.UseMvc();
       app.UseStaticFiles();
 

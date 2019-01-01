@@ -15,6 +15,7 @@
   * [Nuget packages](#nuget-packages)
 * [EntityFramework](#entityframework)
   * [For Razor](#for-razor)
+    * [0. Razor Overview](#0-razor-overview)
     * [1. Introduction Tutorial in ASP.NET Core documentation website](#1-introduction-tutorial-in-aspnet-core-documentation-website)
       * [Note about this tutorial](#note-about-this-tutorial)
         * [Integrate Scaffolding code into my very well factorized code](#integrate-scaffolding-code-into-my-very-well-factorized-code)
@@ -29,6 +30,7 @@
 * [Page/View, Layout, Partial View, View Component](#pageview-layout-partial-view-view-component)
   * [Notes](#notes)
 * [Other interesting doc](#other-interesting-doc)
+* [Routing](#routing)
 * [Inheritance](#inheritance-1)
 * [Issue created by me on GitHub](#issue-created-by-me-on-github)
 * [Credits](#credits)
@@ -329,6 +331,11 @@ at the section 2 very carefully.**
         https://en.wikipedia.org/wiki/Don't_repeat_yourself !
     * I've also used Abstract Classes, and Layouts, and Partial View. The code
         is well factorized !!! Can't be more factorized.
+
+### 0. Razor Overview
+
+* Before all you must read, understand and practice
+    https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.2&tabs=visual-studio-code
 
 ### 1. Introduction Tutorial in ASP.NET Core documentation website
 
@@ -721,6 +728,7 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
         Seems to be the same for all non JavaScript Client Framework, except
         maybe for Thymeleaf
 
+# Routing
 
 * To get the URL
     * In a Razor Page use `@Context.WhatEver`
@@ -729,6 +737,19 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
     * See examples in the current code.
     * For MVC, maybe see also
         https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/routing?view=aspnetcore-2.2
+
+* Razor Pages - Understanding Handler Methods:
+    https://www.mikesdotnetting.com/article/308/razor-pages-understanding-handler-methods
+
+* Razor Pages route and app conventions in ASP.NET Core
+    https://docs.microsoft.com/en-us/aspnet/core/razor-pages/razor-pages-conventions?view=aspnetcore-2.2
+
+* We could customize routes thanks https://stackoverflow.com/questions/52317610/localized-page-names-with-asp-net-core-2-1
+    See also https://www.mikesdotnetting.com/article/327/customising-routing-conventions-in-razor-pages
+
+* 404 Not found:
+    * https://www.learnrazorpages.com/configuration/custom-errors
+    * https://www.reddit.com/r/dotnet/comments/8wtd9r/custom_404_page_in_aspnet_core_21_razor_pages/
 
 # Inheritance
 
