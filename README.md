@@ -2,6 +2,7 @@
 <!-- vim-markdown-toc GFM -->
 
 * [Teacher's instructions](#teachers-instructions)
+  * [Notes about my implementation](#notes-about-my-implementation)
 * [How to for Linux users](#how-to-for-linux-users)
   * [Langage Version](#langage-version)
   * [Code Analysis and StyleCop](#code-analysis-and-stylecop)
@@ -13,8 +14,7 @@
       * [Create Schema](#create-schema)
   * [Dotnet Watcher](#dotnet-watcher)
   * [Nuget packages](#nuget-packages)
-* [EntityFramework](#entityframework)
-  * [For Razor](#for-razor)
+* [How To for the official Quick Start](#how-to-for-the-official-quick-start)
     * [0. Razor Overview](#0-razor-overview)
     * [1. Introduction Tutorial in ASP.NET Core documentation website](#1-introduction-tutorial-in-aspnet-core-documentation-website)
       * [Note about this tutorial](#note-about-this-tutorial)
@@ -24,6 +24,8 @@
     * [2. Contonso University sample in ASP.NET Core documentation website](#2-contonso-university-sample-in-aspnet-core-documentation-website)
       * [Create the sample with dotnet cli](#create-the-sample-with-dotnet-cli)
       * [In Linux, example downloaded](#in-linux-example-downloaded-1)
+    * [3. Asp.Net MVC](#3-aspnet-mvc)
+* [Entity Framework, further resources and notes](#entity-framework-further-resources-and-notes)
   * [Model Validation](#model-validation)
   * [Relationship](#relationship)
   * [Date Update and Date Create](#date-update-and-date-create)
@@ -58,6 +60,15 @@ Il aimerait bien disposer des fonctionnalités suivantes :
 6. Faire la location de films aux personnes.
 7. Éditer une facture à une personne
 8. Faire un top N des films loués
+
+## Notes about my implementation
+
+If it's a real app, the user should buy a printer of barecode. Barecode
+  to print should be send to the printer software thanks API
+  like  https://www.tec-it.com/en/software/label-printing/label-software/barcode-generator/Default.aspx
+  (compatible with Linux).
+  On Linux, if the software have not API, we could use `xdotool` to
+  automate the process :-).
 
 # How to for Linux users
 * Create new project:
@@ -313,9 +324,7 @@ dotnet watch run
      `$ dotnet restore && dotnet build`
 * Prefer use  `$ dotnet add package`
 
-# EntityFramework
-
-## For Razor
+# How To for the official Quick Start
 
 **Read documentation presented at the section 1., then the section presented
 at the section 2 very carefully.**
@@ -448,7 +457,6 @@ at the section 2 very carefully.**
     https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/complex-data-model?view=aspnetcore-2.2&tabs=visual-studio
     * Solution for one-to-many is presented bellow, in section Relationship.
 
-
 #### Create the sample with dotnet cli
 * https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/?view=aspnetcore-2.2
 * In the left navigation panel, could be seen thanks:
@@ -487,6 +495,31 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
     `dotnet ef update`
     I've seen than id has defined in uppercase (`ID`). Maybe see
     https://github.com/aspnet/Docs/issues/9863
+
+### 3. Asp.Net MVC
+
+* https://docs.microsoft.com/en-us/aspnet/core/mvc/overview?view=aspnetcore-2.2
+  * As “ Razor Pages is a new **aspect of ASP.NET Core MVC** that makes coding
+  page-focused scenarios easier and more productive. ” **don't** forget to read
+  parts of
+  This **doc is very important** to undertstand.
+  * But Razor Page differs from “ *Model-View-Controller approach* ”
+  * To understand what is a model, there is a ref to
+      https://deviq.com/kinds-of-models/
+  * Citations above from
+      https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.2&tabs=visual-studio-code
+
+* More explanations at:
+  1. https://hackernoon.com/asp-net-core-razor-pages-vs-mvc-which-will-create-better-web-apps-in-2018-bd137ae0acaa
+  2. https://stackify.com/asp-net-razor-pages-vs-mvc/
+      (first sentences are almost the same, but not the end)
+  * Razor Page is MVVM
+  * To understand the sentence “ *The key difference between Razor pages and MVC
+      is that the model and controller code is also included within the Razor
+      Page itself.* ”
+      don't forget to read also link above
+
+# Entity Framework, further resources and notes
 
 ## Model Validation
 * https://docs.microsoft.com/en-us/aspnet/core/mvc/models/validation?view=aspnetcore-2.2
@@ -796,6 +829,9 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
   RazorPagesMovie.Models.Movie.Id
 10. https://github.com/OmniSharp/omnisharp-roslyn/pull/1361
 11. https://github.com/OmniSharp/omnisharp-vim/issues/437
+12. https://github.com/aspnet/AspNetCore/issues/6329
+  [Suggestion] Accessibility for input fields required
+
 
 # Credits
 
@@ -842,7 +878,12 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
     `<input type="hidden">`are not tested.
     Could be done in a future, therefore this kind of TODO as marked `TODO LOW`
 
-* Todo: change `base.ViewData` to be strong typed (better when we scaffold with my script)
+* ~~Todo: change `base.ViewData` to be strong typed (better when we scaffold
+    with my script)~~
+    not useful. When we have more than 10 films, not cool.
+
+* Check my issue https://github.com/aspnet/AspNetCore/issues/6329
+  [Suggestion] Accessibility for input fields required
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->

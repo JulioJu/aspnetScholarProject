@@ -12,9 +12,23 @@ namespace Videotheque.Pages.FilmPage
     {
     }
 
+    [BindProperty]
+    public int NumberOfNewArticles { get; set; }
+
     public override async Task<IActionResult> OnGetAsync(int? id,
         bool? saveChangeErrors = false)
     {
+      string currentRoute = base.HttpContext.Request.Path;
+      if (currentRoute. EndsWith("/Create",
+            System.StringComparison.InvariantCultureIgnoreCase))
+      {
+        this.NumberOfNewArticles = 1;
+      }
+      else if (currentRoute.Contains("/Edit/",
+            System.StringComparison.InvariantCultureIgnoreCase))
+      {
+        this.NumberOfNewArticles = 0;
+      }
       return await base.OnGetAsync(id, saveChangeErrors).ConfigureAwait(false);
     }
 
@@ -30,8 +44,19 @@ namespace Videotheque.Pages.FilmPage
         .ConfigureAwait(false);
     }
 
+    private void CreateNewArticles() {
+      for (int index = 0 ; index < this.NumberOfNewArticles ; index++)
+      {
+        Article article = new Article();
+        article.Film = base.AbstractEntity;
+        base._db.Articles.Add(article);
+      }
+      this._tDbSet.Add(this.AbstractEntity);
+    }
+
     public override async Task<IActionResult> OnPostCreateAsync()
     {
+      this.CreateNewArticles();
       return await base.OnPostCreateAsyncWithFunc(
           this.PerformTestOverpostingFunc)
         .ConfigureAwait(false);
@@ -39,6 +64,7 @@ namespace Videotheque.Pages.FilmPage
 
     public async Task<IActionResult> OnPostEditAsync()
     {
+      this.CreateNewArticles();
       return await base.OnPostEditAsyncWithFunc(this.PerformTestOverpostingFunc)
         .ConfigureAwait(false);
     }

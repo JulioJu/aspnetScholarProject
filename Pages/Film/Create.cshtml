@@ -8,7 +8,12 @@
 }
 
 @section Inputs {
-  @await Html.PartialAsync("_FormPartialView", Model.AbstractEntity )
+  @await Html.PartialAsync("_FormPartialView", Model.AbstractEntity,
+      new ViewDataDictionary(ViewData)
+      {
+        {"NumberOfNewArticles",
+            Model.NumberOfNewArticles}
+      })
 }
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
