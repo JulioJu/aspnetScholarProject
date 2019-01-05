@@ -19,6 +19,10 @@ namespace Videotheque.Pages.CustomerPage
     #pragma warning disable CA1819
     public string[] ArticleIdToBorrowArrayInputValue { get; set; }
 
+    public string[] ShouldBeRemovedArray { get; set; }
+
+    private int numberInputArticleToBorrow = 4;
+
     private protected override async Task<bool> PerformTestOverpostingFunc()
     {
       return await base.TryUpdateModelAsync<Customer>(
@@ -114,7 +118,7 @@ namespace Videotheque.Pages.CustomerPage
                 {
                   string messageArticle = "Article with barcode"
                     + " '<a href='/Article/Details/"
-                    + articleToRemove.Id  + "'>" + articleToRemove.Id + "</a>";
+                    + articleToRemove.Id + "'>" + articleToRemove.Id + "</a>";
                   // 'Microsoft.AspNetCore.Mvc.ViewFeatures.Internal.TempDataSerializer'
                   // cannot serialize an object of type
                   // 'System.Text.StringBuilder'.
@@ -153,14 +157,14 @@ namespace Videotheque.Pages.CustomerPage
       bool isValidationError = false;
       // TODO LOW display error
       this.ArticleIdToBorrowArrayInputValue =
-        new string[4];
+        new string[this.numberInputArticleToBorrow];
       this.ValidationMessageArticleIdToBorrowArray =
-        new string[4];
+        new string[this.numberInputArticleToBorrow];
       if (articleIdToBorrowArray != null
           && articleLoanDurationArray != null
           && articleIdToBorrowArray.Length == articleLoanDurationArray.Length)
       {
-        for (int index = 0; index < 4 ; index++)
+        for (int index = 0; index < this.numberInputArticleToBorrow; index++)
         {
           if (articleIdToBorrowArray[index] != null
               && articleLoanDurationArray[index] != null)
@@ -190,10 +194,10 @@ namespace Videotheque.Pages.CustomerPage
             }
             string messageArticle = "Article with barcode"
               + " '<a href='/Article/Details/"
-              + articleToAdd.Id  + "'>" + articleToAdd.Id + "</a>'";
+              + articleToAdd.Id + "'>" + articleToAdd.Id + "</a>'";
             string messageBorrower = "Customer with id "
                   + "'<a href='/Customer/Details/"
-                  + articleToAdd.BorrowerId  + "'>" + articleToAdd.BorrowerId
+                  + articleToAdd.BorrowerId + "'>" + articleToAdd.BorrowerId
                   + "</a>'";
             if (articleToAdd.BorrowerId == null)
             {
@@ -228,7 +232,7 @@ namespace Videotheque.Pages.CustomerPage
               else
               {
                 this.ValidationMessageArticleIdToBorrowArray[index] =
-                  messageArticle  + " already borrowed by the current "
+                  messageArticle + " already borrowed by the current "
                     + "Customer. Can't be borrowed again.";
                 isValidationError = true;
               }
@@ -254,6 +258,7 @@ namespace Videotheque.Pages.CustomerPage
           this.PerformSearchInDatabaseFunc(base.AbstractEntity.Id)
           .ConfigureAwait(false);
         this.Message = null;
+        this.ShouldBeRemovedArray = shouldBeRemovedArray;
         return base.Page();
       }
       // We must remove after add, otherwise we sadly could return and article

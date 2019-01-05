@@ -5,6 +5,8 @@
     (string[])ViewData["ValidationMessageArticleIdToBorrowArray"];
   string[] ArticleIdToBorrowArrayInputValue =
     (string[])ViewData["ArticleIdToBorrowArrayInputValue"];
+  string[] ShouldBeRemovedArray =
+    (string[])ViewData["ShouldBeRemovedArray"];
 }
 
 <div class="form-group">
@@ -65,34 +67,45 @@
           </tr>
         </thead>
         @:<tbody>
+      int index=0;
       foreach (Article article in Model.CurrentlyBorrowed)
       {
-          <tr class="form-group">
-            <td>
-              <input type="hidden" name="articleIdAlreadyBorrowedArray"
-                value="@article.Id" />
-              <a asp-page="/Article/Details"
-                  asp-route-id="@article.Id">
-                @article.Id
-              </a>
-            </td>
-            <td>
-              <a asp-page="/Film/Details"
-                  asp-route-id="@article.FilmId">
-                @article.FilmId
-              </a>
-            </td>
-            <td>
-              @article.Film.Title
-            </td>
-            <td>
-              <select name="shouldBeRemovedArray">
-                <option value="false" selected >Keep</option>
-                <option value="true" >Return</option>
-              </select>
-            </td>
-            <td> @article.ReturnDate?.ToShortDateString() </td>
-          </tr>
+        bool isSelectFalse = true;
+        bool isSelectTrue = false;
+        if (ShouldBeRemovedArray != null
+            && ShouldBeRemovedArray[index].Equals("true",
+              System.StringComparison.InvariantCultureIgnoreCase))
+        {
+          isSelectFalse = false;
+          isSelectTrue = true;
+        }
+        <tr class="form-group">
+          <td>
+            <input type="hidden" name="articleIdAlreadyBorrowedArray"
+              value="@article.Id" />
+            <a asp-page="/Article/Details"
+                asp-route-id="@article.Id">
+              @article.Id
+            </a>
+          </td>
+          <td>
+            <a asp-page="/Film/Details"
+                asp-route-id="@article.FilmId">
+              @article.FilmId
+            </a>
+          </td>
+          <td>
+            @article.Film.Title
+          </td>
+          <td>
+            <select name="shouldBeRemovedArray">
+              <option value="false" selected="@isSelectFalse">Keep</option>
+              <option value="true" selected="@isSelectTrue">Return</option>
+            </select>
+          </td>
+          <td> @article.ReturnDate?.ToShortDateString() </td>
+        </tr>
+        index++;
       }
         @:</tbody>
         @:</table>
