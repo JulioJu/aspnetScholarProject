@@ -45,83 +45,101 @@
     if (Model.CurrentlyBorrowed.Count > 0)
     {
         @:<table id="CustomerEditArticlesCurrentlyBorrowed">
-        @:<thead>
-          @:<tr>
-            @:<td>
-              @:Article borrowed <br /> (barcode)
-            @:</td>
-            @:<td>
-              @:Do you want return it?
-            @:</td>
-            @:<td>
-              @:Should be returned before
-            @:</td>
-          @:</tr>
-        @:</thead>
+        <thead>
+          <tr>
+            <td>
+              Article borrowed <br /> (barcode)
+            </td>
+            <td>
+              Film Id <br />
+            </td>
+            <td>
+              Film title
+            </td>
+            <td>
+              Do you want return it?
+            </td>
+            <td>
+              Should be returned before
+            </td>
+          </tr>
+        </thead>
         @:<tbody>
       foreach (Article article in Model.CurrentlyBorrowed)
       {
-          @:<tr class="form-group">
-            @:<td>
-              @:<input type="hidden" name="articleIdAlreadyBorrowedArray"
-              @:  value="@article.Id" />
-              @:<span>@article.Id</span>
-            @:</td>
-            @:<td>
-              @:<select name="shouldBeRemovedArray">
-                @:<option value="false" selected >Keep</option>
-                @:<option value="true" >Return</option>
-              @:</select>
-            @:</td>
-            @:<td> @article.ReturnDate?.ToShortDateString() </td>
-          @:</tr>
+          <tr class="form-group">
+            <td>
+              <input type="hidden" name="articleIdAlreadyBorrowedArray"
+                value="@article.Id" />
+              <a asp-page="/Article/Details"
+                  asp-route-id="@article.Id">
+                @article.Id
+              </a>
+            </td>
+            <td>
+              <a asp-page="/Film/Details"
+                  asp-route-id="@article.FilmId">
+                @article.FilmId
+              </a>
+            </td>
+            <td>
+              @article.Film.Title
+            </td>
+            <td>
+              <select name="shouldBeRemovedArray">
+                <option value="false" selected >Keep</option>
+                <option value="true" >Return</option>
+              </select>
+            </td>
+            <td> @article.ReturnDate?.ToShortDateString() </td>
+          </tr>
       }
         @:</tbody>
         @:</table>
     }
     else
     {
-      @:<p>No articles currently borrowed</p>
+      <p>No articles currently borrowed</p>
     }
 
 
     <!-- We could make four new borrowing -->
     @:<table>
-    @:<thead>
-      @:<tr>
-        @:<td>
-          @:Article borrowed <br /> (barcode)
-        @:</td>
-        @:<td>
-          @:Loan duration
-        @:</td>
-      @:<tr>
-    @:</thead>
+    <thead>
+      <tr>
+        <td>
+          Article borrowed <br /> (barcode)
+        </td>
+        <td>
+          Loan duration
+        </td>
+      <tr>
+    </thead>
     @:<tbody>
     for (int index=0 ;
           index < ValidationMessageArticleIdToBorrowArray.Length ;
           index++)
     {
-      @:<tr class="form-group">
-        @:<td>
-          @:<input type="number" name="articleIdToBorrowArray"
-          @:    placeholder="Article Barcode (id)"
-          @:    value="@ArticleIdToBorrowArrayInputValue[index]">
-          @:<br />
-          @:<span class="text-danger field-validation-error" >
+      <tr class="form-group">
+        <td>
+          <input type="number" name="articleIdToBorrowArray"
+              placeholder="Article Barcode (id)"
+              value="@ArticleIdToBorrowArrayInputValue[index]">
+          <br />
+          <span class="text-danger field-validation-error" >
             @ValidationMessageArticleIdToBorrowArray[index]
-          @:</span>
-        @:</td>
-        @:<td>
-          @:<select name="articleLoanDurationArray">
-          @:  <option value="1">1 days</option>
-          @:  <option value="2" selected >2 days</option>
-          @:  <option value="5">5 days</option>
-          @:  <option value="7">7 days</option>
-          @:  <option value="14">14 days</option>
-          @:</select>
-        @:</td>
-      @:</tr>
+          </span>
+        </td>
+        <td>
+          <select name="articleLoanDurationArray">
+            <option value="1">1 days</option>
+            <option value="2" selected >2 days</option>
+            <option value="5">5 days</option>
+            <option value="7">7 days</option>
+            <option value="14">14 days</option>
+          </select>
+        </td>
+      </tr>
     }
     @:</tbody>
     @:</table>

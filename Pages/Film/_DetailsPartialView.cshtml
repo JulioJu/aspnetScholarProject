@@ -26,5 +26,19 @@
   @Html.DisplayFor(model => model.Image)
 </dd>
 
+<dt>
+@Html.DisplayNameFor(model => model.Articles)
+</dt>
+<dd>
+<table class="table">
+  @await Html.PartialAsync("../Article/_TableFormDetailsThead.cshtml")
+
+  @foreach (var item in Model.Articles)
+  {
+    @await Html.PartialAsync("../Article/_TableFormDetailsTbody.cshtml",
+      item)
+  }
+</table>
+
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->

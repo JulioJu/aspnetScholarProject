@@ -2,6 +2,7 @@ namespace Videotheque.Pages.FilmPage
 {
   using System.Threading.Tasks;
   using Microsoft.AspNetCore.Mvc;
+  using Microsoft.EntityFrameworkCore;
   using Videotheque.Data;
   using Videotheque.Pages.Abstract;
 
@@ -14,6 +15,16 @@ namespace Videotheque.Pages.FilmPage
 
     [BindProperty]
     public int NumberOfNewArticles { get; set; }
+
+    private protected async override Task<Film>
+      PerformSearchInDatabaseFunc(int? id)
+    {
+      return await base._tDbSet
+        .Include(s => s.Articles)
+        .AsNoTracking()
+        .FirstOrDefaultAsync(m => m.Id == id)
+        .ConfigureAwait(false);
+    }
 
     public override async Task<IActionResult> OnGetAsync(int? id,
         bool? saveChangeErrors = false)
@@ -29,7 +40,8 @@ namespace Videotheque.Pages.FilmPage
       {
         this.NumberOfNewArticles = 0;
       }
-      return await base.OnGetAsync(id, saveChangeErrors).ConfigureAwait(false);
+      return await base.OnGetAsyncWithFunc(id, this.PerformSearchInDatabaseFunc)
+        .ConfigureAwait(false);
     }
 
     private protected override async Task<bool> PerformTestOverpostingFunc()

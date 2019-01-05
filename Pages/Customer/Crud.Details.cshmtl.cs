@@ -20,15 +20,9 @@ namespace Videotheque.Pages.CustomerPage
     {
       return await base._tDbSet
         .Include(s => s.CurrentlyBorrowed)
+          .ThenInclude(f => f.Film)
         .AsNoTracking()
         .FirstOrDefaultAsync(m => m.Id == id)
-        .ConfigureAwait(false);
-    }
-
-    public override async Task<IActionResult> OnGetAsync(int? id,
-        bool? saveChangeErrors = false)
-    {
-      return await base.OnGetAsyncWithFunc(id, this.PerformSearchInDatabaseFunc)
         .ConfigureAwait(false);
     }
 

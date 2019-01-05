@@ -1,0 +1,43 @@
+@using Videotheque.Data
+@model Article
+
+<tr>
+  <td>
+    <a asp-page="/Article/Details"
+        asp-route-id="@Model.Id">
+      @Html.DisplayFor(model => model.Id)
+    </a>
+  </td>
+  <td>
+    @Html.DisplayFor(model => model.BorrowingDate)
+  </td>
+  <td>
+    @Html.DisplayFor(model => model.ReturnDate)
+  </td>
+  @if (!@Context.Request.Path.ToString().StartsWith("/Customer",
+    System.StringComparison.InvariantCultureIgnoreCase))
+  {
+    <td>
+      <a asp-page="/Customer/Details"
+          asp-route-id="@Model.BorrowerId">
+        @Html.DisplayFor(model => model.BorrowerId)
+      </a>
+    </td>
+  }
+  @if (!@Context.Request.Path.ToString().StartsWith("/Film",
+    System.StringComparison.InvariantCultureIgnoreCase))
+  {
+    <td>
+      <a asp-page="/Film/Details"
+          asp-route-id="@Model.FilmId">
+        @Html.DisplayFor(model => model.FilmId)
+      </a>
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.Film.Title)
+    </td>
+  }
+</tr>
+
+<!-- vim:sw=2:ts=2:et:fileformat=dos
+-->

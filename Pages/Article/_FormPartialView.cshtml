@@ -2,12 +2,13 @@
 @model Article
 
 <div class="form-group">
-  <label asp-for="Film" class="control-label"></label>
-  <select asp-for="FilmId" class="form-control" asp-items="ViewBag.FilmId">
-    <option value="" class="selectTagHelperFirstEmptyLine">
-      Please select one
-    </option>
-  </select>
+  <label asp-for="FilmId" class="control-label"></label>
+  <!-- <select asp&#45;for="FilmId" class="form&#45;control" asp&#45;items="ViewBag.FilmId"> -->
+  <!--   <option value="" class="selectTagHelperFirstEmptyLine"> -->
+  <!--     Please select one -->
+  <!--   </option> -->
+  <!-- </select> -->
+  <input class="form-check-input" asp-for="FilmId" disabled />
   <span asp-validation-for="FilmId" class="text-danger"></span>
 </div>
 <div class="form-group">
@@ -43,12 +44,13 @@
 </div>
 <div class="form-group">
   <label asp-for="BorrowerId" class="control-label"></label>
-  <select asp-for="BorrowerId" class ="form-control"
-    asp-items="ViewBag.BorrowerId">
-    <option value="" class="selectTagHelperFirstEmptyLine">
-      Please select one
-    </option>
-  </select>
+  <!-- <select asp&#45;for="BorrowerId" class ="form&#45;control" -->
+  <!--   asp&#45;items="ViewBag.BorrowerId"> -->
+  <!--   <option value="" class="selectTagHelperFirstEmptyLine"> -->
+  <!--     Please select one -->
+  <!--   </option> -->
+  <!-- </select> -->
+  <input asp-for="BorrowerId" class="form-control" disabled />
 </div>
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos

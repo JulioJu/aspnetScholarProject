@@ -1,15 +1,13 @@
 @{
   Layout = "../_Layout.cshtml";
 }
+
 @if (@Context.Request.Path.ToString().StartsWith("/Article",
   System.StringComparison.InvariantCultureIgnoreCase))
 {
   <strong><em>
-      Do not create Articles thanks the page
-      <a asp-page="/Article/Create">
-        @("/Article/Create")
-      </a>
-      but thanks pages under
+      Create Articles in its correspondig Films
+      See:
       <a asp-page="/Film/ShowAll">
         @("/Film")
       </a>
@@ -19,7 +17,10 @@
 @RenderBody()
 
 @if (!@Context.Request.Path.ToString().EndsWith("/Create",
-  System.StringComparison.InvariantCultureIgnoreCase))
+  System.StringComparison.InvariantCultureIgnoreCase)
+  && !@Context.Request.Path.ToString().StartsWith("/Article",
+    System.StringComparison.InvariantCultureIgnoreCase)
+  )
 {
   <a asp-page="./Create">Create</a>
 }

@@ -42,28 +42,15 @@
 @Html.DisplayNameFor(model => model.CurrentlyBorrowed)
 </dt>
 <dd>
-<table class="table">
-  <tr>
-    <th>Barcode</th>
-    <th>Borrowing Date</th>
-    <th>Returning Date</th>
-  </tr>
+  <table class="table">
+    @await Html.PartialAsync("../Article/_TableFormDetailsThead.cshtml")
 
-  @foreach (var item in Model.CurrentlyBorrowed)
-  {
-  <tr>
-    <td>
-      @Html.DisplayFor(modelItem => item.Id)
-    </td>
-    <td>
-      @Html.DisplayFor(modelItem => item.BorrowingDate)
-    </td>
-    <td>
-      @Html.DisplayFor(modelItem => item.ReturnDate)
-    </td>
-  </tr>
-  }
-</table>
+    @foreach (var item in Model.CurrentlyBorrowed)
+    {
+      @await Html.PartialAsync("../Article/_TableFormDetailsTbody.cshtml",
+        item)
+    }
+  </table>
 </dd>
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos

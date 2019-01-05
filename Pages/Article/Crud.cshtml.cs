@@ -17,25 +17,21 @@ namespace Videotheque.Pages.ArticlePage
     private protected async override Task<Article>
       PerformSearchInDatabaseFunc(int? id)
     {
-      return await base._tDbSet
-        .Include(a => a.Borrower)
-        .Include(a => a.Film)
-        .AsNoTracking()
-        .FirstOrDefaultAsync(m => m.Id == id)
-        .ConfigureAwait(false);
-    }
-
-    public override async Task<IActionResult> OnGetAsync(int? id,
-        bool? saveChangeErrors = false)
-    {
-      base.ViewData["BorrowerId"] = new SelectList(base._db.Customers,
-          "Id",
-          "Address");
-      base.ViewData["FilmId"] = new SelectList(base._db.Films,
-          "Id",
-          "Title");
-      return await base.OnGetAsyncWithFunc(id, this.PerformSearchInDatabaseFunc)
-        .ConfigureAwait(false);
+      string currentRoute = base.HttpContext.Request.Path;
+      if (currentRoute.Contains("/Details/",
+            System.StringComparison.InvariantCultureIgnoreCase))
+      {
+        return await base._tDbSet
+          .Include(a => a.Borrower)
+          .Include(a => a.Film)
+          .AsNoTracking()
+          .FirstOrDefaultAsync(m => m.Id == id)
+          .ConfigureAwait(false);
+      }
+      else
+      {
+        return await base.PerformSearchInDatabaseFunc(id).ConfigureAwait(false);
+      }
     }
 
     private protected override async Task<bool> PerformTestOverpostingFunc()
