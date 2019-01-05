@@ -11,8 +11,16 @@ namespace Videotheque.Pages.CustomerPage
     public Crud(AppDbContext db)
       : base(db, db.Customers)
     {
-      this.ValidationMessageArticleIdToBorrowArray = new string[4];
-      this.ArticleIdToBorrowArrayInputValue = new string[4];
+    }
+
+    public override async Task<IActionResult> OnGetAsync(int? id,
+        bool? saveChangeErrors = false)
+    {
+      this.ArticleIdToBorrowArrayInputValue =
+        new string[4];
+      this.ValidationMessageArticleIdToBorrowArray =
+        new string[4];
+      return await base.OnGetAsync(id, saveChangeErrors);
     }
 
     private protected async override Task<Customer>

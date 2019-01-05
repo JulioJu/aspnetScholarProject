@@ -9,13 +9,11 @@ namespace Videotheque.Pages.CustomerPage
 
   public sealed partial class Crud : CrudAbstract<Customer>
   {
-    // Instantiate in constructor
     // CA1819: "Arrays returned by properties are not write-protected, even if
     //      the property is read-only."
     #pragma warning disable CA1819
     public string[] ValidationMessageArticleIdToBorrowArray { get; set; }
 
-    // Instantiate in constructor
     // CA1819: "Arrays returned by properties are not write-protected, even if
     //      the property is read-only."
     #pragma warning disable CA1819
@@ -94,6 +92,7 @@ namespace Videotheque.Pages.CustomerPage
             }
             else if (articleToRemove.BorrowerId == null)
             {
+              // TODO LOW: display in browser
               System.Console.WriteLine("WARNING: Article with id '"
                   + articleToRemove.Id + "' is not borrowed by any Customer. "
                   + "Not removed.");
@@ -113,15 +112,16 @@ namespace Videotheque.Pages.CustomerPage
               {
                 if (shouldBeRemoved)
                 {
+                  string messageArticle = "Article with barcode"
+                    + " '<a href='/Article/Details/"
+                    + articleToRemove.Id  + "'>" + articleToRemove.Id + "</a>";
                   // 'Microsoft.AspNetCore.Mvc.ViewFeatures.Internal.TempDataSerializer'
                   // cannot serialize an object of type
                   // 'System.Text.StringBuilder'.
                   // S1643: Use a StringBuilder instead.
                   #pragma warning disable S1643
-                  base.Message += "<li>Article with id (barcode) '"
-                      + articleToRemove.Id
-                      + "' is returned by Customer with id '"
-                      + articleToRemove.BorrowerId + ".</li>";
+                  base.Message += "<li>" + messageArticle
+                      + " is returned.";
                   articleToRemove.BorrowingDate = null;
                   articleToRemove.BorrowerId = null;
 
@@ -152,11 +152,15 @@ namespace Videotheque.Pages.CustomerPage
     {
       bool isValidationError = false;
       // TODO LOW display error
+      this.ArticleIdToBorrowArrayInputValue =
+        new string[4];
+      this.ValidationMessageArticleIdToBorrowArray =
+        new string[4];
       if (articleIdToBorrowArray != null
           && articleLoanDurationArray != null
           && articleIdToBorrowArray.Length == articleLoanDurationArray.Length)
       {
-        for (int index = 0; index < articleIdToBorrowArray.Length; index++)
+        for (int index = 0; index < 4 ; index++)
         {
           if (articleIdToBorrowArray[index] != null
               && articleLoanDurationArray[index] != null)
@@ -173,6 +177,7 @@ namespace Videotheque.Pages.CustomerPage
                 CultureInfo.InvariantCulture);
             this.ArticleIdToBorrowArrayInputValue[index] =
               articleId.ToString(CultureInfo.InvariantCulture);
+
             Article articleToAdd = await base._db.Articles
                 .FindAsync(articleId).ConfigureAwait(false);
             if (articleToAdd == null)
@@ -181,8 +186,16 @@ namespace Videotheque.Pages.CustomerPage
                 "Article with id (barcode) '"
                 + articleId + "' doesn't exist. Not borrowed.";
               isValidationError = true;
+              continue;
             }
-            else if (articleToAdd.BorrowerId == null)
+            string messageArticle = "Article with barcode"
+              + " '<a href='/Article/Details/"
+              + articleToAdd.Id  + "'>" + articleToAdd.Id + "</a>'";
+            string messageBorrower = "Customer with id "
+                  + "'<a href='/Customer/Details/"
+                  + articleToAdd.BorrowerId  + "'>" + articleToAdd.BorrowerId
+                  + "</a>'";
+            if (articleToAdd.BorrowerId == null)
             {
               articleToAdd.CountBorrowing++;
               articleToAdd.BorrowingDate = System.DateTime.UtcNow;
@@ -201,28 +214,22 @@ namespace Videotheque.Pages.CustomerPage
               // 'System.Text.StringBuilder'.
               // S1643: Use a StringBuilder instead.
               #pragma warning disable S1643
-              base.Message += "<li>Article with id '"
-                  + articleToAdd.Id + "' borrowed (added) by Customer with Id '"
-                  + articleToAdd.BorrowerId + "'.</li>";
+              base.Message += "<li>" + messageArticle + " borrowed.</li>";
             }
             else
             {
               if (articleToAdd.BorrowerId != base.AbstractEntity.Id)
               {
                 this.ValidationMessageArticleIdToBorrowArray[index] =
-                  "Article with id (barcode) '"
-                    + articleToAdd.Id
-                    + "' already borrowed by Customer with id '"
-                    + articleToAdd.BorrowerId + "'. Can't be borrowed again.";
+                  messageArticle + " already borrowed by " + messageBorrower
+                  + ". Can't be borrowed again.";
                 isValidationError = true;
               }
               else
               {
                 this.ValidationMessageArticleIdToBorrowArray[index] =
-                  "Article with id (barcode) '"
-                    + articleToAdd.Id + "' already borrowed by the current "
-                    + "Customer with id '" +
-                    articleToAdd.BorrowerId + "'. Can't be borrowed again.";
+                  messageArticle  + " already borrowed by the current "
+                    + "Customer. Can't be borrowed again.";
                 isValidationError = true;
               }
             }
@@ -249,7 +256,6 @@ namespace Videotheque.Pages.CustomerPage
         this.Message = null;
         return base.Page();
       }
-      this.Message = null;
       // We must remove after add, otherwise we sadly could return and article
       // then borrow it again in the same edit.
       await this.RemoveSomeArticlesAlreadyBorrowed(articleIdAlreadyBorrowedArray,

@@ -125,10 +125,9 @@
           <input type="number" name="articleIdToBorrowArray"
               placeholder="Article Barcode (id)"
               value="@ArticleIdToBorrowArrayInputValue[index]">
-          <br />
-          <span class="text-danger field-validation-error" >
-            @ValidationMessageArticleIdToBorrowArray[index]
-          </span>
+          <div class="text-danger field-validation-error customer-article-message-validation" >
+            @Html.Raw(@ValidationMessageArticleIdToBorrowArray[index])
+          </div>
         </td>
         <td>
           <select name="articleLoanDurationArray">

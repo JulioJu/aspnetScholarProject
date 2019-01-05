@@ -14,5 +14,9 @@ select[name='articleLoanDuration'] {
   display: inline-block;
 }
 
+.customer-article-message-validation {
+  max-width: 200px;
+}
+
 /* vim:sw=2:ts=2:et:fileformat=dos
  */
