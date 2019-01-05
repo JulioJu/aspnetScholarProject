@@ -12,6 +12,7 @@ namespace Videotheque.Pages.Abstract
   public abstract class ShowAllAbstract<TAbstractEntity> : PageModel
     where TAbstractEntity : AbstractEntity
   {
+    #pragma warning disable SA1401
     private protected readonly DbSet<TAbstractEntity> _tDbSet;
 
     public IList<TAbstractEntity> AbstractEntities

@@ -19,7 +19,7 @@ namespace Videotheque.Pages.FilmPage
         bool? saveChangeErrors = false)
     {
       string currentRoute = base.HttpContext.Request.Path;
-      if (currentRoute. EndsWith("/Create",
+      if (currentRoute.EndsWith("/Create",
             System.StringComparison.InvariantCultureIgnoreCase))
       {
         this.NumberOfNewArticles = 1;
@@ -44,8 +44,9 @@ namespace Videotheque.Pages.FilmPage
         .ConfigureAwait(false);
     }
 
-    private void CreateNewArticles() {
-      for (int index = 0 ; index < this.NumberOfNewArticles ; index++)
+    private void CreateNewArticles()
+    {
+      for (int index = 0; index < this.NumberOfNewArticles; index++)
       {
         Article article = new Article();
         article.Film = base.AbstractEntity;

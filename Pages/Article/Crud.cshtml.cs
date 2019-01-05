@@ -51,8 +51,7 @@ namespace Videotheque.Pages.ArticlePage
           s => s.BorrowingDate,
           s => s.ReturnDate,
           s => s.FilmId,
-          s => s.BorrowerId
-          )
+          s => s.BorrowerId)
         .ConfigureAwait(false);
     }
 

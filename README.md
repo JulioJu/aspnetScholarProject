@@ -790,6 +790,8 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
 * We could customize routes thanks https://stackoverflow.com/questions/52317610/localized-page-names-with-asp-net-core-2-1
     See also https://www.mikesdotnetting.com/article/327/customising-routing-conventions-in-razor-pages
 
+* To redirect pages, see https://github.com/aspnet/Mvc/issues/6436
+
 * 404 Not found:
     * https://www.learnrazorpages.com/configuration/custom-errors
     * https://www.reddit.com/r/dotnet/comments/8wtd9r/custom_404_page_in_aspnet_core_21_razor_pages/
