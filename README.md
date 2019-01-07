@@ -60,7 +60,9 @@ Il aimerait bien disposer des fonctionnalités suivantes :
 5. (Done) Les personnes qui ont loué un film
 6. (Done) Faire la location de films aux personnes.
 7. Éditer une facture à une personne
-8. Faire un top N des films loués
+8. (Done) Faire un top N des films loués
+  (Added by JulioJu: Default is top10000, if nothing is passed (or invalid)
+  in the HTTP GET query string)
 
 ## Notes about my implementation
 
@@ -887,6 +889,9 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
 
 * Check my issue https://github.com/aspnet/AspNetCore/issues/6329
   [Suggestion] Accessibility for input fields required
+
+* Investigate Lazy Loading (needs Entity Framework > 2.2) or load
+    not all properties of an Entity
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->

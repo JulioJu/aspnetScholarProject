@@ -44,36 +44,6 @@ namespace Videotheque.Data
       }
     }
 
-    /// <summary>Search films by Title</summary>
-    public static Film[] SearchByTitle()
-    {
-      throw new NotImplementedException();
-    }
-
-    /// <summary>Search films by released date</summary>
-    public static Film[] SearchByYearDate(string date)
-    {
-      throw new NotImplementedException();
-    }
-
-    /// <summary>Count number of films thare are currently borrowed</summary>
-    public int CountBorrowing()
-    {
-      throw new NotImplementedException();
-    }
-
-    /// <summary>Count number of free Articles, not borrowed</summary>
-    public int FreeArticles()
-    {
-      throw new NotImplementedException();
-    }
-
-    /// <summary>Return Customers that borrow currently this film</summary>
-    public Customer[] Borrowers()
-    {
-      throw new NotImplementedException();
-    }
-
   }
 }
 

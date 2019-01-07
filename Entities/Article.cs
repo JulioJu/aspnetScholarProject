@@ -50,12 +50,6 @@ namespace Videotheque.Data
 
     public Customer Borrower { get; set; }
 
-    /// <summary>List all articles borrowed</summary>
-    public static Article AllArticlesBorrowed()
-    {
-      throw new NotImplementedException();
-    }
-
   }
 }
 

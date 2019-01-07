@@ -1,10 +1,32 @@
-@page "{handler?}"
+@page "{handler?}/{topN?}"
 @model Videotheque.Pages.FilmPage.ShowAll
 
 @{
   Layout = "../Layout/_ShowAll.cshtml";
   ViewData["Title"] = "Film Create";
   ViewData["h1"] = "List of films";
+}
+
+@section Search {
+  @if (HttpContext.Request.Path.ToString().EndsWith("BestBorrowing",
+    System.StringComparison.InvariantCultureIgnoreCase))
+  {
+    <h2>Top borrowed</h2>
+    <a asp-page="/Film/ShowAll">
+      Come back to list of all Films
+    </a>
+  }
+  else
+  {
+    <form method="GET">
+      <label for="topN">Top N</label>
+      <input id="topN" type="number" name="topN"
+        placeholder="let empty for infinite"/>
+      <input type="submit"
+        value="Submite Top N film borrowed"
+        class="btn btn-danger" asp-page-handler="BestBorrowing" />
+    </form>
+  }
 }
 
 @section Thead {
@@ -19,6 +41,9 @@
   </th>
   <th>
     @Html.DisplayNameFor(model => model.AbstractEntities[0].Image)
+  </th>
+  <th>
+    Count borrowing
   </th>
 }
 
