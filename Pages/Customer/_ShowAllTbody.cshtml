@@ -22,6 +22,20 @@
 <td>
   @Html.DisplayFor(modelItem => item.Email)
 </td>
+<td>
+  <ol>
+    @foreach (Article article in item.CurrentlyBorrowed)
+    {
+      <li>
+        <a asp-page="/Article/Details"
+            asp-route-id="@article.Id">
+          @article.Id
+          @article.Film.Title
+        </a>
+      </li>
+    }
+  </ol>
+</td>
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->

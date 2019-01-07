@@ -47,14 +47,6 @@ namespace Videotheque.Data
       }
     }
 
-    /// <summary>
-    ///     List all custmers that have articles currently borrowed
-    /// </summary>
-    public static Customer AllBorrowers()
-    {
-      throw new NotImplementedException();
-    }
-
   }
 }
 

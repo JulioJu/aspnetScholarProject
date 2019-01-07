@@ -3,6 +3,7 @@
 namespace Videotheque.Pages.Abstract
 {
   using System.Collections.Generic;
+  using System.Linq;
   using System.Threading.Tasks;
   using Microsoft.AspNetCore.Mvc;
   using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -26,13 +27,17 @@ namespace Videotheque.Pages.Abstract
       this._tDbSet = tDbSet;
     }
 
-    public virtual async Task OnGetAsync()
+    protected private virtual IQueryable<TAbstractEntity> CompleteQueryable()
     {
-      this.AbstractEntities =
-        await this._tDbSet
-          .AsNoTracking()
-          .ToListAsync()
-          .ConfigureAwait(false);
+      return this._tDbSet
+        .AsNoTracking();
+    }
+
+    public async Task OnGetAsync()
+    {
+      this.AbstractEntities = await this.CompleteQueryable()
+        .ToListAsync()
+        .ConfigureAwait(false);
     }
 
   }

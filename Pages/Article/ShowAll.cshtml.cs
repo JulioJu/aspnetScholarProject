@@ -13,26 +13,18 @@ namespace Videotheque.Pages.ArticlePage
     {
     }
 
-    public override async Task OnGetAsync()
+    protected private override IQueryable<Article> CompleteQueryable()
     {
-      base.AbstractEntities = await base._tDbSet
+      return base.CompleteQueryable()
         .Include(a => a.Borrower)
         .Include(a => a.Film)
-        .AsNoTracking()
-        .ToListAsync()
-        .ConfigureAwait(false);
+        .OrderBy(a => a.ReturnDate);
     }
 
-    public virtual async Task OnGetCurrentlyBorrowedAsync()
+    public async Task OnGetCurrentlyBorrowedAsync()
     {
-      IQueryable<Article> articles = from a in base._tDbSet
-        .Include(a => a.Borrower)
-        .Include(a => a.Film)
-        where a.BorrowerId != null
-        orderby a.ReturnDate
-        select a;
-      base.AbstractEntities = await articles
-        .AsNoTracking()
+      base.AbstractEntities = await this.CompleteQueryable()
+        .Where(a => a.BorrowerId != null)
         .ToListAsync()
         .ConfigureAwait(false);
     }

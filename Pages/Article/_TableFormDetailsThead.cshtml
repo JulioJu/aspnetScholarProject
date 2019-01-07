@@ -1,19 +1,21 @@
-<tr>
-  <th>Barcode</th>
-  <th>Borrowing Date</th>
-  <th>Returning Date</th>
-  @if (!@Context.Request.Path.ToString().StartsWith("/Customer",
-    System.StringComparison.InvariantCultureIgnoreCase))
-  {
-    <th>Borrower (if exist)</th>
-  }
-  @if (!@Context.Request.Path.ToString().StartsWith("/Film",
-    System.StringComparison.InvariantCultureIgnoreCase))
-  {
-    <th>Film Id</th>
-    <th>Film Title</th>
-  }
-</tr>
+<thead>
+  <tr>
+    <th>Barcode</th>
+    <th>Borrowing Date</th>
+    <th>Returning Date</th>
+    @if (!@Context.Request.Path.ToString().StartsWith("/Customer",
+      System.StringComparison.InvariantCultureIgnoreCase))
+    {
+      <th>Borrower (if exist)</th>
+    }
+    @if (!@Context.Request.Path.ToString().StartsWith("/Film",
+      System.StringComparison.InvariantCultureIgnoreCase))
+    {
+      <th>Film Id</th>
+      <th>Film Title</th>
+    }
+  </tr>
+</thead>
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->

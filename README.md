@@ -50,14 +50,15 @@ Le propriétaire d’une vidéothèque vous demande de lui réaliser une applica
   pour gérer sa vidéothèque.
 
 Il aimerait bien disposer des fonctionnalités suivantes :
-1. Mettre à jours son stock par des nouveaux articles au fur et à mesure qu’ils
-   arrivent ;
+1. (Done) Mettre à jours son stock par des nouveaux articles au fur et à mesure
+   qu’ils arrivent ;
 2. Rechercher les films par réalisateur, catégorie, date de sortie et par nom du
    film
-3. Connaître tous les articles en cours de locations et leurs dates de retours
-4. Les films loués par une personne
-5. Les personnes qui ont loué un film
-6. Faire la location de films aux personnes.
+3. (Done) Connaître tous les articles en cours de locations et leurs dates de
+   retours
+4. (Done) Les films loués par une personne
+5. (Done) Les personnes qui ont loué un film
+6. (Done) Faire la location de films aux personnes.
 7. Éditer une facture à une personne
 8. Faire un top N des films loués
 

@@ -7,6 +7,29 @@
   ViewData["h1"] = "List of customers";
 }
 
+@section Search {
+  @if (HttpContext.Request.Path.ToString().EndsWith("CurrentBorrower",
+    System.StringComparison.InvariantCultureIgnoreCase))
+  {
+    <h2>
+      Customer that currently borrow a film
+      (order by count of articles borrowed)
+    </h2>
+    <a asp-page="/Customer/ShowAll">
+      Come back to list of all Films
+    </a>
+  }
+  else
+  {
+    <form method="GET">
+      <input type="submit"
+        value="Show only Customers that currently borrow a film
+          (order by count of articles borrowed)."
+        class="btn btn-danger" asp-page-handler="CurrentBorrower" />
+    </form>
+  }
+}
+
 @section Thead {
   <th>
     @Html.DisplayNameFor(model => model.AbstractEntities[0].Firstname)
@@ -25,6 +48,9 @@
   </th>
   <th>
     @Html.DisplayNameFor(model => model.AbstractEntities[0].Email)
+  </th>
+  <th>
+    @Html.DisplayNameFor(model => model.AbstractEntities[0].CurrentlyBorrowed)
   </th>
 }
 
