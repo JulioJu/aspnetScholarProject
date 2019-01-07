@@ -127,6 +127,7 @@ namespace Videotheque.Pages.CustomerPage
                   base.Message += "<li>" + messageArticle
                       + " is returned.";
                   articleToRemove.BorrowingDate = null;
+                  articleToRemove.ReturnDate = null;
                   articleToRemove.BorrowerId = null;
 
                   // Not needed for Entity Framework Core 2.2, but more clean.

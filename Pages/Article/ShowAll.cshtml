@@ -7,6 +7,25 @@
   ViewData["h1"] = "List of articles";
 }
 
+@section Search {
+  @if (HttpContext.Request.Path.ToString().EndsWith("CurrentlyBorrowed",
+    System.StringComparison.InvariantCultureIgnoreCase))
+  {
+    <h2>Articles only borrowed (ordered by return date)</h2>
+    <a asp-page="/Article/ShowAll">
+      Come back to list of all Articles
+    </a>
+  }
+  else
+  {
+    <form method="GET">
+      <input type="submit"
+        value="Show only articles borrowed (ordered by return date)"
+        class="btn btn-danger" asp-page-handler="CurrentlyBorrowed" />
+    </form>
+  }
+}
+
 @section Thead {
   <th>
     @Html.DisplayNameFor(model => model.AbstractEntities[0].FilmId)

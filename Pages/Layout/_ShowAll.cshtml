@@ -7,57 +7,57 @@
 <h3>Msg: @Model.Message</h3>
 }
 
-<form method="post">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        @RenderSection("Thead", required: true)
-        <th>Created Date</th>
-        <th>Updated Date</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      @foreach (var field in Model.AbstractEntities)
-      {
-      <tr>
-        <td> @field.Id </td>
+<!-- TODO Should become True -->
+@RenderSection("Search", required: false)
 
-        @** Following use "_ShowAllTBody.cshtml" of the folder*
-         *  where the Page that use the currant Layout is.
-         *@
-         @await Html.PartialAsync("_ShowAllTbody",
-            new ViewDataDictionary(ViewData) { { "field", field } })
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      @RenderSection("Thead", required: true)
+      <th>Created Date</th>
+      <th>Updated Date</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var field in Model.AbstractEntities)
+    {
+    <tr>
+      <td> @field.Id </td>
 
-        @*
-        *  The type or namespace name 'Model' could not be found (are you missing a
-        *  using directive or an assembly reference?)
-        *  [We can't use @model in the Layout because at this time we can't to
-        *    the type]
-              @{await Html.PartialAsync("_ShowAllTbody",
-                (Model.AbstractEntities)field);}
+      @** Following use "_ShowAllTBody.cshtml" of the folder*
+        *  where the Page that use the currant Layout is.
+        *@
+        @await Html.PartialAsync("_ShowAllTbody",
+          new ViewDataDictionary(ViewData) { { "field", field } })
+
+      @*
+      *  The type or namespace name 'Model' could not be found (are you missing a
+      *  using directive or an assembly reference?)
+      *  [We can't use @model in the Layout because at this time we can't to
+      *    the type]
+            @{await Html.PartialAsync("_ShowAllTbody",
+              (Model.AbstractEntities)field);}
+      *@
+
+      @** Following use "_ShowAllTbody" of the folder
+        *  where the current Layout is. We don't want that.
+        *  @await Html.PartialAsync("./_ShowAllTbody.cshtml")
         *@
 
-        @** Following use "_ShowAllTbody" of the folder
-         *  where the current Layout is. We don't want that.
-         *  @await Html.PartialAsync("./_ShowAllTbody.cshtml")
-         *@
+        <td> @field.CreatedDate </td>
+        <td> @field.UpdatedDate </td>
 
-         <td> @field.CreatedDate </td>
-         <td> @field.UpdatedDate </td>
-
-        <td>
-          <a asp-page="./Details" asp-route-id="@field.Id">details</a>
-          <a asp-page="./Edit" asp-route-id="@field.Id">edit</a>
-          <a asp-page="./Delete" asp-route-id="@field.Id">delete</a>
-        </td>
-      </tr>
-      }
-    </tbody>
-  </table>
-
-</form>
+      <td>
+        <a asp-page="./Details" asp-route-id="@field.Id">details</a>
+        <a asp-page="./Edit" asp-route-id="@field.Id">edit</a>
+        <a asp-page="./Delete" asp-route-id="@field.Id">delete</a>
+      </td>
+    </tr>
+    }
+  </tbody>
+</table>
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->
