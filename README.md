@@ -34,6 +34,8 @@
 * [Other interesting doc](#other-interesting-doc)
 * [Routing](#routing)
 * [Inheritance](#inheritance-1)
+* [Create Invoice](#create-invoice)
+  * [From Scratch](#from-scratch)
 * [Issue created by me on GitHub](#issue-created-by-me-on-github)
 * [Credits](#credits)
 * [TODO](#todo)
@@ -815,6 +817,40 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
     * PerformSearchInDatabase could not be assign to a default
         callback, default parameter should be evaluated at compiled time.
     * (see ./Pages/Abstract/DetailsAbstract.cshtml.cs for further examples)
+
+# Create Invoice
+
+* https://github.com/simonray/Invoicer
+    Open Source but for .NET 4.6, not updated since 2015
+
+* https://codecanyon.net/item/easy-invoice-generator-aspnet-core-with-ef-core/22346535
+  20$, for .NET Core
+  Seems very cool
+
+* https://itextpdf.com/ https://github.com/itext/i7n-pdfinvoice
+    very cool! (the best)
+    pdfInvoice is dual licensed as AGPL/Commercial software.
+    * Corresponding example
+        https://git.itextsupport.com/projects/I7NS/repos/samples/browse
+        Very cool project, very complete
+        Corresponding in Java (with examples) https://itextpdf.com/en/resources/examples/itext-7/zugferd-invoice-example
+    * Found thanks bing.fr
+        https://forums.asp.net/t/2118045.aspx?How+to+generate+PDF+using+itextsharp+
+        "How to generate PDF using itextsharp"
+        Lot of links with several examples
+
+* Probably the easier solution is to create a Razor Page with cells. Then,
+  with css probably we could create a cool PDF. As videotheque have not
+  lot of products, probably the result will be better.
+  Easier customisable to work from scratch; Don't forget, we borrow only
+  DVD / BLUE or RAY
+
+## From Scratch
+* https://gunnarpeipman.com/aspnet/aspnet-core-pdf/
+    For .NET Core, seems so good
+
+* http://apitron.com/docs/articles/Create_PDF_invoice_in_Windows_Forms_application.pdf
+    Create PDF invoice in Windows Forms application (a little bit old)
 
 # Issue created by me on GitHub
 
