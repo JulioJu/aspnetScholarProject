@@ -36,6 +36,9 @@
 * [Inheritance](#inheritance-1)
 * [Create Invoice](#create-invoice)
   * [From Scratch](#from-scratch)
+  * [Footer for HTML](#footer-for-html)
+  * [Convert html to pdf](#convert-html-to-pdf)
+  * [Generate docx](#generate-docx)
 * [Issue created by me on GitHub](#issue-created-by-me-on-github)
 * [Credits](#credits)
 * [TODO](#todo)
@@ -838,6 +841,7 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
         https://forums.asp.net/t/2118045.aspx?How+to+generate+PDF+using+itextsharp+
         "How to generate PDF using itextsharp"
         Lot of links with several examples
+    * Warning, official public documentation for .NET is actually inexistent
 
 * Probably the easier solution is to create a Razor Page with cells. Then,
   with css probably we could create a cool PDF. As videotheque have not
@@ -851,6 +855,116 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
 
 * http://apitron.com/docs/articles/Create_PDF_invoice_in_Windows_Forms_application.pdf
     Create PDF invoice in Windows Forms application (a little bit old)
+
+## Footer for HTML
+
+* Even `@page`  at-rule is defined since 2004 as a CSS3 Candidate Recommandation
+    it is not already implemented in Google Chrome or Firefox.
+    Especially can't define header and footer.
+    * See https://www.w3.org/TR/2004/CR-css3-page-20040225/
+    * See https://developer.mozilla.org/en-US/docs/Web/CSS/@page
+    * See https://bugzilla.mozilla.org/show_bug.cgi?id=286443
+      (the bug)
+    * See https://www.quackit.com/css/at-rules/css_bottom-right-corner_at-rule.cfm
+      (a cool demo).
+
+* There is an hach: https://medium.com/@Idan_Co/the-ultimate-print-html-template-with-header-footer-568f415f6d2a
+  But it's not the best, too complicated, see below
+
+* Simply use `<tfoot>`
+  Warning, on Chromium 71 doesn't work if the table
+  is partially defined (without also `thead`, and `tr`) doesn't work
+  (contrary to Firefox).
+  * In previous versions of Chromium or with some others browser (not tested),
+      could doesn't work with some others hach.
+    * See https://stackoverflow.com/questions/7211229/having-google-chrome-repeat-table-headers-on-printed-pages
+    * See https://github.com/twbs/bootstrap/issues/13544
+    * See https://stackoverflow.com/questions/274149/repeat-table-headers-in-print-mode
+    * But not fixed for WebKit (therfore Safari or wkhtmltopdf
+      https://bugs.webkit.org/show_bug.cgi?id=17205 )
+
+* `content: counter(page) "/" counter(pages);` doesn't work
+  you could weasyprint (BSD License)
+  Ref https://stackoverflow.com/questions/20050939/print-page-numbers-on-pages-when-printing-html
+
+## Convert html to pdf
+  * you could WeasyPrint (BSD License), but it's for Python.
+
+  * https://selectpdf.com/community-edition/
+    Community Edition. Could directly convert Razor to Pdf for paid edition
+
+  * https://ironpdf.com/licensing/
+  The Trial version may be used for private evaluation purposes only. Developers can test the functionality of IronPDF without paying for a license. The Software should not be published in any internet nor intranet project until an appropriate license is purchased.
+
+
+  * WkHtmlToPdf wrapper
+    So cool utiles, but it's a wrap around WebKit, therefore same
+    limitations than Chromium
+    * https://github.com/rdvojmoc/DinkToPdf
+      Mit License
+    * https://www.nuget.org/packages/NReco.PdfGenerator.LT/
+    * For header and page number see https://stackoverflow.com/questions/7174359/how-to-do-page-numbering-in-header-footer-htmls-with-wkhtmltopdf
+      the easier is probably to use command-line generated header and footer
+
+  * http://www.evopdf.com/buy.aspx
+    (650 dollars)
+
+  * http://www.winnovative-software.com/contact.aspx
+    (paid)
+
+  * jsreport
+    (.NET wrap around jsreport for Node)
+    (paid)
+
+  * See also
+    * https://stackoverflow.com/questions/36983300/export-to-pdf-using-asp-net-5
+    * https://stackoverflow.com/questions/39364687/export-html-to-pdf-in-asp-net-core
+    * https://alternativeto.net/software/weasyprint/ (BSD)
+    * https://alternativeto.net/software/prince-xml/ (paid)
+    * https://alternativeto.net/software/pdfreactor/ (paid)
+
+  * Therefore the two best solutions seems to build it's own version around
+      WeasyPrint
+      Furthermore, cited by W3C https://www.w3.org/Style/CSS/software.en.tmpl
+
+  * The best one paid solution is I think Apose (to generate also Word)
+
+  * WeasyPrint tested in command line, no render well html page
+    with table with `tfoot` and other problems.
+
+  * Or use wkhtmltopdf (but it's based on WebKit render engine, therfore
+    totally outdated)
+
+  * Or use Firefox or Chromium headless
+
+  * For Chromium https://stackoverflow.com/questions/44575628/alter-the-default-header-footer-when-printing-to-pdf
+
+  * Actually, an easy solution is https://github.com/eclipxe13/cmdlnprint
+  wit WaterFox or Firefox 56
+    See also https://bugzilla.mozilla.org/show_bug.cgi?id=1407238
+
+  * Problem, Chromium printer does not  hyperlinks that point inside
+    a doc (`<a href="xxx" `, e.g internal target location), but print hyperlinks
+    well that point outside the doc (same problem with LibreOffice)
+  * Problem with chromium, doesn't print any Outline.
+
+  * Actually, the easy open Source solution to create a doc
+    with summary (with link) and page number is to generate Latex doc.
+    Probably the cheap and the more robust solution.
+
+  * Or maybe test Markdown generator (but probably not very cool,
+    there are powerfull Markdown generator to generate HTML, not more.
+
+  * Maybe test with a recent version of Word. LibreOffice doesn't render
+    well styles or tables.
+
+## Generate docx
+
+* https://github.com/plutext/docx4j.NET
+* https://docs.microsoft.com/en-us/office/open-xml/open-xml-sdk
+* https://products.aspose.com/words/net
+
+* See my work for my Internship
 
 # Issue created by me on GitHub
 
@@ -911,8 +1025,9 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
 * Add client-side validation scaffolded.
 
 * Our goal is simply to make a simple app deployable in an intranet,
-    for an updated PC browser (Chrome, Firefox, Edge, Safari, not IE).
-    We assume that the user will not try to change the client side app
+    for an updated PC browser (Chrome or Firefox, not IE, not Safari,
+      no smartphones, etc.).
+    * We assume that the user will not try to change the client side app
     thanks Developers tools of the Browser. Therefore, if in a client
     side we have `<input type="number" name="xxx" />`, we will not `try` `catch`
     in server side `int.Parse(xxx)`. Like that, all fields

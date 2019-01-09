@@ -1,0 +1,65 @@
+nav {
+  /*
+    !important is usefull otherwise, with add-on 'no-script' sometimes
+    it appears
+   */
+  display: none !important;
+}
+
+footer.invoice-generated-footer {
+  text-align: center;
+  font-size: 0.7em;
+}
+
+.no-style {
+  background-color: transparent;
+  border : 0;
+  border : none;
+  margin : 0;
+  padding : 0;
+  vertical-align : baseline;
+}
+
+table#invoice-generated-address {
+  background-color: red;
+  width: 100%;
+}
+
+table#invoice-generated-address span#invoice-generated-customer-address {
+  float: right;
+  margin-right: 10mm;
+}
+
+html, body {
+  margin: 20mm;
+}
+
+@media screen {
+
+  html, body {
+    width: 210mm;
+  }
+
+}
+
+@media print {
+
+  footer.invoice-generated-footer > span::after {
+    float: right;
+    padding-right: 3em;
+    content: counter(page) "/" counter(pages);
+  }
+
+  @page {
+    margin: 15mm;
+    size: A4 portrait;
+    /* Not implmented in Firefox and Google Chrome: see README */
+    @bottom-right-corner {
+      content: "Page " counter(page) "aa";
+    }
+  }
+
+}
+
+/* vim:sw=2:ts=2:et:fileformat=dos
+ */
