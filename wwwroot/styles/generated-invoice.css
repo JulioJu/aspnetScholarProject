@@ -1,14 +1,9 @@
-nav {
+.header, header, nav {
   /*
     !important is usefull otherwise, with add-on 'no-script' sometimes
     it appears
    */
   display: none !important;
-}
-
-footer.invoice-generated-footer {
-  text-align: center;
-  font-size: 0.7em;
 }
 
 .no-style {
@@ -20,23 +15,44 @@ footer.invoice-generated-footer {
   vertical-align : baseline;
 }
 
-table#invoice-generated-address {
-  background-color: red;
+main div#addresses {
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-table#invoice-generated-address span#invoice-generated-customer-address {
+main div#addresses span#customer-address {
+  padding-right: 6em;
+}
+
+main table#total-price {
   float: right;
-  margin-right: 10mm;
+  width: 40%;
+  margin-right: 10%;
 }
 
-html, body {
-  margin: 20mm;
+main div.clear {
+  clear: both;
+}
+
+main div#payement-condition {
+  width: 50%;
+  float: right;
+  margin-top: 4em;
+  font-size: 0.7em;
+}
+
+footer {
+  font-size: 0.7em;
+  width: 100%;
+  text-align: center;
 }
 
 @media screen {
 
   html, body {
+    margin: 10mm;
     width: 210mm;
   }
 
@@ -44,19 +60,37 @@ html, body {
 
 @media print {
 
-  footer.invoice-generated-footer > span::after {
-    float: right;
-    padding-right: 3em;
-    content: counter(page) "/" counter(pages);
+  /* Can't work because counter(page) no implemented too. See REAME.md */
+  /* footer > span::after { */
+  /*   float: right; */
+  /*   padding-right: 3em; */
+  /*   content: counter(page) "/" counter(pages); */
+  /* } */
+
+  footer {
+    position: fixed;
+    bottom: 0;
+  }
+
+  footer, .tfoot-empty {
+    height: 2em;
+  }
+
+  footer {
   }
 
   @page {
-    margin: 15mm;
+
+    /* Tested well in Chromium 71 and Firefox 64 */
+    margin: 8mm;
+
     size: A4 portrait;
-    /* Not implmented in Firefox and Google Chrome: see README */
+
+    /* Not implmented in Firefox and Google Chrome: see README.md */
     @bottom-right-corner {
-      content: "Page " counter(page) "aa";
+      content: "Page " counter(page);
     }
+
   }
 
 }

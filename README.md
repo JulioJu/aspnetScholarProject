@@ -868,15 +868,25 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
     * See https://www.quackit.com/css/at-rules/css_bottom-right-corner_at-rule.cfm
       (a cool demo).
 
-* There is an hach: https://medium.com/@Idan_Co/the-ultimate-print-html-template-with-header-footer-568f415f6d2a
+* There is an hack: https://medium.com/@Idan_Co/the-ultimate-print-html-template-with-header-footer-568f415f6d2a
   But it's not the best, too complicated, see below
 
 * Simply use `<tfoot>`
-  Warning, on Chromium 71 doesn't work if the table
-  is partially defined (without also `thead`, and `tr`) doesn't work
-  (contrary to Firefox).
+    * Warning, on Chromium 71 doesn't work if the table
+      is partially defined (without also `thead`, and `tr`) doesn't work
+      (contrary to Firefox).
+    * Warning: for last page, tfoot is not at the bottom of the page,
+        that's why we msut use fixed element as link above said.
+    * Warning: in Chromium 71 following doesn't work (remove header tags):
+        ```html
+            <td class="no-style">
+              <header>
+                &nbsp;
+              </header>
+            </td>
+          ```
   * In previous versions of Chromium or with some others browser (not tested),
-      could doesn't work with some others hach.
+      could doesn't work with some others hack.
     * See https://stackoverflow.com/questions/7211229/having-google-chrome-repeat-table-headers-on-printed-pages
     * See https://github.com/twbs/bootstrap/issues/13544
     * See https://stackoverflow.com/questions/274149/repeat-table-headers-in-print-mode
@@ -905,6 +915,8 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
     * https://www.nuget.org/packages/NReco.PdfGenerator.LT/
     * For header and page number see https://stackoverflow.com/questions/7174359/how-to-do-page-numbering-in-header-footer-htmls-with-wkhtmltopdf
       the easier is probably to use command-line generated header and footer
+    * wkhtmltopdf seems to be not really maintained
+        https://github.com/wkhtmltopdf/wkhtmltopdf/issues
 
   * http://www.evopdf.com/buy.aspx
     (650 dollars)
@@ -921,7 +933,28 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
     * https://stackoverflow.com/questions/39364687/export-html-to-pdf-in-asp-net-core
     * https://alternativeto.net/software/weasyprint/ (BSD)
     * https://alternativeto.net/software/prince-xml/ (paid)
-    * https://alternativeto.net/software/pdfreactor/ (paid)
+
+      https://www.princexml.com/purchase/license_faq/#server
+      « We are developing a special edition of Prince with extra features that
+      have been requested by book publishers. Please contact us for more
+      information. »
+      « Commercial Use means that Prince can be used to prepare commercial
+      documents, such as invoices, receipts and newsletters. However, it does
+      not include Commercial Services. »
+
+      « I'm planning to create commercial service where Prince only will be used
+      to generate invoices and receipts? The documents are commercial. Do I need
+      a CSO License to use Prince for this?
+
+      We allow invoices and receipts to be generated as long as they are issued
+      by your own company. These document are not considered to be a significant
+      part of your service, and the normal Server License can therefore be used.
+      However, if you, say, offer an invoice-generation service for others to
+      use, you will need a CSO License. »
+
+    * https://alternativeto.net/software/pdfreactor/
+      (paid, but with Zugferd implementation)
+    * Extensive comparaison: https://print-css.rocks/tools.html
 
   * Therefore the two best solutions seems to build it's own version around
       WeasyPrint
@@ -931,6 +964,8 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
 
   * WeasyPrint tested in command line, no render well html page
     with table with `tfoot` and other problems.
+    Tested to print https://github.com/JulioJu/aspnetScholarProject :
+    lot of warnings then errors.
 
   * Or use wkhtmltopdf (but it's based on WebKit render engine, therfore
     totally outdated)
@@ -943,10 +978,15 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
   wit WaterFox or Firefox 56
     See also https://bugzilla.mozilla.org/show_bug.cgi?id=1407238
 
-  * Problem, Chromium printer does not  hyperlinks that point inside
-    a doc (`<a href="xxx" `, e.g internal target location), but print hyperlinks
-    well that point outside the doc (same problem with LibreOffice)
-  * Problem with chromium, doesn't print any Outline.
+  * Or the easiest folution for my own needs, use cups-pdf in Firefox (not Chrome)
+      with custom header and footers. But it has limitations of cups:
+      no outlet and no internal hyperliks (see after).
+
+  * Problem with chromium, doesn't print any Outline. But print cross reference
+    (same manipulation as for Prince described below).
+    see https://bugs.chromium.org/p/chromium/issues/detail?id=781797
+    https://stackoverflow.com/questions/48511061/can-headless-chrome-create-pdfs-with-bookmarks
+    * Note: wkhtmltopdf generate outlines from headers
 
   * Actually, the easy open Source solution to create a doc
     with summary (with link) and page number is to generate Latex doc.
@@ -957,6 +997,57 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
 
   * Maybe test with a recent version of Word. LibreOffice doesn't render
     well styles or tables.
+
+  * For LibreOffice, see error for Cross-Reference
+    https://bugs.documentfoundation.org/show_bug.cgi?id=38187
+    https://bugs.documentfoundation.org/show_bug.cgi?id=114351
+    (maybe others, see links in this pages)
+
+  * Maybe the easier solution for a non commercial use is Prince
+    https://github.com/thomaspark/pubcss
+    Tested, works very well for simple doc on Arch Linux.
+    It generate outlines, output all errors of parsing. Generate cross-reference
+    if we delete from all id targets "user-content-".
+    But generate a Watermark.
+
+  * **Le successeur de Zugferd est Facure-X, normalisé en 2018**
+    https://linuxfr.org/news/odoo-genere-la-premiere-facture-factur-x-deposee-sur-chorus-pro
+    Il existe une bibliothèque Python.
+    « la partie du code indépendante d’Odoo qui assure la génération d’une
+    facture Factur-X a été déplacé dans une bibliothèque Python dédiée dénommée
+    factur-x. Cette bibliothèque est publiée sous licence BSD »
+
+  * **Voir également** (en Python)
+    https://xcg-consulting.fr/news/2015/05/15/py3o-generer-un-document-odt-doc-ou-pdf-depuis-une-application-metier/
+    "py3o - générer un document odt, doc ou pdf depuis une application métier"
+    * Voir aussi for https://linuxfr.org/news/premier-module-libre-de-facturation-electronique-pour-odoo
+
+  * Odoo seems the best for open-source invoices (read some articles)
+    Seems use wkhtmltopdf (outdated, probably headless Chromium is better)
+    https://github.com/OCA/account-invoicing/pull/122
+
+  * In php, there is fpdf http://www.fpdf.org/
+    see also
+    http://www.jeuxvideo.com/forums/1-51-24396482-1-0-1-0-les-factures-sur-plusieurs-pages.htm
+
+  * **For the final User
+    * on Chromium 71, when you print do not forget to use
+      option 'margin default'
+      and add header and footer**
+    * **Print options of cups-pdf
+        is highly customizable.**
+    * In Firefox 64, when page number is too close of the bottom page
+        in print preview, in `Page Setup` window play with Paper Size
+        (e.g A4 -> B5 -> A4). It reset distances.
+        of page. Needs a new profil, I don't know why (all params seems same).
+    * Firefox PDF printer seems a little bit buggy (last line could be
+        a little bit masked).
+        Probably with an empty tfoot like I done, should work well all time.
+    * Tridactyl add-ons in Firefox 64 display "Normal" at end of document.
+        see https://github.com/tridactyl/tridactyl/issues/453
+
+  * Note: on PDF, header and footer could be added programmatically with
+      https://github.com/coherentgraphics/cpdf-binaries Probably others exist.
 
 ## Generate docx
 
