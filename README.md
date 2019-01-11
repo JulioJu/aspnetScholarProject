@@ -64,7 +64,9 @@ Il aimerait bien disposer des fonctionnalités suivantes :
 4. (Done) Les films loués par une personne
 5. (Done) Les personnes qui ont loué un film
 6. (Done) Faire la location de films aux personnes.
-7. Éditer une facture à une personne
+7. (not dome, but there is a start) Éditer une facture à une personne
+    (Note from JulioJu: Invoice should be generated when a Customer return
+      an Article)
 8. (Done) Faire un top N des films loués
   (Added by JulioJu: Default is top10000, if nothing is passed (or invalid)
   in the HTTP GET query string)
@@ -77,6 +79,10 @@ If it's a real app, the user should buy a printer of barecode. Barecode
   (compatible with Linux).
   On Linux, if the software have not API, we could use `xdotool` to
   automate the process :-).
+
+* No JavaScript is used in this project, as it's a c# project. Therefore,
+    even javascript automatically scaffolded was deleted. All checks
+    are Server Side.
 
 # How to for Linux users
 * Create new project:
@@ -260,6 +266,15 @@ If it's a real app, the user should buy a printer of barecode. Barecode
     # Simply, delete it.
 
     dotnet ef database update
+    ```
+
+    You could simply use:
+    ```sh
+    $ sqlcmd -S localhost -U SA -P $(head -c -1 ../mdpmssqlserver.txt) \
+        -Q "drop database videotheque" \
+      && rm -Rf Migrations \
+      &&  dotnet ef migrations add InitialCreate \
+      && dotnet ef database update
     ```
 
 ### Inheritance
@@ -1134,6 +1149,9 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
 
 * Investigate Lazy Loading (needs Entity Framework > 2.2) or load
     not all properties of an Entity
+
+* When nothing is edited, we have a message "AbstractEntity 1 Edited" when
+    we click in button Edited in "Customer/Edited"
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->

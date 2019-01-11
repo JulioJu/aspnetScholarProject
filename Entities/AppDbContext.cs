@@ -52,9 +52,6 @@ namespace Videotheque.Data
             .Property(f => f.Price)
             .HasDefaultValue(Price.Gold);
 
-        modelBuilder.Entity<Receipt>()
-            .Property(r => r.DateTime)
-            .HasDefaultValue(DateTime.UtcNow);
     }
 
     private void DateCreationModification()

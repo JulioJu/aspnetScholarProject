@@ -4,7 +4,13 @@
 
 @if (!String.IsNullOrEmpty(Model.Message))
 {
-<h3>Msg: @Html.Raw(Model.Message)</h3>
+  <h3>Msg: @Html.Raw(Model.Message)</h3>
+  <!-- Used in For Customer -->
+  @if (@Context.Request.Path.ToString().StartsWith("/Customer",
+    System.StringComparison.InvariantCultureIgnoreCase))
+  {
+    <button asp-page="/Customer/InvoiceGenerated">Generate Invoice</button>
+  }
 }
 
 @RenderSection("h2", required: false)

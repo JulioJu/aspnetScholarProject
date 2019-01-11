@@ -31,6 +31,9 @@ namespace Videotheque.Data
     [EmailAddress]
     public string Email { get; set; }
 
+    [DataType(DataType.Date)]
+    public DateTime Birthdate { get; set; }
+
     private HashSet<Article> PCurrentlyBorrowed { get; set; }
 
     public HashSet<Article> CurrentlyBorrowed
