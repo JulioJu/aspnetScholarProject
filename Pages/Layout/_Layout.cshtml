@@ -2,6 +2,10 @@
   Layout = "../_Layout.cshtml";
 }
 
+@section head {
+  @RenderSection("head", required: false)
+}
+
 @if (@Context.Request.Path.ToString().StartsWith("/Article",
   System.StringComparison.InvariantCultureIgnoreCase))
 {
@@ -28,6 +32,10 @@
   )
 {
   <a asp-page="./Create">Create</a>
+}
+
+@section SecondMain {
+  @RenderSection("SecondMain", required: false)
 }
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos

@@ -1,28 +1,10 @@
-@page "{handler?}"
-
-@{
-  ViewData["Title"] = "French Invoice";
-  ViewData["h1"] = "Invoice";
-}
-
-@section head {
-  <link rel="stylesheet" href="/styles/generated-invoice.css" />
-}
-
-
-  <table class="no-style">
-    <thead class="no-style">
-      <tr class="no-style">
-        <td class="no-style .header">
-            &nbsp;
-        </td>
-      </tr>
-    </thead>
-    <tbody class="no-style">
-      <tr class="no-style">
-        <td class="no-style">
-<main id="invoice-generated-main" >
-
+<table id="invoice" class="no-style">
+  <tbody class="no-style">
+    <tr class="no-style">
+      <td class="no-style">
+<main>
+  <h1> Facture </h1>
+  <hr />
   <div id="addresses">
     <span id="store-address" >
       NeoVim Videotheque Corporation <br />
@@ -44,7 +26,7 @@
     <thead>
       <tr>
         <th scope="col">
-          Film loué
+          Film loués
         </th>
         <th scope="col">
           Remises
@@ -55,9 +37,11 @@
       </tr>
     </thead>
     <tbody>
-      <td></td>
-      <td></td>
-      <td></td>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
     </tbody>
   </table>
 
@@ -174,17 +158,17 @@
     en cas de retard de paiement: 40 euros
   </div>
 </main>
-        </td>
-      </tr>
-    </tbody>
-    <tfoot class="no-style">
-      <tr class="no-style">
-        <td class="tfoot-empty">
-          &nbsp;
-        </td>
-      </tr>
-    </tfoot>
-  </table>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot class="no-style">
+    <tr class="no-style">
+      <td class="tfoot-empty">
+        &nbsp;
+      </td>
+    </tr>
+  </tfoot>
+</table>
 
 <footer>
   <span>

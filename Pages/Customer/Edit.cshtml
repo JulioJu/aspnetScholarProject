@@ -4,10 +4,18 @@
 @{
   Layout = "../Layout/_CreateOrEdit.cshtml";
   ViewData["Title"] = "Customer Edit";
-  ViewData["h1"] = "Edit a Customer";
+  if(Model.IsInvoice == true)
+  {
+    ViewData["h1"] = "Facture";
+  }
 }
 
 @section Inputs {
+  @if (Model.IsInvoice)
+  {
+    <input type="hidden" asp-for="@Model.IsInvoice"/>
+  }
+
   <div class="form-group">
     <label asp-for="@Model.AbstractEntity.Id" class="control-label" ></label>
     <input type="text" asp-for="@Model.AbstractEntity.Id" class="form-control"
@@ -23,6 +31,25 @@
         {"ShouldBeRemovedArray",
             Model.ShouldBeRemovedArray}
       })
+}
+
+@if(Model.IsInvoice == true)
+{
+  @section head {
+    <link rel="stylesheet" href="/styles/generated-invoice.css" />
+  }
+  @section SecondMain{
+    <h2 id="warning-not-edit-yet">
+      @Model.IsInvoice
+      <strong><em>WARNING: NOTHING IS SAVED YET</em></strong>
+      <br />
+      You could print the Invoice below, then click to Button Edit above
+      to continue.
+      <hr />
+      <hr />
+    </h2>
+    @await Html.PartialAsync("./Customer/_InvoiceGenerated.cshtml")
+  }
 }
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos

@@ -1,9 +1,17 @@
-.header, header, nav {
-  /*
-    !important is usefull otherwise, with add-on 'no-script' sometimes
-    it appears
-   */
-  display: none !important;
+main#first-main h1,
+main#first-main hr,
+main#first-main nav,
+main#first-main a,
+main#first-main form[method="POST"] > table,
+main#first-main form[method="POST"] label,
+/* main#first-main form[method="POST"] input */
+input
+{
+  display: none;
+}
+
+input#EditButton {
+  display: block;
 }
 
 .no-style {
@@ -13,6 +21,10 @@
   margin : 0;
   padding : 0;
   vertical-align : baseline;
+}
+
+h2#warning-not-edit-yet {
+  margin-bottom: 10em;
 }
 
 main div#addresses {
@@ -77,6 +89,10 @@ footer {
   }
 
   footer {
+  }
+
+  main#first-main, h2#warning-not-edit-yet {
+    display: none !important;
   }
 
   @page {

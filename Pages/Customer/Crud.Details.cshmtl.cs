@@ -20,6 +20,7 @@ namespace Videotheque.Pages.CustomerPage
       if (currentRoute.Contains("/Edit/",
             System.StringComparison.InvariantCultureIgnoreCase))
       {
+        this.IsInvoice = false;
         this.ArticleIdToBorrowArrayInputValue =
           new string[this.numberInputArticleToBorrow];
         this.ValidationMessageArticleIdToBorrowArray =

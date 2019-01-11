@@ -21,6 +21,8 @@ namespace Videotheque.Pages.CustomerPage
 
     public string[] ShouldBeRemovedArray { get; set; }
 
+    public bool IsInvoice { get; private set; }
+
     private int numberInputArticleToBorrow = 4;
 
     private protected override async Task<bool> PerformTestOverpostingFunc()
@@ -61,7 +63,11 @@ namespace Videotheque.Pages.CustomerPage
         .ConfigureAwait(false);
     }
 
-    private async Task RemoveSomeArticlesAlreadyBorrowed(
+    /// <return>
+    ///   Return true if `this.IsInvoice === true` and there is
+    ///   an article to remove"
+    /// </return>
+    private async Task<bool> RemoveSomeArticlesAlreadyBorrowed(
         string[] articleIdAlreadyBorrowedArray,
         string[] shouldBeRemovedArray)
     {
@@ -84,7 +90,6 @@ namespace Videotheque.Pages.CustomerPage
             int articleId = int.Parse(articleIdAlreadyBorrowedArray[index],
                 System.Globalization.NumberStyles.Integer,
                 CultureInfo.InvariantCulture);
-            System.Console.WriteLine(shouldBeRemovedArray[index]);
             bool shouldBeRemoved = bool.Parse(shouldBeRemovedArray[index]);
             Article articleToRemove = await base._db.Articles
                 .FindAsync(articleId).ConfigureAwait(false);
@@ -116,6 +121,10 @@ namespace Videotheque.Pages.CustomerPage
               {
                 if (shouldBeRemoved)
                 {
+                  if (!this.IsInvoice)
+                  {
+                    return true;
+                  }
                   string messageArticle = "Article with barcode"
                     + " '<a href='/Article/Details/"
                     + articleToRemove.Id + "'>" + articleToRemove.Id + "</a>";
@@ -149,6 +158,7 @@ namespace Videotheque.Pages.CustomerPage
         }
 
       }
+      return false;
     }
 
     private async Task<bool> AddNewArticlesBorrowed(
@@ -244,15 +254,8 @@ namespace Videotheque.Pages.CustomerPage
       return isValidationError;
     }
 
-    public async Task<IActionResult> OnPostEditAsync(
-        string[] articleIdToBorrowArray,
-        string[] articleLoanDurationArray,
-        string[] articleIdAlreadyBorrowedArray,
-        string[] shouldBeRemovedArray)
+    private async Task EdRetrieveAbstractEntity(string[] shouldBeRemovedArray)
     {
-      if (await this.AddNewArticlesBorrowed(articleIdToBorrowArray,
-          articleLoanDurationArray).ConfigureAwait(false))
-      {
         // Otherwise we lost base.AbstractEntity.CurrentlyBorrowed
         // As it, all is reseted
         base.AbstractEntity = await
@@ -260,12 +263,40 @@ namespace Videotheque.Pages.CustomerPage
           .ConfigureAwait(false);
         this.Message = null;
         this.ShouldBeRemovedArray = shouldBeRemovedArray;
+        this.IsInvoice = false;
+    }
+
+    public async Task<IActionResult> OnPostEditAsync(
+        string[] articleIdToBorrowArray,
+        string[] articleLoanDurationArray,
+        string[] articleIdAlreadyBorrowedArray,
+        string[] shouldBeRemovedArray,
+        string isInvoice = "false")
+    {
+      // TODO LOW try catch bool.Parse
+      this.IsInvoice = bool.Parse(isInvoice);
+      if (await this.AddNewArticlesBorrowed(articleIdToBorrowArray,
+          articleLoanDurationArray).ConfigureAwait(false))
+      {
+        await this.EdRetrieveAbstractEntity(shouldBeRemovedArray)
+          .ConfigureAwait(false);
         return base.Page();
       }
       // We must remove after add, otherwise we sadly could return and article
       // then borrow it again in the same edit.
-      await this.RemoveSomeArticlesAlreadyBorrowed(articleIdAlreadyBorrowedArray,
+      bool redirectToInvoice = await
+        this.RemoveSomeArticlesAlreadyBorrowed(articleIdAlreadyBorrowedArray,
           shouldBeRemovedArray).ConfigureAwait(false);
+      if (!this.IsInvoice && redirectToInvoice)
+      {
+        await this.EdRetrieveAbstractEntity(shouldBeRemovedArray)
+          .ConfigureAwait(false);
+        if (base.ModelState.IsValid)
+        {
+          this.IsInvoice = true;
+        }
+        return base.Page();
+      }
       return await base.OnPostEditAsyncWithFunc(this.PerformTestOverpostingFunc)
         .ConfigureAwait(false);
     }

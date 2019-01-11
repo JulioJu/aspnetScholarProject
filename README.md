@@ -585,12 +585,6 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
       ```
       base.AbstractEntity.CurrentlyBorrowed.Add(articleToAdd);
       ```
-  * For build an array with `input name="nameOfArray"`,
-      can't use `type=checkbox` because the array `nameOfArray`
-      will contain only inputs with `value="true"` and not inputs with
-      `value=false`. Length of `nameOfArray` depends
-      of number of `<inputs type="checkbox" name="nameOfArray" value="true" />`
-      * e.g. at ./Pages/Customer/_FormPartialView.cshtml
   * See also:
       * https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/update-related-data?view=aspnetcore-2.2#add-course-assignments-to-the-instructor-edit-page
           (explanation is far of the solution, but could help).
@@ -887,19 +881,10 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
   But it's not the best, too complicated, see below
 
 * Simply use `<tfoot>`
-    * Warning, on Chromium 71 doesn't work if the table
-      is partially defined (without also `thead`, and `tr`) doesn't work
-      (contrary to Firefox).
+    * Warning, if it doesn't work, test if the table is well defined,
+        without no matching tags. Use https://validator.w3.org/
     * Warning: for last page, tfoot is not at the bottom of the page,
-        that's why we msut use fixed element as link above said.
-    * Warning: in Chromium 71 following doesn't work (remove header tags):
-        ```html
-            <td class="no-style">
-              <header>
-                &nbsp;
-              </header>
-            </td>
-          ```
+        that's why we must use fixed element as link above said.
   * In previous versions of Chromium or with some others browser (not tested),
       could doesn't work with some others hack.
     * See https://stackoverflow.com/questions/7211229/having-google-chrome-repeat-table-headers-on-printed-pages
@@ -1152,6 +1137,20 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
 
 * When nothing is edited, we have a message "AbstractEntity 1 Edited" when
     we click in button Edited in "Customer/Edited"
+
+
+* **TODO** ask to teacher how use checkbox instead of dropdown list
+    under the URL `/Customer/Edit`
+
+* TODO ask to teacher or search how use Service to manage data between views.
+    Especially, how Service are deleted. Could be interesting
+    for manage Articles passed bettwein `/Customer/Edit` and
+    `/Customer/InvoiceGenerated`
+    See also https://stackoverflow.com/questions/46772632/how-pass-objects-from-one-page-to-another-on-asp-net-core-with-razor-pages
+    Probably we must simply use Request.Form["xxx" + index]
+    TODO: test it
+
+* TODO: validate generated website thanks: https://validator.w3.org/
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->

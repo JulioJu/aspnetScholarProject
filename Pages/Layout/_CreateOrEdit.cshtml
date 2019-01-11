@@ -2,6 +2,10 @@
  Layout = "./_Layout.cshtml";
 }
 
+@section head {
+  @RenderSection("head", required: false)
+}
+
 <div class="row">
   <div class="col-md-4">
     <form method="POST">
@@ -11,7 +15,7 @@
         @if (@Context.Request.Path.ToString().Contains("/Edit/",
             System.StringComparison.InvariantCultureIgnoreCase))
         {
-          <input type="submit" value="Edit" class="btn btn-danger"
+          <input id="EditButton" type="submit" value="Edit" class="btn btn-danger"
               asp-page-handler="edit"
               asp-route-id="@Model.AbstractEntity.Id" >
         }
@@ -27,6 +31,10 @@
 <div>
     <a asp-page="./ShowAll">Back to List</a>
 </div>
+
+@section SecondMain {
+  @RenderSection("SecondMain", required: false)
+}
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->
