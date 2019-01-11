@@ -270,11 +270,19 @@ namespace Videotheque.Pages.CustomerPage
         string[] articleIdToBorrowArray,
         string[] articleLoanDurationArray,
         string[] articleIdAlreadyBorrowedArray,
-        string[] shouldBeRemovedArray,
         string isInvoice = "false")
     {
       // TODO LOW try catch bool.Parse
       this.IsInvoice = bool.Parse(isInvoice);
+      string[] shouldBeRemovedArray =
+        new string[articleIdAlreadyBorrowedArray.Length];
+      for (int index = 0; index < articleIdAlreadyBorrowedArray.Length; index++)
+      {
+        // TODO LOW nothing try catch. If the user change something
+        // thanks Developpers tools, we could have an out of bound exception
+        shouldBeRemovedArray[index] =
+          Request.Form["shouldBeRemovedArray" + index];
+      }
       if (await this.AddNewArticlesBorrowed(articleIdToBorrowArray,
           articleLoanDurationArray).ConfigureAwait(false))
       {

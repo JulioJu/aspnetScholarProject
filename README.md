@@ -1139,16 +1139,17 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
     we click in button Edited in "Customer/Edited"
 
 
-* **TODO** ask to teacher how use checkbox instead of dropdown list
+* (works, find alone)
+    ~~**TODO** ask to teacher how use checkbox instead of dropdown list
     under the URL `/Customer/Edit`
+    Probably we must simply use Request.Form["xxx" + index]
+    TODO: test it~~
 
 * TODO ask to teacher or search how use Service to manage data between views.
     Especially, how Service are deleted. Could be interesting
     for manage Articles passed bettwein `/Customer/Edit` and
     `/Customer/InvoiceGenerated`
     See also https://stackoverflow.com/questions/46772632/how-pass-objects-from-one-page-to-another-on-asp-net-core-with-razor-pages
-    Probably we must simply use Request.Form["xxx" + index]
-    TODO: test it
 
 * TODO: validate generated website thanks: https://validator.w3.org/
 

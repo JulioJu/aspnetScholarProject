@@ -103,10 +103,16 @@
             @article.Film.Title
           </td>
           <td>
-            <select name="shouldBeRemovedArray">
-              <option value="false" selected="@isSelectFalse">Keep</option>
-              <option value="true" selected="@isSelectTrue">Return</option>
-            </select>
+              <div class="grid-container-should-be-removed">
+                <label for="shouldBeRemovedArray@(index)True">Keep</label>
+                <label for="shouldBeRemovedArray@(index)False">Return</label>
+                <input id="shouldBeRemovedArray@(index)True" type="radio"
+                  value="false" name="shouldBeRemovedArray@(index)"
+                  checked="@isSelectFalse" />
+                <input id="shouldBeRemovedArray@(index)False" type="radio"
+                  value="true" name="shouldBeRemovedArray@(index)"
+                  checked="@isSelectTrue" />
+              </div>
           </td>
           <td> @article.ReturnDate?.ToShortDateString() </td>
         </tr>
@@ -122,7 +128,7 @@
 
 
     <!-- We could make four new borrowing -->
-    @:<table>
+    @:<table class="table-no-width">
     <thead>
       <tr>
         <td>
