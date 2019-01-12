@@ -21,22 +21,24 @@
 
     <title>Video Library | @ViewData["Title"]</title>
 
-    <link rel="stylesheet" href="/styles/styles.css" />
-
     @RenderSection("head", required: false)
+
+    <link rel="stylesheet" href="/styles/styles.css" />
 
   </head>
   <body>
 
     <main id="first-main">
+      <nav id="navbar">
+        <ul>
+          <li>  <a asp-page="/Customer/ShowAll"> Customers  </a>  </li>
+          <li>  <a asp-page="/Article/ShowAll">  Articles   </a>  </li>
+          <li>  <a asp-page="/Film/ShowAll">     Film       </a>  </li>
+        </ul>
+      </nav>
       <h1> @ViewData["h1"] </h1>
       <hr />
       @RenderBody()
-      <nav id="navbar">
-        <a asp-page="/Customer/ShowAll">Customers</a>
-        | <a asp-page="/Article/ShowAll">Articles</a>
-        | <a asp-page="/Film/ShowAll">Film</a>
-      </nav>
     </main>
 
     @RenderSection("SecondMain", required: false)

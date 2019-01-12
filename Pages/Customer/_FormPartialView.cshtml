@@ -1,12 +1,15 @@
 @using Videotheque.Data
 @model Customer
 @{
-  string[] ValidationMessageArticleIdToBorrowArray =
-    (string[])ViewData["ValidationMessageArticleIdToBorrowArray"];
-  string[] ArticleIdToBorrowArrayInputValue =
-    (string[])ViewData["ArticleIdToBorrowArrayInputValue"];
   string[] ShouldBeRemovedArray =
     (string[])ViewData["ShouldBeRemovedArray"];
+
+  string[] ArticleIdToBorrowArrayInputValue =
+    (string[])ViewData["ArticleIdToBorrowArrayInputValue"];
+  string[] ArticleIdToBorrowLoanDurationArray =
+    (string[])ViewData["ArticleIdToBorrowLoanDurationArray"];
+  string[] ValidationMessageArticleIdToBorrowArray =
+    (string[])ViewData["ValidationMessageArticleIdToBorrowArray"];
 }
 
 <div class="form-group">
@@ -141,26 +144,50 @@
     </thead>
     @:<tbody>
     for (int index=0 ;
-          index < ValidationMessageArticleIdToBorrowArray.Length ;
+          index < Crud.NumberInputArticleToBorrow ;
           index++)
     {
+      int loanDuration;
+      @if (ArticleIdToBorrowLoanDurationArray == null)
+      {
+        loanDuration = 2;
+      }
+      else
+      {
+        loanDuration = int.Parse(ArticleIdToBorrowLoanDurationArray[index]);
+      }
       <tr class="form-group">
         <td>
           <input type="number" name="articleIdToBorrowArray"
               placeholder="Article Barcode (id)"
-              value="@ArticleIdToBorrowArrayInputValue[index]">
+              value="@ArticleIdToBorrowArrayInputValue?[index]">
           <div class="text-danger field-validation-error customer-article-message-validation" >
-            @Html.Raw(@ValidationMessageArticleIdToBorrowArray[index])
+            @Html.Raw(@ValidationMessageArticleIdToBorrowArray?[index])
           </div>
         </td>
         <td>
-          <select name="articleLoanDurationArray">
-            <option value="1">1 days</option>
-            <option value="2" selected >2 days</option>
-            <option value="5">5 days</option>
-            <option value="7">7 days</option>
-            <option value="14">14 days</option>
-          </select>
+          <div class="grid-container-article-loan-duration">
+            <label for="articleLoanDurationArray@(index)1">  1</label>
+            <label for="articleLoanDurationArray@(index)2">  2</label>
+            <label for="articleLoanDurationArray@(index)5">  5</label>
+            <label for="articleLoanDurationArray@(index)7">  7</label>
+            <label for="articleLoanDurationArray@(index)14"> 14</label>
+            <input id="articleLoanDurationArray@(index)1" type="radio"
+              value="1" name="articleLoanDurationArray@(index)"
+              checked="@(loanDuration == 1)" />
+            <input id="articleLoanDurationArray@(index)2" type="radio"
+              value="2" name="articleLoanDurationArray@(index)"
+              checked="@(loanDuration == 2)" />
+            <input id="articleLoanDurationArray@(index)5" type="radio"
+              value="5" name="articleLoanDurationArray@(index)"
+              checked="@(loanDuration == 5)" />
+            <input id="articleLoanDurationArray@(index)7" type="radio"
+              value="7" name="articleLoanDurationArray@(index)"
+              checked="@(loanDuration == 7)" />
+            <input id="articleLoanDurationArray@(index)14" type="radio"
+              value="14" name="articleLoanDurationArray@(index)"
+              checked="@(loanDuration == 14)" />
+          </div>
         </td>
       </tr>
     }

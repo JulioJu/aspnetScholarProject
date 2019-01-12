@@ -25,15 +25,6 @@
 
 @RenderBody()
 
-@if (!@Context.Request.Path.ToString().EndsWith("/Create",
-  System.StringComparison.InvariantCultureIgnoreCase)
-  && !@Context.Request.Path.ToString().StartsWith("/Article",
-    System.StringComparison.InvariantCultureIgnoreCase)
-  )
-{
-  <a asp-page="./Create">Create</a>
-}
-
 @section SecondMain {
   @RenderSection("SecondMain", required: false)
 }

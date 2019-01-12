@@ -1,13 +1,15 @@
+html, body {
+  background-color: transparent !important;
+}
+
 main#first-main h1,
 main#first-main hr,
-main#first-main nav,
-main#first-main a,
 main#first-main form[method="POST"] > table,
 main#first-main form[method="POST"] label,
 /* main#first-main form[method="POST"] input */
 input
 {
-  display: none;
+  display: none ;
 }
 
 input#EditButton {
@@ -27,28 +29,32 @@ h2#warning-not-edit-yet {
   margin-bottom: 10em;
 }
 
-main div#addresses {
+table#invoice > tbody > tr > td  {
+  text-align: left;
+}
+
+table#invoice div#addresses {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-main div#addresses span#customer-address {
+table#invoice div#addresses span#customer-address {
   padding-right: 6em;
 }
 
-main table#total-price {
+table#invoice table#total-price {
   float: right;
   width: 40%;
   margin-right: 10%;
 }
 
-main div.clear {
+table#invoice p.clear {
   clear: both;
 }
 
-main div#payement-condition {
+table#invoice p#payement-condition {
   width: 50%;
   float: right;
   margin-top: 4em;

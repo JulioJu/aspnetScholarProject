@@ -1,0 +1,40 @@
+.table-no-width {
+  width: initial;
+}
+
+#CustomerEditArticlesCurrentlyBorrowed {
+  background-image: linear-gradient(45deg,
+    rgba(153,218,255,1) 0%,
+    rgba(0,128,128,1) 95%);
+}
+
+select[name='articleLoanDuration'] {
+  display: inline-block;
+}
+
+.grid-container-should-be-removed {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows:    auto auto;
+}
+
+.grid-container-article-loan-duration {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+  grid-template-rows:    auto auto;
+}
+
+.grid-container-should-be-removed,
+.grid-container-article-loan-duration {
+  grid-row-gap: 1em;
+  grid-column-gap: 2em;
+  align-content: space-around;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  padding: 1em;
+}
+
+.customer-article-message-validation {
+  max-width: 200px;
+}

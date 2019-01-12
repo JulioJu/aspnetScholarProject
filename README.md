@@ -84,6 +84,11 @@ If it's a real app, the user should buy a printer of barecode. Barecode
     even javascript automatically scaffolded was deleted. All checks
     are Server Side.
 
+* Bootstrap is not used, as the teacher says he doesn't like if we use
+    template. In Prod env, I will use Bootstrap.
+    Somme css was added, just for usability of the app, not for beauty.
+    Inspired from default style of w3schools.
+
 # How to for Linux users
 * Create new project:
   ```sh
@@ -1152,6 +1157,9 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
     See also https://stackoverflow.com/questions/46772632/how-pass-objects-from-one-page-to-another-on-asp-net-core-with-razor-pages
 
 * TODO: validate generated website thanks: https://validator.w3.org/
+
+* (Done) ~~TODO: warning, borrow is always 2 day when there is a Return
+    replace all by radio buttons~~
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->

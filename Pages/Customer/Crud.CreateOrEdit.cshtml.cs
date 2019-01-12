@@ -9,6 +9,21 @@ namespace Videotheque.Pages.CustomerPage
 
   public sealed partial class Crud : CrudAbstract<Customer>
   {
+    public static readonly int NumberInputArticleToBorrow = 4;
+
+    // Default value: False (due to c# interpretation)
+    public bool IsInvoice { get; private set; }
+
+    // CA1819: "Arrays returned by properties are not write-protected, even if
+    //      the property is read-only."
+    #pragma warning disable CA1819
+    public string[] ShouldBeRemovedArray { get; set; }
+
+    // CA1819: "Arrays returned by properties are not write-protected, even if
+    //      the property is read-only."
+    #pragma warning disable CA1819
+    public string[] ArticleIdToBorrowArrayInputValue { get; set; }
+
     // CA1819: "Arrays returned by properties are not write-protected, even if
     //      the property is read-only."
     #pragma warning disable CA1819
@@ -17,13 +32,7 @@ namespace Videotheque.Pages.CustomerPage
     // CA1819: "Arrays returned by properties are not write-protected, even if
     //      the property is read-only."
     #pragma warning disable CA1819
-    public string[] ArticleIdToBorrowArrayInputValue { get; set; }
-
-    public string[] ShouldBeRemovedArray { get; set; }
-
-    public bool IsInvoice { get; private set; }
-
-    private int numberInputArticleToBorrow = 4;
+    public string[] ArticleIdToBorrowLoanDurationArray { get; set; }
 
     private protected override async Task<bool> PerformTestOverpostingFunc()
     {
@@ -168,14 +177,14 @@ namespace Videotheque.Pages.CustomerPage
       bool isValidationError = false;
       // TODO LOW display error
       this.ArticleIdToBorrowArrayInputValue =
-        new string[this.numberInputArticleToBorrow];
+        new string[Crud.NumberInputArticleToBorrow];
       this.ValidationMessageArticleIdToBorrowArray =
-        new string[this.numberInputArticleToBorrow];
+        new string[Crud.NumberInputArticleToBorrow];
       if (articleIdToBorrowArray != null
           && articleLoanDurationArray != null
           && articleIdToBorrowArray.Length == articleLoanDurationArray.Length)
       {
-        for (int index = 0; index < this.numberInputArticleToBorrow; index++)
+        for (int index = 0; index < Crud.NumberInputArticleToBorrow; index++)
         {
           if (articleIdToBorrowArray[index] != null
               && articleLoanDurationArray[index] != null)
@@ -254,7 +263,8 @@ namespace Videotheque.Pages.CustomerPage
       return isValidationError;
     }
 
-    private async Task EdRetrieveAbstractEntity(string[] shouldBeRemovedArray)
+    private async Task EdRetrieveAbstractEntity(string[] shouldBeRemovedArray,
+        string[] articleLoanDurationArray)
     {
         // Otherwise we lost base.AbstractEntity.CurrentlyBorrowed
         // As it, all is reseted
@@ -262,18 +272,19 @@ namespace Videotheque.Pages.CustomerPage
           this.PerformSearchInDatabaseFunc(base.AbstractEntity.Id)
           .ConfigureAwait(false);
         this.Message = null;
-        this.ShouldBeRemovedArray = shouldBeRemovedArray;
         this.IsInvoice = false;
+        this.ShouldBeRemovedArray = shouldBeRemovedArray;
+        this.ArticleIdToBorrowLoanDurationArray = articleLoanDurationArray;
     }
 
     public async Task<IActionResult> OnPostEditAsync(
-        string[] articleIdToBorrowArray,
-        string[] articleLoanDurationArray,
         string[] articleIdAlreadyBorrowedArray,
+        string[] articleIdToBorrowArray,
         string isInvoice = "false")
     {
       // TODO LOW try catch bool.Parse
       this.IsInvoice = bool.Parse(isInvoice);
+
       string[] shouldBeRemovedArray =
         new string[articleIdAlreadyBorrowedArray.Length];
       for (int index = 0; index < articleIdAlreadyBorrowedArray.Length; index++)
@@ -281,13 +292,24 @@ namespace Videotheque.Pages.CustomerPage
         // TODO LOW nothing try catch. If the user change something
         // thanks Developpers tools, we could have an out of bound exception
         shouldBeRemovedArray[index] =
-          Request.Form["shouldBeRemovedArray" + index];
+          base.Request.Form["shouldBeRemovedArray" + index];
       }
+
+      string[] articleLoanDurationArray =
+        new string[articleIdToBorrowArray.Length];
+      for (int index = 0; index < articleIdToBorrowArray.Length; index++)
+      {
+        // TODO LOW nothing try catch. If the user change something
+        // thanks Developpers tools, we could have an out of bound exception
+        articleLoanDurationArray[index] =
+          base.Request.Form["articleLoanDurationArray" + index];
+      }
+
       if (await this.AddNewArticlesBorrowed(articleIdToBorrowArray,
           articleLoanDurationArray).ConfigureAwait(false))
       {
-        await this.EdRetrieveAbstractEntity(shouldBeRemovedArray)
-          .ConfigureAwait(false);
+        await this.EdRetrieveAbstractEntity(shouldBeRemovedArray,
+            articleLoanDurationArray).ConfigureAwait(false);
         return base.Page();
       }
       // We must remove after add, otherwise we sadly could return and article
@@ -297,8 +319,8 @@ namespace Videotheque.Pages.CustomerPage
           shouldBeRemovedArray).ConfigureAwait(false);
       if (!this.IsInvoice && redirectToInvoice)
       {
-        await this.EdRetrieveAbstractEntity(shouldBeRemovedArray)
-          .ConfigureAwait(false);
+        await this.EdRetrieveAbstractEntity(shouldBeRemovedArray,
+            articleLoanDurationArray).ConfigureAwait(false);
         if (base.ModelState.IsValid)
         {
           this.IsInvoice = true;

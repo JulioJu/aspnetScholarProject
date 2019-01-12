@@ -8,7 +8,19 @@
   {
     ViewData["h1"] = "Facture";
   }
+  else
+  {
+    ViewData["h1"] = "Customer Edit";
+  }
 }
+
+  @section head {
+    <link rel="stylesheet" href="/styles/customer-edit.css" />
+    @if(Model.IsInvoice)
+    {
+      <link rel="stylesheet" href="/styles/generated-invoice.css" />
+    }
+  }
 
 @section Inputs {
   @if (Model.IsInvoice)
@@ -24,23 +36,22 @@
   @await Html.PartialAsync("_FormPartialView", Model.AbstractEntity,
       new ViewDataDictionary(ViewData)
       {
-        {"ValidationMessageArticleIdToBorrowArray",
-            Model.ValidationMessageArticleIdToBorrowArray},
+        {"ShouldBeRemovedArray",
+            Model.ShouldBeRemovedArray},
+
         {"ArticleIdToBorrowArrayInputValue",
             Model.ArticleIdToBorrowArrayInputValue},
-        {"ShouldBeRemovedArray",
-            Model.ShouldBeRemovedArray}
+        {"ArticleIdToBorrowLoanDurationArray",
+            Model.ArticleIdToBorrowLoanDurationArray},
+        {"ValidationMessageArticleIdToBorrowArray",
+            Model.ValidationMessageArticleIdToBorrowArray},
       })
 }
 
-@if(Model.IsInvoice == true)
+@if(Model.IsInvoice)
 {
-  @section head {
-    <link rel="stylesheet" href="/styles/generated-invoice.css" />
-  }
   @section SecondMain{
     <h2 id="warning-not-edit-yet">
-      @Model.IsInvoice
       <strong><em>WARNING: NOTHING IS SAVED YET</em></strong>
       <br />
       You could print the Invoice below, then click to Button Edit above

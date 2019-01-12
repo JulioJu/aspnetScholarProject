@@ -13,22 +13,6 @@ namespace Videotheque.Pages.CustomerPage
     {
     }
 
-    public override async Task<IActionResult> OnGetAsync(int? id,
-        bool? saveChangeErrors = false)
-    {
-      string currentRoute = base.HttpContext.Request.Path;
-      if (currentRoute.Contains("/Edit/",
-            System.StringComparison.InvariantCultureIgnoreCase))
-      {
-        this.IsInvoice = false;
-        this.ArticleIdToBorrowArrayInputValue =
-          new string[this.numberInputArticleToBorrow];
-        this.ValidationMessageArticleIdToBorrowArray =
-          new string[this.numberInputArticleToBorrow];
-      }
-      return await base.OnGetAsync(id, saveChangeErrors).ConfigureAwait(false);
-    }
-
     private protected async override Task<Customer>
       PerformSearchInDatabaseFunc(int? id)
     {
