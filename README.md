@@ -93,12 +93,11 @@ If it's a real app, the user should buy a printer of barecode. Barecode
 * Our goal is simply to make a simple app deployable in an intranet,
     for an updated PC browser (Chrome or Firefox, not IE, not Safari,
       no smartphones, etc.).
-    * We assume that the user will not try to change the client side app
-    thanks Developers tools of the Browser. Therefore, if in a client
-    side we have `<input type="number" name="xxx" />`, we will not `try` `catch`
-    in server side `int.Parse(xxx)`. Like that, all fields
-    `<input type="hidden">`are not tested.
-    Could be done in a future, therefore this kind of TODO as marked `TODO LOW`
+    * As the app could be used in concurrency (e.g. several tabs open)
+        POST params should be tested to know if they are still valid.
+        Especially done in ./Pages/Customer/Crud.CreateOrEdit.cshtml.cs
+        * Note: if the user open dev tools, it could borrow for any time,
+            even negatives times.
     * Some manipulations are tested, especially in
         Pages/Customer/Crud.CreateOrEdit.cshtml.cs
         They raise System.InvalidOperationException that are not explained

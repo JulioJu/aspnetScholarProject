@@ -15,9 +15,9 @@ namespace Videotheque.Pages.ArticlePage
 
     // Used under /Page/Customer/Crud.CreateOrEdit.shtml.cs
     public static async Task<Article>
-      FindArticleAsync(AppDbContext _context, int id)
+      FindArticleAsync(AppDbContext context, int id)
     {
-      return await _context.Articles
+      return await context.Articles
         .Include(a => a.Borrower)
         .Include(a => a.Film)
         .AsNoTracking()

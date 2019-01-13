@@ -6,13 +6,14 @@ namespace Videotheque.Pages.CustomerPage
   using Microsoft.AspNetCore.Mvc;
   using Microsoft.EntityFrameworkCore;
   using Videotheque.Data;
+  using Videotheque.Pages;
   using Videotheque.Pages.Abstract;
 
   public sealed partial class Crud : CrudAbstract<Customer>
   {
     public static readonly int NumberInputArticleToBorrow = 4;
 
-    public List<Article> CurrentlyBorrowedList;
+    public List<Article> CurrentlyBorrowedList { get; private set; }
 
     // Default value: False (due to c# interpretation)
     public bool IsInvoice { get; private set; }
@@ -75,11 +76,18 @@ namespace Videotheque.Pages.CustomerPage
         .ConfigureAwait(false);
     }
 
-    private async Task<Article> RetrieveArticle(string articleIdString)
+    private async Task<Article> RetrieveArticle(string articleIdString,
+        int index)
     {
-      int articleId = int.Parse(articleIdString,
+      int articleId;
+      if(! int.TryParse(articleIdString,
           System.Globalization.NumberStyles.Integer,
-          CultureInfo.InvariantCulture);
+          CultureInfo.InvariantCulture, out articleId))
+      {
+        throw new BadPostRequestException("Param articleIdAlreadyBorrowedArray["
+            + index + "] (value " + articleIdString
+            + ") could not be casted to int.");
+      }
       // INFO
       // If we display Invoice, we don't display keept Articles
       Article currentlyBorrowedArticle = await
@@ -91,8 +99,9 @@ namespace Videotheque.Pages.CustomerPage
       }
       else
       {
-        throw new System.InvalidOperationException("ERROR in POST,"
-            + " can't find article with id " + articleId);
+        throw new BadPostRequestException( "Can't find article with id "
+            + articleId + ". Param articleIdAlreadyBorrowedArray["
+            + index + "] is wrong.");
       }
       return currentlyBorrowedArticle;
     }
@@ -106,95 +115,96 @@ namespace Videotheque.Pages.CustomerPage
         string[] shouldBeRemovedArray)
     {
       bool returnValue = false;
-      if (articleIdAlreadyBorrowedArray != null
-          && shouldBeRemovedArray != null
-          && articleIdAlreadyBorrowedArray.Length
-              == shouldBeRemovedArray.Length)
+      for (int index = 0;
+          index < articleIdAlreadyBorrowedArray.Length;
+          index++)
       {
-
-        for (int index = 0;
-            index < articleIdAlreadyBorrowedArray.Length;
-            index++)
+        if (articleIdAlreadyBorrowedArray[index] != null
+            && shouldBeRemovedArray[index] != null)
         {
-          if (articleIdAlreadyBorrowedArray[index] != null
-              && shouldBeRemovedArray[index] != null)
-          {
-            Article currentlyBorrowedArticle = await
-              this.RetrieveArticle(articleIdAlreadyBorrowedArray[index])
+          Article currentlyBorrowedArticle = await
+            this.RetrieveArticle(articleIdAlreadyBorrowedArray[index], index)
               .ConfigureAwait(false);
-            bool shouldBeRemoved = bool.Parse(shouldBeRemovedArray[index]);
-            if (currentlyBorrowedArticle.BorrowerId == null)
+          bool shouldBeRemoved;
+          if (! bool.TryParse(shouldBeRemovedArray[index], out shouldBeRemoved))
+          {
+            throw new BadPostRequestException("Param shouldBeRemovedArray["
+                + index + "] (value " + shouldBeRemovedArray[index]
+                + ") could not be casted to bool.");
+          }
+          if (currentlyBorrowedArticle.BorrowerId == null)
+          {
+            throw new BadPostRequestException("Article with id '"
+                + currentlyBorrowedArticle.Id
+                + "' is not borrowed by any Customer. "
+                + "Not removed. Param articleIdAlreadyBorrowedArray["
+                + index + "] not valid.");
+          }
+          else
+          {
+            if (currentlyBorrowedArticle.BorrowerId != base.AbstractEntity.Id)
             {
-              throw new System.InvalidOperationException("ERROR in POST"
-                  + "ERROR: Article with id '"
-                  + currentlyBorrowedArticle.Id
-                  + "' is not borrowed by any Customer. "
-                  + "Not removed.");
+                throw new BadPostRequestException("Article with id (barcode) '"
+                    + currentlyBorrowedArticle.Id
+                    + "' not borrowed by the current "
+                    + "Customer with id '"
+                    + currentlyBorrowedArticle.BorrowerId
+                    + "'. Can't be returned "
+                    + "by the current Customer. Param " +
+                    " articleIdAlreadyBorrowedArray["
+                    + index + "] not valid.");
+
             }
             else
             {
-              if (currentlyBorrowedArticle.BorrowerId != base.AbstractEntity.Id)
+              if (shouldBeRemoved)
               {
-                  throw new System.InvalidOperationException("ERROR in POST"
-                      + "ERROR: Article with id (barcode) '"
-                      + currentlyBorrowedArticle.Id
-                      + "' not borrowed by the current "
-                      + "Customer with id '"
-                      + currentlyBorrowedArticle.BorrowerId
-                      + "'. Can't be returned "
-                      + "by the current Customer.");
+                if (!this.IsInvoice)
+                {
+                  returnValue = true;
+                  continue;
+                }
+                string messageArticle = "Article with barcode"
+                  + " '<a href='/Article/Details/"
+                  + currentlyBorrowedArticle.Id + "'>"
+                  + currentlyBorrowedArticle.Id + "</a>";
+                // 'Microsoft.AspNetCore.Mvc.ViewFeatures.Internal.TempDataSerializer'
+                // cannot serialize an object of type
+                // 'System.Text.StringBuilder'.
+                // S1643: Use a StringBuilder instead.
+                #pragma warning disable S1643
+                base.Message += "<li>" + messageArticle
+                    + " is returned.";
+                currentlyBorrowedArticle.BorrowingDate = null;
+                currentlyBorrowedArticle.ReturnDate = null;
+                currentlyBorrowedArticle.BorrowerId = null;
+
+                // Not needed for Entity Framework Core 2.2, but more clean.
+                // (personal opinion)
+                currentlyBorrowedArticle.Borrower = null;
+
+                base._db.Attach(currentlyBorrowedArticle).State
+                  = EntityState.Modified;
               }
               else
               {
-                if (shouldBeRemoved)
-                {
-                  if (!this.IsInvoice)
-                  {
-                    returnValue = true;
-                    continue;
-                  }
-                  string messageArticle = "Article with barcode"
-                    + " '<a href='/Article/Details/"
-                    + currentlyBorrowedArticle.Id + "'>"
-                    + currentlyBorrowedArticle.Id + "</a>";
-                  // 'Microsoft.AspNetCore.Mvc.ViewFeatures.Internal.TempDataSerializer'
-                  // cannot serialize an object of type
-                  // 'System.Text.StringBuilder'.
-                  // S1643: Use a StringBuilder instead.
-                  #pragma warning disable S1643
-                  base.Message += "<li>" + messageArticle
-                      + " is returned.";
-                  currentlyBorrowedArticle.BorrowingDate = null;
-                  currentlyBorrowedArticle.ReturnDate = null;
-                  currentlyBorrowedArticle.BorrowerId = null;
-
-                  // Not needed for Entity Framework Core 2.2, but more clean.
-                  // (personal opinion)
-                  currentlyBorrowedArticle.Borrower = null;
-
-                  base._db.Attach(currentlyBorrowedArticle).State
-                    = EntityState.Modified;
-                }
-                else
-                {
-                  System.Console.WriteLine("INFO: Article with id (barcode) '"
-                      + currentlyBorrowedArticle.Id
-                      + "' is keept by Customer with id '"
-                      + currentlyBorrowedArticle.BorrowerId);
-                }
+                System.Console.WriteLine("INFO: Article with id (barcode) '"
+                    + currentlyBorrowedArticle.Id
+                    + "' is keept by Customer with id '"
+                    + currentlyBorrowedArticle.BorrowerId);
               }
             }
           }
-          else {
-            throw new System.InvalidOperationException("ERROR in POST");
-          }
         }
+        else
+        {
+            throw new BadPostRequestException("Params "
+              + "articleIdAlreadyBorrowedArray[" + index
+              + "] and shouldBeRemovedArray" + index
+              + " should not be null.");
+        }
+      }
 
-      }
-      else
-      {
-        throw new System.InvalidOperationException("ERROR in POST");
-      }
       return returnValue;
     }
 
@@ -207,102 +217,111 @@ namespace Videotheque.Pages.CustomerPage
         new string[Crud.NumberInputArticleToBorrow];
       this.ValidationMessageArticleIdToBorrowArray =
         new string[Crud.NumberInputArticleToBorrow];
-      if (articleIdToBorrowArray != null
-          && articleLoanDurationArray != null
-          && articleIdToBorrowArray.Length == articleLoanDurationArray.Length)
+      for (int index = 0; index < Crud.NumberInputArticleToBorrow; index++)
       {
-        for (int index = 0; index < Crud.NumberInputArticleToBorrow; index++)
+        if (articleIdToBorrowArray[index] != null
+            && articleLoanDurationArray[index] != null)
         {
-          if (articleIdToBorrowArray[index] != null
-              && articleLoanDurationArray[index] != null)
+          // INFORMATION not protected against injections.
+          //      All number values could be injected. Could borrow for
+          //      all durations.
+          int articleId ;
+          if (! int.TryParse(articleIdToBorrowArray[index],
+              System.Globalization.NumberStyles.Integer,
+              CultureInfo.InvariantCulture, out articleId))
           {
-            // TODO LOW not protected against injections.
-            //      All number values could be injected. Could borrow for
-            //      all durations.
-            int articleId = int.Parse(articleIdToBorrowArray[index],
-                System.Globalization.NumberStyles.Integer,
-                CultureInfo.InvariantCulture);
-            int articleLoanDuration =
-              int.Parse(articleLoanDurationArray[index],
-                System.Globalization.NumberStyles.Integer,
-                CultureInfo.InvariantCulture);
-            this.ArticleIdToBorrowArrayInputValue[index] =
-              articleId.ToString(CultureInfo.InvariantCulture);
+            throw new BadPostRequestException("Param articleIdToBorrowArray["
+                + index + "] (value " + articleIdToBorrowArray[index]
+                + ") could not be casted to int.");
+          }
+          int articleLoanDuration;
+          if (! int.TryParse(articleLoanDurationArray[index],
+              System.Globalization.NumberStyles.Integer,
+              CultureInfo.InvariantCulture, out articleLoanDuration))
+          {
+            throw new BadPostRequestException("Param articleLoanDurationArray["
+                + index + "] (value " + articleLoanDurationArray[index]
+                + ") could not be casted to int.");
+          }
+          this.ArticleIdToBorrowArrayInputValue[index] =
+            articleId.ToString(CultureInfo.InvariantCulture);
 
-            Article articleToAdd = await base._db.Articles
-                .FindAsync(articleId).ConfigureAwait(false);
-            if (articleToAdd == null)
-            {
-              this.ValidationMessageArticleIdToBorrowArray[index] =
-                "Article with id (barcode) '"
-                + articleId + "' doesn't exist. Not borrowed.";
-              isValidationError = true;
-              continue;
-            }
-            string messageArticle = "Article with barcode"
-              + " '<a href='/Article/Details/"
-              + articleToAdd.Id + "'>" + articleToAdd.Id + "</a>'";
-            string messageBorrower = "Customer with id "
-                  + "'<a href='/Customer/Details/"
-                  + articleToAdd.BorrowerId + "'>" + articleToAdd.BorrowerId
-                  + "</a>'";
-            if (articleToAdd.BorrowerId == null)
-            {
-              articleToAdd.CountBorrowing++;
-              articleToAdd.BorrowingDate = System.DateTime.UtcNow;
-              articleToAdd.ReturnDate = articleToAdd.BorrowingDate?.AddDays(
-                  articleLoanDuration);
+          Article articleToAdd = await base._db.Articles
+              .FindAsync(articleId).ConfigureAwait(false);
+          if (articleToAdd == null)
+          {
+            this.ValidationMessageArticleIdToBorrowArray[index] =
+              "Article with id (barcode) '"
+              + articleId + "' doesn't exist. Not borrowed.";
+            isValidationError = true;
+            continue;
+          }
+          string messageArticle = "Article with barcode"
+            + " '<a href='/Article/Details/"
+            + articleToAdd.Id + "'>" + articleToAdd.Id + "</a>'";
+          string messageBorrower = "Customer with id "
+                + "'<a href='/Customer/Details/"
+                + articleToAdd.BorrowerId + "'>" + articleToAdd.BorrowerId
+                + "</a>'";
+          if (articleToAdd.BorrowerId == null)
+          {
+            articleToAdd.CountBorrowing++;
+            articleToAdd.BorrowingDate = System.DateTime.UtcNow;
+            articleToAdd.ReturnDate = articleToAdd.BorrowingDate?.AddDays(
+                articleLoanDuration);
 
-              // Deleted as it should be null
-              // base.AbstractEntity.CurrentlyBorrowed.Add(articleToAdd);
+            // Deleted as it should be null
+            // base.AbstractEntity.CurrentlyBorrowed.Add(articleToAdd);
 
-              // Not needed for Entity Framework Core 2.2, but more clean
-              // (personal opinion)
-              articleToAdd.BorrowerId = base.AbstractEntity.Id;
-              articleToAdd.Borrower = base.AbstractEntity;
+            // Not needed for Entity Framework Core 2.2, but more clean
+            // (personal opinion)
+            articleToAdd.BorrowerId = base.AbstractEntity.Id;
+            articleToAdd.Borrower = base.AbstractEntity;
 
-              base._db.Attach(articleToAdd).State = EntityState.Modified;
-              // 'Microsoft.AspNetCore.Mvc.ViewFeatures.Internal.TempDataSerializer'
-              // cannot serialize an object of type
-              // 'System.Text.StringBuilder'.
-              // S1643: Use a StringBuilder instead.
-              #pragma warning disable S1643
-              base.Message += "<li>" + messageArticle + " borrowed.</li>";
-            }
-            else
-            {
-              if (articleToAdd.BorrowerId != base.AbstractEntity.Id)
-              {
-                this.ValidationMessageArticleIdToBorrowArray[index] =
-                  messageArticle + " already borrowed by " + messageBorrower
-                  + ". Can't be borrowed again.";
-                isValidationError = true;
-              }
-              else
-              {
-                this.ValidationMessageArticleIdToBorrowArray[index] =
-                  messageArticle + " already borrowed by the current "
-                    + "Customer. Can't be borrowed again.";
-                isValidationError = true;
-              }
-            }
+            base._db.Attach(articleToAdd).State = EntityState.Modified;
+            // 'Microsoft.AspNetCore.Mvc.ViewFeatures.Internal.TempDataSerializer'
+            // cannot serialize an object of type
+            // 'System.Text.StringBuilder'.
+            // S1643: Use a StringBuilder instead.
+            #pragma warning disable S1643
+            base.Message += "<li>" + messageArticle + " borrowed.</li>";
           }
           else
           {
-            // throw new System.InvalidOperationException("ERROR in POST");
+            if (articleToAdd.BorrowerId != base.AbstractEntity.Id)
+            {
+              this.ValidationMessageArticleIdToBorrowArray[index] =
+                messageArticle + " already borrowed by " + messageBorrower
+                + ". Can't be borrowed again.";
+              isValidationError = true;
+            }
+            else
+            {
+              this.ValidationMessageArticleIdToBorrowArray[index] =
+                messageArticle + " already borrowed by the current "
+                  + "Customer. Can't be borrowed again.";
+              isValidationError = true;
+            }
           }
         }
-      }
-      else
-      {
-        throw new System.InvalidOperationException("ERROR in POST");
+        else
+        {
+          if (articleLoanDurationArray[index] == null)
+          {
+            throw new BadPostRequestException("Param articleLoanDurationArray"
+                + index + " should not be null.");
+          }
+          // articleIdToBorrowArray[index] could be null: nothing to loan
+        }
       }
       return isValidationError;
     }
 
-    private async Task EdRetrieveAbstractEntity(
-        string[] articleIdAlreadyBorrowedArray, string[] shouldBeRemovedArray,
-        string[] articleLoanDurationArray, bool doesRetrieveCurrentlyBorrow)
+    private async Task EdRetrieveAbstractEntity (
+        string[] articleIdAlreadyBorrowedArray,
+        string[] shouldBeRemovedArray,
+        string[] articleLoanDurationArray,
+        bool doesRetrieveCurrentlyBorrow)
     {
       // VERY IMPORTANT.
       // NO: base.AbstractEntity.CurrentlyBorrowed is lost, should be retrieved
@@ -314,9 +333,12 @@ namespace Videotheque.Pages.CustomerPage
       // this.CurrentlyBorrowed() is also set at null.
       if (doesRetrieveCurrentlyBorrow)
       {
-        foreach (string articleIdString in articleIdAlreadyBorrowedArray)
+        for (int index = 0;
+            index < articleIdAlreadyBorrowedArray.Length;
+            index++)
         {
-          await this.RetrieveArticle(articleIdString).ConfigureAwait(false);
+          await this.RetrieveArticle(articleIdAlreadyBorrowedArray[index],
+              index).ConfigureAwait(false);
         }
 
       }
@@ -331,52 +353,106 @@ namespace Videotheque.Pages.CustomerPage
         string[] articleIdToBorrowArray,
         string isInvoice = "false")
     {
-      this.IsInvoice = bool.Parse(isInvoice);
+      // 1) Test and cast POST params and instantiate corresponding vars
+      // =========================
+      // =========================
+      bool IsInvoiceTmp;
+      if (! bool.TryParse(isInvoice, out IsInvoiceTmp))
+      {
+        return base.BadRequest("Param isInvoice "
+            + "(value " + isInvoice + ") could not be casted to bool.");
+      }
+      this.IsInvoice = IsInvoiceTmp;
 
       string[] shouldBeRemovedArray =
         new string[articleIdAlreadyBorrowedArray.Length];
-      for (int index = 0; index < articleIdAlreadyBorrowedArray.Length; index++)
+      if (articleIdAlreadyBorrowedArray.Length > 0)
       {
-        // TODO LOW nothing try catch. If the user change something
-        // thanks Developpers tools, we could have an out of bound exception
-        shouldBeRemovedArray[index] =
-          base.Request.Form["shouldBeRemovedArray" + index];
+        for (int index = 0; index < articleIdAlreadyBorrowedArray.Length; index++)
+        {
+          if (! base.Request.Form.ContainsKey("shouldBeRemovedArray" + index))
+          {
+            // Note: if shouldBeRemovedArray10000 exists
+            // and articleIdAlreadyBorrowedArray.Length == 1 , no problems !
+            // the value associated to the key could be null.
+            return base.BadRequest("Param shouldBeRemovedArray" + index
+                + "does not exist");
+          }
+          shouldBeRemovedArray[index] =
+            base.Request.Form["shouldBeRemovedArray" + index];
+        }
       }
 
       string[] articleLoanDurationArray =
         new string[articleIdToBorrowArray.Length];
       for (int index = 0; index < articleIdToBorrowArray.Length; index++)
       {
-        // TODO LOW nothing try catch. If the user change something
-        // thanks Developpers tools, we could have an out of bound exception
+        if (! base.Request.Form.ContainsKey("articleLoanDurationArray" + index))
+        {
+          // Note: if articleLoanDurationArray10000 exists
+          // and articleIdToBorrowArray.Length == 1 , no problems !
+          // the value associated to the key could be null.
+          return base.BadRequest("Param articleLoanDurationArray" + index
+              + "does not exist");
+        }
         articleLoanDurationArray[index] =
           base.Request.Form["articleLoanDurationArray" + index];
       }
 
       this.CurrentlyBorrowedList = new List<Article>();
 
-      if (await this.AddNewArticlesBorrowed(articleIdToBorrowArray,
-          articleLoanDurationArray).ConfigureAwait(false))
+      // 2) Perform borrowing, then return
+      // =============================
+      // =============================
+
+      // BORROWING
+      try
       {
-        await this.EdRetrieveAbstractEntity(articleIdAlreadyBorrowedArray,
-          shouldBeRemovedArray, articleLoanDurationArray, true);
-        return base.Page();
-      }
-      // We must remove after add, otherwise we sadly could return and article
-      // then borrow it again in the same edit.
-      bool redirectToInvoice = await
-        this.RemoveSomeArticlesAlreadyBorrowed(articleIdAlreadyBorrowedArray,
-          shouldBeRemovedArray).ConfigureAwait(false);
-      if (!this.IsInvoice && redirectToInvoice)
-      {
-        await this.EdRetrieveAbstractEntity(articleIdAlreadyBorrowedArray,
-            shouldBeRemovedArray, articleLoanDurationArray, false);
-        if (base.ModelState.IsValid)
+        if (await this.AddNewArticlesBorrowed(articleIdToBorrowArray,
+            articleLoanDurationArray).ConfigureAwait(false))
         {
-          this.IsInvoice = true;
+          await this.EdRetrieveAbstractEntity(articleIdAlreadyBorrowedArray,
+            shouldBeRemovedArray,
+            articleLoanDurationArray,
+            true).ConfigureAwait(false);
+          return base.Page();
         }
-        return base.Page();
       }
+      catch (BadPostRequestException e)
+      {
+        return base.BadRequest(e.Message);
+      }
+
+      // RETURN
+      // We must return after borrowing, otherwise we sadly could return and article
+      // then borrow it again in the same edit.
+      if (articleIdAlreadyBorrowedArray.Length > 0)
+      {
+        bool redirectToInvoice = false;
+        try
+        {
+          redirectToInvoice = await
+            this.RemoveSomeArticlesAlreadyBorrowed(articleIdAlreadyBorrowedArray,
+                shouldBeRemovedArray).ConfigureAwait(false);
+        }
+        catch (BadPostRequestException e)
+        {
+          return base.BadRequest(e.Message);
+        }
+        if (!this.IsInvoice && redirectToInvoice)
+        {
+          await this.EdRetrieveAbstractEntity(articleIdAlreadyBorrowedArray,
+              shouldBeRemovedArray,
+              articleLoanDurationArray,
+              false).ConfigureAwait(false);
+          if (base.ModelState.IsValid)
+          {
+            this.IsInvoice = true;
+          }
+          return base.Page();
+        }
+      }
+
       return await base.OnPostEditAsyncWithFunc(this.PerformTestOverpostingFunc)
         .ConfigureAwait(false);
     }

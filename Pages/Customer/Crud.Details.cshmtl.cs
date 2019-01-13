@@ -1,7 +1,7 @@
 namespace Videotheque.Pages.CustomerPage
 {
-  using System.Threading.Tasks;
   using System.Linq;
+  using System.Threading.Tasks;
   using Microsoft.EntityFrameworkCore;
   using Videotheque.Data;
   using Videotheque.Pages.Abstract;
