@@ -1,6 +1,8 @@
 @using Videotheque.Data
 @model Customer
 @{
+  List<Article> CurrentlyBorrowedList = (List<Article>)
+      ViewData["CurrentlyBorrowedList"];
   string[] ShouldBeRemovedArray =
     (string[])ViewData["ShouldBeRemovedArray"];
 
@@ -48,152 +50,154 @@
   <span asp-validation-for="Email" class="text-danger"></span>
 </div>
 
-@{
-  if (@Context.Request.Path.ToString().Contains("/Edit/",
-      System.StringComparison.InvariantCultureIgnoreCase))
+@if (@Context.Request.Path.ToString().Contains("/Edit/",
+    System.StringComparison.InvariantCultureIgnoreCase))
+{
+  if (CurrentlyBorrowedList.Any())
   {
-    if (Model.CurrentlyBorrowed.Count > 0)
-    {
-        @:<table id="CustomerEditArticlesCurrentlyBorrowed">
-        <thead>
-          <tr>
-            <td>
-              Article borrowed <br /> (barcode)
-            </td>
-            <td>
-              Film Id <br />
-            </td>
-            <td>
-              Film title
-            </td>
-            <td>
-              Do you want return it?
-            </td>
-            <td>
-              Should be returned before
-            </td>
-          </tr>
-        </thead>
-        @:<tbody>
-      int index=0;
-      foreach (Article article in Model.CurrentlyBorrowed)
-      {
-        bool isSelectFalse = true;
-        bool isSelectTrue = false;
-        if (ShouldBeRemovedArray != null
-            && ShouldBeRemovedArray[index].Equals("true",
-              System.StringComparison.InvariantCultureIgnoreCase))
-        {
-          isSelectFalse = false;
-          isSelectTrue = true;
-        }
-        <tr class="form-group">
+      @:<table id="CustomerEditArticlesCurrentlyBorrowed">
+      <thead>
+        <tr>
           <td>
-            <input type="hidden" name="articleIdAlreadyBorrowedArray"
-              value="@article.Id" />
-            <a asp-page="/Article/Details"
-                asp-route-id="@article.Id">
-              @article.Id
-            </a>
+            Article borrowed <br /> (barcode)
           </td>
           <td>
-            <a asp-page="/Film/Details"
-                asp-route-id="@article.FilmId">
-              @article.FilmId
-            </a>
+            Film Id <br />
           </td>
           <td>
-            @article.Film.Title
+            Film title
           </td>
           <td>
-              <div class="grid-container-should-be-removed">
-                <label for="shouldBeRemovedArray@(index)True">Keep</label>
-                <label for="shouldBeRemovedArray@(index)False">Return</label>
-                <input id="shouldBeRemovedArray@(index)True" type="radio"
-                  value="false" name="shouldBeRemovedArray@(index)"
-                  checked="@isSelectFalse" />
-                <input id="shouldBeRemovedArray@(index)False" type="radio"
-                  value="true" name="shouldBeRemovedArray@(index)"
-                  checked="@isSelectTrue" />
-              </div>
+            Do you want return it?
           </td>
-          <td> @article.ReturnDate?.ToShortDateString() </td>
+          <td>
+            Should be returned before
+          </td>
         </tr>
-        index++;
-      }
-        @:</tbody>
-        @:</table>
-    }
-    else
+      </thead>
+      @:<tbody>
+    int index=0;
+    foreach (Article article in CurrentlyBorrowedList)
     {
-      <p>No articles currently borrowed</p>
-    }
-
-
-    <!-- We could make four new borrowing -->
-    @:<table class="table-no-width">
-    <thead>
-      <tr>
-        <td>
-          Article borrowed <br /> (barcode)
-        </td>
-        <td>
-          Loan duration
-        </td>
-      </tr>
-    </thead>
-    @:<tbody>
-    for (int index=0 ;
-          index < Crud.NumberInputArticleToBorrow ;
-          index++)
-    {
-      int loanDuration;
-      @if (ArticleIdToBorrowLoanDurationArray == null)
+      bool isSelectFalse = true;
+      bool isSelectTrue = false;
+      if (ShouldBeRemovedArray != null
+          && ShouldBeRemovedArray[index].Equals("true",
+            System.StringComparison.InvariantCultureIgnoreCase))
       {
-        loanDuration = 2;
-      }
-      else
-      {
-        loanDuration = int.Parse(ArticleIdToBorrowLoanDurationArray[index]);
+        isSelectFalse = false;
+        isSelectTrue = true;
       }
       <tr class="form-group">
         <td>
-          <input type="number" name="articleIdToBorrowArray"
-              placeholder="Article Barcode (id)"
-              value="@ArticleIdToBorrowArrayInputValue?[index]">
-          <div class="text-danger field-validation-error customer-article-message-validation" >
-            @Html.Raw(@ValidationMessageArticleIdToBorrowArray?[index])
-          </div>
+          <input type="hidden" name="articleIdAlreadyBorrowedArray"
+            value="@article.Id" />
+          <a asp-page="/Article/Details"
+              asp-route-id="@article.Id">
+            @article.Id
+          </a>
         </td>
         <td>
-          <div class="grid-container-article-loan-duration">
-            <label for="articleLoanDurationArray@(index)1">  1</label>
-            <label for="articleLoanDurationArray@(index)2">  2</label>
-            <label for="articleLoanDurationArray@(index)5">  5</label>
-            <label for="articleLoanDurationArray@(index)7">  7</label>
-            <label for="articleLoanDurationArray@(index)14"> 14</label>
-            <input id="articleLoanDurationArray@(index)1" type="radio"
-              value="1" name="articleLoanDurationArray@(index)"
-              checked="@(loanDuration == 1)" />
-            <input id="articleLoanDurationArray@(index)2" type="radio"
-              value="2" name="articleLoanDurationArray@(index)"
-              checked="@(loanDuration == 2)" />
-            <input id="articleLoanDurationArray@(index)5" type="radio"
-              value="5" name="articleLoanDurationArray@(index)"
-              checked="@(loanDuration == 5)" />
-            <input id="articleLoanDurationArray@(index)7" type="radio"
-              value="7" name="articleLoanDurationArray@(index)"
-              checked="@(loanDuration == 7)" />
-            <input id="articleLoanDurationArray@(index)14" type="radio"
-              value="14" name="articleLoanDurationArray@(index)"
-              checked="@(loanDuration == 14)" />
-          </div>
+          <a asp-page="/Film/Details"
+              asp-route-id="@article.FilmId">
+            @article.FilmId
+          </a>
         </td>
+        <td>
+          @article.Film.Title
+        </td>
+        <td>
+            <div class="grid-container-should-be-removed">
+              <label for="shouldBeRemovedArray@(index)True">Keep</label>
+              <label for="shouldBeRemovedArray@(index)False">Return</label>
+              <input id="shouldBeRemovedArray@(index)True" type="radio"
+                value="false" name="shouldBeRemovedArray@(index)"
+                checked="@isSelectFalse" />
+              <input id="shouldBeRemovedArray@(index)False" type="radio"
+                value="true" name="shouldBeRemovedArray@(index)"
+                checked="@isSelectTrue" />
+            </div>
+        </td>
+        <td> @article.ReturnDate?.ToShortDateString() </td>
       </tr>
+      index++;
     }
-    @:</tbody>
-    @:</table>
+      @:</tbody>
+      @:</table>
   }
+  else
+  {
+    <p>No articles currently borrowed</p>
+  }
+}
+
+<!-- TODO Following should also be displayed TODO in /Create -->
+@if (@Context.Request.Path.ToString().Contains("/Edit/",
+    System.StringComparison.InvariantCultureIgnoreCase))
+{
+  <!-- We could make four new borrowing -->
+  @:<table class="table-no-width">
+  <thead>
+    <tr>
+      <td>
+        Article borrowed <br /> (barcode)
+      </td>
+      <td>
+        Loan duration
+      </td>
+    </tr>
+  </thead>
+  @:<tbody>
+  for (int index=0 ;
+        index < Crud.NumberInputArticleToBorrow ;
+        index++)
+  {
+    int loanDuration;
+    @if (ArticleIdToBorrowLoanDurationArray == null)
+    {
+      loanDuration = 2;
+    }
+    else
+    {
+      loanDuration = int.Parse(ArticleIdToBorrowLoanDurationArray[index]);
+    }
+    <tr class="form-group">
+      <td>
+        <input type="number" name="articleIdToBorrowArray"
+            placeholder="Article Barcode (id)"
+            value="@ArticleIdToBorrowArrayInputValue?[index]">
+        <div class="text-danger field-validation-error customer-article-message-validation" >
+          @Html.Raw(@ValidationMessageArticleIdToBorrowArray?[index])
+        </div>
+      </td>
+      <td>
+        <div class="grid-container-article-loan-duration">
+          <label for="articleLoanDurationArray@(index)1">  1</label>
+          <label for="articleLoanDurationArray@(index)2">  2</label>
+          <label for="articleLoanDurationArray@(index)5">  5</label>
+          <label for="articleLoanDurationArray@(index)7">  7</label>
+          <label for="articleLoanDurationArray@(index)14"> 14</label>
+          <input id="articleLoanDurationArray@(index)1" type="radio"
+            value="1" name="articleLoanDurationArray@(index)"
+            checked="@(loanDuration == 1)" />
+          <input id="articleLoanDurationArray@(index)2" type="radio"
+            value="2" name="articleLoanDurationArray@(index)"
+            checked="@(loanDuration == 2)" />
+          <input id="articleLoanDurationArray@(index)5" type="radio"
+            value="5" name="articleLoanDurationArray@(index)"
+            checked="@(loanDuration == 5)" />
+          <input id="articleLoanDurationArray@(index)7" type="radio"
+            value="7" name="articleLoanDurationArray@(index)"
+            checked="@(loanDuration == 7)" />
+          <input id="articleLoanDurationArray@(index)14" type="radio"
+            value="14" name="articleLoanDurationArray@(index)"
+            checked="@(loanDuration == 14)" />
+        </div>
+      </td>
+    </tr>
+  }
+  @:</tbody>
+  @:</table>
 }
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos

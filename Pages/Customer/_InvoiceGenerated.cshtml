@@ -1,3 +1,13 @@
+@using Videotheque.Data
+@model Customer
+
+@{
+  List<Article> CurrentlyBorrowedList = (List<Article>)
+      ViewData["CurrentlyBorrowedList"];
+  string[] ShouldBeRemovedArray =
+    (string[])ViewData["ShouldBeRemovedArray"];
+}
+
 <table id="invoice" class="no-style">
   <tbody class="no-style">
     <tr class="no-style">
@@ -31,17 +41,51 @@
         <th scope="col">
           Remises
         </th>
+        <th>
+          TVA
+        </th>
         <th scope="col">
           Prix hors-taxe
+        </th>
+        <th scope="col">
+          Prix TTC
         </th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
+      @{
+        double priceHT = 0;
+        double priceTTC = 0;
+      }
+        @for (int index = 0;
+            index < CurrentlyBorrowedList.Count;
+            index++)
+        {
+          if (bool.Parse(ShouldBeRemovedArray[index]))
+          {
+            @:<tr>
+              Article article = CurrentlyBorrowedList[index];
+              <td>Code-barre: @article.Id Titre: @article.Film.Title</td>
+              <td>0 euros</td>
+              <td>2 %</td>
+              <td>
+                @{
+                  double articlePriceHT = (int)article.Film.Price * 1.5 + 2;
+                  priceHT += articlePriceHT;
+                }
+                @articlePriceHT
+              </td>
+              <td>
+                @{
+                  double articlePriceTTC = articlePriceHT
+                    + (0.02 * articlePriceHT);
+                  priceTTC += articlePriceTTC;
+                }
+                @articlePriceTTC
+              </td>
+          @:</tr>
+          }
+        }
     </tbody>
   </table>
 
@@ -52,15 +96,11 @@
     </colgroup>
     <tr>
       <th scope="row">Total hors-taxe</th>
-      <td>xxx euros</td>
-    </tr>
-    <tr>
-      <th scope="row">TVA à xx%</th>
-      <td>xxx euros</td>
+      <td>@priceHT euros</td>
     </tr>
     <tr>
       <th scope="row">Total TTC en euro</th>
-      <td>xxx euros</td>
+      <td>@priceTTC euros</td>
     </tr>
   </table>
 
@@ -175,8 +215,6 @@
     Vim Entreprise au capital de 10 000 euros, siret en cours d'immatriculation
   </span>
 </footer>
-
-
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->

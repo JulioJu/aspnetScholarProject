@@ -29,6 +29,7 @@
   * [Model Validation](#model-validation)
   * [Relationship](#relationship)
   * [Date Update and Date Create](#date-update-and-date-create)
+  * [<select> tag for Enum](#select-tag-for-enum)
 * [Page/View, Layout, Partial View, View Component](#pageview-layout-partial-view-view-component)
   * [Notes](#notes)
 * [Other interesting doc](#other-interesting-doc)
@@ -64,7 +65,7 @@ Il aimerait bien disposer des fonctionnalités suivantes :
 4. (Done) Les films loués par une personne
 5. (Done) Les personnes qui ont loué un film
 6. (Done) Faire la location de films aux personnes.
-7. (not dome, but there is a start) Éditer une facture à une personne
+7. (Done) Éditer une facture à une personne
     (Note from JulioJu: Invoice should be generated when a Customer return
       an Article)
 8. (Done) Faire un top N des films loués
@@ -88,6 +89,20 @@ If it's a real app, the user should buy a printer of barecode. Barecode
     template. In Prod env, I will use Bootstrap.
     Somme css was added, just for usability of the app, not for beauty.
     Inspired from default style of w3schools.
+
+* Our goal is simply to make a simple app deployable in an intranet,
+    for an updated PC browser (Chrome or Firefox, not IE, not Safari,
+      no smartphones, etc.).
+    * We assume that the user will not try to change the client side app
+    thanks Developers tools of the Browser. Therefore, if in a client
+    side we have `<input type="number" name="xxx" />`, we will not `try` `catch`
+    in server side `int.Parse(xxx)`. Like that, all fields
+    `<input type="hidden">`are not tested.
+    Could be done in a future, therefore this kind of TODO as marked `TODO LOW`
+    * Some manipulations are tested, especially in
+        Pages/Customer/Crud.CreateOrEdit.cshtml.cs
+        They raise System.InvalidOperationException that are not explained
+        in Client side (therefore only shown in development mode).
 
 # How to for Linux users
 * Create new project:
@@ -630,6 +645,9 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
 * https://github.com/aspnet/EntityFrameworkCore/issues/10417
     Default value for parent class (inheritence)
 
+## <select> tag for Enum
+* https://techbrij.com/asp-net-core-mvc-enums-select-taghelper
+
 # Page/View, Layout, Partial View, View Component
 
 * Page/View, Layout, Partial View
@@ -1119,16 +1137,6 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
   To simply see all TODO, simply in ./ca.ruleset comment the rule `S1135` .
 
 * Add client-side validation scaffolded.
-
-* Our goal is simply to make a simple app deployable in an intranet,
-    for an updated PC browser (Chrome or Firefox, not IE, not Safari,
-      no smartphones, etc.).
-    * We assume that the user will not try to change the client side app
-    thanks Developers tools of the Browser. Therefore, if in a client
-    side we have `<input type="number" name="xxx" />`, we will not `try` `catch`
-    in server side `int.Parse(xxx)`. Like that, all fields
-    `<input type="hidden">`are not tested.
-    Could be done in a future, therefore this kind of TODO as marked `TODO LOW`
 
 * ~~Todo: change `base.ViewData` to be strong typed (better when we scaffold
     with my script)~~

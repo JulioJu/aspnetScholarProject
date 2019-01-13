@@ -13,12 +13,22 @@
 </div>
 <div class="form-group">
   <label asp-for="Disc" class="control-label"></label>
-  <select asp-for="Disc" class="form-control"></select>
+  <select asp-for="Disc" class="form-control"
+    asp-items="Html.GetEnumSelectList<Conservation>()">
+    <option value="">
+    ——  Please select one ——
+    </option>
+  </select>
   <span asp-validation-for="Disc" class="text-danger"></span>
 </div>
 <div class="form-group">
   <label asp-for="Box" class="control-label"></label>
-  <select asp-for="Box" class="form-control"></select>
+  <select asp-for="Box" class="form-control"
+    asp-items="Html.GetEnumSelectList<Conservation>()">
+    <option value="">
+    ——  Please select one ——
+    </option>
+  </select>
   <span asp-validation-for="Box" class="text-danger"></span>
 </div>
 <div class="form-group form-check">

@@ -2,7 +2,6 @@ namespace Videotheque.Pages.ArticlePage
 {
   using System.Threading.Tasks;
   using Microsoft.AspNetCore.Mvc;
-  using Microsoft.AspNetCore.Mvc.Rendering;
   using Microsoft.EntityFrameworkCore;
   using Videotheque.Data;
   using Videotheque.Pages.Abstract;
@@ -14,24 +13,16 @@ namespace Videotheque.Pages.ArticlePage
     {
     }
 
-    private protected async override Task<Article>
-      PerformSearchInDatabaseFunc(int? id)
+    // Used under /Page/Customer/Crud.CreateOrEdit.shtml.cs
+    public static async Task<Article>
+      FindArticleAsync(AppDbContext _context, int id)
     {
-      string currentRoute = base.HttpContext.Request.Path;
-      if (currentRoute.Contains("/Details/",
-            System.StringComparison.InvariantCultureIgnoreCase))
-      {
-        return await base._tDbSet
-          .Include(a => a.Borrower)
-          .Include(a => a.Film)
-          .AsNoTracking()
-          .FirstOrDefaultAsync(m => m.Id == id)
-          .ConfigureAwait(false);
-      }
-      else
-      {
-        return await base.PerformSearchInDatabaseFunc(id).ConfigureAwait(false);
-      }
+      return await _context.Articles
+        .Include(a => a.Borrower)
+        .Include(a => a.Film)
+        .AsNoTracking()
+        .FirstOrDefaultAsync(m => m.Id == id)
+        .ConfigureAwait(false);
     }
 
     private protected override async Task<bool> PerformTestOverpostingFunc()

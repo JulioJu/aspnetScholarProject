@@ -20,8 +20,18 @@
               asp-route-id="@Model.AbstractEntity.Id" >
         }
         else {
+          bool isDisabled = false;
+          if (@Context.Request.Path.ToString().StartsWith("/Article/Create",
+            System.StringComparison.InvariantCultureIgnoreCase))
+          {
+            isDisabled = true;
+            <strong><em><p>
+              An article should be created in its corresponding
+              <a href="/Film/ShowAll">film</a>
+            </p></em></strong>
+          }
           <input type="submit" value="Create" class="btn btn-danger"
-              asp-page-handler="create" >
+              asp-page-handler="create" disabled="@isDisabled" />
         }
       </div>
     </form>

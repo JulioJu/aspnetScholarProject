@@ -1,7 +1,7 @@
 namespace Videotheque.Pages.CustomerPage
 {
   using System.Threading.Tasks;
-  using Microsoft.AspNetCore.Mvc;
+  using System.Linq;
   using Microsoft.EntityFrameworkCore;
   using Videotheque.Data;
   using Videotheque.Pages.Abstract;
@@ -16,12 +16,20 @@ namespace Videotheque.Pages.CustomerPage
     private protected async override Task<Customer>
       PerformSearchInDatabaseFunc(int? id)
     {
-      return await base._tDbSet
+      Customer customer = await base._tDbSet
         .Include(s => s.CurrentlyBorrowed)
           .ThenInclude(f => f.Film)
         .AsNoTracking()
         .FirstOrDefaultAsync(m => m.Id == id)
         .ConfigureAwait(false);
+      string currentRoute = base.HttpContext.Request.Path;
+      if (currentRoute.StartsWith("/Customer/Edit/",
+            System.StringComparison.InvariantCultureIgnoreCase))
+      {
+        this.CurrentlyBorrowedList = customer.CurrentlyBorrowed.ToList();
+        customer.CurrentlyBorrowed = null;
+      }
+      return customer;
     }
 
   }

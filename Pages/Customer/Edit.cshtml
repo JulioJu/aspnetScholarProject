@@ -1,4 +1,5 @@
 @page "{id:int}/{handler?}"
+@using Videotheque.Data
 @model Videotheque.Pages.CustomerPage.Crud
 
 @{
@@ -33,9 +34,12 @@
     <input type="text" asp-for="@Model.AbstractEntity.Id" class="form-control"
         disabled />
   </div>
+
   @await Html.PartialAsync("_FormPartialView", Model.AbstractEntity,
       new ViewDataDictionary(ViewData)
       {
+        {"CurrentlyBorrowedList",
+          Model.CurrentlyBorrowedList},
         {"ShouldBeRemovedArray",
             Model.ShouldBeRemovedArray},
 
@@ -59,7 +63,16 @@
       <hr />
       <hr />
     </h2>
-    @await Html.PartialAsync("./Customer/_InvoiceGenerated.cshtml")
+
+    @await Html.PartialAsync("./Customer/_InvoiceGenerated.cshtml",
+      Model.AbstractEntity,
+      new ViewDataDictionary(ViewData)
+      {
+        {"CurrentlyBorrowedList",
+          Model.CurrentlyBorrowedList},
+        {"ShouldBeRemovedArray",
+            Model.ShouldBeRemovedArray}
+      })
   }
 }
 

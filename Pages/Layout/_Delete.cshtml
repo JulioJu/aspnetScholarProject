@@ -13,9 +13,19 @@
 
 @section DeleteButton {
   <br />
+  @{
+    bool isDisabled = false;
+    if (@Context.Request.Path.ToString().StartsWith("/Article/Delete",
+      System.StringComparison.InvariantCultureIgnoreCase))
+    {
+      isDisabled = true;
+      <strong><em><p>An article should not be deleted</p></em></strong>
+    }
+  }
   <form method="post">
     <input type="submit" value="Delete" class="btn btn-danger"
-      asp-page-handler="delete" asp-route-id="@Model.AbstractEntity.Id" >
+      asp-page-handler="delete" asp-route-id="@Model.AbstractEntity.Id"
+      disabled="@isDisabled" />
   </form>
 }
 

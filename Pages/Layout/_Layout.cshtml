@@ -25,6 +25,12 @@
 
 @RenderBody()
 
+@if (!@Context.Request.Path.ToString().EndsWith("/Create",
+  System.StringComparison.InvariantCultureIgnoreCase))
+{
+  <a class="btn" asp-page="./Create">Create New</a>
+}
+
 @section SecondMain {
   @RenderSection("SecondMain", required: false)
 }
