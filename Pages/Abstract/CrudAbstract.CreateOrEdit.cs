@@ -36,10 +36,10 @@ namespace Videotheque.Pages.Abstract
         return base.Page();
       }
 
-      if (await peformTestOverposting().ConfigureAwait(false))
+      if (await peformTestOverposting())
       {
         this._tDbSet.Add(this.AbstractEntity);
-        await this._db.SaveChangesAsync().ConfigureAwait(false);
+        await this._db.SaveChangesAsync();
         this.Message = this.AbstractEntity.GetType() +
             $"{this.AbstractEntity.Id} created.";
         return base.RedirectToPage("./Details/",
@@ -59,11 +59,11 @@ namespace Videotheque.Pages.Abstract
 
       this._db.Attach(this.AbstractEntity).State = EntityState.Modified;
 
-      if (await peformTestOverposting().ConfigureAwait(false))
+      if (await peformTestOverposting())
       {
         try
         {
-          await this._db.SaveChangesAsync().ConfigureAwait(false);
+          await this._db.SaveChangesAsync();
         }
         catch (DbUpdateConcurrencyException)
         {

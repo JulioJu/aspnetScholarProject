@@ -30,7 +30,7 @@ namespace Videotheque.Pages.FilmPage
         .OrderByDescending(f => f.Articles.Count())
         .Take(topNParsed)
         .ToListAsync()
-        .ConfigureAwait(false);
+        ;
     }
 
   }

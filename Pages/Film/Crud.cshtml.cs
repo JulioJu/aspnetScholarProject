@@ -23,7 +23,7 @@ namespace Videotheque.Pages.FilmPage
         .Include(s => s.Articles)
         .AsNoTracking()
         .FirstOrDefaultAsync(m => m.Id == id)
-        .ConfigureAwait(false);
+        ;
     }
 
     public override async Task<IActionResult> OnGetAsync(int? id,
@@ -41,7 +41,7 @@ namespace Videotheque.Pages.FilmPage
         this.NumberOfNewArticles = 0;
       }
       return await base.OnGetAsyncWithFunc(id, this.PerformSearchInDatabaseFunc)
-        .ConfigureAwait(false);
+        ;
     }
 
     private protected override async Task<bool> PerformTestOverpostingFunc()
@@ -53,7 +53,7 @@ namespace Videotheque.Pages.FilmPage
           s => s.Price,
           s => s.ReleaseDate,
           s => s.Image)
-        .ConfigureAwait(false);
+        ;
     }
 
     private void CreateNewArticles()
@@ -72,14 +72,14 @@ namespace Videotheque.Pages.FilmPage
       this.CreateNewArticles();
       return await base.OnPostCreateAsyncWithFunc(
           this.PerformTestOverpostingFunc)
-        .ConfigureAwait(false);
+        ;
     }
 
     public async Task<IActionResult> OnPostEditAsync()
     {
       this.CreateNewArticles();
       return await base.OnPostEditAsyncWithFunc(this.PerformTestOverpostingFunc)
-        .ConfigureAwait(false);
+        ;
     }
 
   }

@@ -31,7 +31,7 @@ namespace Videotheque.Pages.CustomerPage
       base.AbstractEntities = await this.CompleteQueryable()
         .Where(f => f.CurrentlyBorrowed.Any())
         .ToListAsync()
-        .ConfigureAwait(false);
+        ;
     }
 
   }

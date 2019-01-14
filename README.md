@@ -33,6 +33,8 @@
 * [Page/View, Layout, Partial View, View Component](#pageview-layout-partial-view-view-component)
   * [Notes](#notes)
 * [Other interesting doc](#other-interesting-doc)
+* [Get URL and Sring Comparaison](#get-url-and-sring-comparaison)
+* [Exception](#exception)
 * [Routing](#routing)
 * [Inheritance](#inheritance-1)
 * [Create Invoice](#create-invoice)
@@ -777,21 +779,6 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
   * https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/xmldoc/recommended-tags-for-documentation-comments
   * https://docs.microsoft.com/en-us/dotnet/csharp/codedoc
 
-* Get URL
-    * ~~In cs file (a little complicated)~~
-      * ~~https://forums.asp.net/t/2143295.aspx?Get+HttpContext+Current+in+a+library+project+in+ASP+NET+Core+
-          (how get all url parts)~~
-      * ~~https://sites.google.com/site/netcorenote/asp-net-core/get-scheme-url-host
-          (do not forget to inject the Service)~~
-      * ~~https://www.carlrippon.com/httpcontext-in-asp-net-core/
-          (less interesting)~~
-    * ~~In Page file (very, very easy)
-        * https://stackoverflow.com/questions/38437005/how-to-get-current-url-in-view-in-asp-net-core-1-0~~
-    * The solution is: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/http-context?view=aspnetcore-2.2
-        Notes
-        1. You should use `base.HttpContext.Request.Path`
-        2. Doesn't work in constructor.
-
 * Migration  from old dotnet version to a newer
     * See https://docs.microsoft.com/en-us/aspnet/core/migration/
     * Do not forget to update `$ dotnet tool`. See `$ dotnet tool list` to
@@ -809,6 +796,40 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
         interesting.
         Seems to be the same for all non JavaScript Client Framework, except
         maybe for Thymeleaf
+
+# Get URL and Sring Comparaison
+    * ~~In cs file (a little complicated)~~
+      * ~~https://forums.asp.net/t/2143295.aspx?Get+HttpContext+Current+in+a+library+project+in+ASP+NET+Core+
+          (how get all url parts)~~
+      * ~~https://sites.google.com/site/netcorenote/asp-net-core/get-scheme-url-host
+          (do not forget to inject the Service)~~
+      * ~~https://www.carlrippon.com/httpcontext-in-asp-net-core/
+          (less interesting)~~
+    * ~~In Page file (very, very easy)
+        * https://stackoverflow.com/questions/38437005/how-to-get-current-url-in-view-in-asp-net-core-1-0~~
+    * The solution is: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/http-context?view=aspnetcore-2.2
+        Notes
+        1. You should use `base.HttpContext.Request.Path`
+        2. Doesn't work in constructor.
+
+    * Therefore you must use:
+        ```cshtml
+        @if (HttpContext.Request.Path.ToString().EndsWith("CurrentBorrower",
+        System.StringComparison.InvariantCultureIgnoreCase))
+        ```
+        ```cs
+        string currentRoute = base.HttpContext.Request.Path;
+        if (currentRoute.StartsWith("/Customer/Edit/",
+          System.StringComparison.InvariantCultureIgnoreCase))
+            ```
+
+# Exception
+    * https://blog.cloudhub360.com/returning-400-bad-request-from-invalid-model-states-in-asp-net-94275fdfd2a0?gi=2b30685e7e5a
+    * https://dusted.codes/error-handling-in-aspnet-core
+    * https://docs.microsoft.com/en-us/aspnet/core/fundamentals/error-handling?view=aspnetcore-2.2
+    * https://stackify.com/aspnet-mvc-error-handling/
+    * https://stackoverflow.com/questions/94488/what-is-the-correct-way-to-make-a-custom-net-exception-serializable
+        What is the correct way to make a custom .NET Exception serializable?
 
 # Routing
 
@@ -1103,18 +1124,16 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
 
 # Credits
 
-* Strongly inspired from
-    https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.1&tabs=netcore-cli
-* Base created thanks `dotnet cli 2.1.403`
 * Title icon from https://commons.wikimedia.org/wiki/File:Video-film.svg
 
 # TODO
-* Understand https://medium.com/bynder-tech/c-why-you-should-use-configureawait-false-in-your-library-code-d7837dce3d7f and the warning `CA2007`
+* ~~Understand https://medium.com/bynder-tech/c-why-you-should-use-configureawait-false-in-your-library-code-d7837dce3d7f and the warning `CA2007`~~
     ```
     <Rules AnalyzerId="AsyncUsageAnalyzers" RuleNamespace="AsyncUsageAnalyzers">
       <Rule Id="UseConfigureAwait" Action="Warning" />
     </Rules>
     ```
+    See http://blog.stephencleary.com/2017/03/aspnetcore-synchronization-context.html
 * ~~Todo: read and maybe apply
     https://docs.microsoft.com/en-us/aspnet/core/tutorials/razor-pages/page?view=aspnetcore-2.1~~ (Done)
 

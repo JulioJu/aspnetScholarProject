@@ -21,7 +21,7 @@ namespace Videotheque.Pages.CustomerPage
           .ThenInclude(f => f.Film)
         .AsNoTracking()
         .FirstOrDefaultAsync(m => m.Id == id)
-        .ConfigureAwait(false);
+        ;
       string currentRoute = base.HttpContext.Request.Path;
       if (currentRoute.StartsWith("/Customer/Edit/",
             System.StringComparison.InvariantCultureIgnoreCase))

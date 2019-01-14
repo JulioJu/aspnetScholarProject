@@ -19,7 +19,7 @@ namespace Videotheque.Pages.Abstract
       this.AbstractEntity = await this._tDbSet
         .AsNoTracking()
         .FirstOrDefaultAsync(m => m.Id == id)
-        .ConfigureAwait(false);
+        ;
 
       if (this.AbstractEntity == null)
       {
@@ -29,7 +29,7 @@ namespace Videotheque.Pages.Abstract
       {
         this._tDbSet.Remove(this.AbstractEntity);
         await this._db.SaveChangesAsync()
-          .ConfigureAwait(false);
+          ;
         this.Message = this.AbstractEntity.GetType() +
             $"{this.AbstractEntity.Id} deleted.";
         return base.RedirectToPage("./ShowAll");

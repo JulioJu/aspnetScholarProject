@@ -43,13 +43,13 @@ namespace Videotheque.Pages.Abstract
         return await this._tDbSet
           .AsNoTracking()
           .FirstOrDefaultAsync(m => m.Id == id)
-          .ConfigureAwait(false);
+          ;
       }
       else
       {
         return await this._tDbSet
           .FindAsync(id)
-          .ConfigureAwait(false);
+          ;
       }
     }
 
@@ -81,7 +81,7 @@ namespace Videotheque.Pages.Abstract
       // FindAsync is no longer appropriate.
       // https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/crud?view=aspnetcore-2.2
       this.AbstractEntity = await performSearchInDatabase(id)
-        .ConfigureAwait(false);
+        ;
 
       if (this.AbstractEntity == null)
       {
@@ -104,7 +104,7 @@ namespace Videotheque.Pages.Abstract
       return await this.OnGetAsyncWithFunc(id,
           this.PerformSearchInDatabaseFunc,
           saveChangeErrors)
-        .ConfigureAwait(false);
+        ;
     }
 
   }

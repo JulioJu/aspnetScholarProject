@@ -1,6 +1,5 @@
 namespace Videotheque.Pages.CustomerPage
 {
-  using System.Collections.Generic;
   using System.Globalization;
   using System.Threading.Tasks;
   using Microsoft.AspNetCore.Mvc;
@@ -9,19 +8,12 @@ namespace Videotheque.Pages.CustomerPage
   using Videotheque.Pages;
   using Videotheque.Pages.Abstract;
 
+  /// <summary>
+  /// Manage /Customer/Create and /Customer/Edit/:id
+  /// </summary>
   public sealed partial class Crud : CrudAbstract<Customer>
   {
     public static readonly int NumberInputArticleToBorrow = 4;
-
-    public List<Article> CurrentlyBorrowedList { get; private set; }
-
-    // Default value: False (due to c# interpretation)
-    public bool IsInvoice { get; private set; }
-
-    // CA1819: "Arrays returned by properties are not write-protected, even if
-    //      the property is read-only."
-    #pragma warning disable CA1819
-    public string[] ShouldBeRemovedArray { get; set; }
 
     // CA1819: "Arrays returned by properties are not write-protected, even if
     //      the property is read-only."
@@ -50,165 +42,68 @@ namespace Videotheque.Pages.CustomerPage
           s => s.Phone,
           s => s.Email,
           s => s.CurrentlyBorrowed)
-        .ConfigureAwait(false);
+        ;
     }
 
-    public override async Task<IActionResult> OnPostCreateAsync()
-    {
-      return await base.OnPostCreateAsyncWithFunc(this.PerformTestOverpostingFunc)
-        .ConfigureAwait(false);
-    }
-
-    public async Task<IActionResult> OnPostJoinListAsync()
-    {
-      return await this.OnPostCreateAsync().ConfigureAwait(false);
-    }
-
-    public async Task<IActionResult> OnPostJoinListUCAsync()
-    {
-      if (!base.ModelState.IsValid)
-      {
-        return base.Page();
-      }
-      base.AbstractEntity.Lastname = base.AbstractEntity.Lastname?
-        .ToUpper(CultureInfo.InvariantCulture);
-      return await this.OnPostJoinListAsync()
-        .ConfigureAwait(false);
-    }
-
-    private async Task<Article> RetrieveArticle(string articleIdString,
-        int index)
-    {
-      int articleId;
-      if(! int.TryParse(articleIdString,
-          System.Globalization.NumberStyles.Integer,
-          CultureInfo.InvariantCulture, out articleId))
-      {
-        throw new BadPostRequestException("Param articleIdAlreadyBorrowedArray["
-            + index + "] (value " + articleIdString
-            + ") could not be casted to int.");
-      }
-      // INFO
-      // If we display Invoice, we don't display keept Articles
-      Article currentlyBorrowedArticle = await
-        Videotheque.Pages.ArticlePage.Crud.FindArticleAsync(base._db, articleId)
-        .ConfigureAwait(false);
-      if (currentlyBorrowedArticle != null)
-      {
-        this.CurrentlyBorrowedList.Add(currentlyBorrowedArticle);
-      }
-      else
-      {
-        throw new BadPostRequestException( "Can't find article with id "
-            + articleId + ". Param articleIdAlreadyBorrowedArray["
-            + index + "] is wrong.");
-      }
-      return currentlyBorrowedArticle;
-    }
-
-    /// <return>
-    ///   Return true if `this.IsInvoice === true` and there is
-    ///   an article to remove"
-    /// </return>
-    private async Task<bool> RemoveSomeArticlesAlreadyBorrowed(
+    /// <summary>
+    /// Before display <code>base.Page()</code> instantiate
+    /// public properties because all are erased, and not trigger OnGet()
+    /// Note: not nead to retrieve again <code>base.AbstractEntity</code>.
+    /// (in case of form is not validated or if it's validate and we display the
+    /// Invoice).
+    /// </summary>
+    /// <exception>
+    /// See exception raised by this.RetrieveArticle
+    /// </exception>
+    private async Task ComeBackToPageInstantiatePublicProperties (
         string[] articleIdAlreadyBorrowedArray,
-        string[] shouldBeRemovedArray)
+        string[] shouldBeRemovedArray,
+        string[] articleLoanDurationArray)
     {
-      bool returnValue = false;
-      for (int index = 0;
-          index < articleIdAlreadyBorrowedArray.Length;
-          index++)
+      // VERY IMPORTANT.
+      // NO: base.AbstractEntity.CurrentlyBorrowed is lost, should be retrieved
+      //    again. But, as we can't know the order, it's done in method
+      //    this.ReturnArticles()
+      // base.AbstractEntity = await
+      //   this.PerformSearchInDatabaseFunc(base.AbstractEntity.Id)
+      //   ;
+      // this.CurrentlyBorrowed() is also set at null.
+
+      // When we are into url Customer/Edit/:id and in function
+      // this.BorrowArticles() (this.ReturnArticles()
+      // not triggered)
+      if (articleIdAlreadyBorrowedArray != null)
       {
-        if (articleIdAlreadyBorrowedArray[index] != null
-            && shouldBeRemovedArray[index] != null)
+        for (int index = 0;
+            index < articleIdAlreadyBorrowedArray.Length;
+            index++)
         {
-          Article currentlyBorrowedArticle = await
-            this.RetrieveArticle(articleIdAlreadyBorrowedArray[index], index)
-              .ConfigureAwait(false);
-          bool shouldBeRemoved;
-          if (! bool.TryParse(shouldBeRemovedArray[index], out shouldBeRemoved))
-          {
-            throw new BadPostRequestException("Param shouldBeRemovedArray["
-                + index + "] (value " + shouldBeRemovedArray[index]
-                + ") could not be casted to bool.");
-          }
-          if (currentlyBorrowedArticle.BorrowerId == null)
-          {
-            throw new BadPostRequestException("Article with id '"
-                + currentlyBorrowedArticle.Id
-                + "' is not borrowed by any Customer. "
-                + "Not removed. Param articleIdAlreadyBorrowedArray["
-                + index + "] not valid.");
-          }
-          else
-          {
-            if (currentlyBorrowedArticle.BorrowerId != base.AbstractEntity.Id)
-            {
-                throw new BadPostRequestException("Article with id (barcode) '"
-                    + currentlyBorrowedArticle.Id
-                    + "' not borrowed by the current "
-                    + "Customer with id '"
-                    + currentlyBorrowedArticle.BorrowerId
-                    + "'. Can't be returned "
-                    + "by the current Customer. Param " +
-                    " articleIdAlreadyBorrowedArray["
-                    + index + "] not valid.");
-
-            }
-            else
-            {
-              if (shouldBeRemoved)
-              {
-                if (!this.IsInvoice)
-                {
-                  returnValue = true;
-                  continue;
-                }
-                string messageArticle = "Article with barcode"
-                  + " '<a href='/Article/Details/"
-                  + currentlyBorrowedArticle.Id + "'>"
-                  + currentlyBorrowedArticle.Id + "</a>";
-                // 'Microsoft.AspNetCore.Mvc.ViewFeatures.Internal.TempDataSerializer'
-                // cannot serialize an object of type
-                // 'System.Text.StringBuilder'.
-                // S1643: Use a StringBuilder instead.
-                #pragma warning disable S1643
-                base.Message += "<li>" + messageArticle
-                    + " is returned.";
-                currentlyBorrowedArticle.BorrowingDate = null;
-                currentlyBorrowedArticle.ReturnDate = null;
-                currentlyBorrowedArticle.BorrowerId = null;
-
-                // Not needed for Entity Framework Core 2.2, but more clean.
-                // (personal opinion)
-                currentlyBorrowedArticle.Borrower = null;
-
-                base._db.Attach(currentlyBorrowedArticle).State
-                  = EntityState.Modified;
-              }
-              else
-              {
-                System.Console.WriteLine("INFO: Article with id (barcode) '"
-                    + currentlyBorrowedArticle.Id
-                    + "' is keept by Customer with id '"
-                    + currentlyBorrowedArticle.BorrowerId);
-              }
-            }
-          }
-        }
-        else
-        {
-            throw new BadPostRequestException("Params "
-              + "articleIdAlreadyBorrowedArray[" + index
-              + "] and shouldBeRemovedArray" + index
-              + " should not be null.");
+          await this.RetrieveArticle(articleIdAlreadyBorrowedArray[index],
+              index);
         }
       }
 
-      return returnValue;
+      this.Message = null;
+      this.IsInvoice = false;
+      this.ShouldBeRemovedArray = shouldBeRemovedArray;
+      this.ArticleIdToBorrowLoanDurationArray = articleLoanDurationArray;
     }
 
-    private async Task<bool> AddNewArticlesBorrowed(
+    /// <summary>
+    /// Try to borrow new articles submited in the corresponding table The user
+    /// could pass (thanks developpers tools) any int value to
+    /// <code>articleLoanDurationArray</code>, therefore an article could be
+    /// borrowed for any duration.
+    /// </summary>
+    /// <returns>
+    /// Return false if there is something wrong in the input text.  otherwise
+    /// return true.
+    /// </returns>
+    /// <exception cref="BadPostRequestException">
+    /// Thrown if POST is malformed : can't cast to int or
+    /// <code>articleIdToBorrowArray@(incex)</code> is null
+    /// </exception>
+    private async Task<bool> BorrowArticles(
         string[] articleIdToBorrowArray,
         string[] articleLoanDurationArray)
     {
@@ -222,22 +117,21 @@ namespace Videotheque.Pages.CustomerPage
         if (articleIdToBorrowArray[index] != null
             && articleLoanDurationArray[index] != null)
         {
-          // INFORMATION not protected against injections.
-          //      All number values could be injected. Could borrow for
-          //      all durations.
-          int articleId ;
-          if (! int.TryParse(articleIdToBorrowArray[index],
+          int articleId;
+          if (!int.TryParse(articleIdToBorrowArray[index],
               System.Globalization.NumberStyles.Integer,
-              CultureInfo.InvariantCulture, out articleId))
+              CultureInfo.InvariantCulture,
+              out articleId))
           {
             throw new BadPostRequestException("Param articleIdToBorrowArray["
                 + index + "] (value " + articleIdToBorrowArray[index]
                 + ") could not be casted to int.");
           }
           int articleLoanDuration;
-          if (! int.TryParse(articleLoanDurationArray[index],
+          if (!int.TryParse(articleLoanDurationArray[index],
               System.Globalization.NumberStyles.Integer,
-              CultureInfo.InvariantCulture, out articleLoanDuration))
+              CultureInfo.InvariantCulture,
+              out articleLoanDuration))
           {
             throw new BadPostRequestException("Param articleLoanDurationArray["
                 + index + "] (value " + articleLoanDurationArray[index]
@@ -247,7 +141,7 @@ namespace Videotheque.Pages.CustomerPage
             articleId.ToString(CultureInfo.InvariantCulture);
 
           Article articleToAdd = await base._db.Articles
-              .FindAsync(articleId).ConfigureAwait(false);
+              .FindAsync(articleId);
           if (articleToAdd == null)
           {
             this.ValidationMessageArticleIdToBorrowArray[index] =
@@ -317,144 +211,38 @@ namespace Videotheque.Pages.CustomerPage
       return isValidationError;
     }
 
-    private async Task EdRetrieveAbstractEntity (
-        string[] articleIdAlreadyBorrowedArray,
-        string[] shouldBeRemovedArray,
-        string[] articleLoanDurationArray,
-        bool doesRetrieveCurrentlyBorrow)
+    /// <summary>
+    /// Retrieve and validate Post param articleLoanDurationArray
+    /// </summary>
+    /// <exception cref="BadPostRequestException">
+    /// For articles listed in the Return form (list hidden inputs), if the
+    /// article can't be fetched from Database.
+    /// </exception>
+    private string[] RetrievePostParamArticleLoanDurationArray(
+        string[] articleIdToBorrowArray)
     {
-      // VERY IMPORTANT.
-      // NO: base.AbstractEntity.CurrentlyBorrowed is lost, should be retrieved
-      //    again. But, as we can't know the order, it's done in method
-      //    this.RemoveSomeArticlesAlreadyBorrowed()
-      // base.AbstractEntity = await
-      //   this.PerformSearchInDatabaseFunc(base.AbstractEntity.Id)
-      //   .ConfigureAwait(false);
-      // this.CurrentlyBorrowed() is also set at null.
-      if (doesRetrieveCurrentlyBorrow)
-      {
-        for (int index = 0;
-            index < articleIdAlreadyBorrowedArray.Length;
-            index++)
-        {
-          await this.RetrieveArticle(articleIdAlreadyBorrowedArray[index],
-              index).ConfigureAwait(false);
-        }
-
-      }
-      this.Message = null;
-      this.IsInvoice = false;
-      this.ShouldBeRemovedArray = shouldBeRemovedArray;
-      this.ArticleIdToBorrowLoanDurationArray = articleLoanDurationArray;
-    }
-
-    public async Task<IActionResult> OnPostEditAsync(
-        string[] articleIdAlreadyBorrowedArray,
-        string[] articleIdToBorrowArray,
-        string isInvoice = "false")
-    {
-      // 1) Test and cast POST params and instantiate corresponding vars
-      // =========================
-      // =========================
-      bool IsInvoiceTmp;
-      if (! bool.TryParse(isInvoice, out IsInvoiceTmp))
-      {
-        return base.BadRequest("Param isInvoice "
-            + "(value " + isInvoice + ") could not be casted to bool.");
-      }
-      this.IsInvoice = IsInvoiceTmp;
-
-      string[] shouldBeRemovedArray =
-        new string[articleIdAlreadyBorrowedArray.Length];
-      if (articleIdAlreadyBorrowedArray.Length > 0)
-      {
-        for (int index = 0; index < articleIdAlreadyBorrowedArray.Length; index++)
-        {
-          if (! base.Request.Form.ContainsKey("shouldBeRemovedArray" + index))
-          {
-            // Note: if shouldBeRemovedArray10000 exists
-            // and articleIdAlreadyBorrowedArray.Length == 1 , no problems !
-            // the value associated to the key could be null.
-            return base.BadRequest("Param shouldBeRemovedArray" + index
-                + "does not exist");
-          }
-          shouldBeRemovedArray[index] =
-            base.Request.Form["shouldBeRemovedArray" + index];
-        }
-      }
-
       string[] articleLoanDurationArray =
         new string[articleIdToBorrowArray.Length];
       for (int index = 0; index < articleIdToBorrowArray.Length; index++)
       {
-        if (! base.Request.Form.ContainsKey("articleLoanDurationArray" + index))
+        if (!base.Request.Form.ContainsKey("articleLoanDurationArray" + index))
         {
           // Note: if articleLoanDurationArray10000 exists
           // and articleIdToBorrowArray.Length == 1 , no problems !
           // the value associated to the key could be null.
-          return base.BadRequest("Param articleLoanDurationArray" + index
+          throw new BadPostRequestException("Param articleLoanDurationArray" + index
               + "does not exist");
         }
         articleLoanDurationArray[index] =
           base.Request.Form["articleLoanDurationArray" + index];
       }
+      return articleLoanDurationArray;
+    }
 
-      this.CurrentlyBorrowedList = new List<Article>();
-
-      // 2) Perform borrowing, then return
-      // =============================
-      // =============================
-
-      // BORROWING
-      try
-      {
-        if (await this.AddNewArticlesBorrowed(articleIdToBorrowArray,
-            articleLoanDurationArray).ConfigureAwait(false))
-        {
-          await this.EdRetrieveAbstractEntity(articleIdAlreadyBorrowedArray,
-            shouldBeRemovedArray,
-            articleLoanDurationArray,
-            true).ConfigureAwait(false);
-          return base.Page();
-        }
-      }
-      catch (BadPostRequestException e)
-      {
-        return base.BadRequest(e.Message);
-      }
-
-      // RETURN
-      // We must return after borrowing, otherwise we sadly could return and article
-      // then borrow it again in the same edit.
-      if (articleIdAlreadyBorrowedArray.Length > 0)
-      {
-        bool redirectToInvoice = false;
-        try
-        {
-          redirectToInvoice = await
-            this.RemoveSomeArticlesAlreadyBorrowed(articleIdAlreadyBorrowedArray,
-                shouldBeRemovedArray).ConfigureAwait(false);
-        }
-        catch (BadPostRequestException e)
-        {
-          return base.BadRequest(e.Message);
-        }
-        if (!this.IsInvoice && redirectToInvoice)
-        {
-          await this.EdRetrieveAbstractEntity(articleIdAlreadyBorrowedArray,
-              shouldBeRemovedArray,
-              articleLoanDurationArray,
-              false).ConfigureAwait(false);
-          if (base.ModelState.IsValid)
-          {
-            this.IsInvoice = true;
-          }
-          return base.Page();
-        }
-      }
-
-      return await base.OnPostEditAsyncWithFunc(this.PerformTestOverpostingFunc)
-        .ConfigureAwait(false);
+    public override async Task<IActionResult> OnPostCreateAsync()
+    {
+      return await base.OnPostCreateAsyncWithFunc(this.PerformTestOverpostingFunc)
+        ;
     }
 
   }

@@ -5,7 +5,12 @@
 <RuleSet Name="Custom Rulset" Description="Custom Rulset" ToolsVersion="15.9">
   <Rules AnalyzerId="AsyncUsageAnalyzers" RuleNamespace="AsyncUsageAnalyzers">
     <!-- It's not necessary to add it. By defaut, this rule is activated -->
-    <!-- <Rule Id="UseConfigureAwait" Action="Warning" /> -->
+
+    <!-- Don't need to use ConfigureAwait() in ASP.NET Core -->
+    <!-- http://blog.stephencleary.com/2017/03/aspnetcore&#45;synchronization&#45;context.html -->
+    <!-- CA2007: Do not directly await a Task without calling ConfigureAwait-->
+    <Rule Id="CA2007" Action="None" />
+
   </Rules>
   <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis"
       RuleNamespace="Microsoft.Rules.Managed">
