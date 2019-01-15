@@ -6,6 +6,7 @@
       ViewData["CurrentlyBorrowedList"];
   string[] ShouldBeRemovedArray =
     (string[])ViewData["ShouldBeRemovedArray"];
+  double CustomDiscount = (double)((int)ViewData["CustomDiscount"]);
 }
 
 <table id="invoice" class="no-style">
@@ -38,9 +39,12 @@
         <th scope="col">
           Film loués
         </th>
-        <th scope="col">
-          Remises
-        </th>
+        @if (CustomDiscount != 0)
+        {
+          <th scope="col">
+            Remise
+          </th>
+        }
         <th>
           TVA
         </th>
@@ -66,14 +70,18 @@
             @:<tr>
               Article article = CurrentlyBorrowedList[index];
               <td>Code-barre: @article.Id Titre: @article.Film.Title</td>
-              <td>0 euros</td>
+              @if (CustomDiscount != 0)
+              {
+                <td>@CustomDiscount %</td>
+              }
               <td>2 %</td>
               <td>
                 @{
                   double articlePriceHT = (int)article.Film.Price * 1.5 + 2;
+                  articlePriceHT -= @CustomDiscount / 100 * articlePriceHT;
                   priceHT += articlePriceHT;
                 }
-                @articlePriceHT
+                @System.Math.Round(articlePriceHT, 2)
               </td>
               <td>
                 @{
@@ -81,7 +89,7 @@
                     + (0.02 * articlePriceHT);
                   priceTTC += articlePriceTTC;
                 }
-                @articlePriceTTC
+                @System.Math.Round(articlePriceTTC, 2)
               </td>
           @:</tr>
           }
@@ -96,15 +104,17 @@
     </colgroup>
     <tr>
       <th scope="row">Total hors-taxe</th>
-      <td>@priceHT euros</td>
+      <td>@System.Math.Round(priceHT,2) euros</td>
     </tr>
     <tr>
       <th scope="row">Total TTC en euro</th>
-      <td>@priceTTC euros</td>
+      <td>@System.Math.Round(priceTTC, 2) euros</td>
     </tr>
   </table>
 
   <p class="clear">
+    <em>Lorem Ipsum only to show that when we print, footer are correctly positionned
+      at bottom of the page: </em><br />
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
     eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
     minim veniam, quis nostrud exercitation ullamco laboris nisi ut

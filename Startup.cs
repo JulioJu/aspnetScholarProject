@@ -7,8 +7,8 @@ namespace Aspnet
 {
   using Microsoft.AspNetCore.Builder;
   using Microsoft.AspNetCore.Hosting;
-  using Microsoft.AspNetCore.Http;
   using Microsoft.AspNetCore.Mvc;
+  using Microsoft.AspNetCore.Mvc.DataAnnotations;
   using Microsoft.EntityFrameworkCore;
   using Microsoft.Extensions.Configuration;
   using Microsoft.Extensions.DependencyInjection;
@@ -45,8 +45,11 @@ namespace Aspnet
       services.AddMvc()
         .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-      // Used in Pages/Customer/Create.cshtml.cs
-      services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+      // // Used in Pages/Customer/Create.cshtml.cs
+      // services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+      services.AddSingleton<IValidationAttributeAdapterProvider,
+        RequiredAttributeAdapterProvider>();
     }
 
     // This method gets called by the runtime. Use this method to configure the

@@ -567,7 +567,12 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
 
 ## Model Validation
 * https://docs.microsoft.com/en-us/aspnet/core/mvc/models/validation?view=aspnetcore-2.2
-* https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations?view=netframework-4.7.2
+    (official doc)
+    * See corresponding GitHub example: https://github.com/aspnet/Docs/blob/master/aspnetcore/mvc/models/validation/sample/ClassicMovieAttribute.cs
+
+* See my issue at https://github.com/aspnet/AspNetCore/issues/6329
+    “ [Suggestion] Accessibility for input fields required ”
+    * To manually fix this, see https://blogs.msdn.microsoft.com/mvpawardprogram/2017/01/03/asp-net-core-mvc/
 
 ## Relationship
 * in EntityFramework doc

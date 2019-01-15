@@ -28,6 +28,9 @@ namespace Videotheque.Pages.CustomerPage
 
     public List<Article> CurrentlyBorrowedList { get; private set; }
 
+    /// <summary> Used only when we display Invoice </summary>
+    public int CustomDiscount { get; private set; }
+
     /// <summary> Retrieve an article saved in Database </summary>
     /// <exception cref="BadPostRequestException">
     /// if the article can't be find.
@@ -139,6 +142,7 @@ namespace Videotheque.Pages.CustomerPage
         {
           Article currentlyBorrowedArticle = await
             this.RetrieveArticle(articleIdAlreadyBorrowedArray[index], index);
+
           bool shouldBeRemoved;
           if (!bool.TryParse(shouldBeRemovedArray[index], out shouldBeRemoved))
           {
@@ -146,6 +150,7 @@ namespace Videotheque.Pages.CustomerPage
                 + index + "] (value " + shouldBeRemovedArray[index]
                 + ") could not be casted to bool.");
           }
+
           if (currentlyBorrowedArticle.BorrowerId == null)
           {
             throw new BadPostRequestException("Article with id '"
@@ -242,6 +247,7 @@ namespace Videotheque.Pages.CustomerPage
     /// </exception>
     private async Task<bool> PerformBorrowAndReturn(
         string[] articleIdAlreadyBorrowedArray,
+        string customDiscount,
         string[] articleIdToBorrowArray,
         string isInvoice = "false")
     {
@@ -257,6 +263,29 @@ namespace Videotheque.Pages.CustomerPage
       this.IsInvoice = isInvoiceTmp;
 
       this.CurrentlyBorrowedList = new List<Article>();
+
+      try
+      {
+        this.CustomDiscount = int.Parse(customDiscount,
+            System.Globalization.NumberStyles.Integer,
+            CultureInfo.InvariantCulture);
+      }
+      catch (System.Exception)
+      {
+        throw new BadPostRequestException("Param customDiscount"
+            + "(value " + customDiscount
+            + ") could not be casted to int.");
+      }
+      if (this.CustomDiscount < 0)
+      {
+        throw new BadPostRequestException("Param customDiscount (value "
+            + customDiscount + ") must be a number >= 0.");
+      }
+      if (this.CustomDiscount > 99)
+      {
+        throw new BadPostRequestException("Param customDiscount (value "
+            + customDiscount + ") must be a number < 99.");
+      }
 
       string[] shouldBeRemovedArray =
         new string[articleIdAlreadyBorrowedArray.Length];
@@ -383,14 +412,16 @@ namespace Videotheque.Pages.CustomerPage
     /// </exception>
     public async Task<IActionResult> OnPostEditAsync(
         string[] articleIdAlreadyBorrowedArray,
+        string customDiscount,
         string[] articleIdToBorrowArray,
         string isInvoice = "false")
     {
       try
       {
         if (!await this.PerformBorrowAndReturn(articleIdAlreadyBorrowedArray,
-         articleIdToBorrowArray,
-         isInvoice))
+              customDiscount,
+              articleIdToBorrowArray,
+              isInvoice))
         {
           return base.Page();
         }

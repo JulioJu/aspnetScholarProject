@@ -32,7 +32,8 @@ namespace Videotheque.Data
     public string Email { get; set; }
 
     [DataType(DataType.Date)]
-    public DateTime Birthdate { get; set; }
+    [Birthdate]
+    public DateTime? Birthdate { get; set; }
 
     private HashSet<Article> PCurrentlyBorrowed { get; set; }
 
@@ -48,6 +49,15 @@ namespace Videotheque.Data
       {
         this.PCurrentlyBorrowed = value;
       }
+    }
+
+    public bool IsUnderage()
+    {
+      if (this.Birthdate < DateTime.Today)
+      {
+        return true;
+      }
+      return false;
     }
 
   }

@@ -22,7 +22,7 @@
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasLineColor="false" height="15.07421875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="31.763671875" x="55.442468640625066" y="4.0">Article</y:NodeLabel>
-          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Liberation Sans" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="126.890625" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="top" visible="true" width="136.2509765625" x="2.0" y="27.07421875">Disc*: Conservation
+          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Liberation Sans" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="104.546875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="top" visible="true" width="124.8837890625" x="2.0" y="27.07421875">Disc*: Conservation
            = Conservation.New
 Box*: Conservation
            = Conservation.New
@@ -30,9 +30,7 @@ IsLost*: bool = false
 CountBorrowing*: int = 0
 Comment: string [255]
 DateBorrowing: DateTime
-DateReturn: DateTime
-        &lt;&lt;static&gt;&gt;
-AllArticlesBorrowed(): Article[]<y:LabelModel>
+DateReturn: DateTime<y:LabelModel>
               <y:ErdAttributesNodeLabelModel/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -315,14 +313,14 @@ Image: byte[]<y:LabelModel>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasLineColor="false" height="15.07421875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="42.88671875" x="39.87272559374992" y="4.0">Customer</y:NodeLabel>
-          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Liberation Sans" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="82.203125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="top" visible="true" width="122.41796875" x="2.0" y="27.07421875">Firstname: string [100]
+          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Liberation Sans" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="93.375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="top" visible="true" width="122.41796875" x="2.0" y="27.07421875">Firstname: string [100]
 Lastname: string [100]
 Birthdate: Datetime
 Society: string [100]
 Address*: string [255]
 Email: string[255, Email]
 Phone: string [100, Phone]
-<y:LabelModel>
+IsUnderage(): bool<y:LabelModel>
               <y:ErdAttributesNodeLabelModel/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -413,8 +411,9 @@ Films<y:LabelModel>
           <y:Geometry height="10.160000000000082" width="133.677734375" x="557.0852817994758" y="835.9153599999999"/>
           <y:Fill hasColor="false" transparent="false"/>
           <y:BorderStyle hasColor="false" raised="false" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="26.1484375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="123.677734375" x="5.0" y="-7.994218749999959">Either firstname and lastname
-or society is required<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="37.22265625" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="123.677734375" x="5.0" y="-13.531328124999959">Either firstname and lastname
+or society is required
+13 yo &lt;= Birthday &lt;= 122yo<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>

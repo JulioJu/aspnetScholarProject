@@ -103,7 +103,7 @@ input {
   background-color: white;
 }
 
-input[data-val-required~="required."] {
+input[data-val-required*="required"], input[required] {
   background-color: #ffdccc;
 }
 

@@ -47,7 +47,7 @@
 <div class="form-group">
   <label asp-for="Birthdate" class="control-label"></label>
   <input asp-for="Birthdate" class="form-control" />
-  <span asp-validation-for="Birthdate" class="text-danger"></span>
+  <span asp-validation-for="Birthdate" class="text-danger" ></span>
 </div>
 <div class="form-group">
   <label asp-for="Society" class="control-label"></label>
@@ -148,6 +148,17 @@
     }
       @:</tbody>
       @:</table>
+      <label for="customDiscount">
+        Custom discount in %
+        (not cummulable with fixed discount)
+      </label>
+      int customDiscountValue = 0;
+      if (Model.IsUnderage())
+      {
+        customDiscountValue = 10;
+      }
+      <input id="customDiscount" type="number" min="0" max="99"
+        value="@customDiscountValue" name="customDiscount" required />
   }
   else
   {
