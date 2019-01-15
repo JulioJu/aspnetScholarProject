@@ -9,6 +9,9 @@ namespace Videotheque.Pages.Abstract
   public abstract partial class CrudAbstract<TAbstractEntity> : PageModel
       where TAbstractEntity : AbstractEntity
   {
+    [TempData]
+    public string Message { get; set; }
+
     // SA1401: Field must be private
     #pragma warning disable SA1401
     private protected readonly AppDbContext _db;
@@ -59,6 +62,11 @@ namespace Videotheque.Pages.Abstract
     // we are in a Generic function.
     // * PerformSearchInDatabase could not be assign to a default
     // callback, default parameter should be evaluated at compiled time.
+    /// <summary>
+    /// Note: for Ends with url Create OnGetAsync defined in file
+    /// Pages/Abstract/Crud.DetailsAbstract.cs we return Page without perform
+    /// search in Database.
+    /// </summary>
     private protected async Task<IActionResult> OnGetAsyncWithFunc(int? id,
         PerformSearchInDatabase performSearchInDatabase,
         bool? saveChangesError = false)
@@ -101,10 +109,18 @@ namespace Videotheque.Pages.Abstract
     public virtual async Task<IActionResult> OnGetAsync(int? id,
         bool? saveChangeErrors = false)
     {
-      return await this.OnGetAsyncWithFunc(id,
-          this.PerformSearchInDatabaseFunc,
-          saveChangeErrors)
-        ;
+      string currentRoute = base.HttpContext.Request.Path;
+      if (!currentRoute.EndsWith("/Create",
+            System.StringComparison.InvariantCultureIgnoreCase))
+      {
+        return await this.OnGetAsyncWithFunc(id,
+            this.PerformSearchInDatabaseFunc,
+            saveChangeErrors);
+      }
+      else
+      {
+        return base.Page();
+      }
     }
 
   }

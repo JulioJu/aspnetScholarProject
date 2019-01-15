@@ -1187,5 +1187,7 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
 * (Done) ~~TODO: warning, borrow is always 2 day when there is a Return
     replace all by radio buttons~~
 
+* TODO VERY IMPORTANT: make a class diagram of Pages
+
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->

@@ -10,15 +10,6 @@ namespace Videotheque.Pages.Abstract
   public abstract partial class CrudAbstract<TAbstractEntity> : PageModel
     where TAbstractEntity : AbstractEntity
   {
-    [TempData]
-    public string Message { get; set; }
-
-    private protected delegate Task<bool>
-      PerformTestOverposting();
-
-    private protected abstract Task<bool>
-      PerformTestOverpostingFunc();
-
     // Detects concurrency exceptions when the one client
     // deletes the movie and the other client posts changes to the movie.
     // The previous code detects concurrency exceptions when the one client
@@ -26,27 +17,6 @@ namespace Videotheque.Pages.Abstract
     private bool AbstractEntityExist(int id)
     {
       return this._tDbSet.Any(e => e.Id == id);
-    }
-
-    private protected async Task<IActionResult>
-      OnPostCreateAsyncWithFunc(PerformTestOverposting peformTestOverposting)
-    {
-      if (!base.ModelState.IsValid)
-      {
-        return base.Page();
-      }
-
-      if (await peformTestOverposting())
-      {
-        this._tDbSet.Add(this.AbstractEntity);
-        await this._db.SaveChangesAsync();
-        this.Message = this.AbstractEntity.GetType() +
-            $"{this.AbstractEntity.Id} created.";
-        return base.RedirectToPage("./Details/",
-            new { id = this.AbstractEntity.Id });
-      }
-
-      return null;
     }
 
     private protected async Task<IActionResult> OnPostEditAsyncWithFunc(
@@ -91,8 +61,6 @@ namespace Videotheque.Pages.Abstract
       return base.RedirectToPage("./Details/",
           new { id = this.AbstractEntity.Id });
     }
-
-    public abstract Task<IActionResult> OnPostCreateAsync();
 
     // public abstract Task<IActionResult> OnPostEditAsync();
 

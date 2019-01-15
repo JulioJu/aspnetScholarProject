@@ -21,8 +21,7 @@ namespace Videotheque.Pages.ArticlePage
         .Include(a => a.Borrower)
         .Include(a => a.Film)
         .AsNoTracking()
-        .FirstOrDefaultAsync(m => m.Id == id)
-        ;
+        .FirstOrDefaultAsync(m => m.Id == id);
     }
 
     private protected override async Task<bool> PerformTestOverpostingFunc()
