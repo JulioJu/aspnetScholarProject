@@ -41,7 +41,7 @@ namespace Videotheque.Pages.ArticlePage
         ;
     }
 
-    public override async Task<IActionResult> OnPostCreateAsync()
+    public async Task<IActionResult> OnPostCreateAsync()
     {
       return await base.OnPostCreateAsyncWithFunc(
           this.PerformTestOverpostingFunc)

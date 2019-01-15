@@ -15,13 +15,13 @@
   }
 }
 
-  @section head {
-    <link rel="stylesheet" href="/styles/customer-edit.css" />
-    @if(Model.IsInvoice)
-    {
-      <link rel="stylesheet" href="/styles/generated-invoice.css" />
-    }
+@section head {
+  <link rel="stylesheet" href="/styles/customer-create-edit.css" />
+  @if(Model.IsInvoice)
+  {
+    <link rel="stylesheet" href="/styles/generated-invoice.css" />
   }
+}
 
 @section Inputs {
   @if (Model.IsInvoice)

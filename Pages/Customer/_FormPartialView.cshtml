@@ -1,11 +1,28 @@
 @using Videotheque.Data
 @model Customer
 @{
+  // For the second part of the Form (keep or return articles already borrowed)
+  // ======================
+  // Following commented doesn't work, I don't know why
+  // It complains that CurrentlyBorrowedList isn't instantied in
+  // page /Customer/Edit/:id
+  // List<Article> CurrentlyBorrowedList;
+  // string[] ShouldBeRemovedArray;
+  // if (!@Context.Request.Path.ToString().Contains("/Edit/",
+  //   System.StringComparison.InvariantCultureIgnoreCase))
+  // {
+  //   CurrentlyBorrowedList = (List<Article>)
+  //       ViewData["CurrentlyBorrowedList"];
+  //   ShouldBeRemovedArray =
+  //     (string[])ViewData["ShouldBeRemovedArray"];
+  // }
   List<Article> CurrentlyBorrowedList = (List<Article>)
       ViewData["CurrentlyBorrowedList"];
   string[] ShouldBeRemovedArray =
     (string[])ViewData["ShouldBeRemovedArray"];
 
+  // For the third part of the Form (perform new borrowing)
+  // ======================
   string[] ArticleIdToBorrowArrayInputValue =
     (string[])ViewData["ArticleIdToBorrowArrayInputValue"];
   string[] ArticleIdToBorrowLoanDurationArray =
@@ -13,6 +30,9 @@
   string[] ValidationMessageArticleIdToBorrowArray =
     (string[])ViewData["ValidationMessageArticleIdToBorrowArray"];
 }
+
+<!-- First part of tye form: general Customer info -->
+<!-- ================================ -->
 
 <div class="form-group">
   <label asp-for="Firstname" class="control-label"></label>
@@ -49,6 +69,10 @@
   <input asp-for="Email" class="form-control" />
   <span asp-validation-for="Email" class="text-danger"></span>
 </div>
+
+<!-- Second part of the Form: we could return articles already borrowed -->
+<!-- Only for /Customer/Edit/:id -->
+<!-- ================================ -->
 
 @if (@Context.Request.Path.ToString().Contains("/Edit/",
     System.StringComparison.InvariantCultureIgnoreCase))
@@ -131,74 +155,71 @@
   }
 }
 
-<!-- TODO Following should also be displayed TODO in /Create -->
-@if (@Context.Request.Path.ToString().Contains("/Edit/",
-    System.StringComparison.InvariantCultureIgnoreCase))
+<!-- Third part of the Form: make four new borrowing -->
+<!-- ================================ -->
+
+<table class="table-no-width">
+<thead>
+  <tr>
+    <td>
+      Article borrowed <br /> (barcode)
+    </td>
+    <td>
+      Loan duration
+    </td>
+  </tr>
+</thead>
+<tbody>
+@for (int index=0 ;
+      index < Crud.NumberInputArticleToBorrow ;
+      index++)
 {
-  <!-- We could make four new borrowing -->
-  @:<table class="table-no-width">
-  <thead>
-    <tr>
-      <td>
-        Article borrowed <br /> (barcode)
-      </td>
-      <td>
-        Loan duration
-      </td>
-    </tr>
-  </thead>
-  @:<tbody>
-  for (int index=0 ;
-        index < Crud.NumberInputArticleToBorrow ;
-        index++)
+  int loanDuration;
+  @if (ArticleIdToBorrowLoanDurationArray == null)
   {
-    int loanDuration;
-    @if (ArticleIdToBorrowLoanDurationArray == null)
-    {
-      loanDuration = 2;
-    }
-    else
-    {
-      loanDuration = int.Parse(ArticleIdToBorrowLoanDurationArray[index]);
-    }
-    <tr class="form-group">
-      <td>
-        <input type="number" name="articleIdToBorrowArray"
-            placeholder="Article Barcode (id)"
-            value="@ArticleIdToBorrowArrayInputValue?[index]">
-        <div class="text-danger field-validation-error customer-article-message-validation" >
-          @Html.Raw(@ValidationMessageArticleIdToBorrowArray?[index])
-        </div>
-      </td>
-      <td>
-        <div class="grid-container-article-loan-duration">
-          <label for="articleLoanDurationArray@(index)1">  1</label>
-          <label for="articleLoanDurationArray@(index)2">  2</label>
-          <label for="articleLoanDurationArray@(index)5">  5</label>
-          <label for="articleLoanDurationArray@(index)7">  7</label>
-          <label for="articleLoanDurationArray@(index)14"> 14</label>
-          <input id="articleLoanDurationArray@(index)1" type="radio"
-            value="1" name="articleLoanDurationArray@(index)"
-            checked="@(loanDuration == 1)" />
-          <input id="articleLoanDurationArray@(index)2" type="radio"
-            value="2" name="articleLoanDurationArray@(index)"
-            checked="@(loanDuration == 2)" />
-          <input id="articleLoanDurationArray@(index)5" type="radio"
-            value="5" name="articleLoanDurationArray@(index)"
-            checked="@(loanDuration == 5)" />
-          <input id="articleLoanDurationArray@(index)7" type="radio"
-            value="7" name="articleLoanDurationArray@(index)"
-            checked="@(loanDuration == 7)" />
-          <input id="articleLoanDurationArray@(index)14" type="radio"
-            value="14" name="articleLoanDurationArray@(index)"
-            checked="@(loanDuration == 14)" />
-        </div>
-      </td>
-    </tr>
+    loanDuration = 2;
   }
-  @:</tbody>
-  @:</table>
+  else
+  {
+    loanDuration = int.Parse(ArticleIdToBorrowLoanDurationArray[index]);
+  }
+  <tr class="form-group">
+    <td>
+      <input type="number" name="articleIdToBorrowArray"
+          placeholder="Article Barcode (id)"
+          value="@ArticleIdToBorrowArrayInputValue?[index]">
+      <div class="text-danger field-validation-error customer-article-message-validation" >
+        @Html.Raw(@ValidationMessageArticleIdToBorrowArray?[index])
+      </div>
+    </td>
+    <td>
+      <div class="grid-container-article-loan-duration">
+        <label for="articleLoanDurationArray@(index)1">  1</label>
+        <label for="articleLoanDurationArray@(index)2">  2</label>
+        <label for="articleLoanDurationArray@(index)5">  5</label>
+        <label for="articleLoanDurationArray@(index)7">  7</label>
+        <label for="articleLoanDurationArray@(index)14"> 14</label>
+        <input id="articleLoanDurationArray@(index)1" type="radio"
+          value="1" name="articleLoanDurationArray@(index)"
+          checked="@(loanDuration == 1)" />
+        <input id="articleLoanDurationArray@(index)2" type="radio"
+          value="2" name="articleLoanDurationArray@(index)"
+          checked="@(loanDuration == 2)" />
+        <input id="articleLoanDurationArray@(index)5" type="radio"
+          value="5" name="articleLoanDurationArray@(index)"
+          checked="@(loanDuration == 5)" />
+        <input id="articleLoanDurationArray@(index)7" type="radio"
+          value="7" name="articleLoanDurationArray@(index)"
+          checked="@(loanDuration == 7)" />
+        <input id="articleLoanDurationArray@(index)14" type="radio"
+          value="14" name="articleLoanDurationArray@(index)"
+          checked="@(loanDuration == 14)" />
+      </div>
+    </td>
+  </tr>
 }
+</tbody>
+</table>
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->

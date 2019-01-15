@@ -64,6 +64,50 @@ namespace Videotheque.Pages.CustomerPage
     }
 
     /// <summary>
+    /// Before display <code>base.Page()</code> instantiate
+    /// public properties because all are erased, and not trigger OnGet()
+    /// Note: not nead to retrieve again <code>base.AbstractEntity</code>.
+    /// (in case of form is not validated or if it's validate and we display the
+    /// Invoice).
+    /// </summary>
+    /// <exception>
+    /// See exception raised by this.RetrieveArticle
+    /// </exception>
+    private async Task ComeBackToPageInstantiatePublicProperties (
+        string[] articleIdAlreadyBorrowedArray,
+        string[] shouldBeRemovedArray,
+        string[] articleLoanDurationArray)
+    {
+      // VERY IMPORTANT.
+      // NO: base.AbstractEntity.CurrentlyBorrowed is lost, should be retrieved
+      //    again. But, as we can't know the order, it's done in method
+      //    this.ReturnArticles()
+      // base.AbstractEntity = await
+      //   this.PerformSearchInDatabaseFunc(base.AbstractEntity.Id)
+      //   ;
+      // this.CurrentlyBorrowed() is also set at null.
+
+      // When we are into url Customer/Edit/:id and in function
+      // this.BorrowArticles() (this.ReturnArticles()
+      // not triggered)
+      if (articleIdAlreadyBorrowedArray != null)
+      {
+        for (int index = 0;
+            index < articleIdAlreadyBorrowedArray.Length;
+            index++)
+        {
+          await this.RetrieveArticle(articleIdAlreadyBorrowedArray[index],
+              index);
+        }
+      }
+
+      this.Message = null;
+      this.IsInvoice = false;
+      this.ShouldBeRemovedArray = shouldBeRemovedArray;
+      this.ArticleIdToBorrowLoanDurationArray = articleLoanDurationArray;
+    }
+
+    /// <summary>
     /// Try to return article already borrowed submited in the corresponding
     /// table
     /// </summary>
@@ -212,6 +256,8 @@ namespace Videotheque.Pages.CustomerPage
       }
       this.IsInvoice = isInvoiceTmp;
 
+      this.CurrentlyBorrowedList = new List<Article>();
+
       string[] shouldBeRemovedArray =
         new string[articleIdAlreadyBorrowedArray.Length];
       if (articleIdAlreadyBorrowedArray.Length > 0)
@@ -232,11 +278,8 @@ namespace Videotheque.Pages.CustomerPage
       }
 
       string[] articleLoanDurationArray;
-
       articleLoanDurationArray = this
         .RetrievePostParamArticleLoanDurationArray(articleIdToBorrowArray);
-
-      this.CurrentlyBorrowedList = new List<Article>();
 
       // 2) Perform borrowing, then return
       // =============================
@@ -331,8 +374,7 @@ namespace Videotheque.Pages.CustomerPage
     /// </para>
     /// <para>
     /// Return <code>this.BadRequest()</code> (error HTTP 400) in case of
-    /// <code>base.Model.IsValid === false</code> OR exception
-    /// <code>BadPostRequestException</code> was catch
+    ///  exception <code>BadPostRequestException</code> was catch
     /// </para>
     /// </returns>
     /// <exception cref="BadPostRequestException">

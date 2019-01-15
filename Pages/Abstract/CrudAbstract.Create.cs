@@ -19,7 +19,6 @@ namespace Videotheque.Pages.Abstract
     private protected abstract Task<bool>
       PerformTestOverpostingFunc();
 
-
     private protected async Task<IActionResult>
       OnPostCreateAsyncWithFunc(PerformTestOverposting peformTestOverposting)
     {
@@ -41,7 +40,7 @@ namespace Videotheque.Pages.Abstract
       return null;
     }
 
-    public abstract Task<IActionResult> OnPostCreateAsync();
+    // public abstract Task<IActionResult> OnPostCreateAsync();
 
   }
 }

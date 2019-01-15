@@ -7,8 +7,26 @@
   ViewData["h1"] = "Create a Customer";
 }
 
+@section head {
+  <link rel="stylesheet" href="/styles/customer-create-edit.css" />
+}
+
 @section Inputs {
-  @await Html.PartialAsync("_FormPartialView", Model.AbstractEntity )
+  @await Html.PartialAsync("_FormPartialView", Model.AbstractEntity,
+      new ViewDataDictionary(ViewData)
+      {
+        {"CurrentlyBorrowedList",
+            null},
+        {"ShouldBeRemovedArray",
+            null},
+
+        {"ArticleIdToBorrowArrayInputValue",
+            Model.ArticleIdToBorrowArrayInputValue},
+        {"ArticleIdToBorrowLoanDurationArray",
+            Model.ArticleIdToBorrowLoanDurationArray},
+        {"ValidationMessageArticleIdToBorrowArray",
+            Model.ValidationMessageArticleIdToBorrowArray},
+      })
 }
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos

@@ -67,7 +67,7 @@ namespace Videotheque.Pages.FilmPage
       this._tDbSet.Add(this.AbstractEntity);
     }
 
-    public override async Task<IActionResult> OnPostCreateAsync()
+    public async Task<IActionResult> OnPostCreateAsync()
     {
       this.CreateNewArticles();
       return await base.OnPostCreateAsyncWithFunc(

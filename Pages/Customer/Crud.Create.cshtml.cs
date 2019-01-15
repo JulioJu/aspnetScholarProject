@@ -46,52 +46,8 @@ namespace Videotheque.Pages.CustomerPage
     }
 
     /// <summary>
-    /// Before display <code>base.Page()</code> instantiate
-    /// public properties because all are erased, and not trigger OnGet()
-    /// Note: not nead to retrieve again <code>base.AbstractEntity</code>.
-    /// (in case of form is not validated or if it's validate and we display the
-    /// Invoice).
-    /// </summary>
-    /// <exception>
-    /// See exception raised by this.RetrieveArticle
-    /// </exception>
-    private async Task ComeBackToPageInstantiatePublicProperties (
-        string[] articleIdAlreadyBorrowedArray,
-        string[] shouldBeRemovedArray,
-        string[] articleLoanDurationArray)
-    {
-      // VERY IMPORTANT.
-      // NO: base.AbstractEntity.CurrentlyBorrowed is lost, should be retrieved
-      //    again. But, as we can't know the order, it's done in method
-      //    this.ReturnArticles()
-      // base.AbstractEntity = await
-      //   this.PerformSearchInDatabaseFunc(base.AbstractEntity.Id)
-      //   ;
-      // this.CurrentlyBorrowed() is also set at null.
-
-      // When we are into url Customer/Edit/:id and in function
-      // this.BorrowArticles() (this.ReturnArticles()
-      // not triggered)
-      if (articleIdAlreadyBorrowedArray != null)
-      {
-        for (int index = 0;
-            index < articleIdAlreadyBorrowedArray.Length;
-            index++)
-        {
-          await this.RetrieveArticle(articleIdAlreadyBorrowedArray[index],
-              index);
-        }
-      }
-
-      this.Message = null;
-      this.IsInvoice = false;
-      this.ShouldBeRemovedArray = shouldBeRemovedArray;
-      this.ArticleIdToBorrowLoanDurationArray = articleLoanDurationArray;
-    }
-
-    /// <summary>
     /// Try to borrow new articles submited in the corresponding table The user
-    /// could pass (thanks developpers tools) any int value to
+    /// could pass (thanks developpers tools) any int positive value to
     /// <code>articleLoanDurationArray</code>, therefore an article could be
     /// borrowed for any duration.
     /// </summary>
@@ -136,6 +92,12 @@ namespace Videotheque.Pages.CustomerPage
             throw new BadPostRequestException("Param articleLoanDurationArray["
                 + index + "] (value " + articleLoanDurationArray[index]
                 + ") could not be casted to int.");
+          }
+          if (articleLoanDuration < 1)
+          {
+            throw new BadPostRequestException("Param articleLoanDurationArray["
+                + index + "] (value " + articleLoanDuration
+                + ") must be a number > 0.");
           }
           this.ArticleIdToBorrowArrayInputValue[index] =
             articleId.ToString(CultureInfo.InvariantCulture);
@@ -230,8 +192,8 @@ namespace Videotheque.Pages.CustomerPage
           // Note: if articleLoanDurationArray10000 exists
           // and articleIdToBorrowArray.Length == 1 , no problems !
           // the value associated to the key could be null.
-          throw new BadPostRequestException("Param articleLoanDurationArray" + index
-              + "does not exist");
+          throw new BadPostRequestException("Param articleLoanDurationArray"
+              + index + " does not exist");
         }
         articleLoanDurationArray[index] =
           base.Request.Form["articleLoanDurationArray" + index];
@@ -239,10 +201,46 @@ namespace Videotheque.Pages.CustomerPage
       return articleLoanDurationArray;
     }
 
-    public override async Task<IActionResult> OnPostCreateAsync()
+    /// <param>
+    /// articleIdToBorrowArray sent by part of the form to borrow a new article.
+    /// Tye input type="number"
+    /// </param>
+    /// <returns>
+    /// <para>
+    /// Return <code>base.Page()</code> (url /Customer/Edit/:id)
+    /// if the User submit wrong values in the borrow form
+    /// </para>
+    /// <para>
+    /// Return <code>this.BadRequest()</code> (error HTTP 400) in case of
+    /// exception <code>BadPostRequestException</code> was catch
+    /// </para>
+    /// </returns>
+    /// <exception cref="BadPostRequestException">
+    /// Thrown if POST is malformed or if the Return form is outdated
+    /// (in case of concurrence edit).
+    /// </exception>
+    public async Task<IActionResult> OnPostCreateAsync(
+        string[] articleIdToBorrowArray)
     {
-      return await base.OnPostCreateAsyncWithFunc(this.PerformTestOverpostingFunc)
-        ;
+      try
+      {
+        string[] articleLoanDurationArray;
+        articleLoanDurationArray = this
+          .RetrievePostParamArticleLoanDurationArray(articleIdToBorrowArray);
+
+        if (await this.BorrowArticles(articleIdToBorrowArray,
+              articleLoanDurationArray))
+        {
+          return base.Page();
+        }
+      }
+      catch (BadPostRequestException e)
+      {
+        return base.BadRequest(e.Message);
+      }
+
+      return await
+        base.OnPostCreateAsyncWithFunc(this.PerformTestOverpostingFunc);
     }
 
   }
