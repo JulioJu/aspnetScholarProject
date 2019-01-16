@@ -26,10 +26,16 @@
       Siret en cours d'attribution <br />
     </span>
     <span id="customer-address" >
-      Théodule ju Rohan <br />
-      2 place de la Victoire <br />
-      75000 Contonso City <br />
-      01 23 45 67 90 <br />
+      @if (String.IsNullOrWhiteSpace(Model.Lastname))
+      {
+        @Model.Firstname @Model.Lastname
+      }
+      @if (String.IsNullOrWhiteSpace(Model.Society))
+      {
+        @Model.Society <br />
+      }
+      @Model.AddressStreet <br />
+      @Model.AddressCountry <br />
     </span>
   </div>
 

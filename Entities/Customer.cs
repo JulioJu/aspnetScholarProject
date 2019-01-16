@@ -10,30 +10,55 @@ namespace Videotheque.Data
   /// </summary>
   public class Customer : AbstractEntity
   {
-    [StringLength(100)]
+    [CustomerName]
+    [MinLengthAttribute(2)]
+    [MaxLengthAttribute(100)]
     public string Firstname { get; set; }
 
-    [StringLength(100)]
+    [CustomerName]
+    [MinLengthAttribute(2)]
+    [MaxLengthAttribute(100)]
     public string Lastname { get; set; }
 
-    [StringLength(100)]
+    [CustomerName]
+    [MinLengthAttribute(2)]
+    [MaxLengthAttribute(100)]
     public string Society { get; set; }
 
     [Required]
-    [StringLength(255)]
-    public string Address { get; set; }
+    [MinLengthAttribute(2)]
+    [MaxLengthAttribute(50)]
+    public string AddressStreet { get; set; }
 
-    [StringLength(100)]
+    [Required]
+    [MinLengthAttribute(2)]
+    [MaxLengthAttribute(50)]
+    public string AddressCity { get; set; }
+
+    [Required]
+    [MinLengthAttribute(2)]
+    [MaxLengthAttribute(50)]
+    public string AddressCountry { get; set; }
+
     [Phone]
     public string Phone { get; set; }
 
-    [StringLength(255)]
     [EmailAddress]
     public string Email { get; set; }
 
     [DataType(DataType.Date)]
+    [CustomerIsSociety]
     [Birthdate]
     public DateTime? Birthdate { get; set; }
+
+    [CustomerIsSociety]
+    public bool IsUnemployed { get; set; }
+
+    [CustomerIsSociety]
+    public bool IsStudent { get; set; }
+
+    [CustomerIsSociety]
+    public bool PeopleWithDisabilities { get; set; }
 
     private HashSet<Article> PCurrentlyBorrowed { get; set; }
 

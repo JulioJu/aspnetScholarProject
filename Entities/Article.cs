@@ -30,10 +30,10 @@ namespace Videotheque.Data
     public bool IsLost { get; set; }
 
     [Required]
+    [Range(0, int.MaxValue)]
     /// <value>Default value: <code>0</code> </value>
     public int CountBorrowing { get; set; } = 0;
 
-    [StringLength(255)]
     public string Comment { get; set; }
 
     public DateTime? BorrowingDate { get; set; }

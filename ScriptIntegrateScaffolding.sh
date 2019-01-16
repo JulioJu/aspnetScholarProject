@@ -54,10 +54,6 @@ finishError() {
 finish() {
     returnCode=$?
 
-    if [[ ${isFinishHook} -eq 1 ]] ; then
-        mv "${CurrentPagesMoved}" ./Pages
-    fi
-
     set +x
     if [[ "${returnCode}" -gt 0 ]] ; then
         1>&2 echo -e "\\n\\n\\n${URED}ERROR" \
@@ -70,28 +66,52 @@ finish() {
     echo -e "\n\n\n"
 }
 
+userInputSimple() {
+    read -r -t 1 -n 10000 _ || echo ""
+    echo -e "Press 'ENTER' to continue"
+    read -r -p " "
+}
+
+userInputCorrectAllFiles() {
+    read -r -t 1 -n 10000 _ || echo ""
+    echo -e "Press 'ENTER' to continue" \
+        "${URED}WHEN ALL FILE WILL BE CORRECTED${NC}"
+    read -r -p " "
+}
+
 error() {
     set +x
     1>&2 echo -e "\\n\\n\\n${URED}ERROR:" "${@:2}" "${NC}\\n\\n"
     exit "${@:1:1}"
 }
 
+usage() {
+    error 5 "${NC}Should have either one or two arguments." \
+        "\n\t* First one: name of the entity to generate." \
+        "\n\t* Seconde one --is-generation-again"
+}
+
 testCommandLine(){
-    if [[ $# -ne 1 ]] && [[ $# -ne 3 ]]
+    if [[ $# -ne 1 ]] && [[ $# -ne 2 ]]
     then
-        error 5 "${NC}Should have either one or three arguments." \
-            "\n\t* First one: name of the entity to generate." \
-            "\n\t* Seconde one (optional): path of file where mdp of the" \
-                "Database is stored" \
-            "\n\t* Third one (optional): name of the Database" \
-                "(it will be droped, then generated again).${NC}"
+        usage
+    fi
+    if [[ $# -eq 2 ]]  && [[ ! ${2} = "--is-generation-again" ]]
+    then
+        usage
     fi
 }
 
 testsBeforeStart() {
-    if [[ -e "${PagesNewEntity}" ]]
+    if [[ ${isGenerationAgain} -eq 0 ]] && [[ -e "${PagesNewEntity}" ]]
     then
-        error 6 "'${PagesNewEntity}' already generated."
+        error 6 "'${PagesNewEntity}' already generated. " \
+        " Specify a second argument '--is-generation-again'"
+    fi
+    if [[ ${isGenerationAgain} -eq 1 ]] && [[ ! -e "${PagesNewEntity}" ]]
+    then
+        error 6 "'Page/${PagesNewEntity}' doesn't exist." \
+            "Remove argument '--is-generation-again'"
     fi
 
     if ! git diff --exit-code > /dev/null
@@ -141,64 +161,64 @@ testsBeforeStart() {
 }
 
 retrieveMdpAndDatabaseName() {
-    if [[ $# -eq 1 ]]
-    then
-        local -ri isThreeArguments=0
-    else
-        local -ri isThreeArguments=1
-    fi
+    # if [[ $# -eq 1 ]]
+    # then
+    #     local -ri isThreeArguments=0
+    # else
+    #     local -ri isThreeArguments=1
+    # fi
 
-    if [[ ${isThreeArguments} -eq 1 ]]
-    then
-        local -r PathOfTheMdpFile=${2}
-        DatabaseName=${3}
-
-        # Note: in LocalDB there isn't password
-        # Note2: the password should be removed by `git checkout' or `git stash'
-        #   because the following command should be executed:
-        #   `git update-index --assume-unchanged ./appsettings.json'
-        if [[ ! -f "${PathOfTheMdpFile}" ]] ||
-            [[ "$(cut -d '' -f 2 < \
-                    <(file -F '' --mime-type "${PathOfTheMdpFile}"))" \
-                != " text/plain" ]]
-        then
-            error 11 "The file '${PathOfTheMdpFile}'" \
-                " does not exist or is not a 'text/plain' file."
-        else
-            # `echo -n "aa" > file && wc -l file` ==> 0
-            local -i isLastLineNotCarriageReturn=0
-            if [[ -n $(tail -c 1 "${PathOfTheMdpFile}") ]]
-            then
-                isLastLineNotCarriageReturn=1
-            fi
-            local -i fileMdpNumberOfLines
-            fileMdpNumberOfLines=$(($(wc -l < \
-                "${PathOfTheMdpFile}")+isLastLineNotCarriageReturn))
-            if [[ ${fileMdpNumberOfLines} -ne 1 ]]
-            then
-                error 13 "The file '${PathOfTheMdpFile}'" \
-                    "does not contain only one line"
-            fi
-
-            local -i fileMdpNumberOfChars
-            fileMdpNumberOfChars=$(wc -c < <(tr -d '\n' < \
-                <(tr -d '\r\n' < "${PathOfTheMdpFile}")))
-            if [[ ${fileMdpNumberOfChars} -lt 8 ]] \
-                || [[ ${fileMdpNumberOfChars} -gt 30 ]]
-            then
-                error 12 "The file '${PathOfTheMdpFile}'" \
-                    "does not contain between 8 and 30 chars."
-            fi
-
-            Mdp
-            if [[ -z $(tail -c 1 "${PathOfTheMdpFile}") ]]
-            then
-                Mdp=$(head -c -1 "${PathOfTheMdpFile}")
-            else
-                Mdp=$(cat "${PathOfTheMdpFile}")
-            fi
-        fi
-    else
+    # if [[ ${isThreeArguments} -eq 1 ]]
+    # then
+    #     local -r PathOfTheMdpFile=${2}
+    #     DatabaseName=${3}
+    #
+    #     # Note: in LocalDB there isn't password
+    #     # Note2: the password should be removed by `git checkout' or `git stash'
+    #     #   because the following command should be executed:
+    #     #   `git update-index --assume-unchanged ./appsettings.json'
+    #     if [[ ! -f "${PathOfTheMdpFile}" ]] ||
+    #         [[ "$(cut -d '' -f 2 < \
+    #                 <(file -F '' --mime-type "${PathOfTheMdpFile}"))" \
+    #             != " text/plain" ]]
+    #     then
+    #         error 11 "The file '${PathOfTheMdpFile}'" \
+    #             " does not exist or is not a 'text/plain' file."
+    #     else
+    #         # `echo -n "aa" > file && wc -l file` ==> 0
+    #         local -i isLastLineNotCarriageReturn=0
+    #         if [[ -n $(tail -c 1 "${PathOfTheMdpFile}") ]]
+    #         then
+    #             isLastLineNotCarriageReturn=1
+    #         fi
+    #         local -i fileMdpNumberOfLines
+    #         fileMdpNumberOfLines=$(($(wc -l < \
+    #             "${PathOfTheMdpFile}")+isLastLineNotCarriageReturn))
+    #         if [[ ${fileMdpNumberOfLines} -ne 1 ]]
+    #         then
+    #             error 13 "The file '${PathOfTheMdpFile}'" \
+    #                 "does not contain only one line"
+    #         fi
+    #
+    #         local -i fileMdpNumberOfChars
+    #         fileMdpNumberOfChars=$(wc -c < <(tr -d '\n' < \
+    #             <(tr -d '\r\n' < "${PathOfTheMdpFile}")))
+    #         if [[ ${fileMdpNumberOfChars} -lt 8 ]] \
+    #             || [[ ${fileMdpNumberOfChars} -gt 30 ]]
+    #         then
+    #             error 12 "The file '${PathOfTheMdpFile}'" \
+    #                 "does not contain between 8 and 30 chars."
+    #         fi
+    #
+    #         Mdp
+    #         if [[ -z $(tail -c 1 "${PathOfTheMdpFile}") ]]
+    #         then
+    #             Mdp=$(head -c -1 "${PathOfTheMdpFile}")
+    #         else
+    #             Mdp=$(cat "${PathOfTheMdpFile}")
+    #         fi
+    #     fi
+    # else
         if [[ ! -f ./appsettings.json ]]
         then
             echo 19 "'./appsettings.json' does not exist." \
@@ -217,8 +237,8 @@ retrieveMdpAndDatabaseName() {
                     s/^Database=//
                     '
             )
-        echo $DatabaseName
-    fi
+        echo "$DatabaseName"
+    # fi
     if [[ -z ${Mdp+x} ]]
     then
         error 20 "No Password found. Maybe you try to use LocalDB" \
@@ -235,38 +255,57 @@ retrieveMdpAndDatabaseName() {
     fi
 }
 
-scaffoldingCore() {
-    mv Pages "${CurrentPagesMoved}"
-    isFinishHook=1
-    dotnet aspnet-codegenerator razorpage -m "${NewEntity}" -dc AppDbContext \
-        -udl -outDir "${PagesGenerated}" --referenceScriptLibraries
+resetFolderPosition() {
     mv "${CurrentPagesMoved}"/* ./Pages
     rmdir "${CurrentPagesMoved}"
-    isFinishHook=0
+}
+
+scaffoldingCore() {
+    mv Pages "${CurrentPagesMoved}"
+    if ! dotnet aspnet-codegenerator razorpage -m "${NewEntity}" -dc \
+        AppDbContext \
+        -udl -outDir "${PagesGenerated}" --referenceScriptLibraries
+    then
+        resetFolderPosition
+        error 9 "'${PagesGenerated}' not generated"
+    fi
     if [[ ! -d "${PagesGenerated}" ]]
     then
+        resetFolderPosition
         error 9 "'${PagesGenerated}' not generated"
     fi
 
     mv "${PagesGenerated}" "${GeneratedEntity}"
 
-    mkdir "${PagesNewEntity}"
-    cp Pages/Article/* "${PagesNewEntity}"
+    resetFolderPosition
 
-    sed -i "1,2d
-        s/public DbSet<.*${NewEntity}> ${NewEntity} { get; set; }/internal DbSet<${NewEntity}> ${NewEntity}s { get; set; }/
-        //! s/$//" ./Entities/AppDbContext.cs
+    if [[ ${isGenerationAgain} -eq 0 ]]
+    then
+        mkdir "${PagesNewEntity}"
+        cp Pages/Article/* "${PagesNewEntity}"
+    fi
 
-    sed -i "s/${NewEntity}\.//
-        s/\.${NewEntity}\[/\.AbstractEntities[/" \
+    if [[ ${isGenerationAgain} -eq 0 ]]
+    then
+        sed -i "1,2d
+            s/public DbSet<.*${NewEntity}> ${NewEntity} { get; set; }/internal DbSet<${NewEntity}> ${NewEntity}s { get; set; }/
+            //! s/$//" ./Entities/AppDbContext.cs
+
+    fi
+
+    sed -i "s/${NewEntity}\.//g
+        s/\.${NewEntity}\[/\.AbstractEntities[/g" \
             "${GeneratedEntity}/Details.cshtml" \
             "${GeneratedEntity}/Edit.cshtml" \
             "${GeneratedEntity}/Index.cshtml"
 
     pushd "${PagesNewEntity}"
 
-    sed -i "s/Article/${NewEntity}/g" -- *
-    sed -i "s/article/${newEntity}/g" -- *
+    if [[ ${isGenerationAgain} -eq 0 ]]
+    then
+        sed -i "s/Article/${NewEntity}/g" -- *
+        sed -i "s/article/${newEntity}/g" -- *
+    fi
 
     set +x
 
@@ -277,7 +316,7 @@ scaffoldingCore() {
         "\`Dbset<${NewEntity}>' at the beginning of the file." \
         "\n* In the 9th tab, correct errors"  \
             "DO NOT FORGET to correct OnGetAsync() function" \
-            "(no warning displayed)"
+            "(no warning displayed)" \
         "\n* In the 8th tab, correct errors"  \
         "\n* Copy content of the 7th tab in the 6th and 5th tab," \
             "CORRECT INDENTATION, " \
@@ -289,9 +328,9 @@ scaffoldingCore() {
             "CORRECT INDENTATION, " \
             "DO NOT FORGET TO REMOVE UPDATED_DATE AND CREATED_DATE FIELDS."
 
-    read -r -t 1 -n 10000 _ || echo ""
-    echo -e "Press 'ENTER' to continue"
-    read -r -p " "
+    userInputSimple
+
+    rm -f _TableFormDetailsThead.cshtml _TableFormDetailsTbody.cshtml
 
     nvr --remote-tab _DetailsPartialView.cshtml
     nvr --remote-tab "${GeneratedEntity}/Details.cshtml"
@@ -311,17 +350,19 @@ scaffoldingCore() {
 
     nvr --remote-tab ./Entities/AppDbContext.cs
 
-    read -r -t 1 -n 10000 _ || echo ""
-    echo -e "Press 'ENTER' to continue" \
-        "${URED}WHEN ALL FILE WILL BE CORRECTED${NC}"
-    read -r -p " "
+    userInputCorrectAllFiles
 
     set -x
     sqlcmd -S localhost -U SA -P "${Mdp}" \
         -Q "drop database ${DatabaseName}"
 
     rm -Rf Migrations
-    dotnet ef migrations add InitialCreate
+    while ! dotnet ef migrations add InitialCreate
+    do
+        set +x
+        echo -e "${URED}Error during build. You havn't correct all errors${NC}"
+        userInputCorrectAllFiles
+    done
     dotnet ef database update
     set +x
 }
@@ -341,6 +382,11 @@ main() {
     local -r PagesNewEntity="Pages/${NewEntity}"
     local -r CurrentPagesMoved="/tmp/Pages"
 
+    local -i isGenerationAgain=0
+    if [[ $# -eq 2 ]]  && [[ ${2} = "--is-generation-again" ]]
+    then
+        isGenerationAgain=1
+    fi
     testsBeforeStart "${@}"
 
     local Mdp
@@ -365,8 +411,5 @@ cd "${DIR_SCRIPT}"
 
 declare -g -r URED="\\033[4;31m"
 declare -g -r NC="\\033[0m"
-
-
-declare -g -i isFinishHook=0
 
 main "${@}"

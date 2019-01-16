@@ -8,7 +8,7 @@ namespace Videotheque.Pages.Abstract
   using Videotheque.Data;
 
   public abstract partial class CrudAbstract<TAbstractEntity> : PageModel
-    where TAbstractEntity : AbstractEntity
+    where TAbstractEntity : AbstractEntity, new()
   {
     // Detects concurrency exceptions when the one client
     // deletes the movie and the other client posts changes to the movie.
@@ -19,17 +19,23 @@ namespace Videotheque.Pages.Abstract
       return this._tDbSet.Any(e => e.Id == id);
     }
 
-    private protected async Task<IActionResult> OnPostEditAsyncWithFunc(
-        PerformTestOverposting peformTestOverposting)
+    // Could not be called OnPostEditAsync(), because
+    // if we define OnPostEditAsync(...args) in an inherited function
+    // ASP.NET send a message, forbid to define several overloaded
+    // OnPostEditAsync
+    private protected async Task<IActionResult> OnPostEditAsyncWithFunc()
     {
       if (!base.ModelState.IsValid)
       {
         return base.Page();
       }
 
-      this._db.Attach(this.AbstractEntity).State = EntityState.Modified;
+      // this._db.Attach(this.AbstractEntity).State = EntityState.Modified;
 
-      if (await peformTestOverposting())
+      TAbstractEntity tAbstractEntity =
+        await this._tDbSet.FindAsync(this.AbstractEntity.Id);
+
+      if (await this.PerformTestOverpostingFunc(tAbstractEntity))
       {
         try
         {
@@ -46,6 +52,10 @@ namespace Videotheque.Pages.Abstract
             throw;
           }
         }
+      }
+      else
+      {
+        throw new BadPostRequestException("TryUpdateModelAsync has failed");
       }
 
       if (!string.IsNullOrEmpty(this.Message))

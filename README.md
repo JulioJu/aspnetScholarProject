@@ -28,8 +28,9 @@
 * [Entity Framework, further resources and notes](#entity-framework-further-resources-and-notes)
   * [Model Validation](#model-validation)
   * [Relationship](#relationship)
+* [Note about generation](#note-about-generation)
   * [Date Update and Date Create](#date-update-and-date-create)
-  * [<select> tag for Enum](#select-tag-for-enum)
+  * [\<select\> tag for Enum](#select-tag-for-enum)
 * [Page/View, Layout, Partial View, View Component](#pageview-layout-partial-view-view-component)
   * [Notes](#notes)
 * [Other interesting doc](#other-interesting-doc)
@@ -104,6 +105,8 @@ If it's a real app, the user should buy a printer of barecode. Barecode
         Pages/Customer/Crud.CreateOrEdit.cshtml.cs
         They raise System.InvalidOperationException that are not explained
         in Client side (therefore only shown in development mode).
+
+* Protected against OverPosting
 
 # How to for Linux users
 * Create new project:
@@ -631,6 +634,17 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
     public Film Film { get; set; }
     ```
 
+# Note about generation
+* Do not define bool properties Properties as nullable, otherwise don't generate
+    checkbox.
+
+* If you want an optional Date, define `DateTime?` otherwise
+    it generate automatically the `data-val-required` attributes.
+    * In this case ./Entities/RequiredAttributeAdapter.cs
+
+* Required attributes can't be protected agains overposting thanks
+* TryUpdateModelAsync (I've tested)
+
 
 ## Date Update and Date Create
 * **https://github.com/aspnet/EntityFrameworkCore/issues/10769**
@@ -651,7 +665,7 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
 * https://github.com/aspnet/EntityFrameworkCore/issues/10417
     Default value for parent class (inheritence)
 
-## <select> tag for Enum
+## \<select\> tag for Enum
 * https://techbrij.com/asp-net-core-mvc-enums-select-taghelper
 
 # Page/View, Layout, Partial View, View Component

@@ -24,11 +24,12 @@ namespace Videotheque.Pages.ArticlePage
         .FirstOrDefaultAsync(m => m.Id == id);
     }
 
-    private protected override async Task<bool> PerformTestOverpostingFunc()
+    private protected override async Task<bool> PerformTestOverpostingFunc(
+        Article tAbstractEntity)
     {
       return await base.TryUpdateModelAsync<Article>(
-          base.AbstractEntity,
-          "article",   // Prefix for form value.
+          tAbstractEntity,
+          string.Empty,   // Prefix for form value.
           s => s.Disc,
           s => s.Box,
           s => s.IsLost,
@@ -42,14 +43,12 @@ namespace Videotheque.Pages.ArticlePage
 
     public async Task<IActionResult> OnPostCreateAsync()
     {
-      return await base.OnPostCreateAsyncWithFunc(
-          this.PerformTestOverpostingFunc);
+      return await base.OnPostCreateAsyncWithFunc();
     }
 
     public async Task<IActionResult> OnPostEditAsync()
     {
-      return await base
-        .OnPostEditAsyncWithFunc(this.PerformTestOverpostingFunc);
+      return await base.OnPostEditAsyncWithFunc();
     }
 
   }

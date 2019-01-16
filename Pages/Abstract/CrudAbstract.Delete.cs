@@ -7,7 +7,7 @@ namespace Videotheque.Pages.Abstract
   using Videotheque.Data;
 
   public abstract partial class CrudAbstract<TAbstractEntity> : PageModel
-      where TAbstractEntity : AbstractEntity
+    where TAbstractEntity : AbstractEntity, new()
   {
     public async Task<IActionResult> OnPostDeleteAsync(int? id)
     {

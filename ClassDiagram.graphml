@@ -47,21 +47,14 @@ DateReturn: DateTime<y:LabelModel>
       <data key="d4"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.entityRelationship.big_entity">
-          <y:Geometry height="165.98239999999987" width="127.75216993749996" x="765.2145917812499" y="500.3840000000001"/>
+          <y:Geometry height="102.58771986716522" width="127.75216993749996" x="765.2145917812499" y="500.3840000000002"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasLineColor="false" height="15.07421875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="22.896484375" x="52.42784278124998" y="4.0">Film</y:NodeLabel>
-          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Liberation Sans" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="126.890625" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="top" visible="true" width="126.255859375" x="2.0" y="27.07421875">Title*: string [100]
+          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Liberation Sans" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="48.6875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="top" visible="true" width="117.3837890625" x="2.0" y="27.074218750000057">Title*: string [100]
 Price*: Price = Price.Gold
 ReleaseDate*: DateTime 
-      [1895-today]
-Image: byte[]
-CountBorrowing(): int
-FreeArticles(): int
-Borrowers(): Customer[]
-          &lt;&lt;static&gt;&gt;
-SearchByTitle(): Film
-SearchByYearDate(): Film[]<y:LabelModel>
+      [1895-today]<y:LabelModel>
               <y:ErdAttributesNodeLabelModel/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -82,10 +75,10 @@ SearchByYearDate(): Film[]<y:LabelModel>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasLineColor="false" height="15.07421875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="60.669921875" x="35.753815031720706" y="4.0">PersonOfFilm</y:NodeLabel>
-          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Liberation Sans" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="48.6875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="top" visible="true" width="107.3740234375" x="2.0" y="27.07421875">Firstname*: string [100]
+          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Liberation Sans" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="37.515625" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="top" visible="true" width="107.3740234375" x="2.0" y="27.07421875">Firstname*: string [100]
 Lastname*: string [100]
 Surname: string [100]
-Image: byte[]<y:LabelModel>
+<y:LabelModel>
               <y:ErdAttributesNodeLabelModel/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -290,9 +283,9 @@ Trick<y:LabelModel>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasLineColor="false" height="15.07421875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="48.9853515625" x="54.56893944368835" y="4.0">GenreStyle</y:NodeLabel>
-          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Liberation Sans" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="37.515625" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="top" visible="true" width="133.5068359375" x="2.0" y="27.07421875">Title*: GenreStyleEnum [100]
+          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Liberation Sans" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="26.34375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="top" visible="true" width="133.5068359375" x="2.0" y="27.07421875">Title*: GenreStyleEnum [100]
 Description: string [1000]
-Image: byte[]<y:LabelModel>
+<y:LabelModel>
               <y:ErdAttributesNodeLabelModel/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -309,17 +302,22 @@ Image: byte[]<y:LabelModel>
       <data key="d4"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.entityRelationship.big_entity">
-          <y:Geometry height="124.12452962854798" width="122.63216993749984" x="551.234846236976" y="690.2673599999999"/>
+          <y:Geometry height="188.36064073965917" width="147.51642919675896" x="551.234846236976" y="690.2673599999999"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasLineColor="false" height="15.07421875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="42.88671875" x="39.87272559374992" y="4.0">Customer</y:NodeLabel>
-          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Liberation Sans" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="93.375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="top" visible="true" width="122.41796875" x="2.0" y="27.07421875">Firstname: string [100]
+          <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasLineColor="false" height="15.07421875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="42.88671875" x="52.31485522337948" y="4.0">Customer</y:NodeLabel>
+          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Liberation Sans" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="149.234375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="top" visible="true" width="130.728515625" x="2.0" y="27.07421875">Firstname: string [100]
 Lastname: string [100]
 Birthdate: Datetime
 Society: string [100]
-Address*: string [255]
+AddressStreet: string [100]
+AddressCity: string [100]
+AddressCountry: string [100]
 Email: string[255, Email]
 Phone: string [100, Phone]
+IsStudent: bool
+Unemployed: bool
+PeopleWithDisabilities: bool
 IsUnderage(): bool<y:LabelModel>
               <y:ErdAttributesNodeLabelModel/>
             </y:LabelModel>
@@ -408,7 +406,7 @@ Films<y:LabelModel>
     <node id="n17">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="10.160000000000082" width="133.677734375" x="557.0852817994758" y="835.9153599999999"/>
+          <y:Geometry height="10.160000000000082" width="133.677734375" x="724.9093558735499" y="815.8910999541118"/>
           <y:Fill hasColor="false" transparent="false"/>
           <y:BorderStyle hasColor="false" raised="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="37.22265625" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="123.677734375" x="5.0" y="-13.531328124999959">Either firstname and lastname
@@ -468,7 +466,7 @@ UpdatedDate: DateTime<y:LabelModel>
       <data key="d4"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.entityRelationship.big_entity">
-          <y:Geometry height="88.0" width="88.208984375" x="794.1197915843504" y="708.329624814274"/>
+          <y:Geometry height="88.0" width="88.208984375" x="843.8883101028691" y="694.4407359253852"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasLineColor="false" height="26.1484375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="78.208984375" x="5.0" y="4.0">&lt;&lt;Enumeration&gt;&gt;
@@ -509,7 +507,7 @@ Gold<y:LabelModel>
     <edge id="e0" source="n0" target="n1">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="37.24060606382932" sy="-6.139921688092386" tx="-48.41422981760536" ty="-31.591296408773246"/>
+          <y:Path sx="37.24060606382932" sy="-6.139921688092386" tx="-50.77354712037027" ty="0.10604365764402246"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="none"/>
           <y:BendStyle smoothed="false"/>
@@ -519,7 +517,7 @@ Gold<y:LabelModel>
     <edge id="e1" source="n1" target="n2">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="-48.7912" tx="0.0" ty="-9.799999999999955"/>
+          <y:Path sx="-5.055954527777658" sy="-17.093859933582735" tx="0.0" ty="-9.799999999999955"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="none"/>
           <y:BendStyle smoothed="false"/>
@@ -529,7 +527,7 @@ Gold<y:LabelModel>
     <edge id="e2" source="n1" target="n2">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="-9.4925588811044" tx="-21.32002515996372" ty="29.498641118895648"/>
+          <y:Path sx="-3.319843416666572" sy="22.204781185312868" tx="-21.32002515996372" ty="29.498641118895648"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="none"/>
           <y:BendStyle smoothed="false"/>
@@ -539,7 +537,7 @@ Gold<y:LabelModel>
     <edge id="e3" source="n0" target="n12">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="-65.64324115233944" sy="0.0" tx="-46.480149680988234" ty="0.0"/>
+          <y:Path sx="-65.64324115233944" sy="0.0" tx="-55.91180285698897" ty="0.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="none"/>
           <y:BendStyle smoothed="false"/>
@@ -549,7 +547,7 @@ Gold<y:LabelModel>
     <edge id="e4" source="n11" target="n1">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="-29.040330274529765" sy="26.808387372308232" tx="-1.6412433432184874" ty="-55.68805051076692"/>
+          <y:Path sx="-29.040330274529765" sy="26.808387372308232" tx="-1.6412433432184874" ty="-34.418770458477"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="none"/>
           <y:BendStyle smoothed="false"/>
@@ -559,7 +557,7 @@ Gold<y:LabelModel>
     <edge id="e5" source="n12" target="n17">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="16.895999999999958" sy="49.85674330991724" tx="5.522782218750081" ty="0.0"/>
+          <y:Path sx="16.17129101649641" sy="36.52341958428235" tx="5.522782218750081" ty="0.0"/>
           <y:LineStyle color="#000000" type="dashed" width="1.0"/>
           <y:Arrows source="none" target="none"/>
           <y:BendStyle smoothed="false"/>

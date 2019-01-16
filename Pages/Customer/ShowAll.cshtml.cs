@@ -22,7 +22,7 @@ namespace Videotheque.Pages.CustomerPage
           // Property 'Int32 Count' is not defined for type
           // 'Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1[Videotheque.Data.XXXX]'
           // S2971 : Use 'Count' property here instead.
-#pragma warning disable S2971
+          #pragma warning disable S2971
           .OrderBy(f => f.CurrentlyBorrowed.Count());
     }
 

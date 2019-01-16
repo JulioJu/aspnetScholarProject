@@ -11,41 +11,47 @@ namespace Videotheque.Pages.Abstract
   /// search in Database.
   /// </summary>
   public abstract partial class CrudAbstract<TAbstractEntity> : PageModel
-    where TAbstractEntity : AbstractEntity
+    where TAbstractEntity : AbstractEntity, new()
   {
-    private protected delegate Task<bool>
-      PerformTestOverposting();
-
     private protected abstract Task<bool>
-      PerformTestOverpostingFunc();
+      PerformTestOverpostingFunc(TAbstractEntity tAbstractEntity);
 
+    // Could not be called OnPostCreateAsync(), because
+    // if we define OnPostCreateAsync(...args) in an inherited function
+    // ASP.NET send a message, forbid to define several overloaded
+    // OnPostCreateAsync
     private protected async Task<IActionResult>
-      OnPostCreateAsyncWithFunc(PerformTestOverposting peformTestOverposting)
+      OnPostCreateAsyncWithFunc()
     {
       if (!base.ModelState.IsValid)
       {
         return base.Page();
       }
 
-      if (await peformTestOverposting())
+      TAbstractEntity tAbstractEntity = new TAbstractEntity();
+
+      if (await this.PerformTestOverpostingFunc(tAbstractEntity))
       {
-        this._tDbSet.Add(this.AbstractEntity);
+        this._tDbSet.Add(tAbstractEntity);
         await this._db.SaveChangesAsync();
         if (!string.IsNullOrEmpty(this.Message))
         {
-          this.Message = $"AbstractEntity {this.AbstractEntity.Id} created. "
+          this.Message = $"AbstractEntity {tAbstractEntity.Id} created. "
             + "<br />Some details: <br /><ul>" + this.Message + "</ul>";
         }
         else
         {
-          this.Message = $"AbstractEntity {this.AbstractEntity.Id} created." +
+          this.Message = $"AbstractEntity {tAbstractEntity.Id} created." +
             this.Message;
         }
         return base.RedirectToPage("./Details/",
-            new { id = this.AbstractEntity.Id });
+            new { id = tAbstractEntity.Id });
+      }
+      else
+      {
+        throw new BadPostRequestException("TryUpdateModelAsync has failed");
       }
 
-      return null;
     }
 
     // public abstract Task<IActionResult> OnPostCreateAsync();

@@ -34,6 +34,7 @@
 <!-- First part of tye form: general Customer info -->
 <!-- ================================ -->
 
+<p> At least Firstname and Lastname or Society is required </p>
 <div class="form-group">
   <label asp-for="Firstname" class="control-label"></label>
   <input asp-for="Firstname" class="form-control" />
@@ -45,19 +46,24 @@
   <span asp-validation-for="Lastname" class="text-danger"></span>
 </div>
 <div class="form-group">
-  <label asp-for="Birthdate" class="control-label"></label>
-  <input asp-for="Birthdate" class="form-control" />
-  <span asp-validation-for="Birthdate" class="text-danger" ></span>
-</div>
-<div class="form-group">
   <label asp-for="Society" class="control-label"></label>
   <input asp-for="Society" class="form-control" />
   <span asp-validation-for="Society" class="text-danger"></span>
 </div>
 <div class="form-group">
-  <label asp-for="Address" class="control-label"></label>
-  <input asp-for="Address" class="form-control" />
-  <span asp-validation-for="Address" class="text-danger"></span>
+  <label asp-for="AddressStreet" class="control-label"></label>
+  <input asp-for="AddressStreet" class="form-control" />
+  <span asp-validation-for="AddressStreet" class="text-danger"></span>
+</div>
+<div class="form-group">
+  <label asp-for="AddressCity" class="control-label"></label>
+  <input asp-for="AddressCity" class="form-control" />
+  <span asp-validation-for="AddressCity" class="text-danger"></span>
+</div>
+<div class="form-group">
+  <label asp-for="AddressCountry" class="control-label"></label>
+  <input asp-for="AddressCountry" class="form-control" />
+  <span asp-validation-for="AddressCountry" class="text-danger"></span>
 </div>
 <div class="form-group">
   <label asp-for="Phone" class="control-label"></label>
@@ -68,6 +74,32 @@
   <label asp-for="Email" class="control-label"></label>
   <input asp-for="Email" class="form-control" />
   <span asp-validation-for="Email" class="text-danger"></span>
+</div>
+<div class="form-group">
+  <label asp-for="Birthdate" class="control-label"></label>
+  <input asp-for="Birthdate" class="form-control" />
+  <span asp-validation-for="Birthdate" class="text-danger"></span>
+</div>
+<div class="form-group form-check">
+  <label class="form-check-label">
+    <input class="form-check-input" asp-for="IsUnemployed" />
+    @Html.DisplayNameFor(model => model.IsUnemployed)
+  </label>
+  <span asp-validation-for="IsUnemployed" class="text-danger"></span>
+</div>
+<div class="form-group form-check">
+  <label class="form-check-label">
+    <input class="form-check-input" asp-for="IsStudent" />
+    @Html.DisplayNameFor(model => model.IsStudent)
+  </label>
+  <span asp-validation-for="IsStudent" class="text-danger"></span>
+</div>
+<div class="form-group form-check">
+  <label class="form-check-label">
+    <input class="form-check-input" asp-for="PeopleWithDisabilities" />
+    @Html.DisplayNameFor(model => model.PeopleWithDisabilities)
+  </label>
+  <span asp-validation-for="PeopleWithDisabilities" class="text-danger"></span>
 </div>
 
 <!-- Second part of the Form: we could return articles already borrowed -->
@@ -153,9 +185,12 @@
         (not cummulable with fixed discount)
       </label>
       int customDiscountValue = 0;
-      if (Model.IsUnderage())
+      if (Model.IsUnderage()
+          || Model.IsUnemployed
+          || Model.IsStudent
+          || Model.PeopleWithDisabilities)
       {
-        customDiscountValue = 10;
+        customDiscountValue = 25;
       }
       <input id="customDiscount" type="number" min="0" max="99"
         value="@customDiscountValue" name="customDiscount" required />

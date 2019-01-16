@@ -7,7 +7,8 @@ namespace Videotheque.Data
   public class Film : AbstractEntity
   {
     [Required]
-    [StringLength(100)]
+    [MinLengthAttribute(2)]
+    [MaxLengthAttribute(255)]
     public string Title { get; set; }
 
     [Required]
@@ -22,11 +23,6 @@ namespace Videotheque.Data
     [FilmReleased]
     /// <summary>Year between 1895 and the Current Year</summary>
     public DateTime ReleaseDate { get; set; }
-
-    // CA1819: "Arrays returned by properties are not write-protected, even if
-    //      the property is read-only."
-    #pragma warning disable CA1819
-    public byte[] Image { get; set; }
 
     private HashSet<Article> PArticles { get; set; }
 

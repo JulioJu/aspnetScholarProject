@@ -60,14 +60,10 @@
   @Html.DisplayNameFor(model => model.BorrowerId)
 </dt>
 <dd class="col-sm-10">
-  @Html.DisplayFor(model => model.BorrowerId)
-</dd>
-<dt class="col-sm-2">
-  @Html.DisplayNameFor(model => model.Borrower)
-  @Html.DisplayNameFor(model => model.Borrower.Address)
-</dt>
-<dd class="col-sm-10">
-  @Html.DisplayFor(model => model.Borrower.Address)
+  <a asp-page="/Customer/Details"
+        asp-route-id="@Html.DisplayFor(model => model.BorrowerId)">
+    @Html.DisplayFor(model => model.BorrowerId)
+  </a>
 </dd>
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos

@@ -30,18 +30,24 @@ namespace Videotheque.Pages.CustomerPage
     #pragma warning disable CA1819
     public string[] ArticleIdToBorrowLoanDurationArray { get; set; }
 
-    private protected override async Task<bool> PerformTestOverpostingFunc()
+    private protected override async Task<bool> PerformTestOverpostingFunc(
+        Customer tAbstractEntity)
     {
       return await base.TryUpdateModelAsync<Customer>(
-          base.AbstractEntity,
-          "customer",   // Prefix for form value.
+          tAbstractEntity,
+          string.Empty,   // Prefix for form value.
           s => s.Firstname,
           s => s.Lastname,
           s => s.Society,
-          s => s.Address,
+          s => s.AddressStreet,
+          s => s.AddressCity,
+          s => s.AddressCountry,
           s => s.Phone,
           s => s.Email,
-          s => s.CurrentlyBorrowed);
+          s => s.Birthdate,
+          s => s.IsUnemployed,
+          s => s.IsStudent,
+          s => s.PeopleWithDisabilities);
     }
 
     /// <summary>
@@ -120,6 +126,14 @@ namespace Videotheque.Pages.CustomerPage
                 + "</a>'";
           if (articleToAdd.BorrowerId == null)
           {
+            if (articleToAdd.IsLost)
+            {
+              this.ValidationMessageArticleIdToBorrowArray[index] =
+                "Article with id (barcode) '"
+                + articleId + "' is lost. Not borrowed.";
+              isBorrowed = false;
+              continue;
+            }
             articleToAdd.CountBorrowing++;
             articleToAdd.BorrowingDate = System.DateTime.UtcNow;
             articleToAdd.ReturnDate = articleToAdd.BorrowingDate?.AddDays(
@@ -240,7 +254,7 @@ namespace Videotheque.Pages.CustomerPage
       }
 
       return await
-        base.OnPostCreateAsyncWithFunc(this.PerformTestOverpostingFunc);
+        base.OnPostCreateAsyncWithFunc();
     }
 
   }

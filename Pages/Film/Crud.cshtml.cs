@@ -43,15 +43,15 @@ namespace Videotheque.Pages.FilmPage
         .OnGetAsyncWithFunc(id, this.PerformSearchInDatabaseFunc);
     }
 
-    private protected override async Task<bool> PerformTestOverpostingFunc()
+    private protected override async Task<bool> PerformTestOverpostingFunc(
+        Film tAbstractEntity)
     {
       return await base.TryUpdateModelAsync<Film>(
-          base.AbstractEntity,
-          "film",   // Prefix for form value.
+          tAbstractEntity,
+          string.Empty,   // Prefix for form value.
           s => s.Title,
           s => s.Price,
-          s => s.ReleaseDate,
-          s => s.Image);
+          s => s.ReleaseDate);
     }
 
     private void CreateNewArticles()
@@ -68,15 +68,13 @@ namespace Videotheque.Pages.FilmPage
     public async Task<IActionResult> OnPostCreateAsync()
     {
       this.CreateNewArticles();
-      return await base.OnPostCreateAsyncWithFunc(
-          this.PerformTestOverpostingFunc);
+      return await base.OnPostCreateAsyncWithFunc();
     }
 
     public async Task<IActionResult> OnPostEditAsync()
     {
       this.CreateNewArticles();
-      return await base
-        .OnPostEditAsyncWithFunc(this.PerformTestOverpostingFunc);
+      return await base.OnPostEditAsyncWithFunc();
     }
 
   }

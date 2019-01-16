@@ -32,10 +32,10 @@
   @Html.DisplayFor(modelItem => item.ReturnDate)
 </td>
 <td>
-  @Html.DisplayFor(modelItem => item.BorrowerId)
-</td>
-<td>
-  @Html.DisplayFor(modelItem => item.Borrower.Address)
+  <a asp-page="/Customer/Details"
+        asp-route-id="@Html.DisplayFor(modelItem => item.BorrowerId)">
+    @Html.DisplayFor(modelItem => item.BorrowerId)
+  </a>
 </td>
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos

@@ -438,7 +438,7 @@ namespace Videotheque.Pages.CustomerPage
         return base.BadRequest(e.Message);
       }
       return await base
-          .OnPostEditAsyncWithFunc(this.PerformTestOverpostingFunc);
+          .OnPostEditAsyncWithFunc();
     }
   }
 }

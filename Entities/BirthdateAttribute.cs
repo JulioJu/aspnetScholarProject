@@ -10,14 +10,21 @@ namespace Videotheque.Data
     {
       Customer customer = (Customer)validationContext.ObjectInstance;
 
-      if (customer.Birthdate < new DateTime(DateTime.Today.Year - 122, 1, 01))
+      if (customer.Birthdate != null)
       {
-          return new ValidationResult(BirthdateToOld());
-      }
+        if (customer.Birthdate <= new DateTime(DateTime.Today.Year - 122,
+              DateTime.Today.Month,
+              DateTime.Today.Day))
+        {
+            return new ValidationResult(BirthdateToOld());
+        }
 
-      if (customer.Birthdate > new DateTime(DateTime.Today.Year - 13, 1, 01))
-      {
-          return new ValidationResult(TooYoung());
+        if (customer.Birthdate >= new DateTime(DateTime.Today.Year - 13,
+              DateTime.Today.Month,
+              DateTime.Today.Day))
+        {
+            return new ValidationResult(TooYoung());
+        }
       }
 
       return ValidationResult.Success;
