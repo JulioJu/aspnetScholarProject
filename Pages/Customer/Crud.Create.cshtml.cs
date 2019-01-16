@@ -41,8 +41,7 @@ namespace Videotheque.Pages.CustomerPage
           s => s.Address,
           s => s.Phone,
           s => s.Email,
-          s => s.CurrentlyBorrowed)
-        ;
+          s => s.CurrentlyBorrowed);
     }
 
     /// <summary>
@@ -63,7 +62,7 @@ namespace Videotheque.Pages.CustomerPage
         string[] articleIdToBorrowArray,
         string[] articleLoanDurationArray)
     {
-      bool isValidationError = false;
+      bool isBorrowed = true;
       this.ArticleIdToBorrowArrayInputValue =
         new string[Crud.NumberInputArticleToBorrow];
       this.ValidationMessageArticleIdToBorrowArray =
@@ -109,7 +108,7 @@ namespace Videotheque.Pages.CustomerPage
             this.ValidationMessageArticleIdToBorrowArray[index] =
               "Article with id (barcode) '"
               + articleId + "' doesn't exist. Not borrowed.";
-            isValidationError = true;
+            isBorrowed = false;
             continue;
           }
           string messageArticle = "Article with barcode"
@@ -149,14 +148,14 @@ namespace Videotheque.Pages.CustomerPage
               this.ValidationMessageArticleIdToBorrowArray[index] =
                 messageArticle + " already borrowed by " + messageBorrower
                 + ". Can't be borrowed again.";
-              isValidationError = true;
+              isBorrowed = false;
             }
             else
             {
               this.ValidationMessageArticleIdToBorrowArray[index] =
                 messageArticle + " already borrowed by the current "
                   + "Customer. Can't be borrowed again.";
-              isValidationError = true;
+              isBorrowed = false;
             }
           }
         }
@@ -170,7 +169,7 @@ namespace Videotheque.Pages.CustomerPage
           // articleIdToBorrowArray[index] could be null: nothing to loan
         }
       }
-      return isValidationError;
+      return isBorrowed;
     }
 
     /// <summary>
@@ -227,10 +226,11 @@ namespace Videotheque.Pages.CustomerPage
         string[] articleLoanDurationArray;
         articleLoanDurationArray = this
           .RetrievePostParamArticleLoanDurationArray(articleIdToBorrowArray);
-
-        if (await this.BorrowArticles(articleIdToBorrowArray,
+        this.ArticleIdToBorrowLoanDurationArray = articleLoanDurationArray;
+        if (!await this.BorrowArticles(articleIdToBorrowArray,
               articleLoanDurationArray))
         {
+          this.Message = string.Empty;
           return base.Page();
         }
       }

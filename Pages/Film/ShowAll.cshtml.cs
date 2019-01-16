@@ -29,8 +29,7 @@ namespace Videotheque.Pages.FilmPage
         #pragma warning disable S2971
         .OrderByDescending(f => f.Articles.Count())
         .Take(topNParsed)
-        .ToListAsync()
-        ;
+        .ToListAsync();
     }
 
   }

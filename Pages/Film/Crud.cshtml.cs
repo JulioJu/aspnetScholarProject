@@ -22,8 +22,7 @@ namespace Videotheque.Pages.FilmPage
       return await base._tDbSet
         .Include(s => s.Articles)
         .AsNoTracking()
-        .FirstOrDefaultAsync(m => m.Id == id)
-        ;
+        .FirstOrDefaultAsync(m => m.Id == id);
     }
 
     public override async Task<IActionResult> OnGetAsync(int? id,
@@ -40,8 +39,8 @@ namespace Videotheque.Pages.FilmPage
       {
         this.NumberOfNewArticles = 0;
       }
-      return await base.OnGetAsyncWithFunc(id, this.PerformSearchInDatabaseFunc)
-        ;
+      return await base
+        .OnGetAsyncWithFunc(id, this.PerformSearchInDatabaseFunc);
     }
 
     private protected override async Task<bool> PerformTestOverpostingFunc()
@@ -52,8 +51,7 @@ namespace Videotheque.Pages.FilmPage
           s => s.Title,
           s => s.Price,
           s => s.ReleaseDate,
-          s => s.Image)
-        ;
+          s => s.Image);
     }
 
     private void CreateNewArticles()
@@ -71,15 +69,14 @@ namespace Videotheque.Pages.FilmPage
     {
       this.CreateNewArticles();
       return await base.OnPostCreateAsyncWithFunc(
-          this.PerformTestOverpostingFunc)
-        ;
+          this.PerformTestOverpostingFunc);
     }
 
     public async Task<IActionResult> OnPostEditAsync()
     {
       this.CreateNewArticles();
-      return await base.OnPostEditAsyncWithFunc(this.PerformTestOverpostingFunc)
-        ;
+      return await base
+        .OnPostEditAsyncWithFunc(this.PerformTestOverpostingFunc);
     }
 
   }

@@ -1,5 +1,6 @@
 namespace Videotheque.Pages.CustomerPage
 {
+  using System;
   using System.Collections.Generic;
   using System.Globalization;
   using System.Threading.Tasks;
@@ -48,8 +49,6 @@ namespace Videotheque.Pages.CustomerPage
             + index + "] (value " + articleIdString
             + ") could not be casted to int.");
       }
-      // INFO
-      // If we display Invoice, we don't display keept Articles
       Article currentlyBorrowedArticle = await
         Videotheque.Pages.ArticlePage.Crud.FindArticleAsync(base._db,
                 articleId);
@@ -76,7 +75,7 @@ namespace Videotheque.Pages.CustomerPage
     /// <exception>
     /// See exception raised by this.RetrieveArticle
     /// </exception>
-    private async Task ComeBackToPageInstantiatePublicProperties (
+    private async Task InstantiatePublicProperties (
         string[] articleIdAlreadyBorrowedArray,
         string[] shouldBeRemovedArray,
         string[] articleLoanDurationArray)
@@ -90,18 +89,11 @@ namespace Videotheque.Pages.CustomerPage
       //   ;
       // this.CurrentlyBorrowed() is also set at null.
 
-      // When we are into url Customer/Edit/:id and in function
-      // this.BorrowArticles() (this.ReturnArticles()
-      // not triggered)
-      if (articleIdAlreadyBorrowedArray != null)
+      for (int index = 0;
+          index < articleIdAlreadyBorrowedArray.Length;
+          index++)
       {
-        for (int index = 0;
-            index < articleIdAlreadyBorrowedArray.Length;
-            index++)
-        {
-          await this.RetrieveArticle(articleIdAlreadyBorrowedArray[index],
-              index);
-        }
+        await this.RetrieveArticle(articleIdAlreadyBorrowedArray[index], index);
       }
 
       this.Message = null;
@@ -251,58 +243,62 @@ namespace Videotheque.Pages.CustomerPage
         string[] articleIdToBorrowArray,
         string isInvoice = "false")
     {
+      string[] shouldBeRemovedArray = Array.Empty<string>();
       // 1) Test and cast POST params and instantiate corresponding vars
       // =========================
       // =========================
-      bool isInvoiceTmp;
-      if (!bool.TryParse(isInvoice, out isInvoiceTmp))
-      {
-        throw new BadPostRequestException("Param isInvoice "
-            + "(value " + isInvoice + ") could not be casted to bool.");
-      }
-      this.IsInvoice = isInvoiceTmp;
 
-      this.CurrentlyBorrowedList = new List<Article>();
-
-      try
-      {
-        this.CustomDiscount = int.Parse(customDiscount,
-            System.Globalization.NumberStyles.Integer,
-            CultureInfo.InvariantCulture);
-      }
-      catch (System.Exception)
-      {
-        throw new BadPostRequestException("Param customDiscount"
-            + "(value " + customDiscount
-            + ") could not be casted to int.");
-      }
-      if (this.CustomDiscount < 0)
-      {
-        throw new BadPostRequestException("Param customDiscount (value "
-            + customDiscount + ") must be a number >= 0.");
-      }
-      if (this.CustomDiscount > 99)
-      {
-        throw new BadPostRequestException("Param customDiscount (value "
-            + customDiscount + ") must be a number < 99.");
-      }
-
-      string[] shouldBeRemovedArray =
-        new string[articleIdAlreadyBorrowedArray.Length];
       if (articleIdAlreadyBorrowedArray.Length > 0)
       {
-        for (int index = 0; index < articleIdAlreadyBorrowedArray.Length; index++)
+        this.CurrentlyBorrowedList = new List<Article>();
+
+        bool isInvoiceTmp;
+        if (!bool.TryParse(isInvoice, out isInvoiceTmp))
         {
-          if (!base.Request.Form.ContainsKey("shouldBeRemovedArray" + index))
+          throw new BadPostRequestException("Param isInvoice "
+              + "(value " + isInvoice + ") could not be casted to bool.");
+        }
+        this.IsInvoice = isInvoiceTmp;
+
+        try
+        {
+          this.CustomDiscount = int.Parse(customDiscount,
+              System.Globalization.NumberStyles.Integer,
+              CultureInfo.InvariantCulture);
+        }
+        catch (System.Exception)
+        {
+          throw new BadPostRequestException("Param customDiscount"
+              + "(value " + customDiscount
+              + ") could not be casted to int.");
+        }
+        if (this.CustomDiscount < 0)
+        {
+          throw new BadPostRequestException("Param customDiscount (value "
+              + customDiscount + ") must be a number >= 0.");
+        }
+        if (this.CustomDiscount > 99)
+        {
+          throw new BadPostRequestException("Param customDiscount (value "
+              + customDiscount + ") must be a number < 99.");
+        }
+
+        shouldBeRemovedArray = new string[articleIdAlreadyBorrowedArray.Length];
+        if (articleIdAlreadyBorrowedArray.Length > 0)
+        {
+          for (int index = 0; index < articleIdAlreadyBorrowedArray.Length; index++)
           {
-            // Note: if shouldBeRemovedArray10000 exists
-            // and articleIdAlreadyBorrowedArray.Length == 1 , no problems !
-            // the value associated to the key could be null.
-            throw new BadPostRequestException("Param shouldBeRemovedArray"
-                + index + "does not exist");
+            if (!base.Request.Form.ContainsKey("shouldBeRemovedArray" + index))
+            {
+              // Note: if shouldBeRemovedArray10000 exists
+              // and articleIdAlreadyBorrowedArray.Length == 1 , no problems !
+              // the value associated to the key could be null.
+              throw new BadPostRequestException("Param shouldBeRemovedArray"
+                  + index + "does not exist");
+            }
+            shouldBeRemovedArray[index] =
+              base.Request.Form["shouldBeRemovedArray" + index];
           }
-          shouldBeRemovedArray[index] =
-            base.Request.Form["shouldBeRemovedArray" + index];
         }
       }
 
@@ -315,10 +311,10 @@ namespace Videotheque.Pages.CustomerPage
       // =============================
 
       // BORROWING
-      if (await this.BorrowArticles(articleIdToBorrowArray,
+      if (!await this.BorrowArticles(articleIdToBorrowArray,
             articleLoanDurationArray))
       {
-        await this.ComeBackToPageInstantiatePublicProperties(
+        await this.InstantiatePublicProperties(
             articleIdAlreadyBorrowedArray,
             shouldBeRemovedArray,
             articleLoanDurationArray);
@@ -337,7 +333,7 @@ namespace Videotheque.Pages.CustomerPage
 
         if (!this.IsInvoice && redirectToInvoice)
         {
-          await this.ComeBackToPageInstantiatePublicProperties(
+          await this.InstantiatePublicProperties(
               null,
               shouldBeRemovedArray,
               articleLoanDurationArray);
@@ -345,6 +341,17 @@ namespace Videotheque.Pages.CustomerPage
           {
             this.IsInvoice = true;
           }
+          return false;
+        }
+      }
+      else
+      {
+        if (!base.ModelState.IsValid)
+        {
+          await this.InstantiatePublicProperties(
+              null,
+              shouldBeRemovedArray,
+              articleLoanDurationArray);
           return false;
         }
       }

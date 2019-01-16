@@ -13,15 +13,19 @@ namespace Videotheque.Pages.CustomerPage
     {
     }
 
-    private protected async override Task<Customer>
-      PerformSearchInDatabaseFunc(int? id)
+    private async Task<Customer> RetrieveCustomer(int? id)
     {
-      Customer customer = await base._tDbSet
+      return await base._tDbSet
         .Include(s => s.CurrentlyBorrowed)
           .ThenInclude(f => f.Film)
         .AsNoTracking()
-        .FirstOrDefaultAsync(m => m.Id == id)
-        ;
+        .FirstOrDefaultAsync(m => m.Id == id);
+    }
+
+    private protected async override Task<Customer>
+      PerformSearchInDatabaseFunc(int? id)
+    {
+      Customer customer = await this.RetrieveCustomer(id);
       string currentRoute = base.HttpContext.Request.Path;
       if (currentRoute.StartsWith("/Customer/Edit/",
             System.StringComparison.InvariantCultureIgnoreCase))

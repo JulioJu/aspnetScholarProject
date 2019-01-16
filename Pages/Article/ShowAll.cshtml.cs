@@ -25,8 +25,7 @@ namespace Videotheque.Pages.ArticlePage
     {
       base.AbstractEntities = await this.CompleteQueryable()
         .Where(a => a.BorrowerId != null)
-        .ToListAsync()
-        ;
+        .ToListAsync();
     }
 
   }

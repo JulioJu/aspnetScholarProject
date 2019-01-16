@@ -31,8 +31,16 @@ namespace Videotheque.Pages.Abstract
       {
         this._tDbSet.Add(this.AbstractEntity);
         await this._db.SaveChangesAsync();
-        this.Message = this.AbstractEntity.GetType() +
-            $"{this.AbstractEntity.Id} created.";
+        if (!string.IsNullOrEmpty(this.Message))
+        {
+          this.Message = $"AbstractEntity {this.AbstractEntity.Id} created. "
+            + "<br />Some details: <br /><ul>" + this.Message + "</ul>";
+        }
+        else
+        {
+          this.Message = $"AbstractEntity {this.AbstractEntity.Id} created." +
+            this.Message;
+        }
         return base.RedirectToPage("./Details/",
             new { id = this.AbstractEntity.Id });
       }

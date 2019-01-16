@@ -36,8 +36,7 @@ namespace Videotheque.Pages.Abstract
     public async Task OnGetAsync()
     {
       this.AbstractEntities = await this.CompleteQueryable()
-        .ToListAsync()
-        ;
+        .ToListAsync();
     }
 
   }

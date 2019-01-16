@@ -48,7 +48,7 @@ namespace Videotheque.Pages.Abstract
         }
       }
 
-      if (this.Message != null)
+      if (!string.IsNullOrEmpty(this.Message))
       {
         this.Message = $"AbstractEntity {this.AbstractEntity.Id} edited. "
           + "<br />Some details: <br /><ul>" + this.Message + "</ul>";

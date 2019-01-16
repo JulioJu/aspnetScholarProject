@@ -45,14 +45,12 @@ namespace Videotheque.Pages.Abstract
       {
         return await this._tDbSet
           .AsNoTracking()
-          .FirstOrDefaultAsync(m => m.Id == id)
-          ;
+          .FirstOrDefaultAsync(m => m.Id == id);
       }
       else
       {
         return await this._tDbSet
-          .FindAsync(id)
-          ;
+          .FindAsync(id);
       }
     }
 
@@ -88,8 +86,7 @@ namespace Videotheque.Pages.Abstract
       // FirstOrDefaultAsync.  But if you want to Include other entities, then
       // FindAsync is no longer appropriate.
       // https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/crud?view=aspnetcore-2.2
-      this.AbstractEntity = await performSearchInDatabase(id)
-        ;
+      this.AbstractEntity = await performSearchInDatabase(id);
 
       if (this.AbstractEntity == null)
       {

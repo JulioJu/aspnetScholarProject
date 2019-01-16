@@ -37,21 +37,19 @@ namespace Videotheque.Pages.ArticlePage
           s => s.BorrowingDate,
           s => s.ReturnDate,
           s => s.FilmId,
-          s => s.BorrowerId)
-        ;
+          s => s.BorrowerId);
     }
 
     public async Task<IActionResult> OnPostCreateAsync()
     {
       return await base.OnPostCreateAsyncWithFunc(
-          this.PerformTestOverpostingFunc)
-        ;
+          this.PerformTestOverpostingFunc);
     }
 
     public async Task<IActionResult> OnPostEditAsync()
     {
-      return await base.OnPostEditAsyncWithFunc(this.PerformTestOverpostingFunc)
-        ;
+      return await base
+        .OnPostEditAsyncWithFunc(this.PerformTestOverpostingFunc);
     }
 
   }
