@@ -26,17 +26,27 @@
       Siret en cours d'attribution <br />
     </span>
     <span id="customer-address" >
-      @if (String.IsNullOrWhiteSpace(Model.Lastname))
+      @if (!String.IsNullOrWhiteSpace(Model.Lastname))
       {
-        @Model.Firstname @Model.Lastname
+      @Model.Firstname @Html.Raw(" ") @Model.Lastname <br />
       }
-      @if (String.IsNullOrWhiteSpace(Model.Society))
+      @if (!String.IsNullOrWhiteSpace(Model.Society))
       {
         @Model.Society <br />
       }
       @Model.AddressStreet <br />
-      @Model.AddressCountry <br />
+      @Model.AddressCity <br />
+      @if (!String.IsNullOrWhiteSpace(Model.AddressCity))
+      {
+        @Model.AddressCountry <br />
+      }
     </span>
+  </div>
+
+  <br />
+
+  <div> Référence:
+    @(DateTime.Today.Year)@(DateTime.Today.Month)@(DateTime.Today.Day)@(DateTime.UtcNow.Hour)@(DateTime.UtcNow.Minute)@(DateTime.UtcNow.Second)
   </div>
 
   <table id="detail-price">

@@ -35,7 +35,6 @@ namespace Videotheque.Data
     [MaxLengthAttribute(50)]
     public string AddressCity { get; set; }
 
-    [Required]
     [MinLengthAttribute(2)]
     [MaxLengthAttribute(50)]
     public string AddressCountry { get; set; }

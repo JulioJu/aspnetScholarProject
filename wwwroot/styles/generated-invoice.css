@@ -6,6 +6,7 @@ main#first-main h1,
 main#first-main hr,
 main#first-main form[method="POST"] > table,
 main#first-main form[method="POST"] label,
+main#first-main form[method="POST"] p ,
 /* main#first-main form[method="POST"] input */
 input
 {
