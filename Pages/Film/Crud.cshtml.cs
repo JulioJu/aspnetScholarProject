@@ -51,7 +51,9 @@ namespace Videotheque.Pages.FilmPage
           string.Empty,   // Prefix for form value.
           s => s.Title,
           s => s.Price,
-          s => s.ReleaseDate);
+          s => s.ReleaseDate,
+          s => s.DirectedBy,
+          s => s.GenreStyle);
     }
 
     private void CreateNewArticles(Film tAbstractEntity)

@@ -24,6 +24,14 @@ namespace Videotheque.Data
     /// <summary>Year between 1895 and the Current Year</summary>
     public DateTime ReleaseDate { get; set; }
 
+    [Required]
+    [MinLengthAttribute(2)]
+    [MaxLengthAttribute(255)]
+    public string DirectedBy { get; set; }
+
+    [Required]
+    public GenreStyleEnum GenreStyle { get; set; }
+
     private HashSet<Article> PArticles { get; set; }
 
     public HashSet<Article> Articles
