@@ -54,26 +54,27 @@ namespace Videotheque.Pages.FilmPage
           s => s.ReleaseDate);
     }
 
-    private void CreateNewArticles()
+    private void CreateNewArticles(Film tAbstractEntity)
     {
       for (int index = 0; index < this.NumberOfNewArticles; index++)
       {
         Article article = new Article();
-        article.Film = base.AbstractEntity;
+        article.Film = tAbstractEntity;
         base._db.Articles.Add(article);
       }
-      this._tDbSet.Add(this.AbstractEntity);
+      this._tDbSet.Add(tAbstractEntity);
     }
 
     public async Task<IActionResult> OnPostCreateAsync()
     {
-      this.CreateNewArticles();
-      return await base.OnPostCreateAsyncWithFunc();
+      Film film = new Film();
+      this.CreateNewArticles(film);
+      return await base.OnPostCreateAsyncWithFunc(film);
     }
 
     public async Task<IActionResult> OnPostEditAsync()
     {
-      this.CreateNewArticles();
+      this.CreateNewArticles(this.AbstractEntity);
       return await base.OnPostEditAsyncWithFunc();
     }
 

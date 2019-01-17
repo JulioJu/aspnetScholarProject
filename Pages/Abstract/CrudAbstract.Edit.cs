@@ -39,6 +39,12 @@ namespace Videotheque.Pages.Abstract
       {
         try
         {
+          // Otherwise, sometime it bug. Not in official doc, but fix
+          // random error
+          // Cannot insert explicit value for identity column in table 'Films' when
+          //   IDENTITY_INSERT is set to OFF.
+          this._db.Attach(tAbstractEntity).State = EntityState.Modified;
+
           await this._db.SaveChangesAsync();
         }
         catch (DbUpdateConcurrencyException)

@@ -43,7 +43,8 @@ namespace Videotheque.Pages.ArticlePage
 
     public async Task<IActionResult> OnPostCreateAsync()
     {
-      return await base.OnPostCreateAsyncWithFunc();
+      Article article = new Article();
+      return await base.OnPostCreateAsyncWithFunc(article);
     }
 
     public async Task<IActionResult> OnPostEditAsync()

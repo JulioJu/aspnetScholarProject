@@ -28,7 +28,7 @@
 * [Entity Framework, further resources and notes](#entity-framework-further-resources-and-notes)
   * [Model Validation](#model-validation)
   * [Relationship](#relationship)
-* [Note about generation](#note-about-generation)
+  * [Further notes](#further-notes)
   * [Date Update and Date Create](#date-update-and-date-create)
   * [\<select\> tag for Enum](#select-tag-for-enum)
 * [Page/View, Layout, Partial View, View Component](#pageview-layout-partial-view-view-component)
@@ -634,7 +634,7 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
     public Film Film { get; set; }
     ```
 
-# Note about generation
+## Further notes
 * Do not define bool properties Properties as nullable, otherwise don't generate
     checkbox.
 
@@ -642,8 +642,20 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
     it generate automatically the `data-val-required` attributes.
     * In this case ./Entities/RequiredAttributeAdapter.cs
 
-* Required attributes can't be protected agains overposting thanks
-* TryUpdateModelAsync (I've tested)
+* Required attributes can't be protected against overposting thanks
+    TryUpdateModelAsync (I've tested).
+
+* For Edit page.
+    * Contoso example At https://github.com/aspnet/Docs/blob/master/aspnetcore/data/ef-rp/intro/samples/cu/Pages/Courses/Edit.cshtml.cs
+    there isn't
+    ```
+    this._db.Attach(tAbstractEntity).State = EntityState.Modified;
+    ```
+    * Contrary to the basic example (1.) https://github.com/aspnet/Docs/blob/master/aspnetcore/tutorials/razor-pages/razor-pages-start/2.2-stage-samples/RPmovieSearch/Pages/Movies/Edit.cshtml.cs
+    * But add `EntityState.Modified` (like in the basic example) seems correct
+        the random runtime error
+        “ `Cannot insert explicit value for identity column in table 'Films' when
+        IDENTITY_INSERT is set to OFF.` ”
 
 
 ## Date Update and Date Create

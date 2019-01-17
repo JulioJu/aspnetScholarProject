@@ -65,6 +65,7 @@ namespace Videotheque.Pages.CustomerPage
     /// <code>articleIdToBorrowArray@(incex)</code> is null
     /// </exception>
     private async Task<bool> BorrowArticles(
+        Customer customer,
         string[] articleIdToBorrowArray,
         string[] articleLoanDurationArray)
     {
@@ -139,13 +140,8 @@ namespace Videotheque.Pages.CustomerPage
             articleToAdd.ReturnDate = articleToAdd.BorrowingDate?.AddDays(
                 articleLoanDuration);
 
-            // Deleted as it should be null
-            // base.AbstractEntity.CurrentlyBorrowed.Add(articleToAdd);
-
-            // Not needed for Entity Framework Core 2.2, but more clean
-            // (personal opinion)
-            articleToAdd.BorrowerId = base.AbstractEntity.Id;
-            articleToAdd.Borrower = base.AbstractEntity;
+            articleToAdd.BorrowerId = customer.Id;
+            articleToAdd.Borrower = customer;
 
             base._db.Attach(articleToAdd).State = EntityState.Modified;
             // 'Microsoft.AspNetCore.Mvc.ViewFeatures.Internal.TempDataSerializer'
@@ -235,13 +231,16 @@ namespace Videotheque.Pages.CustomerPage
     public async Task<IActionResult> OnPostCreateAsync(
         string[] articleIdToBorrowArray)
     {
+      Customer customer = new Customer();
+
       try
       {
         string[] articleLoanDurationArray;
         articleLoanDurationArray = this
           .RetrievePostParamArticleLoanDurationArray(articleIdToBorrowArray);
         this.ArticleIdToBorrowLoanDurationArray = articleLoanDurationArray;
-        if (!await this.BorrowArticles(articleIdToBorrowArray,
+        if (!await this.BorrowArticles(customer,
+              articleIdToBorrowArray,
               articleLoanDurationArray))
         {
           this.Message = string.Empty;
@@ -254,7 +253,7 @@ namespace Videotheque.Pages.CustomerPage
       }
 
       return await
-        base.OnPostCreateAsyncWithFunc();
+        base.OnPostCreateAsyncWithFunc(customer);
     }
 
   }

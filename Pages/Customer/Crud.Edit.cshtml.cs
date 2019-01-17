@@ -89,11 +89,14 @@ namespace Videotheque.Pages.CustomerPage
       //   ;
       // this.CurrentlyBorrowed() is also set at null.
 
-      for (int index = 0;
-          index < articleIdAlreadyBorrowedArray.Length;
-          index++)
+      if (articleIdAlreadyBorrowedArray != null)
       {
-        await this.RetrieveArticle(articleIdAlreadyBorrowedArray[index], index);
+        for (int index = 0;
+            index < articleIdAlreadyBorrowedArray.Length;
+            index++)
+        {
+          await this.RetrieveArticle(articleIdAlreadyBorrowedArray[index], index);
+        }
       }
 
       this.Message = null;
@@ -164,7 +167,6 @@ namespace Videotheque.Pages.CustomerPage
                     + "by the current Customer. Param " +
                     " articleIdAlreadyBorrowedArray["
                     + index + "] not valid.");
-
             }
             else
             {
@@ -248,10 +250,9 @@ namespace Videotheque.Pages.CustomerPage
       // =========================
       // =========================
 
+      this.CurrentlyBorrowedList = new List<Article>();
       if (articleIdAlreadyBorrowedArray.Length > 0)
       {
-        this.CurrentlyBorrowedList = new List<Article>();
-
         bool isInvoiceTmp;
         if (!bool.TryParse(isInvoice, out isInvoiceTmp))
         {
@@ -311,7 +312,8 @@ namespace Videotheque.Pages.CustomerPage
       // =============================
 
       // BORROWING
-      if (!await this.BorrowArticles(articleIdToBorrowArray,
+      if (!await this.BorrowArticles(this.AbstractEntity,
+            articleIdToBorrowArray,
             articleLoanDurationArray))
       {
         await this.InstantiatePublicProperties(
@@ -437,8 +439,7 @@ namespace Videotheque.Pages.CustomerPage
       {
         return base.BadRequest(e.Message);
       }
-      return await base
-          .OnPostEditAsyncWithFunc();
+      return await base.OnPostEditAsyncWithFunc();
     }
   }
 }

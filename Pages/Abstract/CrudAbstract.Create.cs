@@ -21,14 +21,12 @@ namespace Videotheque.Pages.Abstract
     // ASP.NET send a message, forbid to define several overloaded
     // OnPostCreateAsync
     private protected async Task<IActionResult>
-      OnPostCreateAsyncWithFunc()
+      OnPostCreateAsyncWithFunc(TAbstractEntity tAbstractEntity)
     {
       if (!base.ModelState.IsValid)
       {
         return base.Page();
       }
-
-      TAbstractEntity tAbstractEntity = new TAbstractEntity();
 
       if (await this.PerformTestOverpostingFunc(tAbstractEntity))
       {
