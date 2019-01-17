@@ -47,7 +47,7 @@ namespace Videotheque.Data
 
     [DataType(DataType.Date)]
     [CustomerIsSociety]
-    [Birthdate]
+    [CustomerBirthdate]
     public DateTime? Birthdate { get; set; }
 
     [CustomerIsSociety]

@@ -3,7 +3,7 @@ namespace Videotheque.Data
   using System;
   using System.ComponentModel.DataAnnotations;
 
-  public class BirthdateAttribute : ValidationAttribute
+  public class CustomerBirthdateAttribute : ValidationAttribute
   {
     protected override ValidationResult IsValid(object value,
         ValidationContext validationContext)

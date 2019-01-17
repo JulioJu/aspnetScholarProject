@@ -50,7 +50,7 @@ DateReturn: DateTime<y:LabelModel>
           <y:Geometry height="102.58771986716522" width="127.75216993749996" x="765.2145917812499" y="500.3840000000002"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasLineColor="false" height="15.07421875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="22.896484375" x="52.42784278124998" y="4.0">Film</y:NodeLabel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasLineColor="false" height="15.07421875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="22.896484375" x="52.42784278124998" y="4.000000000000057">Film</y:NodeLabel>
           <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Liberation Sans" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="48.6875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="top" visible="true" width="117.3837890625" x="2.0" y="27.074218750000057">Title*: string [100]
 Price*: Price = Price.Gold
 ReleaseDate*: DateTime 
@@ -71,31 +71,7 @@ ReleaseDate*: DateTime
       <data key="d4"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.entityRelationship.big_entity">
-          <y:Geometry height="88.0" width="132.1775519384413" x="991.2033359374998" y="500.384"/>
-          <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
-          <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasLineColor="false" height="15.07421875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="60.669921875" x="35.753815031720706" y="4.0">PersonOfFilm</y:NodeLabel>
-          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Liberation Sans" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="37.515625" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="top" visible="true" width="107.3740234375" x="2.0" y="27.07421875">Firstname*: string [100]
-Lastname*: string [100]
-Surname: string [100]
-<y:LabelModel>
-              <y:ErdAttributesNodeLabelModel/>
-            </y:LabelModel>
-            <y:ModelParameter>
-              <y:ErdAttributesNodeLabelModelParameter/>
-            </y:ModelParameter>
-          </y:NodeLabel>
-          <y:StyleProperties>
-            <y:Property class="java.lang.Boolean" name="y.view.ShadowNodePainter.SHADOW_PAINTING" value="true"/>
-          </y:StyleProperties>
-        </y:GenericNode>
-      </data>
-    </node>
-    <node id="n3">
-      <data key="d4"/>
-      <data key="d6">
-        <y:GenericNode configuration="com.yworks.entityRelationship.big_entity">
-          <y:Geometry height="108.0" width="88.208984375" x="634.3387382812497" y="349.9753599999999"/>
+          <y:Geometry height="108.0" width="88.208984375" x="902.1752527191046" y="694.4407359253852"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasLineColor="false" height="26.1484375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="78.208984375" x="5.0" y="4.0">&lt;&lt;Enumeration&gt;&gt;
@@ -117,7 +93,7 @@ Unusable<y:LabelModel>
         </y:GenericNode>
       </data>
     </node>
-    <node id="n4">
+    <node id="n3">
       <data key="d6">
         <y:ShapeNode>
           <y:Geometry height="10.160000000000082" width="45.6552734375" x="697.0387256927021" y="535.34528"/>
@@ -135,7 +111,7 @@ Articles<y:LabelModel>
         </y:ShapeNode>
       </data>
     </node>
-    <node id="n5">
+    <node id="n4">
       <data key="d6">
         <y:ShapeNode>
           <y:Geometry height="10.160000000000082" width="32.896484375" x="738.3321437109372" y="533.70688"/>
@@ -153,83 +129,11 @@ Film<y:LabelModel>
         </y:ShapeNode>
       </data>
     </node>
-    <node id="n6">
-      <data key="d6">
-        <y:ShapeNode>
-          <y:Geometry height="10.160000000000082" width="60.09375" x="932.2856640624998" y="514.424"/>
-          <y:Fill hasColor="false" transparent="false"/>
-          <y:BorderStyle hasColor="false" raised="false" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="26.1484375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="50.09375" x="5.0" y="-7.994218749999959">0..*
-DirectedBy<y:LabelModel>
-              <y:SmartNodeLabelModel distance="4.0"/>
-            </y:LabelModel>
-            <y:ModelParameter>
-              <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
-            </y:ModelParameter>
-          </y:NodeLabel>
-          <y:Shape type="rectangle"/>
-        </y:ShapeNode>
-      </data>
-    </node>
-    <node id="n7">
-      <data key="d6">
-        <y:ShapeNode>
-          <y:Geometry height="24.88000000000011" width="51.763671875" x="886.5611445312496" y="507.06399999999985"/>
-          <y:Fill hasColor="false" transparent="false"/>
-          <y:BorderStyle hasColor="false" raised="false" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="26.1484375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="41.763671875" x="5.0" y="-0.6342187499999454">0..*
-Directing<y:LabelModel>
-              <y:SmartNodeLabelModel distance="4.0"/>
-            </y:LabelModel>
-            <y:ModelParameter>
-              <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
-            </y:ModelParameter>
-          </y:NodeLabel>
-          <y:Shape type="rectangle"/>
-        </y:ShapeNode>
-      </data>
-    </node>
-    <node id="n8">
-      <data key="d6">
-        <y:ShapeNode>
-          <y:Geometry height="10.160000000000082" width="54.546875" x="938.5982539062496" y="554.5840000000001"/>
-          <y:Fill hasColor="false" transparent="false"/>
-          <y:BorderStyle hasColor="false" raised="false" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="26.1484375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="44.546875" x="5.0" y="-7.994218749999959">0..*
-StarringIn<y:LabelModel>
-              <y:SmartNodeLabelModel distance="4.0"/>
-            </y:LabelModel>
-            <y:ModelParameter>
-              <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
-            </y:ModelParameter>
-          </y:NodeLabel>
-          <y:Shape type="rectangle"/>
-        </y:ShapeNode>
-      </data>
-    </node>
-    <node id="n9">
-      <data key="d6">
-        <y:ShapeNode>
-          <y:Geometry height="24.88000000000011" width="46.216796875" x="889.3345820312496" y="547.224"/>
-          <y:Fill hasColor="false" transparent="false"/>
-          <y:BorderStyle hasColor="false" raised="false" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="26.1484375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="36.216796875" x="5.0" y="-0.6342187499999454">0..*
-Starring<y:LabelModel>
-              <y:SmartNodeLabelModel distance="4.0"/>
-            </y:LabelModel>
-            <y:ModelParameter>
-              <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
-            </y:ModelParameter>
-          </y:NodeLabel>
-          <y:Shape type="rectangle"/>
-        </y:ShapeNode>
-      </data>
-    </node>
-    <node id="n10">
+    <node id="n5">
       <data key="d4"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.entityRelationship.big_entity">
-          <y:Geometry height="371.1360000000001" width="88.208984375" x="439.8541523437496" y="347.20799999999986"/>
+          <y:Geometry height="371.1360000000001" width="88.208984375" x="429.8696247942673" y="484.04811010370383"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasLineColor="false" height="26.1484375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="78.208984375" x="5.0" y="4.0">&lt;&lt;Enumeration&gt;&gt;
@@ -275,30 +179,7 @@ Trick<y:LabelModel>
         </y:GenericNode>
       </data>
     </node>
-    <node id="n11">
-      <data key="d4"/>
-      <data key="d6">
-        <y:GenericNode configuration="com.yworks.entityRelationship.big_entity">
-          <y:Geometry height="68.06400000000002" width="158.12323044987681" x="777.4281484563728" y="386.4216000000001"/>
-          <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
-          <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasLineColor="false" height="15.07421875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="48.9853515625" x="54.56893944368835" y="4.0">GenreStyle</y:NodeLabel>
-          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Liberation Sans" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="26.34375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="top" visible="true" width="133.5068359375" x="2.0" y="27.07421875">Title*: GenreStyleEnum [100]
-Description: string [1000]
-<y:LabelModel>
-              <y:ErdAttributesNodeLabelModel/>
-            </y:LabelModel>
-            <y:ModelParameter>
-              <y:ErdAttributesNodeLabelModelParameter/>
-            </y:ModelParameter>
-          </y:NodeLabel>
-          <y:StyleProperties>
-            <y:Property class="java.lang.Boolean" name="y.view.ShadowNodePainter.SHADOW_PAINTING" value="true"/>
-          </y:StyleProperties>
-        </y:GenericNode>
-      </data>
-    </node>
-    <node id="n12">
+    <node id="n6">
       <data key="d4"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.entityRelationship.big_entity">
@@ -310,8 +191,8 @@ Description: string [1000]
 Lastname: string [100]
 Birthdate: Datetime
 Society: string [100]
-AddressStreet: string [100]
-AddressCity: string [100]
+AddressStreet*: string [100]
+AddressCity*: string [100]
 AddressCountry: string [100]
 Email: string[255, Email]
 Phone: string [100, Phone]
@@ -331,7 +212,7 @@ IsUnderage(): bool<y:LabelModel>
         </y:GenericNode>
       </data>
     </node>
-    <node id="n13">
+    <node id="n7">
       <data key="d6">
         <y:ShapeNode>
           <y:Geometry height="10.160000000000082" width="92.3154296875" x="548.0786091692672" y="654.22584"/>
@@ -349,7 +230,7 @@ CurrentlyBorrowed<y:LabelModel>
         </y:ShapeNode>
       </data>
     </node>
-    <node id="n14">
+    <node id="n8">
       <data key="d6">
         <y:ShapeNode>
           <y:Geometry height="10.160000000000082" width="52.3203125" x="568.0761677630172" y="674.7899199999999"/>
@@ -367,43 +248,7 @@ Borrower<y:LabelModel>
         </y:ShapeNode>
       </data>
     </node>
-    <node id="n15">
-      <data key="d6">
-        <y:ShapeNode>
-          <y:Geometry height="10.160000000000082" width="58.9853515625" x="821.2560881249995" y="459.30799999999994"/>
-          <y:Fill hasColor="false" transparent="false"/>
-          <y:BorderStyle hasColor="false" raised="false" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="26.1484375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="48.9853515625" x="5.0" y="-7.994218749999959">1..*
-GenreStyle<y:LabelModel>
-              <y:SmartNodeLabelModel distance="4.0"/>
-            </y:LabelModel>
-            <y:ModelParameter>
-              <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
-            </y:ModelParameter>
-          </y:NodeLabel>
-          <y:Shape type="rectangle"/>
-        </y:ShapeNode>
-      </data>
-    </node>
-    <node id="n16">
-      <data key="d6">
-        <y:ShapeNode>
-          <y:Geometry height="10.160000000000082" width="36.7880859375" x="831.4800787812496" y="483.64399999999995"/>
-          <y:Fill hasColor="false" transparent="false"/>
-          <y:BorderStyle hasColor="false" raised="false" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="26.1484375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="26.7880859375" x="5.0" y="-7.994218749999959">0..*
-Films<y:LabelModel>
-              <y:SmartNodeLabelModel distance="4.0"/>
-            </y:LabelModel>
-            <y:ModelParameter>
-              <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
-            </y:ModelParameter>
-          </y:NodeLabel>
-          <y:Shape type="rectangle"/>
-        </y:ShapeNode>
-      </data>
-    </node>
-    <node id="n17">
+    <node id="n9">
       <data key="d6">
         <y:ShapeNode>
           <y:Geometry height="10.160000000000082" width="133.677734375" x="724.9093558735499" y="815.8910999541118"/>
@@ -422,11 +267,11 @@ or society is required
         </y:ShapeNode>
       </data>
     </node>
-    <node id="n18">
+    <node id="n10">
       <data key="d4"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.entityRelationship.big_entity">
-          <y:Geometry height="81.1756828301281" width="121.83203125" x="984.6524610644512" y="329.00816495272386"/>
+          <y:Geometry height="81.1756828301281" width="121.83203125" x="934.980962023249" y="511.09001851851883"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasLineColor="false" height="15.07421875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="62.3203125" x="29.755859375" y="4.0">AbstractEntity</y:NodeLabel>
@@ -445,10 +290,10 @@ UpdatedDate: DateTime<y:LabelModel>
         </y:GenericNode>
       </data>
     </node>
-    <node id="n19">
+    <node id="n11">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="10.160000000000082" width="105.650390625" x="988.9615459353643" y="432.9992459895805"/>
+          <y:Geometry height="10.160000000000082" width="105.650390625" x="939.2900468941621" y="615.0810995553754"/>
           <y:Fill hasColor="false" transparent="false"/>
           <y:BorderStyle hasColor="false" raised="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="15.07421875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="95.650390625" x="5.0" y="-2.457109374999959">All entities inherit of it<y:LabelModel>
@@ -462,11 +307,11 @@ UpdatedDate: DateTime<y:LabelModel>
         </y:ShapeNode>
       </data>
     </node>
-    <node id="n20">
+    <node id="n12">
       <data key="d4"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.entityRelationship.big_entity">
-          <y:Geometry height="88.0" width="88.208984375" x="843.8883101028691" y="694.4407359253852"/>
+          <y:Geometry height="88.0" width="88.208984375" x="738.3321437109372" y="694.4407359253852"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasLineColor="false" height="26.1484375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="78.208984375" x="5.0" y="4.0">&lt;&lt;Enumeration&gt;&gt;
@@ -487,10 +332,10 @@ Gold<y:LabelModel>
         </y:GenericNode>
       </data>
     </node>
-    <node id="n21">
+    <node id="n13">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="10.160000000000082" width="202.59374999999994" x="454.5732135859372" y="317.36906560974745"/>
+          <y:Geometry height="10.160000000000082" width="202.59374999999994" x="444.5886860364549" y="448.85244542469445"/>
           <y:Fill hasColor="false" transparent="false"/>
           <y:BorderStyle hasColor="false" raised="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="15.07421875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="192.59375" x="5.0" y="-2.457109374999959">From https://en.wikipedia.org/wiki/Film_genre<y:LabelModel>
@@ -514,27 +359,7 @@ Gold<y:LabelModel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e1" source="n1" target="n2">
-      <data key="d10">
-        <y:PolyLineEdge>
-          <y:Path sx="-5.055954527777658" sy="-17.093859933582735" tx="0.0" ty="-9.799999999999955"/>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="none"/>
-          <y:BendStyle smoothed="false"/>
-        </y:PolyLineEdge>
-      </data>
-    </edge>
-    <edge id="e2" source="n1" target="n2">
-      <data key="d10">
-        <y:PolyLineEdge>
-          <y:Path sx="-3.319843416666572" sy="22.204781185312868" tx="-21.32002515996372" ty="29.498641118895648"/>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="none"/>
-          <y:BendStyle smoothed="false"/>
-        </y:PolyLineEdge>
-      </data>
-    </edge>
-    <edge id="e3" source="n0" target="n12">
+    <edge id="e1" source="n0" target="n6">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="-65.64324115233944" sy="0.0" tx="-55.91180285698897" ty="0.0"/>
@@ -544,17 +369,7 @@ Gold<y:LabelModel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e4" source="n11" target="n1">
-      <data key="d10">
-        <y:PolyLineEdge>
-          <y:Path sx="-29.040330274529765" sy="26.808387372308232" tx="-1.6412433432184874" ty="-34.418770458477"/>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="none"/>
-          <y:BendStyle smoothed="false"/>
-        </y:PolyLineEdge>
-      </data>
-    </edge>
-    <edge id="e5" source="n12" target="n17">
+    <edge id="e2" source="n6" target="n9">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="16.17129101649641" sy="36.52341958428235" tx="5.522782218750081" ty="0.0"/>
@@ -564,7 +379,7 @@ Gold<y:LabelModel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e6" source="n18" target="n19">
+    <edge id="e3" source="n10" target="n11">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="3.7817354415869886" ty="0.0"/>
@@ -574,7 +389,7 @@ Gold<y:LabelModel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e7" source="n21" target="n10">
+    <edge id="e4" source="n13" target="n5">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="-71.91144405468759" sy="0.0" tx="0.0" ty="0.0"/>
