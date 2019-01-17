@@ -48,10 +48,6 @@ namespace Videotheque.Data
             .Property(a => a.CountBorrowing)
             .HasDefaultValue(0);
 
-        modelBuilder.Entity<Film>()
-            .Property(f => f.Price)
-            .HasDefaultValue(Price.Gold);
-
     }
 
     private void DateCreationModification()

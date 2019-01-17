@@ -1,4 +1,5 @@
-@page "{handler?}/{topN?}"
+@page "{handler?}"
+@using Videotheque.Data
 @model Videotheque.Pages.FilmPage.ShowAll
 
 @{
@@ -8,24 +9,64 @@
 }
 
 @section Search {
-  @if (HttpContext.Request.Path.ToString().EndsWith("BestBorrowing",
-    System.StringComparison.InvariantCultureIgnoreCase))
-  {
-    <h2>Top borrowed</h2>
-    <a class="btn" asp-page="/Film/ShowAll">
-      Come back to list of all Films
-    </a>
-  }
-  else
-  {
-    <form method="GET">
-      <input id="topN" type="number" name="topN"
-        placeholder="let empty for infinite"/>
-      <input type="submit"
-        value="Submite Top N film borrowed"
-        class="btn" asp-page-handler="BestBorrowing" />
-    </form>
-  }
+@if (HttpContext.Request.Path.ToString().EndsWith("Search",
+  System.StringComparison.InvariantCultureIgnoreCase))
+{
+  <a class="btn" asp-page="/Film/ShowAll">
+    Come back to list of all Films
+  </a>
+}
+
+<form id="film-show-all-search-section" method="GET">
+
+  <div>
+
+    <label for="TopN">
+      Top N
+    </label>
+    <input id="TopN" type="number" name="TopN"
+        value="@Model.TopN" placeholder="let empty for infinite"/>
+
+    <label for="SearchByTitle">
+      Search by title
+    </label>
+    <input id="SearchByTitle" type="text" name="SearchByTitle"
+        value="@Model.SearchByTitle" />
+
+    <label for="SearchByDirectedBy">
+      Search by Directed By
+    </label>
+    <input id="SearchByDirectedBy" type="text" name="SearchByDirectedBy"
+        value="@Model.SearchByDirectedBy" />
+
+    <label for="SearchByStyle">
+      Search by style
+    </label>
+    <select asp-for="@Model.SearchByStyle" class="form-control"
+        asp-items="Html.GetEnumSelectList<GenreStyleEnum>()" >
+      <option value="">
+      ——  Please select one ——
+      </option>
+    </select>
+
+    <label for="SearchReleaseAfter">
+      Search release after
+    </label>
+    <input type="date" id="SearchReleaseAfter" name="SearchReleaseAfter"
+        value="@Model.SearchReleaseAfter"/>
+
+    <label for="SearchReleaseBefore">
+      Search release before
+    </label>
+    <input type="date" id="SearchReleaseBefore" name="SearchReleaseBefore"
+        value="@Model.SearchReleaseBefore" />
+
+  </div>
+
+  <input type="submit"
+         value="Search"
+         class="btn" asp-page-handler="Search" />
+</form>
 }
 
 @section Thead {

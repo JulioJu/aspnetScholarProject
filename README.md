@@ -61,8 +61,8 @@ Le propriétaire d’une vidéothèque vous demande de lui réaliser une applica
 Il aimerait bien disposer des fonctionnalités suivantes :
 1. (Done) Mettre à jours son stock par des nouveaux articles au fur et à mesure
    qu’ils arrivent ;
-2. Rechercher les films par réalisateur, catégorie, date de sortie et par nom du
-   film
+2. (Done) Rechercher les films par réalisateur, catégorie, date de sortie et par
+   nom du film
 3. (Done) Connaître tous les articles en cours de locations et leurs dates de
    retours
 4. (Done) Les films loués par une personne
@@ -72,7 +72,7 @@ Il aimerait bien disposer des fonctionnalités suivantes :
     (Note from JulioJu: Invoice should be generated when a Customer return
       an Article)
 8. (Done) Faire un top N des films loués
-  (Added by JulioJu: Default is top10000, if nothing is passed (or invalid)
+  (Added by JulioJu: Default is top1000, if nothing is passed (or invalid)
   in the HTTP GET query string)
 
 ## Notes about my implementation

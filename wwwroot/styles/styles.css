@@ -140,5 +140,30 @@ dt {
   font-weight: 700;
 }
 
+
+/* In Page/Film/ShowAll.cshtml for @section Search */
+/* ===================================== */
+
+/* TODO use flexbox to have something more responsive */
+/* I've used it to test grid layout, as I know already flex layout */
+form#film-show-all-search-section > div:first-child {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: auto auto auto auto auto auto;
+  grid-template-rows: auto auto;
+  align-content: center;
+  justify-content: space-around;
+  justify-items: center;
+  align-items: center;
+}
+
+form#film-show-all-search-section {
+  text-align: center;
+}
+
+form#film-show-all-search-section > input[type="submit"] {
+  display: inline-block;
+}
+
 /* vim:sw=2:ts=2:et:fileformat=dos
  */

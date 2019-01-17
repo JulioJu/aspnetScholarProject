@@ -48,6 +48,25 @@ namespace Videotheque.Data
       }
     }
 
+    private int? CountBorrowingP;
+
+    public int CountBorrowing() {
+      if (CountBorrowingP == null)
+      {
+        int countBorrowing = 0;
+        foreach (Article article in PArticles)
+        {
+          countBorrowing += article.CountBorrowing;
+        }
+        return countBorrowing;
+      }
+      else
+      {
+        int countBorrowing = (int)CountBorrowingP;
+        return countBorrowing;
+      }
+    }
+
   }
 }
 

@@ -16,7 +16,7 @@ namespace Videotheque.Pages.Abstract
     #pragma warning disable SA1401
     private protected readonly DbSet<TAbstractEntity> _tDbSet;
 
-    public IList<TAbstractEntity> AbstractEntities
+    public List<TAbstractEntity> AbstractEntities
       { get; private protected set; }
 
     [TempData]
