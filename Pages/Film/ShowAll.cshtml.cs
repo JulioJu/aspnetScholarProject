@@ -3,8 +3,8 @@ namespace Videotheque.Pages.FilmPage
   using System;
   using System.Linq;
   using System.Threading.Tasks;
-  using Microsoft.EntityFrameworkCore;
   using Microsoft.AspNetCore.Mvc;
+  using Microsoft.EntityFrameworkCore;
   using Videotheque.Data;
   using Videotheque.Pages.Abstract;
 
@@ -44,9 +44,9 @@ namespace Videotheque.Pages.FilmPage
     {
       this.Message = "Ordered by ";
       int topNParsed = 1000;
-      if (!String.IsNullOrEmpty(TopN))
+      if (!string.IsNullOrEmpty(this.TopN))
       {
-        if(!int.TryParse(TopN, out topNParsed))
+        if (!int.TryParse(this.TopN, out topNParsed))
         {
           return base
             .BadRequest("Error in URL, can't cast query param TopN to int.");
@@ -56,25 +56,41 @@ namespace Videotheque.Pages.FilmPage
 
       IQueryable<Film> filmIQ = this.CompleteQueryable();
 
-      if (!String.IsNullOrEmpty(this.SearchByTitle))
+      if (!string.IsNullOrEmpty(this.SearchByTitle))
       {
+        // warn: Microsoft.EntityFrameworkCore.Query[20500] The LINQ expression
+        // 'where [f].Title.Contains(__SearchByTitle_0,
+        // InvariantCultureIgnoreCase)' could not be translated and will be
+        // evaluated locally.
+         // CA1307: The behavior of 'string.Contains(string)' could vary based on
+        // the current user's locale settings.
+        #pragma warning disable CA1307
         filmIQ = filmIQ.Where(f => f.Title.Contains(this.SearchByTitle))
           .OrderBy(f => f.Title);
           base.Message += "Title";
       }
 
-      if (!String.IsNullOrEmpty(this.SearchByDirectedBy))
+      if (!string.IsNullOrEmpty(this.SearchByDirectedBy))
       {
+        // warn: Microsoft.EntityFrameworkCore.Query[20500] The LINQ expression
+        // 'where [f].Title.Contains(__SearchByTitle_0,
+        // InvariantCultureIgnoreCase)' could not be translated and will be
+        // evaluated locally.
+         // CA1307: The behavior of 'string.Contains(string)' could vary based on
+        // the current user's locale settings.
+        #pragma warning disable CA1307
         filmIQ = filmIQ
           .Where(f => f.DirectedBy.Contains(this.SearchByDirectedBy))
           .OrderBy(f => f.DirectedBy);
-        base.Message = base.Message.Equals("Ordered by ")
-          ?  "DirectedBy"
+        base.Message = base.Message.Equals("Ordered by ",
+            System.StringComparison.InvariantCultureIgnoreCase)
+          ? "DirectedBy"
+          // SA1002: Semicolons must not be preceded by a space
+          #pragma warning disable SA1002
           : "DirectedBy" + " then by " + this.Message ;
       }
 
-
-      if (!String.IsNullOrEmpty(this.SearchByStyle))
+      if (!string.IsNullOrEmpty(this.SearchByStyle))
       {
         GenreStyleEnum genreStyle;
         if (!GenreStyleEnum.TryParse(this.SearchByStyle, out genreStyle))
@@ -85,12 +101,15 @@ namespace Videotheque.Pages.FilmPage
         }
         filmIQ = filmIQ.Where(f => f.GenreStyle.Equals(genreStyle))
           .OrderBy(f => f.GenreStyle);
-        base.Message = base.Message.Equals("Ordered by ")
-          ?  "style"
+        base.Message = base.Message.Equals("Ordered by ",
+            System.StringComparison.InvariantCultureIgnoreCase)
+          ? "style"
+          // SA1002: Semicolons must not be preceded by a space
+          #pragma warning disable SA1002
           : "style" + " then by " + this.Message ;
       }
 
-      if (!String.IsNullOrEmpty(this.SearchReleaseAfter))
+      if (!string.IsNullOrEmpty(this.SearchReleaseAfter))
       {
         DateTime releaseAfter;
         if (!DateTime.TryParse(this.SearchReleaseAfter, out releaseAfter))
@@ -101,13 +120,16 @@ namespace Videotheque.Pages.FilmPage
         }
         filmIQ = filmIQ.Where(f => f.ReleaseDate >= releaseAfter)
           .OrderBy(f => f.GenreStyle);
-        base.Message = base.Message.Equals("Ordered by ")
-          ?  "release after (include) " + releaseAfter
+        base.Message = base.Message.Equals("Ordered by ",
+            System.StringComparison.InvariantCultureIgnoreCase)
+          ? "release after (include) " + releaseAfter
+          // SA1002: Semicolons must not be preceded by a space
+          #pragma warning disable SA1002
           : "release after (include)"
             + releaseAfter + " then by " + this.Message ;
       }
 
-      if (!String.IsNullOrEmpty(this.SearchReleaseBefore))
+      if (!string.IsNullOrEmpty(this.SearchReleaseBefore))
       {
         DateTime releaseBefore;
         if (!DateTime.TryParse(this.SearchReleaseBefore, out releaseBefore))
@@ -118,8 +140,9 @@ namespace Videotheque.Pages.FilmPage
         }
         filmIQ = filmIQ.Where(f => f.ReleaseDate <= releaseBefore)
           .OrderBy(f => f.GenreStyle);
-        base.Message = base.Message.Equals("Ordered by ")
-          ?  "release before (include) " + releaseBefore
+        base.Message = base.Message.Equals("Ordered by ",
+            System.StringComparison.InvariantCultureIgnoreCase)
+          ? "release before (include) " + releaseBefore
           : "release before (include) "
             + releaseBefore + " then by " + this.Message ;
       }
@@ -128,9 +151,9 @@ namespace Videotheque.Pages.FilmPage
         .Take(topNParsed)
         .ToListAsync();
 
-      if (!String.IsNullOrEmpty(TopN))
+      if (!string.IsNullOrEmpty(this.TopN))
       {
-        base.AbstractEntities.Sort(delegate (Film x, Film y)
+        base.AbstractEntities.Sort((x, y) =>
         {
           base.Message = "Ordered by CountBorrowing.";
           return y.CountBorrowing().CompareTo(x.CountBorrowing());

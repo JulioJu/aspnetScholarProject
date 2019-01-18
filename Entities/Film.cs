@@ -48,23 +48,20 @@ namespace Videotheque.Data
       }
     }
 
-    private int? CountBorrowingP;
+    private int? _countBorrowingP;
 
-    public int CountBorrowing() {
-      if (CountBorrowingP == null)
+    public int CountBorrowing()
+    {
+      if (this._countBorrowingP == null)
       {
-        int countBorrowing = 0;
-        foreach (Article article in PArticles)
+        this._countBorrowingP = 0;
+        foreach (Article article in this.PArticles)
         {
-          countBorrowing += article.CountBorrowing;
+          this._countBorrowingP += article.CountBorrowing;
         }
-        return countBorrowing;
       }
-      else
-      {
-        int countBorrowing = (int)CountBorrowingP;
-        return countBorrowing;
-      }
+      int countBorrowing = (int)this._countBorrowingP;
+      return countBorrowing;
     }
 
   }
