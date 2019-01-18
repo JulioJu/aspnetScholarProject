@@ -4,6 +4,8 @@
 * [Teacher's instructions](#teachers-instructions)
   * [Notes about my implementation](#notes-about-my-implementation)
 * [How to for Linux users](#how-to-for-linux-users)
+  * [Quick start of this current project](#quick-start-of-this-current-project)
+  * [How to Create a new project](#how-to-create-a-new-project)
   * [Langage Version](#langage-version)
   * [Code Analysis and StyleCop](#code-analysis-and-stylecop)
   * [Sql Server](#sql-server)
@@ -112,6 +114,34 @@ If it's a real app, the user should buy a printer of barecode. Barecode
     to CreatedDate or UpdatedDate.
 
 # How to for Linux users
+
+## Quick start of this current project
+
+1. In the file `./appsettings.json ` replace XXXXXX by the password of
+    MS-SQL Server (user SA)
+
+2. Create a file in the parent folder of the current folder named
+    `../mdpmssqlserver.txt` with the password of MS-SQL
+
+3. Install MS-SQL
+    https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-setup?view=sql-server-2017
+
+4. Install dotnet https://dotnet.microsoft.com/download/thank-you/dotnet-sdk-2.2.103-linux-x64-binaries
+
+5. In a Bash Shell
+  ```sh
+    sudo systemctl start mssql-server.service && sudo -k \
+      && sqlcmd -S localhost -U SA -P $(head -c -1 ../mdpmssqlserver.txt) \
+          -Q "drop database videotheque" \
+      && rm -Rf Migrations \
+      && dotnet tool install --global dotnet-ef
+      && dotnet ef migrations add InitialCreate \
+      && dotnet ef database update \
+      && rm -Rf bin/ obj/ && dotnet run
+  ```
+
+## How to Create a new project
+
 * Create new project:
   ```sh
   dotnet new web
@@ -1222,6 +1252,9 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
     replace all by radio buttons~~
 
 * TODO VERY IMPORTANT: make a class diagram of Pages
+
+* TODO maybe, to improve code quality, use Services. But official examples
+    don't use Service, therefore I've followed their examples and advises.
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->
