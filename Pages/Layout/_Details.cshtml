@@ -25,14 +25,16 @@
       Created Date
     </dt>
     <dd class="col-sm-10">
-      @Model.AbstractEntity.CreatedDate
+      @(TimeZoneInfo.ConvertTimeFromUtc(Model.AbstractEntity.CreatedDate,
+        TimeZoneInfo.Local))
     </dd>
 
     <dt class="col-sm-2">
       Updated Date
     </dt>
     <dd class="col-sm-10">
-      @Model.AbstractEntity.UpdatedDate
+      @(TimeZoneInfo.ConvertTimeFromUtc(Model.AbstractEntity.UpdatedDate,
+        TimeZoneInfo.Local))
     </dd>
 
   </dl>

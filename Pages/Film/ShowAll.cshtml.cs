@@ -122,11 +122,11 @@ namespace Videotheque.Pages.FilmPage
           .OrderBy(f => f.GenreStyle);
         base.Message = base.Message.Equals("Ordered by ",
             System.StringComparison.InvariantCultureIgnoreCase)
-          ? "release after (include) " + releaseAfter
+          ? "release after (include) " + releaseAfter.ToShortDateString()
           // SA1002: Semicolons must not be preceded by a space
           #pragma warning disable SA1002
           : "release after (include)"
-            + releaseAfter + " then by " + this.Message ;
+            + releaseAfter.ToShortDateString() + " then by " + this.Message ;
       }
 
       if (!string.IsNullOrEmpty(this.SearchReleaseBefore))
@@ -142,9 +142,9 @@ namespace Videotheque.Pages.FilmPage
           .OrderBy(f => f.GenreStyle);
         base.Message = base.Message.Equals("Ordered by ",
             System.StringComparison.InvariantCultureIgnoreCase)
-          ? "release before (include) " + releaseBefore
+          ? "release before (include) " + releaseBefore.ToShortDateString()
           : "release before (include) "
-            + releaseBefore + " then by " + this.Message ;
+            + releaseBefore.ToShortDateString() + " then by " + this.Message ;
       }
 
       base.AbstractEntities = await filmIQ

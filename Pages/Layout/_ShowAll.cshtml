@@ -45,8 +45,14 @@
         *  @await Html.PartialAsync("./_ShowAllTbody.cshtml")
         *@
 
-        <td> @field.CreatedDate </td>
-        <td> @field.UpdatedDate </td>
+        <td>
+          @(TimeZoneInfo.ConvertTimeFromUtc(field.CreatedDate,
+            TimeZoneInfo.Local))
+        </td>
+        <td>
+          @(TimeZoneInfo.ConvertTimeFromUtc(field.UpdatedDate,
+            TimeZoneInfo.Local))
+        </td>
 
       <td>
         <a asp-page="./Details" asp-route-id="@field.Id">details</a>

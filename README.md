@@ -108,6 +108,9 @@ If it's a real app, the user should buy a printer of barecode. Barecode
 
 * Protected against OverPosting
 
+* Release date not converted from UTC or to UTC. Local dependent, contrary
+    to CreatedDate or UpdatedDate.
+
 # How to for Linux users
 * Create new project:
   ```sh

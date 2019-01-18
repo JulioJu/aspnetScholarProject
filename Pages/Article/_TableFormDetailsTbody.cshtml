@@ -10,10 +10,18 @@
       </a>
     </td>
     <td>
-      @Html.DisplayFor(model => model.BorrowingDate)
+      @if (Model.BorrowingDate != null)
+      {
+        @(TimeZoneInfo.ConvertTimeFromUtc((DateTime)Model.BorrowingDate,
+            TimeZoneInfo.Local))
+      }
     </td>
     <td>
-      @Html.DisplayFor(model => model.ReturnDate)
+      @if (Model.ReturnDate != null)
+      {
+        @(TimeZoneInfo.ConvertTimeFromUtc((DateTime)Model.ReturnDate,
+            TimeZoneInfo.Local))
+      }
     </td>
     @if (!@Context.Request.Path.ToString().StartsWith("/Customer",
       System.StringComparison.InvariantCultureIgnoreCase))

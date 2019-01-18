@@ -25,12 +25,22 @@
 <td>
   @Html.DisplayFor(modelItem => item.Comment)
 </td>
+
 <td>
-  @Html.DisplayFor(modelItem => item.BorrowingDate)
+  @if (item.BorrowingDate != null)
+  {
+    @(TimeZoneInfo.ConvertTimeFromUtc((DateTime)item.BorrowingDate,
+        TimeZoneInfo.Local))
+  }
 </td>
 <td>
-  @Html.DisplayFor(modelItem => item.ReturnDate)
+  @if (item.ReturnDate != null)
+  {
+    @(TimeZoneInfo.ConvertTimeFromUtc((DateTime)item.ReturnDate,
+        TimeZoneInfo.Local))
+  }
 </td>
+
 <td>
   <a asp-page="/Customer/Details"
         asp-route-id="@Html.DisplayFor(modelItem => item.BorrowerId)">
