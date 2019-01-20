@@ -1,19 +1,24 @@
 namespace Videotheque.Pages.CustomerPage
 {
-  using System.Linq;
   using System.Threading.Tasks;
   using Microsoft.EntityFrameworkCore;
   using Videotheque.Data;
   using Videotheque.Pages.Abstract;
 
-  public sealed partial class Crud : CrudAbstract<Customer>
+  public class Details : CrudAbstract<Customer>
   {
-    public Crud(AppDbContext db)
+    public Details(AppDbContext db)
       : base(db, db.Customers)
     {
     }
 
-    private async Task<Customer> RetrieveCustomer(int? id)
+    private protected
+      override Task<bool> PerformTestOverpostingFunc(Customer tAbstractEntity)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    private protected async Task<Customer> RetrieveCustomer(int? id)
     {
       return await base._tDbSet
         .Include(s => s.CurrentlyBorrowed)
@@ -26,13 +31,6 @@ namespace Videotheque.Pages.CustomerPage
       PerformSearchInDatabaseFunc(int? id)
     {
       Customer customer = await this.RetrieveCustomer(id);
-      string currentRoute = base.HttpContext.Request.Path;
-      if (currentRoute.StartsWith("/Customer/Edit/",
-            System.StringComparison.InvariantCultureIgnoreCase))
-      {
-        this.CurrentlyBorrowedList = customer.CurrentlyBorrowed.ToList();
-        customer.CurrentlyBorrowed = null;
-      }
       return customer;
     }
 

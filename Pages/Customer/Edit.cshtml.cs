@@ -3,18 +3,18 @@ namespace Videotheque.Pages.CustomerPage
   using System;
   using System.Collections.Generic;
   using System.Globalization;
+  using System.Linq;
   using System.Threading.Tasks;
   using Microsoft.AspNetCore.Mvc;
   using Microsoft.EntityFrameworkCore;
   using Videotheque.Data;
   using Videotheque.Pages;
-  using Videotheque.Pages.Abstract;
 
   /// <summary>
   /// Manage only /Customer/Create and /Customer/Edit/:id IMPORTANT see also
   /// the other part of the partial class ./Crud.CreateOrEdit.cshtml.cs
   /// </summary>
-  public sealed partial class Crud : CrudAbstract<Customer>
+  public class Edit : Create
   {
     /// <value>
     /// Default value: False (due to c# interpretation) Set to true to display
@@ -31,6 +31,25 @@ namespace Videotheque.Pages.CustomerPage
 
     /// <summary> Used only when we display Invoice </summary>
     public int CustomDiscount { get; private set; }
+
+    public Edit(AppDbContext db)
+      : base(db)
+    {
+    }
+
+    private protected async override Task<Customer>
+      PerformSearchInDatabaseFunc(int? id)
+    {
+      Customer customer = await base.RetrieveCustomer(id);
+      string currentRoute = base.HttpContext.Request.Path;
+      if (currentRoute.StartsWith("/Customer/Edit/",
+            System.StringComparison.InvariantCultureIgnoreCase))
+      {
+        this.CurrentlyBorrowedList = customer.CurrentlyBorrowed.ToList();
+        customer.CurrentlyBorrowed = null;
+      }
+      return customer;
+    }
 
     /// <summary> Retrieve an article saved in Database </summary>
     /// <exception cref="BadPostRequestException">
@@ -304,7 +323,7 @@ namespace Videotheque.Pages.CustomerPage
       }
 
       string[] articleLoanDurationArray;
-      articleLoanDurationArray = this
+      articleLoanDurationArray = base
         .RetrievePostParamArticleLoanDurationArray(articleIdToBorrowArray);
 
       // 2) Perform borrowing, then return
@@ -312,7 +331,7 @@ namespace Videotheque.Pages.CustomerPage
       // =============================
 
       // BORROWING
-      if (!await this.BorrowArticles(this.AbstractEntity,
+      if (!await base.BorrowArticles(this.AbstractEntity,
             articleIdToBorrowArray,
             articleLoanDurationArray))
       {

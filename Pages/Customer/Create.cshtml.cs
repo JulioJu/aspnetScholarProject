@@ -6,12 +6,11 @@ namespace Videotheque.Pages.CustomerPage
   using Microsoft.EntityFrameworkCore;
   using Videotheque.Data;
   using Videotheque.Pages;
-  using Videotheque.Pages.Abstract;
 
   /// <summary>
   /// Manage /Customer/Create and /Customer/Edit/:id
   /// </summary>
-  public sealed partial class Crud : CrudAbstract<Customer>
+  public class Create : Details
   {
     public static readonly int NumberInputArticleToBorrow = 4;
 
@@ -29,6 +28,11 @@ namespace Videotheque.Pages.CustomerPage
     //      the property is read-only."
     #pragma warning disable CA1819
     public string[] ArticleIdToBorrowLoanDurationArray { get; set; }
+
+    public Create(AppDbContext db)
+      : base(db)
+    {
+    }
 
     private protected override async Task<bool> PerformTestOverpostingFunc(
         Customer tAbstractEntity)
@@ -64,17 +68,18 @@ namespace Videotheque.Pages.CustomerPage
     /// Thrown if POST is malformed : can't cast to int or
     /// <code>articleIdToBorrowArray@(incex)</code> is null
     /// </exception>
-    private async Task<bool> BorrowArticles(
+    private protected async Task<bool> BorrowArticles(
         Customer customer,
         string[] articleIdToBorrowArray,
         string[] articleLoanDurationArray)
     {
       bool isBorrowed = true;
       this.ArticleIdToBorrowArrayInputValue =
-        new string[Crud.NumberInputArticleToBorrow];
+        new string[Create.NumberInputArticleToBorrow];
       this.ValidationMessageArticleIdToBorrowArray =
-        new string[Crud.NumberInputArticleToBorrow];
-      for (int index = 0; index < Crud.NumberInputArticleToBorrow; index++)
+        new string[Create.NumberInputArticleToBorrow];
+      for (int index = 0; index < Create.NumberInputArticleToBorrow;
+          index++)
       {
         if (articleIdToBorrowArray[index] != null
             && articleLoanDurationArray[index] != null)
@@ -189,7 +194,7 @@ namespace Videotheque.Pages.CustomerPage
     /// For articles listed in the Return form (list hidden inputs), if the
     /// article can't be fetched from Database.
     /// </exception>
-    private string[] RetrievePostParamArticleLoanDurationArray(
+    private protected string[] RetrievePostParamArticleLoanDurationArray(
         string[] articleIdToBorrowArray)
     {
       string[] articleLoanDurationArray =
