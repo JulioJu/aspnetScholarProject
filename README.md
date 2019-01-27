@@ -5,6 +5,7 @@
   * [Notes about my implementation](#notes-about-my-implementation)
 * [How to for Linux users](#how-to-for-linux-users)
   * [Quick start of this current project](#quick-start-of-this-current-project)
+  * [Quick start for the samples of the app](#quick-start-for-the-samples-of-the-app)
   * [How to Create a new project](#how-to-create-a-new-project)
   * [Langage Version](#langage-version)
   * [Code Analysis and StyleCop](#code-analysis-and-stylecop)
@@ -45,7 +46,7 @@
   * [Footer for HTML](#footer-for-html)
   * [Convert html to pdf](#convert-html-to-pdf)
   * [Generate docx](#generate-docx)
-* [Issue created by me on GitHub](#issue-created-by-me-on-github)
+* [Issue and Pull Request created by me on GitHub](#issue-and-pull-request-created-by-me-on-github)
 * [Credits](#credits)
 * [TODO](#todo)
 
@@ -63,6 +64,8 @@ Le propriétaire d’une vidéothèque vous demande de lui réaliser une applica
 Il aimerait bien disposer des fonctionnalités suivantes :
 1. (Done) Mettre à jours son stock par des nouveaux articles au fur et à mesure
    qu’ils arrivent ;
+   * Note by JulioJu: Articles could only be created when we create a Film
+       or Edit a Film (more logic).
 2. (Done) Rechercher les films par réalisateur, catégorie, date de sortie et par
    nom du film
 3. (Done) Connaître tous les articles en cours de locations et leurs dates de
@@ -70,12 +73,52 @@ Il aimerait bien disposer des fonctionnalités suivantes :
 4. (Done) Les films loués par une personne
 5. (Done) Les personnes qui ont loué un film
 6. (Done) Faire la location de films aux personnes.
+    * Note by JulioJu:
+      1. Articles are borrowed and returned only in the Customer
+        page.  More logic.
+      2. When borrowing, lot of tests are done. Does the article exist?
+        Is it currently borrowed? Is POST params are valid.
+        Unusable or lost Articles can't be borrowed.
+        Underage customers can't borrow Pornographic or Violence films.
+        This messages are displayed in web page.
+      3. When the Validation fail, all inputs are kept ;-).
+      4. Can't borrow an article with a number of days `< 0`. Number of
+          days has currently no any utility. Price is calculated during
+          generation of the invoice, and depends of the number of days that
+          the user has borrowed the CD. As it's a Private Library, our goal
+          is to make money, therefore no concept of late. If the borrower
+          keep the Article, it pays more.
 7. (Done) Éditer une facture à une personne
-    (Note from JulioJu: Invoice should be generated when a Customer return
-      an Article)
+    * Note from JulioJu:
+      1. Invoice should be generated when a Customer return an Article
+      2. People with Disabilities, or unemployed or student or underage have
+        a discount of 10 %.
+      3. Articles Disc Damaged or VeryDamaged has a custom discount.
+      4. Pornographic films and films with too much Violence has a TVA of
+         10% http://bofip.impots.gouv.fr/bofip/194-PGP.html . Other has a TVA of
+         2%.
+      5. Could be printed on several pages, with the same page footer
+          on Firefox 56.
+      6. Discount could not be `> 99 %` or `< 0 %`
+      7. As it's a French Invoice, the Invoice is in French, it's the
+          only one page in French.
+      8. Details of Price (relative to pastille color on the Article,
+          number of days to borrow, etc.) are displayed in the Customer Edit
+          Page.
+
 8. (Done) Faire un top N des films loués
-  (Added by JulioJu: Default is top1000, if nothing is passed (or invalid)
-  in the HTTP GET query string)
+    * No by JulioJu: Default is top1000, if nothing is passed (or invalid)
+    in the HTTP GET query string
+
+* Other Notes for create a Customer:
+    1. At least (Firstname and Lastname) or Company is required
+    2. Input Birthdate, "Is Unemplyed", "Is Student" and
+      "People with Disabilities" should be null if the input Company is
+      not null.
+    3. A customer can't have less than 13 yo or more than 122 yo (include).
+
+* Other Notes for create a Film:
+    A Film can't be released after today and before the 4/22/1895 (include).
 
 ## Notes about my implementation
 
@@ -96,8 +139,9 @@ If it's a real app, the user should buy a printer of barecode. Barecode
     Inspired from default style of w3schools.
 
 * Our goal is simply to make a simple app deployable in an intranet,
-    for an updated PC browser (Chrome or Firefox, not IE, not Safari,
-      no smartphones, etc.).
+    for an updated  (Chrome or Firefox, not IE, not Safari,
+      no smartphones, etc.). Scren length should have at least
+      1920px of width. Not tested with screen shorter.
     * As the app could be used in concurrency (e.g. several tabs open)
         POST params should be tested to know if they are still valid.
         Especially done in ./Pages/Customer/Crud.CreateOrEdit.cshtml.cs
@@ -131,14 +175,17 @@ If it's a real app, the user should buy a printer of barecode. Barecode
 5. In a Bash Shell
   ```sh
     sudo systemctl start mssql-server.service && sudo -k \
-      && sqlcmd -S localhost -U SA -P $(head -c -1 ../mdpmssqlserver.txt) \
-          -Q "drop database videotheque" \
+      && dotnet ef database drop \
       && rm -Rf Migrations \
       && dotnet tool install --global dotnet-ef
       && dotnet ef migrations add InitialCreate \
       && dotnet ef database update \
       && rm -Rf bin/ obj/ && dotnet run
   ```
+
+## Quick start for the samples of the app
+
+* See my issue at https://github.com/aspnet/Docs/issues/10635
 
 ## How to Create a new project
 
@@ -326,14 +373,20 @@ If it's a real app, the user should buy a printer of barecode. Barecode
     ```
 
     You could simply use:
-    ```sh
+    ~~```sh
     $ sqlcmd -S localhost -U SA -P $(head -c -1 ../mdpmssqlserver.txt) \
         -Q "drop database videotheque" \
       && rm -Rf Migrations \
       &&  dotnet ef migrations add InitialCreate \
       && dotnet ef database update
-    ```
+    ```~~
 
+    ```sh
+    $ dotnet ef database drop
+      && rm -Rf Migrations \
+      && dotnet ef migrations add InitialCreate \
+      && dotnet ef database update
+    ```
 ### Inheritance
 * https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/inheritance?view=aspnetcore-2.0
     (tutorial not updated for aspnetcore-2.1).
@@ -405,6 +458,8 @@ dotnet watch run
 * Prefer use  `$ dotnet add package`
 
 # How To for the official Quick Start
+
+***Before all you must read my issue at https://github.com/aspnet/Docs/issues/10635***
 
 **Read documentation presented at the section 1., then the section presented
 at the section 2 very carefully.**
@@ -1164,7 +1219,7 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
 
 * See my work for my Internship
 
-# Issue created by me on GitHub
+# Issue and Pull Request created by me on GitHub
 
 *The four firsts issues are also referenced above in section
   "How to for Linux Users"*
@@ -1173,17 +1228,37 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
 3. https://github.com/OmniSharp/omnisharp-vim/issues/427
 4. https://github.com/OmniSharp/omnisharp-roslyn/issues/1341
 5. https://github.com/OmniSharp/omnisharp-roslyn/issues/129
-6. See https://github.com/aspnet/Docs/issues/9650
-  ([razor-page overview] can't have Query String in HTTP POST request method)
+
+6. See ([razor-page overview] can't have Query String in HTTP POST request method)
+  https://github.com/aspnet/Docs/issues/9650
+
 7. https://github.com/OmniSharp/omnisharp-vim/issues/434
-8. https://github.com/aspnet/Docs/issues/9863
-  "For Linux users RazorPagesMovie.Models.Movie.ID should be replaced by
-9. https://github.com/OmniSharp/omnisharp-roslyn/issues/1358
-  RazorPagesMovie.Models.Movie.Id
-10. https://github.com/OmniSharp/omnisharp-roslyn/pull/1361
+
+8. "For Linux users RazorPagesMovie.Models.Movie.ID should be replaced by
+  https://github.com/aspnet/Docs/issues/9863
+
+9.  RazorPagesMovie.Models.Movie.Id
+  https://github.com/OmniSharp/omnisharp-roslyn/issues/1358
+  TODO: make a PullRequest (very easy to done)
+
+10. Pull Request Fix refusing HTTP connections
+  https://github.com/OmniSharp/omnisharp-roslyn/pull/1361
+
 11. https://github.com/OmniSharp/omnisharp-vim/issues/437
-12. https://github.com/aspnet/AspNetCore/issues/6329
-  [Suggestion] Accessibility for input fields required
+
+12.  [Suggestion] Accessibility for input fields required
+  https://github.com/aspnet/AspNetCore/issues/6329
+
+13. How to for Linux and Mac users
+  https://github.com/aspnet/Docs/issues/10635
+
+14. LF line ending for all files except .sln files
+  https://github.com/aspnet/Docs/issues/10641
+  (could become a Pull Request if it is accepted)
+
+15. Pull Request:
+  view-components samples: folder `Todo` renamed `ToDo` for case sensitive OS
+  https://github.com/aspnet/Docs/pull/10637
 
 
 # Credits

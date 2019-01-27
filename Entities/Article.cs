@@ -13,7 +13,6 @@ namespace Videotheque.Data
     /// <value>Default value: <code>Conservation.New</code> </value>
     public Conservation Box { get; set; }
 
-    [Required]
     // Warn during the runtime in the Server Console:
     // « Microsoft.EntityFrameworkCore.Model.Validation[20601]
     //     The 'bool' property 'IsLost' on entity type 'Article' is configured
@@ -32,20 +31,24 @@ namespace Videotheque.Data
     [Required]
     [Range(0, int.MaxValue)]
     /// <value>Default value: <code>0</code> </value>
+    [Display(Name = "Count Borrowing")]
     public int CountBorrowing { get; set; } = 0;
 
     public string Comment { get; set; }
 
+    [Display(Name = "Borrowing Date")]
     public DateTime? BorrowingDate { get; set; }
 
     public DateTime? ReturnDate { get; set; }
 
     [Required]
+    [Display(Name = "Film Id")]
     public int FilmId { get; set; }
 
     // should not be required
     public Film Film { get; set; }
 
+    [Display(Name = "Borrower Id")]
     public int? BorrowerId { get; set; }
 
     public Customer Borrower { get; set; }

@@ -10,7 +10,8 @@ namespace Videotheque.Data
     {
       Film film = (Film)validationContext.ObjectInstance;
 
-      if (DateTime.Compare(film.ReleaseDate, new DateTime(1895, 4, 22)) < 0)
+      if (DateTime.Compare(film.ReleaseDate, new DateTime(1895, 4, 22)) < 0
+          || DateTime.Compare(film.ReleaseDate, DateTime.Today) > 0)
       {
         return new ValidationResult(GetErrorMessage());
       }
@@ -20,7 +21,11 @@ namespace Videotheque.Data
 
     private static string GetErrorMessage()
     {
-      return $"Movie must have a release after 4/22/1895 and " + DateTime.Today;
+      return $"Movie must have a release after " +
+        new DateTime(1895, 4, 22).ToShortDateString()
+        + " and " +
+        DateTime.Today.ToShortDateString()
+        + " (include).";
     }
   }
 }

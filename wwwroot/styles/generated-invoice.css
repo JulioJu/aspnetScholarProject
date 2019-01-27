@@ -56,9 +56,17 @@ table#invoice p.clear {
 }
 
 table#invoice p#payement-condition {
-  width: 50%;
+  margin-top: 15em;
+  font-size: 0.9em;
+  text-align: center;
+}
+
+.date {
   float: right;
-  margin-top: 4em;
+  margin-right: 2em;
+}
+
+#lorem-ipsum {
   font-size: 0.7em;
 }
 

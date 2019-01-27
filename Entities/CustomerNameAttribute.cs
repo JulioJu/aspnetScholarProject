@@ -11,7 +11,7 @@ namespace Videotheque.Data
 
       if ((string.IsNullOrEmpty(customer.Firstname)
                   || string.IsNullOrEmpty(customer.Lastname))
-              && string.IsNullOrEmpty(customer.Society))
+              && string.IsNullOrEmpty(customer.Company))
       {
           return new ValidationResult(GetMessage());
       }
@@ -21,7 +21,7 @@ namespace Videotheque.Data
 
     private static string GetMessage()
     {
-      return $"Fill either Firtname and Lastname or Society";
+      return $"Fill either Firtname and Lastname or Company";
     }
 
   }

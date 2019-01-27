@@ -192,7 +192,7 @@ Trick<y:LabelModel>
           <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Liberation Sans" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="149.234375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="top" visible="true" width="130.728515625" x="2.0" y="27.07421875">Firstname: string [100]
 Lastname: string [100]
 Birthdate: Datetime
-Society: string [100]
+Company: string [100]
 AddressStreet*: string [100]
 AddressCity*: string [100]
 AddressCountry: string [100]
@@ -253,11 +253,11 @@ Borrower<y:LabelModel>
     <node id="n9">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="10.160000000000082" width="133.677734375" x="724.9093558735499" y="815.8910999541118"/>
+          <y:Geometry height="10.160000000000082" width="133.677734375" x="724.9093558735499" y="848.4385004426393"/>
           <y:Fill hasColor="false" transparent="false"/>
           <y:BorderStyle hasColor="false" raised="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="37.22265625" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="123.677734375" x="5.0" y="-13.531328124999959">Either firstname and lastname
-or society is required
+or company is required
 13 yo &lt;= Birthday &lt;= 122yo<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
@@ -313,7 +313,7 @@ UpdatedDate: DateTime<y:LabelModel>
       <data key="d4"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.entityRelationship.big_entity">
-          <y:Geometry height="88.0" width="88.208984375" x="738.3321437109372" y="694.4407359253852"/>
+          <y:Geometry height="88.0" width="88.208984375" x="747.6437308735499" y="667.9206318236221"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasLineColor="false" height="26.1484375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="78.208984375" x="5.0" y="4.0">&lt;&lt;Enumeration&gt;&gt;
@@ -337,10 +337,31 @@ Gold<y:LabelModel>
     <node id="n13">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="10.160000000000082" width="202.59374999999994" x="444.5886860364549" y="448.85244542469445"/>
+          <y:Geometry height="32.16000000000008" width="326.9736328125" x="401.3987446302049" y="426.85244542469445"/>
           <y:Fill hasColor="false" transparent="false"/>
           <y:BorderStyle hasColor="false" raised="false" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="15.07421875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="192.59375" x="5.0" y="-2.457109374999959">From https://en.wikipedia.org/wiki/Film_genre<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="26.1484375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="316.9736328125" x="5.0" y="3.005781250000041">From https://en.wikipedia.org/wiki/Film_genre (except Violence)
+Violence and Pornographic films has a TVA of  10 %, other has a TVA of 2%<y:LabelModel>
+              <y:SmartNodeLabelModel distance="4.0"/>
+            </y:LabelModel>
+            <y:ModelParameter>
+              <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+            </y:ModelParameter>
+          </y:NodeLabel>
+          <y:Shape type="rectangle"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n14">
+      <data key="d6">
+        <y:ShapeNode>
+          <y:Geometry height="10.160000000000082" width="74.8154296875" x="749.5106525183514" y="785.9206318236221"/>
+          <y:Fill hasColor="false" transparent="false"/>
+          <y:BorderStyle hasColor="false" raised="false" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Liberation Serif" fontSize="10" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="48.296875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="64.8154296875" x="5.0" y="-19.06843749999996">Grey: 1euro
+Bronze: 2euros
+Silver: 3euros
+Gold:4euros<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -374,7 +395,7 @@ Gold<y:LabelModel>
     <edge id="e2" source="n6" target="n9">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="16.17129101649641" sy="36.52341958428235" tx="5.522782218750081" ty="0.0"/>
+          <y:Path sx="16.17129101649641" sy="69.07082007280985" tx="5.522782218750081" ty="0.0"/>
           <y:LineStyle color="#000000" type="dashed" width="1.0"/>
           <y:Arrows source="none" target="none"/>
           <y:BendStyle smoothed="false"/>
@@ -394,7 +415,17 @@ Gold<y:LabelModel>
     <edge id="e4" source="n13" target="n5">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="-71.91144405468759" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:Path sx="-116.06056999958815" sy="0.0" tx="5.51175135423415" ty="-113.34183233950466"/>
+          <y:LineStyle color="#000000" type="dashed" width="1.0"/>
+          <y:Arrows source="none" target="none"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e5" source="n12" target="n14">
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="4.82985569894845" ty="0.0"/>
           <y:LineStyle color="#000000" type="dashed" width="1.0"/>
           <y:Arrows source="none" target="none"/>
           <y:BendStyle smoothed="false"/>

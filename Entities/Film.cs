@@ -22,14 +22,17 @@ namespace Videotheque.Data
     //         ErrorMessage = "Value for {0} must be between {1} and {2}")]
     [FilmReleased]
     /// <summary>Year between 1895 and the Current Year</summary>
+    [Display(Name = "Release Date")]
     public DateTime ReleaseDate { get; set; }
 
     [Required]
     [MinLengthAttribute(2)]
     [MaxLengthAttribute(255)]
+    [Display(Name = "Directed By")]
     public string DirectedBy { get; set; }
 
     [Required]
+    [Display(Name = "Genre Style")]
     public GenreStyleEnum GenreStyle { get; set; }
 
     private HashSet<Article> PArticles { get; set; }

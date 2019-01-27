@@ -34,7 +34,7 @@
 <!-- First part of tye form: general Customer info -->
 <!-- ================================ -->
 
-<p> At least Firstname and Lastname or Society is required </p>
+<p> At least Firstname and Lastname or Company is required </p>
 <div class="form-group">
   <label asp-for="Firstname" class="control-label"></label>
   <input asp-for="Firstname" class="form-control" />
@@ -46,9 +46,9 @@
   <span asp-validation-for="Lastname" class="text-danger"></span>
 </div>
 <div class="form-group">
-  <label asp-for="Society" class="control-label"></label>
-  <input asp-for="Society" class="form-control" />
-  <span asp-validation-for="Society" class="text-danger"></span>
+  <label asp-for="Company" class="control-label"></label>
+  <input asp-for="Company" class="form-control" />
+  <span asp-validation-for="Company" class="text-danger"></span>
 </div>
 <div class="form-group">
   <label asp-for="AddressStreet" class="control-label"></label>
@@ -75,6 +75,9 @@
   <input asp-for="Email" class="form-control" />
   <span asp-validation-for="Email" class="text-danger"></span>
 </div>
+
+<p> The four following input should be null if Company is defined  </p>
+
 <div class="form-group">
   <label asp-for="Birthdate" class="control-label"></label>
   <input asp-for="Birthdate" class="form-control" />
@@ -111,27 +114,87 @@
 {
   if (CurrentlyBorrowedList.Any())
   {
-      @:<table id="CustomerEditArticlesCurrentlyBorrowed">
-      <thead>
-        <tr>
-          <td>
-            Article borrowed <br /> (barcode)
-          </td>
-          <td>
-            Film Id <br />
-          </td>
-          <td>
-            Film title
-          </td>
-          <td>
-            Do you want return it?
-          </td>
-          <td>
-            Should be returned before
-          </td>
-        </tr>
-      </thead>
-      @:<tbody>
+
+    @:<ul>
+      <li>Price relative to color of the Film
+        (a pastile is pasted on the Article):
+        <ul>
+          <li>Gray: 1 euro</li>
+          <li>Bronze: 2 euros</li>
+          <li>Silver 3 euros</li>
+          <li>Gold: 4 euros</li>
+        </ul>
+      </li>
+      <li>Price relative to day:
+        <ul>
+          <li>One day or two days: Film Price X1</li>
+          <li>between 3 and 7 days : Film Price X3</li>
+          <li>between 8 and  14 days X6</li>
+          <li>more than 14 days X10 </li>
+        </ul>
+      </li>
+      <li>Penalty (TODO):
+        <ul>
+          <li>Disc become damaged: price X5 </li>
+          <li>Disc become very damaged: price X7</li>
+          <li>Disc become unusable: price X10</li>
+          <li>Only box become damaged: price X2</li>
+          <li>Only the box become very damaged or unusable: price X2.5</li>
+          <li>Article lost: price X10</li>
+        </ul>
+      </li>
+      <li>Discount for the article (combined with other discount)
+        <ul>
+          <li>Disc borrowed damaged: 20%</li>
+          <li>Disc borrowed very damaged: 50%</li>
+        </ul>
+      </li>
+      <li>TVA
+        <ul>
+          <li>For all: 2%</li>
+          <li>For violence or pornographic films: 10%</li>
+          <li>See also
+            <a href="http://bofip.impots.gouv.fr/bofip/194-PGP.html">
+              impots.gouv.fr
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>Discount for all articles
+        <ul>
+          <li>
+            Customers underage, with disabilities or umemployed has a custom
+            discount of 10 % of all the Articles.
+          </li>
+          <li>
+            All customers can have a custom discount.
+          </li>
+        </ul>
+        .
+      </li>
+    @:</ul>
+
+    @:<table id="CustomerEditArticlesCurrentlyBorrowed">
+    <thead>
+      <tr>
+        <td>
+          Article borrowed <br /> (barcode)
+        </td>
+        <td>
+          Film Id <br />
+        </td>
+        <td>
+          Film title
+        </td>
+        <td>
+          Do you want return it?
+        </td>
+        <td>
+          Should be returned before
+        </td>
+      </tr>
+    </thead>
+    @:<tbody>
     int index=0;
     foreach (Article article in CurrentlyBorrowedList)
     {
@@ -178,22 +241,23 @@
       </tr>
       index++;
     }
-      @:</tbody>
-      @:</table>
-      <label for="customDiscount">
-        Custom discount in %
-        (not cummulable with fixed discount)
-      </label>
-      int customDiscountValue = 0;
-      if (Model.IsUnderage()
-          || Model.IsUnemployed
-          || Model.IsStudent
-          || Model.PeopleWithDisabilities)
-      {
-        customDiscountValue = 25;
-      }
-      <input id="customDiscount" type="number" min="0" max="99"
-        value="@customDiscountValue" name="customDiscount" required />
+    @:</tbody>
+    @:</table>
+    <label for="customDiscount">
+      Custom discount for all Articles in %
+      (not cummulable with discount for customers
+      underage, with disabilities or umemployed.)
+    </label>
+    int customDiscountValue = 0;
+    if (Model.IsUnderage()
+        || Model.IsUnemployed
+        || Model.IsStudent
+        || Model.PeopleWithDisabilities)
+    {
+      customDiscountValue = 25;
+    }
+    <input id="customDiscount" type="number" min="0" max="99"
+      value="@customDiscountValue" name="customDiscount" required />
   }
   else
   {
@@ -211,7 +275,7 @@
       Article borrowed <br /> (barcode)
     </td>
     <td>
-      Loan duration
+      Loan duration (just for information)
     </td>
   </tr>
 </thead>
@@ -240,20 +304,12 @@
     </td>
     <td>
       <div class="grid-container-article-loan-duration">
-        <label for="articleLoanDurationArray@(index)1">  1</label>
         <label for="articleLoanDurationArray@(index)2">  2</label>
-        <label for="articleLoanDurationArray@(index)5">  5</label>
         <label for="articleLoanDurationArray@(index)7">  7</label>
         <label for="articleLoanDurationArray@(index)14"> 14</label>
-        <input id="articleLoanDurationArray@(index)1" type="radio"
-          value="1" name="articleLoanDurationArray@(index)"
-          checked="@(loanDuration == 1)" />
         <input id="articleLoanDurationArray@(index)2" type="radio"
           value="2" name="articleLoanDurationArray@(index)"
           checked="@(loanDuration == 2)" />
-        <input id="articleLoanDurationArray@(index)5" type="radio"
-          value="5" name="articleLoanDurationArray@(index)"
-          checked="@(loanDuration == 5)" />
         <input id="articleLoanDurationArray@(index)7" type="radio"
           value="7" name="articleLoanDurationArray@(index)"
           checked="@(loanDuration == 7)" />

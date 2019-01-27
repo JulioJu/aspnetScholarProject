@@ -18,21 +18,21 @@
   <hr />
   <div id="addresses">
     <span id="store-address" >
-      NeoVim Videotheque Corporation <br />
+      NeoVim Videotheque <br />
       1 place de la République <br />
-      75000 Contonso City <br />
-      01 23 45 67 89 <br />
+      38000 Grenoble <br />
+      04 76 45 67 89 <br />
       www.neovim.io <br />
-      Siret en cours d'attribution <br />
+      neovim@neovim.fr <br />
     </span>
     <span id="customer-address" >
       @if (!String.IsNullOrWhiteSpace(Model.Lastname))
       {
       @Model.Firstname @Html.Raw(" ") @Model.Lastname <br />
       }
-      @if (!String.IsNullOrWhiteSpace(Model.Society))
+      @if (!String.IsNullOrWhiteSpace(Model.Company))
       {
-        @Model.Society <br />
+        @Model.Company <br />
       }
       @Model.AddressStreet <br />
       @Model.AddressCity <br />
@@ -45,8 +45,12 @@
 
   <br />
 
-  <div> Référence:
-    @(DateTime.Today.Year)@(DateTime.Today.Month)@(DateTime.Today.Day)@(DateTime.UtcNow.Hour)@(DateTime.UtcNow.Minute)@(DateTime.UtcNow.Second)
+  <div>
+    <strong> Facture n°:
+      @(DateTime.Today.Year)@(DateTime.Today.Month)@(DateTime.Today.Day)@(DateTime.UtcNow.Hour)@(DateTime.UtcNow.Minute)@(DateTime.UtcNow.Second)
+    </strong>
+    <span class="date">Grenoble, le @DateTime.Now.ToString("dddd dd MMMM yyyy",
+      new System.Globalization.CultureInfo("fr-FR"))</span>
   </div>
 
   <table id="detail-price">
@@ -55,12 +59,9 @@
         <th scope="col">
           Film loués
         </th>
-        @if (CustomDiscount != 0)
-        {
-          <th scope="col">
-            Remise
-          </th>
-        }
+        <th scope="col">
+          Remise
+        </th>
         <th>
           TVA
         </th>
@@ -74,6 +75,7 @@
     </thead>
     <tbody>
       @{
+        double articlePriceHT;
         double priceHT = 0;
         double priceTTC = 0;
       }
@@ -83,26 +85,81 @@
         {
           if (bool.Parse(ShouldBeRemovedArray[index]))
           {
+            Article article = CurrentlyBorrowedList[index];
+            double tva = 2;
+            int priceLoanDuration;
+            // TODO: test null
+            int articleLoanDuration =
+              (int)(DateTime.Today - article.BorrowingDate)?.TotalDays;
+            string dayPack;
+            if (articleLoanDuration >= 0 && articleLoanDuration <= 2)
+            {
+              priceLoanDuration = 1;
+              dayPack="2";
+            }
+            else if (articleLoanDuration >= 3 && articleLoanDuration <= 7)
+            {
+              priceLoanDuration = 3;
+              dayPack="7";
+            }
+            else if (articleLoanDuration >= 8 && articleLoanDuration <= 14)
+            {
+              priceLoanDuration = 6;
+              dayPack="14";
+            }
+            else
+            {
+              priceLoanDuration = 10;
+              dayPack="+15";
+            }
+
+            if (article.Film.GenreStyle == GenreStyleEnum.Pornographic)
+            {
+              tva = 10;
+            }
+            double discount = CustomDiscount;
+            if (article.Disc == Conservation.Damaged)
+            {
+              discount += 20;
+            }
+            else if (article.Disc == Conservation.VeryDamaged)
+            {
+              discount += 50;
+            }
             @:<tr>
-              Article article = CurrentlyBorrowedList[index];
-              <td>Code-barre: @article.Id Titre: @article.Film.Title</td>
-              @if (CustomDiscount != 0)
-              {
-                <td>@CustomDiscount %</td>
-              }
-              <td>2 %</td>
+              <td>
+                Code-barre: @article.Id Titre: @article.Film.Title
+                @if (article.IsLost)
+                {
+                  @:(perdu)
+                }
+                else
+                {
+                  @:(pack @dayPack jours)
+                }
+              </td>
+              <td> @discount % </td>
+              <td> @tva </td>
               <td>
                 @{
-                  double articlePriceHT = (int)article.Film.Price * 1.5 + 2;
-                  articlePriceHT -= @CustomDiscount / 100 * articlePriceHT;
-                  priceHT += articlePriceHT;
+                  if (article.IsLost)
+                  {
+                    articlePriceHT = ((int)article.Film.Price + 1) * 10;
+                  }
+                  else
+                  {
+                    articlePriceHT = (((int)article.Film.Price + 1) + 1)
+                      * priceLoanDuration;
+                    articlePriceHT -= @discount / 100 * articlePriceHT;
+                    priceHT += articlePriceHT;
+                  }
                 }
                 @System.Math.Round(articlePriceHT, 2)
               </td>
               <td>
                 @{
                   double articlePriceTTC = articlePriceHT
-                    + (0.02 * articlePriceHT);
+                    + (tva / 100 * articlePriceHT);
                   priceTTC += articlePriceTTC;
                 }
                 @System.Math.Round(articlePriceTTC, 2)
@@ -128,7 +185,22 @@
     </tr>
   </table>
 
-  <p class="clear">
+  <p id="payement-condition" class="clear">
+    Tarification forfaitaire en fonction de la pastille présente sur
+      l'article.  <br />
+    <br />
+    Nota: Les articles sont payables au comptant, au retour du produit. <br />
+    En cas de contestation, le Tribunal de Grenoble est seul compétent <br />
+      En cas de retard de paiment, une pénalité égale à 3 fois le taux d'intérêt
+      légal, sera facturé (loi 92-1442 du 31/12/1992) ainsi qu'une somme
+      forfaitaire de 40 euros pour frais de recouvrement (décret du
+      2012-115 du 02/10/2012) <br />
+    Les produits loués restent la propriété de la société
+      NeoVim Videothèque.  <br />
+    Paiement par chèque non accepté. <br />
+  </p>
+
+  <p id="lorem-ipsum">
     <em>Lorem Ipsum only to show that when we print, footer are correctly positionned
       at bottom of the page: </em><br />
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -210,19 +282,6 @@
     culpa qui officia deserunt mollit anim id est laborum.
   </p>
 
-  <p id="payement-condition">
-    Conditions de paiment : paiment comptant. <br />
-
-    Aucun escompte consenti pour réglement anticipé. <br />
-
-    Tout incident de paiement est passible d'intérêt de retard. <br />
-
-    Le montant des pénalités résulte de l'application aux sommes reatant dues
-    d'un taux d'intérêt légal en vigueur au moment de l'incident. <br />
-
-    Indéminsation forfaitaire pour frais de recouvrement due au créancier
-    en cas de retard de paiement: 40 euros
-  </p>
 </main>
       </td>
     </tr>
@@ -238,7 +297,9 @@
 
 <footer>
   <span>
-    Vim Entreprise au capital de 10 000 euros, siret en cours d'immatriculation
+    NeVim Vidéothèque Sarl au capital de 16 000 euros. Siège social:
+      1 place de la République – 38 000 Grenoble <br />
+    N° Siret 123 456 689 123 45 – N.A.F. 1234A — N° TFA: FR 12 345 678 912
   </span>
 </footer>
 

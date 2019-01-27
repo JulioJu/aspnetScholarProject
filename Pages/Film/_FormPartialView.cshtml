@@ -32,6 +32,10 @@
 </div>
 <div class="form-group">
   <label asp-for="GenreStyle" class="control-label"></label>
+  <div><em>
+    Note: Violence films and Pornographic films has a TVA of 10%, others
+    has a TVA of 2%.
+    </em></div>
   <select asp-for="GenreStyle" class="form-control"
     asp-items="Html.GetEnumSelectList<GenreStyleEnum>()">
     <option value="">

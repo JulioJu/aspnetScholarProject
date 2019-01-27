@@ -69,7 +69,7 @@ namespace Videotheque.Pages.CustomerPage
             + ") could not be casted to int.");
       }
       Article currentlyBorrowedArticle = await
-        Videotheque.Pages.ArticlePage.Crud.FindArticleAsync(base._db,
+        Videotheque.Pages.ArticlePage.Crud.FindArticleAsyncWithFilm(base._db,
                 articleId);
       if (currentlyBorrowedArticle != null)
       {

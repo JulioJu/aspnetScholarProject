@@ -11,11 +11,13 @@ namespace Videotheque.Data
     [Required]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [DataType(DataType.Date)]
+    [Display(Name = "Created Date")]
     public DateTime CreatedDate { get; set; }
 
     [Required]
     [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
     [DataType(DataType.Date)]
+    [Display(Name = "Updated Date")]
     public DateTime UpdatedDate { get; set; }
   }
 

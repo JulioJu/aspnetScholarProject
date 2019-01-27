@@ -37,7 +37,8 @@ namespace Videotheque.Data
     Science_fiction,
     Thriller,
     Transgressive,
-    Trick
+    Trick,
+    Violence
   }
 }
 

@@ -3,7 +3,7 @@ namespace Videotheque.Pages.CustomerPage
   using System.Globalization;
   using System.Threading.Tasks;
   using Microsoft.AspNetCore.Mvc;
-  using Microsoft.EntityFrameworkCore;
+  using Microsoft.EntityFrameworkCore;
   using Videotheque.Data;
   using Videotheque.Pages;
 
@@ -42,7 +42,7 @@ namespace Videotheque.Pages.CustomerPage
           string.Empty,   // Prefix for form value.
           s => s.Firstname,
           s => s.Lastname,
-          s => s.Society,
+          s => s.Company,
           s => s.AddressStreet,
           s => s.AddressCity,
           s => s.AddressCountry,
@@ -113,8 +113,8 @@ namespace Videotheque.Pages.CustomerPage
           this.ArticleIdToBorrowArrayInputValue[index] =
             articleId.ToString(CultureInfo.InvariantCulture);
 
-          Article articleToAdd = await base._db.Articles
-              .FindAsync(articleId);
+          Article articleToAdd = await Videotheque.Pages
+            .ArticlePage.Crud.FindArticleAsyncWithFilm(base._db, articleId);
           if (articleToAdd == null)
           {
             this.ValidationMessageArticleIdToBorrowArray[index] =
@@ -140,6 +140,28 @@ namespace Videotheque.Pages.CustomerPage
               isBorrowed = false;
               continue;
             }
+            else if (articleToAdd.Disc == Conservation.Unusable
+                || articleToAdd.Box == Conservation.Unusable)
+            {
+              this.ValidationMessageArticleIdToBorrowArray[index] =
+                "Article with id (barcode) '"
+                + articleId + "' has the box or the disc unusable. "
+                + " Not borrowed.";
+              isBorrowed = false;
+              continue;
+            }
+            else if (base.AbstractEntity.IsUnderage()
+                && (articleToAdd.Film.GenreStyle == GenreStyleEnum.Pornographic
+                    || articleToAdd.Film.GenreStyle
+                    == GenreStyleEnum.Violence))
+            {
+              this.ValidationMessageArticleIdToBorrowArray[index] =
+                "Article with id (barcode) '"
+                + articleId + "' can't be borrowed by an underage Customer. "
+                + "Not borrowed.";
+              isBorrowed = false;
+              continue;
+            }
             articleToAdd.CountBorrowing++;
             articleToAdd.BorrowingDate = System.DateTime.UtcNow;
             articleToAdd.ReturnDate = articleToAdd.BorrowingDate?.AddDays(
@@ -158,7 +180,7 @@ namespace Videotheque.Pages.CustomerPage
           }
           else
           {
-            if (articleToAdd.BorrowerId != base.AbstractEntity.Id)
+            if (articleToAdd.BorrowerId != base.AbstractEntity?.Id)
             {
               this.ValidationMessageArticleIdToBorrowArray[index] =
                 messageArticle + " already borrowed by " + messageBorrower

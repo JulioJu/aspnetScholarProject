@@ -91,6 +91,7 @@ input[type=submit]:hover {
 
 div.form-group {
   margin: 2em 0;
+  max-width: 250px;
 }
 
 .field-validation-error {
@@ -103,7 +104,7 @@ input {
   background-color: white;
 }
 
-input[data-val-required*="required"], input[required] {
+input[data-val-required*="required"], input[required], select[required] {
   background-color: #ffdccc;
 }
 
@@ -144,7 +145,7 @@ dt {
 /* In Page/Film/ShowAll.cshtml for @section Search */
 /* ===================================== */
 
-/* TODO use flexbox to have something more responsive */
+/* Note if you use flexbox, we will have something more responsive */
 /* I've used it to test grid layout, as I know already flex layout */
 form#film-show-all-search-section > div:first-child {
   display: grid;

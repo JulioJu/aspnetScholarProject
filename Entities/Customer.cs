@@ -6,7 +6,7 @@ namespace Videotheque.Data
 
   /// <summary>
   ///   Customer entity.
-  ///   Either firstname and lastname or society is required
+  ///   Either firstname and lastname or company is required
   /// </summary>
   public class Customer : AbstractEntity
   {
@@ -23,20 +23,23 @@ namespace Videotheque.Data
     [CustomerName]
     [MinLengthAttribute(2)]
     [MaxLengthAttribute(100)]
-    public string Society { get; set; }
+    public string Company { get; set; }
 
     [Required]
     [MinLengthAttribute(2)]
     [MaxLengthAttribute(50)]
+    [Display(Name = "Street")]
     public string AddressStreet { get; set; }
 
     [Required]
     [MinLengthAttribute(2)]
     [MaxLengthAttribute(50)]
+    [Display(Name = "City")]
     public string AddressCity { get; set; }
 
     [MinLengthAttribute(2)]
     [MaxLengthAttribute(50)]
+    [Display(Name = "Country")]
     public string AddressCountry { get; set; }
 
     [Phone]
@@ -46,21 +49,25 @@ namespace Videotheque.Data
     public string Email { get; set; }
 
     [DataType(DataType.Date)]
-    [CustomerIsSociety]
+    [CustomerIsCompany]
     [CustomerBirthdate]
     public DateTime? Birthdate { get; set; }
 
-    [CustomerIsSociety]
+    [CustomerIsCompany]
+    [Display(Name = "Is Unemployed")]
     public bool IsUnemployed { get; set; }
 
-    [CustomerIsSociety]
+    [CustomerIsCompany]
+    [Display(Name = "Is Student")]
     public bool IsStudent { get; set; }
 
-    [CustomerIsSociety]
+    [CustomerIsCompany]
+    [Display(Name = "People with Disabilities")]
     public bool PeopleWithDisabilities { get; set; }
 
     private HashSet<Article> PCurrentlyBorrowed { get; set; }
 
+    [Display(Name = "Currently Borrowed")]
     public HashSet<Article> CurrentlyBorrowed
     {
       get
@@ -77,7 +84,10 @@ namespace Videotheque.Data
 
     public bool IsUnderage()
     {
-      if (this.Birthdate < DateTime.Today)
+      if (this.Birthdate != null && this.Birthdate >
+                new DateTime(DateTime.Today.Year - 18,
+                  DateTime.Today.Month,
+                  DateTime.Today.Day))
       {
         return true;
       }

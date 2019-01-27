@@ -37,7 +37,7 @@ namespace Videotheque.Data
 
     private static string TooYoung()
     {
-        return $"The Custmer must is more than 13 years old.";
+        return $"The Custmer is less than 13 years old, forbidden.";
     }
   }
 }
