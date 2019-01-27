@@ -1260,6 +1260,9 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
   view-components samples: folder `Todo` renamed `ToDo` for case sensitive OS
   https://github.com/aspnet/Docs/pull/10637
 
+16. TODO Create a Pull Request to correct Contoso University sample (see below)
+      and to add a README to Razor samples (easy to done).
+
 
 # Credits
 
@@ -1330,6 +1333,15 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
 
 * TODO maybe, to improve code quality, use Services. But official examples
     don't use Service, therefore I've followed their examples and advises.
+
+* TODO TO IMPROVE CODE QUALITY AND EASIER ADD FUNCTIONALITIES
+    UNDER for pages Customer/Edit and Customer/Create : ADD split
+    the rendered view in three. EACH ONE SHOULD BE HAVE ITS OWN VIEWMODEL.
+    Each row of the Return table and Borrow table should have its own instance
+    of a viewmodel. Then, we could pass easy data between Razor Page
+    and Partial View. The invoice should have it own view model.
+    As the logic is simple, no need to have a View Component.
+
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->
