@@ -12,7 +12,7 @@ namespace Videotheque.Pages.CustomerPage
   /// </summary>
   public class Create : Details
   {
-    public static readonly int NumberInputArticleToBorrow = 4;
+    public const int NumberInputArticleToBorrow = 4;
 
     // CA1819: "Arrays returned by properties are not write-protected, even if
     //      the property is read-only."

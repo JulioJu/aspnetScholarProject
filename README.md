@@ -16,7 +16,7 @@
     * [Transact-SQL](#transact-sql)
       * [Create Schema](#create-schema)
   * [Dotnet Watcher](#dotnet-watcher)
-  * [Nuget packages and dotnet tool](#nuget-packages-and-dotnet-tool)
+  * [Nuget Packages and upgrade](#nuget-packages-and-upgrade)
 * [How To for the official Quick Start](#how-to-for-the-official-quick-start)
     * [0. Razor Overview](#0-razor-overview)
     * [1. Introduction Tutorial in ASP.NET Core documentation website](#1-introduction-tutorial-in-aspnet-core-documentation-website)
@@ -452,7 +452,16 @@ export PATH="$PATH:/home/user/.dotnet/tools"
 export DOTNET_ROOT=/opt/dotnet
 dotnet watch run
 ```
-## Nuget packages and dotnet tool
+## Nuget Packages and upgrade
+
+* Migration  from old dotnet version to a newer
+    * See https://docs.microsoft.com/en-us/aspnet/core/migration/
+    * Do not forget to update `$ dotnet tool`. See `$ dotnet tool list` to
+        see the tools to update.
+    * Do not forget to update also tag the `LangVersion` in the `csprog` file.
+    * Do not forget to update also the  attribute `ToolsVersion` of the root tag
+        `RuleSet` in the `ruleset` file.
+
 * If you manually add a package in `.csprog` file do not forget to run
      `$ dotnet restore && dotnet build`
 * Prefer use  `$ dotnet add package`
@@ -940,14 +949,6 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
 * Comments:
   * https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/xmldoc/recommended-tags-for-documentation-comments
   * https://docs.microsoft.com/en-us/dotnet/csharp/codedoc
-
-* Migration  from old dotnet version to a newer
-    * See https://docs.microsoft.com/en-us/aspnet/core/migration/
-    * Do not forget to update `$ dotnet tool`. See `$ dotnet tool list` to
-        see the tools to update.
-    * Do not forget to update also tag the `LangVersion` in the `csprog` file.
-    * Do not forget to update also the  attribute `ToolsVersion` of the root tag
-        `RuleSet` in the `ruleset` file.
 
 * tag helper `form` can't handle HTTP PUT and DELETE method, because
     PUT and DELETE are not valid on HTML forms

@@ -60,7 +60,7 @@
           "lib/netstandard2.0/Microsoft.AspNetCore.Antiforgery.dll": {}
         }
       },
-      "Microsoft.AspNetCore.App/2.2.1": {
+      "Microsoft.AspNetCore.App/2.2.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.AspNet.WebApi.Client": "[5.2.6, 5.3.0)",
@@ -90,7 +90,7 @@
           "Microsoft.AspNetCore.DataProtection.Extensions": "[2.2.0, 2.3.0)",
           "Microsoft.AspNetCore.Diagnostics": "[2.2.0, 2.3.0)",
           "Microsoft.AspNetCore.Diagnostics.Abstractions": "[2.2.0, 2.3.0)",
-          "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "[2.2.1, 2.3.0)",
+          "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "[2.2.0, 2.3.0)",
           "Microsoft.AspNetCore.Diagnostics.HealthChecks": "[2.2.0, 2.3.0)",
           "Microsoft.AspNetCore.HostFiltering": "[2.2.0, 2.3.0)",
           "Microsoft.AspNetCore.Hosting": "[2.2.0, 2.3.0)",
@@ -141,13 +141,13 @@
           "Microsoft.AspNetCore.Routing": "[2.2.0, 2.3.0)",
           "Microsoft.AspNetCore.Routing.Abstractions": "[2.2.0, 2.3.0)",
           "Microsoft.AspNetCore.Server.HttpSys": "[2.2.0, 2.3.0)",
-          "Microsoft.AspNetCore.Server.IIS": "[2.2.1, 2.3.0)",
-          "Microsoft.AspNetCore.Server.IISIntegration": "[2.2.1, 2.3.0)",
+          "Microsoft.AspNetCore.Server.IIS": "[2.2.0, 2.3.0)",
+          "Microsoft.AspNetCore.Server.IISIntegration": "[2.2.0, 2.3.0)",
           "Microsoft.AspNetCore.Server.Kestrel": "[2.2.0, 2.3.0)",
           "Microsoft.AspNetCore.Server.Kestrel.Core": "[2.2.0, 2.3.0)",
           "Microsoft.AspNetCore.Server.Kestrel.Https": "[2.2.0, 2.3.0)",
           "Microsoft.AspNetCore.Server.Kestrel.Transport.Abstractions": "[2.2.0, 2.3.0)",
-          "Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets": "[2.2.1, 2.3.0)",
+          "Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets": "[2.2.0, 2.3.0)",
           "Microsoft.AspNetCore.Session": "[2.2.0, 2.3.0)",
           "Microsoft.AspNetCore.SignalR": "[1.1.0, 1.2.0)",
           "Microsoft.AspNetCore.SignalR.Common": "[1.1.0, 1.2.0)",
@@ -156,17 +156,17 @@
           "Microsoft.AspNetCore.SpaServices": "[2.2.0, 2.3.0)",
           "Microsoft.AspNetCore.SpaServices.Extensions": "[2.2.0, 2.3.0)",
           "Microsoft.AspNetCore.StaticFiles": "[2.2.0, 2.3.0)",
-          "Microsoft.AspNetCore.WebSockets": "[2.2.1, 2.3.0)",
+          "Microsoft.AspNetCore.WebSockets": "[2.2.0, 2.3.0)",
           "Microsoft.AspNetCore.WebUtilities": "[2.2.0, 2.3.0)",
           "Microsoft.CodeAnalysis.Razor": "[2.2.0, 2.3.0)",
-          "Microsoft.EntityFrameworkCore": "[2.2.1, 2.3.0)",
-          "Microsoft.EntityFrameworkCore.Abstractions": "[2.2.1, 2.3.0)",
-          "Microsoft.EntityFrameworkCore.Analyzers": "[2.2.1, 2.3.0)",
-          "Microsoft.EntityFrameworkCore.Design": "[2.2.1, 2.3.0)",
-          "Microsoft.EntityFrameworkCore.InMemory": "[2.2.1, 2.3.0)",
-          "Microsoft.EntityFrameworkCore.Relational": "[2.2.1, 2.3.0)",
-          "Microsoft.EntityFrameworkCore.SqlServer": "[2.2.1, 2.3.0)",
-          "Microsoft.EntityFrameworkCore.Tools": "[2.2.1, 2.3.0)",
+          "Microsoft.EntityFrameworkCore": "[2.2.0, 2.3.0)",
+          "Microsoft.EntityFrameworkCore.Abstractions": "[2.2.0, 2.3.0)",
+          "Microsoft.EntityFrameworkCore.Analyzers": "[2.2.0, 2.3.0)",
+          "Microsoft.EntityFrameworkCore.Design": "[2.2.0, 2.3.0)",
+          "Microsoft.EntityFrameworkCore.InMemory": "[2.2.0, 2.3.0)",
+          "Microsoft.EntityFrameworkCore.Relational": "[2.2.0, 2.3.0)",
+          "Microsoft.EntityFrameworkCore.SqlServer": "[2.2.0, 2.3.0)",
+          "Microsoft.EntityFrameworkCore.Tools": "[2.2.0, 2.3.0)",
           "Microsoft.Extensions.Caching.Abstractions": "[2.2.0, 2.3.0)",
           "Microsoft.Extensions.Caching.Memory": "[2.2.0, 2.3.0)",
           "Microsoft.Extensions.Caching.SqlServer": "[2.2.0, 2.3.0)",
@@ -545,7 +545,7 @@
           "lib/netstandard2.0/Microsoft.AspNetCore.Diagnostics.Abstractions.dll": {}
         }
       },
-      "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore/2.2.1": {
+      "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore/2.2.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.AspNetCore.Http.Abstractions": "2.2.0",
@@ -1284,7 +1284,7 @@
           "lib/netstandard2.0/Microsoft.AspNetCore.Server.HttpSys.dll": {}
         }
       },
-      "Microsoft.AspNetCore.Server.IIS/2.2.1": {
+      "Microsoft.AspNetCore.Server.IIS/2.2.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.AspNetCore.Authentication.Core": "2.2.0",
@@ -1313,7 +1313,7 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Server.IISIntegration/2.2.1": {
+      "Microsoft.AspNetCore.Server.IISIntegration/2.2.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.AspNetCore.Authentication.Core": "2.2.0",
@@ -1404,7 +1404,7 @@
           "lib/netstandard2.0/Microsoft.AspNetCore.Server.Kestrel.Transport.Abstractions.dll": {}
         }
       },
-      "Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets/2.2.1": {
+      "Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets/2.2.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.AspNetCore.Hosting.Abstractions": "2.2.0",
@@ -1538,13 +1538,13 @@
           "lib/netstandard2.0/Microsoft.AspNetCore.StaticFiles.dll": {}
         }
       },
-      "Microsoft.AspNetCore.WebSockets/2.2.1": {
+      "Microsoft.AspNetCore.WebSockets/2.2.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.AspNetCore.Http.Extensions": "2.2.0",
           "Microsoft.Extensions.Logging.Abstractions": "2.2.0",
           "Microsoft.Extensions.Options": "2.2.0",
-          "System.Net.WebSockets.WebSocketProtocol": "4.5.3"
+          "System.Net.WebSockets.WebSocketProtocol": "4.5.1"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.AspNetCore.WebSockets.dll": {}
@@ -1755,11 +1755,11 @@
       "Microsoft.EntityFrameworkCore.Analyzers/2.2.1": {
         "type": "package"
       },
-      "Microsoft.EntityFrameworkCore.Design/2.2.1": {
+      "Microsoft.EntityFrameworkCore.Design/2.2.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.CSharp": "4.5.0",
-          "Microsoft.EntityFrameworkCore.Relational": "2.2.1"
+          "Microsoft.EntityFrameworkCore.Relational": "2.2.0"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Design.dll": {}
@@ -1771,10 +1771,10 @@
           "build/netcoreapp2.0/Microsoft.EntityFrameworkCore.Design.props": {}
         }
       },
-      "Microsoft.EntityFrameworkCore.InMemory/2.2.1": {
+      "Microsoft.EntityFrameworkCore.InMemory/2.2.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.EntityFrameworkCore": "2.2.1"
+          "Microsoft.EntityFrameworkCore": "2.2.0"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.EntityFrameworkCore.InMemory.dll": {}
@@ -1808,10 +1808,10 @@
           "lib/netstandard2.0/Microsoft.EntityFrameworkCore.SqlServer.dll": {}
         }
       },
-      "Microsoft.EntityFrameworkCore.Tools/2.2.1": {
+      "Microsoft.EntityFrameworkCore.Tools/2.2.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.EntityFrameworkCore.Design": "2.2.1"
+          "Microsoft.EntityFrameworkCore.Design": "2.2.0"
         },
         "compile": {
           "lib/netstandard2.0/_._": {}
@@ -3838,7 +3838,7 @@
           "ref/netstandard1.3/System.Net.Primitives.dll": {}
         }
       },
-      "System.Net.WebSockets.WebSocketProtocol/4.5.3": {
+      "System.Net.WebSockets.WebSocketProtocol/4.5.1": {
         "type": "package",
         "compile": {
           "ref/netstandard2.0/System.Net.WebSockets.WebSocketProtocol.dll": {}
@@ -4809,17 +4809,17 @@
         "microsoft.aspnetcore.antiforgery.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.App/2.2.1": {
-      "sha512": "RaU3opouqSmLzUhcDnilQ6ZzaPRVazhq8Ld55K+z0PXspPfmYFDHVAajXr8puaiTIAW68x17bB6WPD2kikdP9Q==",
+    "Microsoft.AspNetCore.App/2.2.0": {
+      "sha512": "kwTO50W2X7P88YVcOzbOOIG24ubMxmTwb31eYtTFQLzmiEQOWxDx4RdYUT/11f3wJhaG3cNfu1nV3pQrVLZhGw==",
       "type": "package",
-      "path": "microsoft.aspnetcore.app/2.2.1",
+      "path": "microsoft.aspnetcore.app/2.2.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "build/netcoreapp2.2/Microsoft.AspNetCore.App.props",
         "build/netcoreapp2.2/Microsoft.AspNetCore.App.targets",
         "lib/netcoreapp2.2/_._",
-        "microsoft.aspnetcore.app.2.2.1.nupkg.sha512",
+        "microsoft.aspnetcore.app.2.2.0.nupkg.sha512",
         "microsoft.aspnetcore.app.nuspec"
       ]
     },
@@ -5137,16 +5137,16 @@
         "microsoft.aspnetcore.diagnostics.abstractions.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore/2.2.1": {
-      "sha512": "P4AVVSNoAqSfmrnECfnXAYGkIgrtVjG+baTBm6xJ3I+ybyhL3xyM3Mdf3+9RoXYHkf1YRdmb4fCUvJUdwHT8JA==",
+    "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore/2.2.0": {
+      "sha512": "hiHQ+L8R8mXnlTPB7zsV1iYc/1J6bqd3NwS3y/9mM/OLPxldoRA/WGcBs8j1HRH1OTtobLi1+vDFh6a4CDsUZw==",
       "type": "package",
-      "path": "microsoft.aspnetcore.diagnostics.entityframeworkcore/2.2.1",
+      "path": "microsoft.aspnetcore.diagnostics.entityframeworkcore/2.2.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "lib/netstandard2.0/Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.dll",
         "lib/netstandard2.0/Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.xml",
-        "microsoft.aspnetcore.diagnostics.entityframeworkcore.2.2.1.nupkg.sha512",
+        "microsoft.aspnetcore.diagnostics.entityframeworkcore.2.2.0.nupkg.sha512",
         "microsoft.aspnetcore.diagnostics.entityframeworkcore.nuspec"
       ]
     },
@@ -5831,33 +5831,33 @@
         "microsoft.aspnetcore.server.httpsys.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Server.IIS/2.2.1": {
-      "sha512": "ubvm21GUyFHj6c2Y91l7U8gw8ClhP7IL0sjm6w7VAWrV6QQ98MEwDR0fbe5mPfzU+Zq8xyUMAB0gfiJ1hXKlIg==",
+    "Microsoft.AspNetCore.Server.IIS/2.2.0": {
+      "sha512": "C64q5Dh2BPAnlbKK9Ma566s0+lcBuQP34EaNP4RkalbikyvetFV5XYHPPwLcCerH/d2k1nPEWVCN8AorXzeahg==",
       "type": "package",
-      "path": "microsoft.aspnetcore.server.iis/2.2.1",
+      "path": "microsoft.aspnetcore.server.iis/2.2.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "build/netstandard2.0/Microsoft.AspNetCore.Server.IIS.targets",
         "lib/netstandard2.0/Microsoft.AspNetCore.Server.IIS.dll",
         "lib/netstandard2.0/Microsoft.AspNetCore.Server.IIS.xml",
-        "microsoft.aspnetcore.server.iis.2.2.1.nupkg.sha512",
+        "microsoft.aspnetcore.server.iis.2.2.0.nupkg.sha512",
         "microsoft.aspnetcore.server.iis.nuspec",
         "runtimes/win-x64/nativeassets/netcoreapp2.2/aspnetcorev2_inprocess.dll",
         "runtimes/win-x86/nativeassets/netcoreapp2.2/aspnetcorev2_inprocess.dll"
       ]
     },
-    "Microsoft.AspNetCore.Server.IISIntegration/2.2.1": {
-      "sha512": "IcyMnIss6kqWVWrfmCYq2Qx9tth4SZT+Kvutc7AwJoyULwRoY4Oe/Eb+sbQj3B91tFIGDqpudOS2eqGhHDg4ZA==",
+    "Microsoft.AspNetCore.Server.IISIntegration/2.2.0": {
+      "sha512": "rGFC47Lppb7s4U0iceSymdvFySL+XxwL6pA0yALyFgCWFkSqayk+tAjHU8N+6hbHPSH1YcOCIFcx2yEvL1xb9g==",
       "type": "package",
-      "path": "microsoft.aspnetcore.server.iisintegration/2.2.1",
+      "path": "microsoft.aspnetcore.server.iisintegration/2.2.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "build/netstandard2.0/Microsoft.AspNetCore.Server.IISIntegration.targets",
         "lib/netstandard2.0/Microsoft.AspNetCore.Server.IISIntegration.dll",
         "lib/netstandard2.0/Microsoft.AspNetCore.Server.IISIntegration.xml",
-        "microsoft.aspnetcore.server.iisintegration.2.2.1.nupkg.sha512",
+        "microsoft.aspnetcore.server.iisintegration.2.2.0.nupkg.sha512",
         "microsoft.aspnetcore.server.iisintegration.nuspec"
       ]
     },
@@ -5917,10 +5917,10 @@
         "microsoft.aspnetcore.server.kestrel.transport.abstractions.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets/2.2.1": {
-      "sha512": "6kk0XPr2yNFDccrBwlyScKZq6EXJOmH19C4fR0o3URkP0cls/9raMp3BFrC8VfW2p5r1b1561MA+O+OWMagZwg==",
+    "Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets/2.2.0": {
+      "sha512": "PwG1DMmg6QJI+cHXJGjNG+HPBerMnolOj9gUlVF9Y0G2MfLov5f0nMSy3iYiWgQT1tgFAmQ3reVOsfwztH/ZLw==",
       "type": "package",
-      "path": "microsoft.aspnetcore.server.kestrel.transport.sockets/2.2.1",
+      "path": "microsoft.aspnetcore.server.kestrel.transport.sockets/2.2.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -5928,7 +5928,7 @@
         "lib/netcoreapp2.1/Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.xml",
         "lib/netstandard2.0/Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.dll",
         "lib/netstandard2.0/Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.xml",
-        "microsoft.aspnetcore.server.kestrel.transport.sockets.2.2.1.nupkg.sha512",
+        "microsoft.aspnetcore.server.kestrel.transport.sockets.2.2.0.nupkg.sha512",
         "microsoft.aspnetcore.server.kestrel.transport.sockets.nuspec"
       ]
     },
@@ -6038,16 +6038,16 @@
         "microsoft.aspnetcore.staticfiles.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.WebSockets/2.2.1": {
-      "sha512": "FHKRh5DVfHQbvmvQGrcaN5cBb34Orbwd4XmMQ38r2DgL0TBXMDAEzwwEm6gUWtFTknZpLU8W0HNKYqATOnavfg==",
+    "Microsoft.AspNetCore.WebSockets/2.2.0": {
+      "sha512": "AFsPDV+ItBiUYsNQ99BKJR66x9CCGeGxfN1DTdH+nBbiKjG2ZT5Xjc20u/Ho6N+ao6wwX3ctxObvELO3QuwhIA==",
       "type": "package",
-      "path": "microsoft.aspnetcore.websockets/2.2.1",
+      "path": "microsoft.aspnetcore.websockets/2.2.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "lib/netstandard2.0/Microsoft.AspNetCore.WebSockets.dll",
         "lib/netstandard2.0/Microsoft.AspNetCore.WebSockets.xml",
-        "microsoft.aspnetcore.websockets.2.2.1.nupkg.sha512",
+        "microsoft.aspnetcore.websockets.2.2.0.nupkg.sha512",
         "microsoft.aspnetcore.websockets.nuspec"
       ]
     },
@@ -6372,10 +6372,10 @@
         "microsoft.entityframeworkcore.analyzers.nuspec"
       ]
     },
-    "Microsoft.EntityFrameworkCore.Design/2.2.1": {
-      "sha512": "h9je+U3KG2DDKzMgNQRvLSqqHRTd7qbOYUTBNP9UVQXNG4gOzOuVnhXdzZgbwgauhYbDyuO6WDpq6OMiIpp/kA==",
+    "Microsoft.EntityFrameworkCore.Design/2.2.0": {
+      "sha512": "aAyZDx6RcanRXJGVRfstJ8cgeH+orugUyMKIuTJqHgXYyvSgzsCfzlXCuyN2XeACwfK2CBEYCAn7y1zW4I+6tQ==",
       "type": "package",
-      "path": "microsoft.entityframeworkcore.design/2.2.1",
+      "path": "microsoft.entityframeworkcore.design/2.2.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -6385,20 +6385,20 @@
         "lib/net461/Microsoft.EntityFrameworkCore.Design.xml",
         "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Design.dll",
         "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Design.xml",
-        "microsoft.entityframeworkcore.design.2.2.1.nupkg.sha512",
+        "microsoft.entityframeworkcore.design.2.2.0.nupkg.sha512",
         "microsoft.entityframeworkcore.design.nuspec"
       ]
     },
-    "Microsoft.EntityFrameworkCore.InMemory/2.2.1": {
-      "sha512": "e9OQhGPQhVjc+nZvIcY0mAkI0cq2ncfsgk8MoAJIEIff/xy0NpjSSn2eQBShWrEbFY7RGUj5kaO/EGrXI4/w6A==",
+    "Microsoft.EntityFrameworkCore.InMemory/2.2.0": {
+      "sha512": "zm7Lotv6v5fyE+EnUG/yVPd9k0CTg82bltco4y4Vlfrq4vOSq8yCPC47PmwaVVY9yG5r7FFXGzt7aTE2ycSKyA==",
       "type": "package",
-      "path": "microsoft.entityframeworkcore.inmemory/2.2.1",
+      "path": "microsoft.entityframeworkcore.inmemory/2.2.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "lib/netstandard2.0/Microsoft.EntityFrameworkCore.InMemory.dll",
         "lib/netstandard2.0/Microsoft.EntityFrameworkCore.InMemory.xml",
-        "microsoft.entityframeworkcore.inmemory.2.2.1.nupkg.sha512",
+        "microsoft.entityframeworkcore.inmemory.2.2.0.nupkg.sha512",
         "microsoft.entityframeworkcore.inmemory.nuspec"
       ]
     },
@@ -6428,16 +6428,16 @@
         "microsoft.entityframeworkcore.sqlserver.nuspec"
       ]
     },
-    "Microsoft.EntityFrameworkCore.Tools/2.2.1": {
-      "sha512": "cDT5RPzY9+eGyaCRzaenLuvSO1coL5RCLBahTCDZZsNdBfF0dytwZG7IYC39dz+EaB3Gu6MTcT2sm1zPLKwFog==",
+    "Microsoft.EntityFrameworkCore.Tools/2.2.0": {
+      "sha512": "TQ5EcwEqAvNbNU2dXOa66xZPJD3DCbmi4/WiqpuGwUqGYghyt5/ooYph9jyraMdMUBJY9x55kZgOwI2I+lWUDg==",
       "type": "package",
-      "path": "microsoft.entityframeworkcore.tools/2.2.1",
+      "path": "microsoft.entityframeworkcore.tools/2.2.0",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "lib/netstandard2.0/_._",
-        "microsoft.entityframeworkcore.tools.2.2.1.nupkg.sha512",
+        "microsoft.entityframeworkcore.tools.2.2.0.nupkg.sha512",
         "microsoft.entityframeworkcore.tools.nuspec",
         "tools/EntityFrameworkCore.PowerShell2.psd1",
         "tools/EntityFrameworkCore.PowerShell2.psm1",
@@ -10615,10 +10615,10 @@
         "system.net.primitives.nuspec"
       ]
     },
-    "System.Net.WebSockets.WebSocketProtocol/4.5.3": {
-      "sha512": "H5E7Kf2s6t7YNV4GUlWNP3yjZziWZ4RFRtoBnxrnuOapKQlGH9h0pqvVZJ5TpCAIJxN7Sl71Etr6P/Q4xR17Cg==",
+    "System.Net.WebSockets.WebSocketProtocol/4.5.1": {
+      "sha512": "FquLjdb/0CeMqb15u9Px6TwnyFl306WztKWu6sKKc5kWPYMdpi5BFEkdxzGoieYFp9UksyGwJnCw4KKAUfJjrw==",
       "type": "package",
-      "path": "system.net.websockets.websocketprotocol/4.5.3",
+      "path": "system.net.websockets.websocketprotocol/4.5.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -10627,7 +10627,7 @@
         "lib/netcoreapp2.1/System.Net.WebSockets.WebSocketProtocol.dll",
         "lib/netstandard2.0/System.Net.WebSockets.WebSocketProtocol.dll",
         "ref/netstandard2.0/System.Net.WebSockets.WebSocketProtocol.dll",
-        "system.net.websockets.websocketprotocol.4.5.3.nupkg.sha512",
+        "system.net.websockets.websocketprotocol.4.5.1.nupkg.sha512",
         "system.net.websockets.websocketprotocol.nuspec",
         "useSharedDesignerContext.txt",
         "version.txt"
@@ -13277,7 +13277,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
-      "Microsoft.AspNetCore.App >= 2.2.1",
+      "Microsoft.AspNetCore.App >= 2.2.0",
       "Microsoft.CodeAnalysis.FxCopAnalyzers >= 2.6.3",
       "Microsoft.EntityFrameworkCore.SqlServer >= 2.2.1",
       "Microsoft.NETCore.App >= 2.2.0",
@@ -13322,8 +13322,10 @@
       "netcoreapp2.2": {
         "dependencies": {
           "Microsoft.AspNetCore.App": {
+            "suppressParent": "All",
             "target": "Package",
-            "version": "[2.2.1, )"
+            "version": "[2.2.0, )",
+            "autoReferenced": true
           },
           "Microsoft.CodeAnalysis.FxCopAnalyzers": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers",

@@ -68,6 +68,8 @@ namespace Videotheque.Data
     private HashSet<Article> PCurrentlyBorrowed { get; set; }
 
     [Display(Name = "Currently Borrowed")]
+    // CA2227 to be read-only by remov ing the property setter
+    #pragma warning disable CA2227
     public HashSet<Article> CurrentlyBorrowed
     {
       get
