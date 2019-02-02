@@ -16,7 +16,7 @@
     * [Transact-SQL](#transact-sql)
       * [Create Schema](#create-schema)
   * [Dotnet Watcher](#dotnet-watcher)
-  * [Nuget packages](#nuget-packages)
+  * [Nuget packages and dotnet tool](#nuget-packages-and-dotnet-tool)
 * [How To for the official Quick Start](#how-to-for-the-official-quick-start)
     * [0. Razor Overview](#0-razor-overview)
     * [1. Introduction Tutorial in ASP.NET Core documentation website](#1-introduction-tutorial-in-aspnet-core-documentation-website)
@@ -452,11 +452,54 @@ export PATH="$PATH:/home/user/.dotnet/tools"
 export DOTNET_ROOT=/opt/dotnet
 dotnet watch run
 ```
-## Nuget packages
+## Nuget packages and dotnet tool
 * If you manually add a package in `.csprog` file do not forget to run
      `$ dotnet restore && dotnet build`
 * Prefer use  `$ dotnet add package`
 
+* To update `dotnet tool` (command by me)
+```sh
+  export PS4='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] [\D{%T}] \$ '
+  dotnet tool list --global
+  # As it's simple loop, probably should work in any case
+  # See https://github.com/JulioJu/generator-jhipster/blob/correct-travis-build/travis/build-samples.sh
+  while IFS= read -r -d $'\n\r' i
+  do
+      echo -e "\n\n$i\n=========\n"
+      set -x
+      # If you want stop in case of fail, you could append `|| break'
+      # or add `set -euET'
+      dotnet tool update -g "$i" # || break
+      set +x
+  done < <( awk '{ col=$1 ; print col }' \
+              <(tail -n +3 <(dotnet tool list --global)) )
+```
+* To upgrade Nuget packages Linux or dotnet tools,
+    no need to use third party tools:
+    * See also https://github.com/jerriep/dotnet-outdated
+        A .NET Core global tool to display outdated NuGet packages in a project
+    * https://github.com/NuGet/Home/issues/4103
+        support for updating references into csproj from commandline(s)
+    * Following, command by me:
+      ```sh
+        export PS4='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] [\D{%T}] \$ '
+        dotnet restore
+        dotnet list package
+        # As it's simple loop, probably should work
+        # See https://github.com/JulioJu/generator-jhipster/blob/correct-travis-build/travis/build-samples.sh
+        while IFS= read -r -d $'\n\r' i
+        do
+            echo -e "\n\n$i\n=========\n"
+            set -x
+            # If you want stop in case of fail, you could append `|| break'
+            # or add `set -euET'
+            dotnet add package "$i" # || break
+            set +x
+        done < <(awk '{ col=$2 ; print col }' < \
+              <(head -n -3 <(tail -n +4 < <(dotnet list package))) )
+        dotnet list package
+
+  ```
 # How To for the official Quick Start
 
 ***Before all you must read my issue at https://github.com/aspnet/Docs/issues/10635***
@@ -1237,7 +1280,7 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
 8. "For Linux users RazorPagesMovie.Models.Movie.ID should be replaced by
   https://github.com/aspnet/Docs/issues/9863
 
-9.  RazorPagesMovie.Models.Movie.Id
+9. RPmovieSQLiteNewField and RPmovieNewField has Migrations files broken
   https://github.com/OmniSharp/omnisharp-roslyn/issues/1358
   TODO: make a PullRequest (very easy to done)
 
@@ -1262,6 +1305,9 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
 
 16. TODO Create a Pull Request to correct Contoso University sample (see below)
       and to add a README to Razor samples (easy to done).
+
+17. Pull Request: https://github.com/aspnet/Docs/pull/10679
+  Fix LF in ./aspnetcore/mvc/views/razor/sample/Views/Home/Contact.cshtml
 
 
 # Credits

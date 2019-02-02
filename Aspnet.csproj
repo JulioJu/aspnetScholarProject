@@ -12,25 +12,22 @@
 
   <ItemGroup>
 
-    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.App">
+      <Version>2.2.1</Version>
+    </PackageReference>
 
-    <!-- Last one of 2.2 serie the 12/5/2018 -->
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.1" />
 
-    <!-- Last one the 12/10/2018 -->
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.1" />
 
-    <!-- Last one the 12/5/2018 -->
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.2">
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.3">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <!-- Last one the 12/5/2018 -->
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="7.9.1.7622">
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="7.10.0.7896">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <!-- Last one the 12/5/2018 -->
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
