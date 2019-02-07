@@ -49,6 +49,7 @@
 * [Issue and Pull Request created by me on GitHub](#issue-and-pull-request-created-by-me-on-github)
 * [Credits](#credits)
 * [TODO](#todo)
+  * [Improve Invoice (not done)](#improve-invoice-not-done)
 
 <!-- vim-markdown-toc -->
 
@@ -1381,14 +1382,96 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
 * TODO maybe, to improve code quality, use Services. But official examples
     don't use Service, therefore I've followed their examples and advises.
 
+## Improve Invoice (not done)
+
 * TODO TO IMPROVE CODE QUALITY AND EASIER ADD FUNCTIONALITIES
     UNDER for pages Customer/Edit and Customer/Create : ADD split
-    the rendered view in three. EACH ONE SHOULD BE HAVE ITS OWN VIEWMODEL.
-    Each row of the Return table and Borrow table should have its own instance
-    of a viewmodel. Then, we could pass easy data between Razor Page
-    and Partial View. The invoice should have it own view model.
-    As the logic is simple, no need to have a View Component.
+    the rendered view in three. EACH ONE SHOULD BE HAVE ITS OWN PARTIAL VIEW.
+    The model of each Partial view should be an array of view Model.
+    For instance,
 
+* Note
+    1. Create.cshtml.cs should contains
+      ```cs
+      public ArticleToBorrowViewModel { get; set; }
+      ```
+    2. Edit.cshtml.cs (it inherits of Create.cshtml.cs) should contains:
+      ```cs
+      public ArticleAlreadyBorrowedViewModel { get; set; }
+      ```
+
+
+1. For the form that contain articles to borrow we should have a model
+  that is an Array of following:
+  ```cs
+  // should not be persisted, not a view model
+  public class ArticleToBorrowViewModel {
+    public int Barecode { get; set; }
+    public int Duration { get; set; }
+    public string ValidationMessage { get; set; }
+  }
+  ```
+
+2. For the partial view / Form that contain
+  Articles already borrowed, the model is an Array of following:
+  ```cs
+  public class ArticleAlreadyBorrowedViewModel {
+
+    public bool ShouldBeReturned { get; set; }
+
+    // As it we could persist modifications of Articles
+    public Article ArticleBorrowed { get; set; }
+
+    // Some Properties of the Invoice should be instantiate
+    //  in this form.
+    public Invoice CorrespondingInvoice { get; set; }
+  }
+  ```
+
+3. For the Invoice Partial View, the model should be
+  (and could be persisted):
+  ```cs
+  public class Invoice {
+    // auto generated
+    public string Reference  { get; set; }
+    public ArticleAlreadyBorrowed[] articlesAlreadyBorrowed
+      { get; set; }
+    public int GlobalDiscountApplied { get; set; }
+    public int SumHT { get; set; }
+    public int SumTVA { get; set; }
+    public Customer Customer { get; set; }
+    public int CustomerId { get; set; }
+    // etc.
+  }
+  ```
+  ```cs
+  public class ArticleReturned {
+
+    // Use this class to build the rows of the Invoice
+    // _InvoiceGenerated.cshtml should not have any c# code.
+    public Invoice Invoice { get; set; }
+    public int InvoiceId { get; set; }
+    public Article Article { get; set; }
+    public int ArticleId { get; set; }
+    public string Description { get; set; }
+    public int PriceHT { get; set; }
+
+    // Following should not be persisted
+    public int PriceTVA { get; set; }
+
+    // TVA could change in the future in France!. Therefore to save it.
+    public int TVAApplied { get; set; }
+
+    public Price PriceOfTheFilmWhenArticleIsReturned { get; set; }
+
+    // If the the box or disc is altered by the Customer we could
+    // save it in increase the price (apply penalty)
+    public Tuple<Conservation, Conservation>?
+        BoxCheck { get; set; }
+    public Tuple<Conservation, Conservation>?
+        DisckCheck { get; set; }
+  }
+  ```
 
 <!-- vim:sw=2:ts=2:et:fileformat=dos
 -->
