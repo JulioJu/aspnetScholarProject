@@ -66,19 +66,6 @@ finish() {
     echo -e "\n\n\n"
 }
 
-userInputSimple() {
-    read -r -t 1 -n 10000 _ || echo ""
-    echo -e "Press 'ENTER' to continue"
-    read -r -p " "
-}
-
-userInputCorrectAllFiles() {
-    read -r -t 1 -n 10000 _ || echo ""
-    echo -e "Press 'ENTER' to continue" \
-        "${URED}WHEN ALL FILE WILL BE CORRECTED${NC}"
-    read -r -p " "
-}
-
 error() {
     set +x
     1>&2 echo -e "\\n\\n\\n${URED}ERROR:" "${@:2}" "${NC}\\n\\n"
@@ -158,6 +145,19 @@ testsBeforeStart() {
     fi
 
 
+}
+
+userInputSimple() {
+    read -r -t 1 -n 10000 _ || echo ""
+    echo -e "Press 'ENTER' to continue"
+    read -r -p " "
+}
+
+userInputCorrectAllFiles() {
+    read -r -t 1 -n 10000 _ || echo ""
+    echo -e "Press 'ENTER' to continue" \
+        "${URED}WHEN ALL FILE WILL BE CORRECTED${NC}"
+    read -r -p " "
 }
 
 retrieveMdpAndDatabaseName() {
@@ -368,7 +368,6 @@ scaffoldingCore() {
 }
 
 main() {
-    testCommandLine "${@}"
     # local: globaly if needed in a hook
     # don't forget that local has a very special meaning
     # see https://github.com/JulioJu/generator-jhipster/blob/correct-travis-build/travis/build-samples.sh
@@ -401,9 +400,11 @@ main() {
 echo -e "\n\nStart of Script\n============\n"
 
 # shellcheck disable=SC2154
-export PS4='${debian_chroot:+($debian_chroot)}'\
+export PS4='
+
+${debian_chroot:+($debian_chroot)}'\
 '\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] [\D{%T}] \$ '
-declare -g -r PS4Light="\\033[1;32m""$USER@""$HOSTNAME""\\033[0m"": "
+declare -g -r PS4Light="\n\n\\033[1;32m""$USER@""$HOSTNAME""\\033[0m"": "
 
 declare -g DIR_SCRIPT
 DIR_SCRIPT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd -P)"
@@ -412,4 +413,5 @@ cd "${DIR_SCRIPT}"
 declare -g -r URED="\\033[4;31m"
 declare -g -r NC="\\033[0m"
 
+testCommandLine "${@}"
 main "${@}"
