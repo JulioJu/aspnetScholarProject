@@ -145,11 +145,13 @@ If it's a real app, the user should buy a printer of barecode. Barecode
       1920px of width. Not tested with screen shorter.
     * As the app could be used in concurrency (e.g. several tabs open)
         POST params should be tested to know if they are still valid.
-        Especially done in ./Pages/Customer/Crud.CreateOrEdit.cshtml.cs
+        Especially done in ./Pages/Customer/Create.cshtml.cs
+        ./Pages/Customer/Edit.cshtml.cs
         * Note: if the user open dev tools, it could borrow for any time,
             even negatives times.
     * Some manipulations are tested, especially in
-        Pages/Customer/Crud.CreateOrEdit.cshtml.cs
+        Pages/Customer/Create.cshtml.cs
+        Pages/Customer/Edit.cshtml.cs
         They raise System.InvalidOperationException that are not explained
         in Client side (therefore only shown in development mode).
 
@@ -162,18 +164,15 @@ If it's a real app, the user should buy a printer of barecode. Barecode
 
 ## Quick start of this current project
 
-1. In the file `./appsettings.json ` replace XXXXXX by the password of
-    MS-SQL Server (user SA)
-
-2. Create a file in the parent folder of the current folder named
-    `../mdpmssqlserver.txt` with the password of MS-SQL
-
-3. Install MS-SQL
+1. Install MS-SQL
     https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-setup?view=sql-server-2017
 
-4. Install dotnet https://dotnet.microsoft.com/download/thank-you/dotnet-sdk-2.2.103-linux-x64-binaries
+2. In the file `./appsettings.json ` replace XXXXXX by the password of
+    MS-SQL Server (user SA)
 
-5. In a Bash Shell
+3. Install dotnet https://dotnet.microsoft.com/download/thank-you/dotnet-sdk-2.2.103-linux-x64-binaries
+
+4. In a Bash Shell
   ```sh
     sudo systemctl start mssql-server.service && sudo -k \
       && dotnet ef database drop \
@@ -1384,18 +1383,17 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
 
 ## Improve Invoice (not done)
 
-* TODO TO IMPROVE CODE QUALITY AND EASIER ADD FUNCTIONALITIES
-    UNDER for pages Customer/Edit and Customer/Create : ADD split
-    the rendered view in three. EACH ONE SHOULD BE HAVE ITS OWN PARTIAL VIEW.
-    The model of each Partial view should be an array of view Model.
-    For instance,
+* To improve code quality and easier add functionalities
+    under for pages customer/edit and customer/create : split
+    the rendered view in three. Each one should have its own partial view
+    and it's own model
 
-* Note
-    1. Create.cshtml.cs should contains
+* Note:
+    1. Create.cshtml.cs should contain
       ```cs
       public ArticleToBorrowViewModel { get; set; }
       ```
-    2. Edit.cshtml.cs (it inherits of Create.cshtml.cs) should contains:
+    2. Edit.cshtml.cs (it inherits of Create.cshtml.cs) should contain:
       ```cs
       public ArticleAlreadyBorrowedViewModel { get; set; }
       ```
@@ -1404,7 +1402,6 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
 1. For the form that contain articles to borrow we should have a model
   that is an Array of following:
   ```cs
-  // should not be persisted, not a view model
   public class ArticleToBorrowViewModel {
     public int Barecode { get; set; }
     public int Duration { get; set; }
@@ -1419,7 +1416,8 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
 
     public bool ShouldBeReturned { get; set; }
 
-    // As it we could persist modifications of Articles
+    // As it we could update the corresponding Article
+    // for instance Conservation of Box and Disc.
     public Article ArticleBorrowed { get; set; }
 
     // Some Properties of the Invoice should be instantiate
@@ -1429,7 +1427,7 @@ https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/c
   ```
 
 3. For the Invoice Partial View, the model should be
-  (and could be persisted):
+  Invoice and ArticleRetuned are not only view model, they could be persisted.
   ```cs
   public class Invoice {
     // auto generated
