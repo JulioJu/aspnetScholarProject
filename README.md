@@ -3,6 +3,7 @@
 
 * [Teacher's instructions](#teachers-instructions)
   * [Notes about my implementation](#notes-about-my-implementation)
+  * [Class Diagram of the Model](#class-diagram-of-the-model)
 * [How to for Linux users](#how-to-for-linux-users)
   * [Quick start of this current project](#quick-start-of-this-current-project)
   * [Quick start for the samples of the app](#quick-start-for-the-samples-of-the-app)
@@ -159,6 +160,10 @@ If it's a real app, the user should buy a printer of barecode. Barecode
 
 * Release date not converted from UTC or to UTC. Local dependent, contrary
     to CreatedDate or UpdatedDate.
+
+## Class Diagram of the Model
+* ./ModelClassDiagram.graphml was drawn with the software Yed (freeware)
+* ./ModelClassDiagram.svg is the corresponding svg file.
 
 # How to for Linux users
 
